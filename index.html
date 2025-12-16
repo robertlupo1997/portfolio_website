@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>R.LUPO | Data Scientist & ML Engineer</title>
+    <meta name="description" content="Portfolio of Robert Lupo - Data Scientist and ML Engineer specializing in production ML pipelines, computer vision, and predictive modeling." />
+
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="R.LUPO | Data Scientist & ML Engineer" />
+    <meta property="og:description" content="Portfolio of Robert Lupo - Data Scientist and ML Engineer specializing in production ML pipelines, computer vision, and predictive modeling." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rlupo.dev" />
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="R.LUPO | Data Scientist & ML Engineer" />
+    <meta name="twitter:description" content="Portfolio of Robert Lupo - Data Scientist and ML Engineer specializing in production ML pipelines, computer vision, and predictive modeling." />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts: Satoshi (PP Neue Montreal alternative) + Space Mono (PP NeueBit alternative) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'chrls-orange': '#FF6B00',
+              'chrls-orange-dark': '#E85D00',
+              'chrls-black': '#000000',
+              'chrls-dark': '#1A1A1A',
+              'chrls-gray': '#666666',
+              'chrls-light': '#E5E5E5',
+              'chrls-cream': '#F5F5F0',
+            },
+            fontFamily: {
+              'display': ['Satoshi', 'sans-serif'],
+              'mono': ['Space Mono', 'monospace'],
+            },
+          }
+        }
+      }
+    </script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Satoshi', sans-serif;
+        background-color: #F5F5F0;
+        color: #000000;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .font-display {
+        font-family: 'Satoshi', sans-serif;
+      }
+
+      .font-mono {
+        font-family: 'Space Mono', monospace;
+      }
+
+      /* Selection */
+      ::selection {
+        background: #FF6B00;
+        color: #000000;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #F5F5F0;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #000000;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #666666;
+      }
+
+      /* Marquee Animation */
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      
+      @keyframes marquee-reverse {
+        0% { transform: translateX(-50%); }
+        100% { transform: translateX(0); }
+      }
+
+      .animate-marquee {
+        animation: marquee 30s linear infinite;
+      }
+
+      .animate-marquee-reverse {
+        animation: marquee-reverse 30s linear infinite;
+      }
+
+      /* Outline text effect for marquee */
+      .text-outline {
+        -webkit-text-stroke: 2px #000000;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .text-outline-white {
+        -webkit-text-stroke: 2px #FFFFFF;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Card hover effect */
+      .card-hover {
+        transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                    box-shadow 300ms ease-out;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
+      }
+
+      /* Blur effect for images */
+      .img-blur {
+        filter: blur(4px) brightness(0.9);
+        transition: filter 400ms ease-out;
+      }
+
+      .group:hover .img-blur {
+        filter: blur(0) brightness(1);
+      }
+
+      /* Slow spin animation */
+      @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      .animate-spin-slow {
+        animation: spin-slow 20s linear infinite;
+      }
+
+      /* Link underline animation */
+      .link-underline {
+        position: relative;
+      }
+
+      .link-underline::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: currentColor;
+        transition: width 300ms cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .link-underline:hover::after {
+        width: 100%;
+      }
+
+      /* QR Code placeholder styling */
+      .qr-placeholder {
+        background: 
+          linear-gradient(90deg, #000 2px, transparent 2px),
+          linear-gradient(#000 2px, transparent 2px),
+          linear-gradient(90deg, #000 2px, transparent 2px),
+          linear-gradient(#000 2px, transparent 2px);
+        background-size: 8px 8px, 8px 8px, 4px 4px, 4px 4px;
+        background-position: 0 0, 0 0, -1px -1px, -1px -1px;
+      }
+    </style>
+
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.0.0/",
+    "react": "https://esm.sh/react@^19.0.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.0.0/",
+    "react-dom": "https://esm.sh/react-dom@^19.0.0",
+    "lucide-react": "https://esm.sh/lucide-react@^0.460.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
