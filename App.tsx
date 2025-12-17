@@ -9,15 +9,20 @@ import About from './components/About';
 import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
 import CustomCursor from './components/CustomCursor';
+import SmoothScroll from './components/SmoothScroll';
+import ScrollProgress from './components/ScrollProgress';
 import { PROJECTS } from './constants';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <>
+    <SmoothScroll>
       {/* Custom Cursor */}
       <CustomCursor />
+
+      {/* Scroll Progress Indicator */}
+      {!isLoading && <ScrollProgress />}
 
       {/* Loading Screen */}
       <AnimatePresence mode="wait">
@@ -51,15 +56,28 @@ const App: React.FC = () => {
             </div>
 
             {/* Project Grid - Scrollable on mobile, grid on desktop */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center">
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: 0.15,
+                  }
+                }
+              }}
+            >
               {PROJECTS.map((project, index) => (
-                <ProjectCard 
-                  key={project.id} 
-                  project={project} 
-                  index={index} 
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  index={index}
                 />
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -80,7 +98,7 @@ const App: React.FC = () => {
         <Footer />
       </main>
       </motion.div>
-    </>
+    </SmoothScroll>
   );
 };
 

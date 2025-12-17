@@ -7,6 +7,7 @@ import Barcode from './Barcode';
 import QRCode from './QRCode';
 import ParticleField from './ParticleField';
 import FloatingGeometry from './FloatingGeometry';
+import ScrambleText from './ScrambleText';
 import { SITE_CONFIG } from '../constants';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -60,7 +61,21 @@ const Hero: React.FC = () => {
           className="font-display font-black text-black leading-[0.85] tracking-[-0.02em] uppercase text-center"
           style={{ fontSize: 'clamp(48px, 15vw, 200px)' }}
         >
-          {SITE_CONFIG.name}<span className="text-chrls-orange">.</span>{SITE_CONFIG.domain}
+          <ScrambleText
+            text={SITE_CONFIG.name}
+            scrambleOnHover={true}
+            scrambleOnClick={true}
+            speed={0.6}
+            scramble={6}
+          />
+          <span className="text-chrls-orange">.</span>
+          <ScrambleText
+            text={SITE_CONFIG.domain}
+            scrambleOnHover={true}
+            scrambleOnClick={true}
+            speed={0.6}
+            scramble={6}
+          />
         </h1>
       </motion.div>
 

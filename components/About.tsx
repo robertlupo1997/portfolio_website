@@ -5,6 +5,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import Marquee from './Marquee';
 import Barcode from './Barcode';
+import TextReveal from './TextReveal';
+import ScrambleText from './ScrambleText';
 import { AWARDS, SKILLS } from '../constants';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -56,9 +58,13 @@ const About: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="font-display text-base md:text-lg leading-relaxed mb-8">
-              Robert Lupo is a Data Scientist passionate about turning data into actionable insights. With a B.A. in Statistics from USF and an Advanced DS/ML certification from MIT, he specializes in building production ML pipelines, predictive models, and data-driven solutions. His work spans churn prediction, computer vision, and recommender systems.
-            </p>
+            <TextReveal
+              text="Robert Lupo is a Data Scientist passionate about turning data into actionable insights. With a B.A. in Statistics from USF and an Advanced DS/ML certification from MIT, he specializes in building production ML pipelines, predictive models, and data-driven solutions. His work spans churn prediction, computer vision, and recommender systems."
+              className="font-display text-base md:text-lg leading-relaxed mb-8"
+              splitBy="word"
+              staggerDelay={0.02}
+              duration={0.4}
+            />
 
             {/* Decorative Zigzag */}
             <div className="flex items-center gap-4">
@@ -85,7 +91,15 @@ const About: React.FC = () => {
 
             {/* About Header */}
             <div className="flex justify-between items-start border-b border-white/30 pb-4">
-              <h3 className="font-display font-bold text-sm uppercase tracking-wider">About</h3>
+              <h3 className="font-display font-bold text-sm uppercase tracking-wider">
+                <ScrambleText
+                  text="About"
+                  scrambleOnHover={true}
+                  scrambleOnClick={true}
+                  speed={0.3}
+                  scramble={4}
+                />
+              </h3>
 
               {/* Decorative dots grid */}
               <div className="grid grid-cols-4 gap-1">

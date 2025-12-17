@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { SITE_CONFIG } from '../constants';
+import ScrambleText from './ScrambleText';
 
 const Footer: React.FC = () => {
   const socials = [
@@ -72,10 +73,24 @@ const Footer: React.FC = () => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <h2
-            className="font-display font-black uppercase leading-[0.8] tracking-[-0.02em] text-center select-none"
+            className="font-display font-black uppercase leading-[0.8] tracking-[-0.02em] text-center"
             style={{ fontSize: 'clamp(48px, 18vw, 240px)' }}
           >
-            {SITE_CONFIG.name}<span className="text-chrls-orange">.</span>{SITE_CONFIG.domain}
+            <ScrambleText
+              text={SITE_CONFIG.name}
+              scrambleOnHover={true}
+              scrambleOnClick={true}
+              speed={0.5}
+              scramble={8}
+            />
+            <span className="text-chrls-orange">.</span>
+            <ScrambleText
+              text={SITE_CONFIG.domain}
+              scrambleOnHover={true}
+              scrambleOnClick={true}
+              speed={0.5}
+              scramble={8}
+            />
           </h2>
         </motion.div>
 

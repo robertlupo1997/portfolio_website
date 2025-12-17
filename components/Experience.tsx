@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { EXPERIENCE } from '../constants';
 import Barcode from './Barcode';
+import ScrambleText from './ScrambleText';
 
 const Experience: React.FC = () => {
   return (
@@ -18,7 +19,13 @@ const Experience: React.FC = () => {
         >
           <div className="flex items-center gap-4">
             <h2 className="font-display font-bold text-2xl md:text-3xl uppercase tracking-tight">
-              Experience
+              <ScrambleText
+                text="Experience"
+                scrambleOnHover={true}
+                scrambleOnClick={true}
+                speed={0.4}
+                scramble={5}
+              />
             </h2>
             <Barcode bars={8} className="h-4 w-16 hidden md:block" />
           </div>

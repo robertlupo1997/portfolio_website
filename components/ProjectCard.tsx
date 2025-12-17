@@ -1,38 +1,39 @@
 import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
+import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import { Project } from '../types';
 import Barcode from './Barcode';
 import QRCode from './QRCode';
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 interface ProjectCardProps {
   project: Project;
   index: number;
 }
 
+// Card animation variants for staggered grid
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as const,
+    }
+  }
+};
+
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   const cardRef = useRef<HTMLAnchorElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    // Subtle scale effect on scroll into view
-    gsap.from(cardRef.current, {
-      scale: 0.95,
-      duration: 0.6,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: cardRef.current,
-        start: 'top 90%',
-        toggleActions: 'play none none reverse',
-      },
-    });
-  }, { scope: cardRef });
+  // Parallax effect for image
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ['start end', 'end start'],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], [-20, 20]);
 
   // Professional data science themed images from Unsplash
   const imageThemes: Record<string, string> = {
@@ -63,23 +64,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       target="_blank"
       rel="noopener noreferrer"
       className="group block w-full max-w-[320px] card-hover"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.1,
-        ease: [0.16, 1, 0.3, 1]
-      }}
+      variants={cardVariants}
+      whileHover={{ y: -8, transition: { duration: 0.3 } }}
     >
       <div className="border-2 border-black bg-white overflow-hidden">
 
-        {/* Image Section - Blurred like CHRLS */}
-        <div className="relative aspect-[4/3] overflow-hidden bg-gray-200">
-          <img
+        {/* Image Section - Blurred like CHRLS with Parallax */}
+        <div ref={imageRef} className="relative aspect-[4/3] overflow-hidden bg-gray-200">
+          <motion.img
             src={imageUrl}
             alt={project.title}
-            className="w-full h-full object-cover img-blur"
+            className="w-full h-full object-cover img-blur scale-110"
+            style={{ y: imageY }}
             loading="lazy"
           />
 
