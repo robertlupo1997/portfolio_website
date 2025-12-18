@@ -11,15 +11,16 @@ const WireframeIcosahedron: React.FC<GeometryProps> = ({ mouse }) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const wireRef = useRef<THREE.LineSegments>(null);
 
-  useFrame(() => {
+  useFrame((_state, delta) => {
     if (meshRef.current && wireRef.current) {
-      // Slow rotation
-      meshRef.current.rotation.x += 0.003;
-      meshRef.current.rotation.y += 0.005;
-      wireRef.current.rotation.x += 0.003;
-      wireRef.current.rotation.y += 0.005;
+      // Delta-based rotation (frame-rate independent)
+      const rotationSpeed = 0.5; // radians per second
+      meshRef.current.rotation.x += delta * rotationSpeed * 0.6;
+      meshRef.current.rotation.y += delta * rotationSpeed;
+      wireRef.current.rotation.x += delta * rotationSpeed * 0.6;
+      wireRef.current.rotation.y += delta * rotationSpeed;
 
-      // Subtle mouse follow
+      // Subtle mouse follow (lerp is already frame-rate independent)
       const targetX = mouse.current.x * 0.3;
       const targetY = -mouse.current.y * 0.3;
       meshRef.current.rotation.z += (targetX - meshRef.current.rotation.z) * 0.02;

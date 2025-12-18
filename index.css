@@ -71,6 +71,56 @@ a {
   }
 }
 
+/* Accessible orange for small text (4.5:1 on cream) */
+.text-orange-accessible {
+  color: #C45000;
+}
+
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Marching ants hover effect for cards */
+.marching-ants {
+  position: relative;
+}
+
+.marching-ants::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background:
+    linear-gradient(90deg, #FF6B00 50%, transparent 50%) repeat-x,
+    linear-gradient(90deg, #FF6B00 50%, transparent 50%) repeat-x,
+    linear-gradient(0deg, #FF6B00 50%, transparent 50%) repeat-y,
+    linear-gradient(0deg, #FF6B00 50%, transparent 50%) repeat-y;
+  background-size: 8px 2px, 8px 2px, 2px 8px, 2px 8px;
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.marching-ants:hover::after {
+  opacity: 1;
+  animation: march 0.3s linear infinite;
+}
+
+@keyframes march {
+  to {
+    background-position: 8px 0, -8px 100%, 0 -8px, 100% 8px;
+  }
+}
+
 /* Reduced motion: respect user preference */
 @media (prefers-reduced-motion: reduce) {
   /* Hide particle field for reduced motion users */

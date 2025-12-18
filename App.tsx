@@ -18,6 +18,14 @@ const App: React.FC = () => {
 
   return (
     <SmoothScroll>
+      {/* Skip to main content link for accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-chrls-orange focus:text-black focus:font-mono focus:text-sm"
+      >
+        Skip to main content
+      </a>
+
       {/* Custom Cursor */}
       <CustomCursor />
 
@@ -40,7 +48,7 @@ const App: React.FC = () => {
       >
         <Header />
       
-      <main>
+      <main id="main-content">
         {/* Hero Section */}
         <Hero />
         

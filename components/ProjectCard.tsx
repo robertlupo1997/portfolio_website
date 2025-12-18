@@ -67,7 +67,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       variants={cardVariants}
       whileHover={{ y: -8, transition: { duration: 0.3 } }}
     >
-      <div className="border-2 border-black bg-white overflow-hidden">
+      <div className="border-2 border-black bg-white overflow-hidden marching-ants">
 
         {/* Image Section - Blurred like CHRLS with Parallax */}
         <div ref={imageRef} className="relative aspect-[4/3] overflow-hidden bg-gray-200">
