@@ -5,10 +5,9 @@ import DemoModal from './DemoModal';
 interface ProjectCardProps {
   project: Project;
   index: number;
-  cardNumber?: number; // 1-6 for 3D stacking classes
+  cardNumber?: number; // 1-6 for CSS stacking classes
 }
 
-// Map cardColor to CHRLS class
 const colorClassMap: Record<string, string> = {
   coral: 'orange',
   cyan: 'cyan',
@@ -45,7 +44,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, cardNumber })
 
         {/* Bottom: Ticket info with color */}
         <div className={`home_project-contentholder btm ${colorClass}`}>
-          {/* Left description holder */}
           <div className="home_project-descholder">
             <h4 className="home_project-title">{project.title}</h4>
             <div className="home_project-group flex">
@@ -62,8 +60,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, cardNumber })
               <img src="./assets/qr.svg" alt="" className="home_project-qr" />
             </div>
           </div>
-
-          {/* Right wing with braille */}
           <div className="home_project-descholder right-wing">
             <img src="./assets/braille.svg" alt="" className="home_project-braille" />
           </div>

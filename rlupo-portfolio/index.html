@@ -307,23 +307,22 @@
 
       .home_project-track {
         width: 100%;
+        height: 650vw; /* CHRLS uses 650vw */
         padding-top: 2em;
         padding-bottom: 2em;
         position: relative;
       }
 
-      /* Project wrapper for sticky scroll (3D mode) */
+      /* Project wrapper - sticky for 3D scroll effect */
       .home_project-wrapper {
-        position: relative;
-        width: 100%;
-      }
-
-      .home_project-track.view-all .home_project-wrapper {
-        height: auto;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        overflow: hidden;
       }
 
       .home_project-bg {
-        z-index: 0;
+        z-index: -1;
         background-color: var(--coral);
         justify-content: flex-start;
         align-items: center;
@@ -331,17 +330,19 @@
         height: 6em;
         display: flex;
         position: absolute;
+        top: 50%;
         overflow: hidden;
+        transform: rotate(7deg) translate(-2%, -50%);
       }
 
       .home_project-bg.first {
-        top: 0;
-        transform: rotate(-3deg) translate(-2%, 0);
+        top: 25%;
       }
 
       .home_project-bg.last {
-        bottom: 0;
-        transform: rotate(3deg) translate(-2%, 0);
+        top: auto;
+        bottom: 25%;
+        transform: rotate(7deg) translate(-4%);
       }
 
       .home_project-bgtext {
@@ -373,67 +374,66 @@
         100% { transform: translateX(-50%); }
       }
 
+      /* 3D Perspective container */
       .home_project-content {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2em;
-        padding: 4em 3.125em;
-        position: relative;
-        z-index: 1;
+        perspective: 300vw;
+        flex: none;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100%;
+        display: flex;
+        transform: perspective(275px);
       }
 
+      /* 3D Stacked cards - absolute positioned */
       .home_project-card {
+        perspective: 353px;
         flex-direction: column;
         flex: none;
+        width: 30em;
+        height: 50em;
         text-decoration: none;
         display: flex;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: absolute;
+        transform: perspective(784px);
       }
 
-      .home_project-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 24px 48px rgba(0,0,0,0.15);
-      }
-
-      /* 3D Card Stacking Classes (used when view-all is removed) */
+      /* Static Z-depth positioning - EXACT CHRLS values */
       .home_project-card._1 {
         z-index: 1;
         transform-style: preserve-3d;
+        transform: translate3d(0%, 0, -25em);
       }
 
       .home_project-card._2 {
         z-index: 2;
         transform-style: preserve-3d;
+        transform: translate3d(0%, 0, -20em);
       }
 
       .home_project-card._3 {
         z-index: 3;
         transform-style: preserve-3d;
+        transform: translate3d(0%, 0, -15em);
       }
 
       .home_project-card._4 {
         z-index: 4;
         transform-style: preserve-3d;
+        transform: translate3d(0%, 0, -10em);
       }
 
       .home_project-card._5 {
         z-index: 5;
         transform-style: preserve-3d;
+        transform: translate3d(0%, 0, -5em);
       }
 
       .home_project-card._6 {
         z-index: 6;
         transform-style: preserve-3d;
-      }
-
-      /* View-all grid mode (current default) */
-      .home_project-content.view-all .home_project-card {
-        position: relative;
-        transform: none;
-      }
-
-      .home_project-content.view-all .home_project-card:hover {
-        transform: translateY(-8px);
+        transform: translate3d(0%, 0, 0);
       }
 
       .home_project-contentholder {
@@ -940,13 +940,37 @@
         .hero_label-col { width: 100%; margin-bottom: 1em; }
         .hero_label-col.hole { width: 100%; height: 200px; margin-right: 0; margin-bottom: 1em; }
         .hero_label-paragraph { width: 100%; }
-        .home_project-content { grid-template-columns: repeat(2, 1fr); padding: 2em; }
+        /* Disable 3D mode on tablet - fall back to grid */
+        .home_project-track { height: auto; }
+        .home_project-wrapper { position: relative; height: auto; }
+        .home_project-content {
+          perspective: none;
+          transform: none;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 2em;
+          padding: 2em;
+          width: 100%;
+          height: auto;
+        }
+        .home_project-card {
+          position: relative;
+          transform: none !important;
+          width: 100%;
+          height: auto;
+        }
+        .home_project-card._1,
+        .home_project-card._2,
+        .home_project-card._3,
+        .home_project-card._4,
+        .home_project-card._5,
+        .home_project-card._6 {
+          transform: none !important;
+        }
+        .home_project-contentholder { height: 200px; }
         .home_about-wrapper { padding: 2em; }
         .home_about-container { grid-template-columns: 1fr; }
         .footer_hello, .footer_email { font-size: 5vw; }
-      }
-
-      @media screen and (max-width: 991px) {
         .nav_hello { display: none; }
         .project_cursor, .cursor_pad { display: none; }
       }
@@ -958,7 +982,13 @@
         .nav_mobile-menu { display: flex; }
         .hero_label-holder { flex-direction: column; align-items: flex-start; }
         .hero_gif-holder { display: none; }
-        .home_project-content { grid-template-columns: 1fr; }
+        .home_project-track { height: 300vh; } /* Shorter on mobile per CHRLS */
+        .home_project-card {
+          width: 20em;
+          height: 35em;
+        }
+        .home_project-content { grid-template-columns: 1fr; padding: 2em 1em; }
+        .home_project-contentholder { height: 180px; }
         .footer_group { flex-direction: column; gap: 2em; }
         .footer_social-handle { flex-direction: row; flex-wrap: wrap; gap: 1em; }
       }
@@ -968,6 +998,10 @@
         .hero_title { font-size: 15vw; }
         .hero_splitter { width: 0.3em; height: 0.3em; }
         .hero_label-paragraph { font-size: 10px; }
+        .home_project-card {
+          width: 73vw;
+          height: 144vw;
+        }
         .home_about-bigtextholder { font-size: 2em; }
         .footer_title { font-size: 15vw; }
         .footer_splitter { width: 0.3em; height: 0.3em; }
