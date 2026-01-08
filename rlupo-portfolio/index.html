@@ -381,7 +381,7 @@
         100% { transform: translateX(-50%); }
       }
 
-      /* 3D Perspective container - EXACT CHRLS values */
+      /* 3D Perspective container - CHRLS exact values */
       .home_project-content {
         perspective: 300vw; /* CHRLS exact value */
         flex: none;
@@ -390,7 +390,6 @@
         width: 100vw;
         height: 100%;
         display: flex;
-        transform: perspective(275px); /* CHRLS exact value */
         transform-style: preserve-3d;
       }
 
@@ -409,42 +408,42 @@
         backface-visibility: hidden;
       }
 
-      /* Static Z-depth positioning - EXACT CHRLS CSS values (5em increments)
+      /* Static Z-depth positioning - CHRLS exact values: -5em increments
          These serve as fallback; GSAP overrides with px values on scroll */
       .home_project-card._1 {
         z-index: 1;
         transform-style: preserve-3d;
-        transform: translate3d(0%, 0, -25em); /* CHRLS exact */
+        transform: translate3d(0, 0, -25em); /* Back card - CHRLS exact */
       }
 
       .home_project-card._2 {
         z-index: 2;
         transform-style: preserve-3d;
-        transform: translate3d(0%, 0, -20em); /* CHRLS exact */
+        transform: translate3d(0, 0, -20em); /* CHRLS exact */
       }
 
       .home_project-card._3 {
         z-index: 3;
         transform-style: preserve-3d;
-        transform: translate3d(0%, 0, -15em); /* CHRLS exact */
+        transform: translate3d(0, 0, -15em); /* CHRLS exact */
       }
 
       .home_project-card._4 {
         z-index: 4;
         transform-style: preserve-3d;
-        transform: translate3d(0%, 0, -10em); /* CHRLS exact */
+        transform: translate3d(0, 0, -10em); /* CHRLS exact */
       }
 
       .home_project-card._5 {
         z-index: 5;
         transform-style: preserve-3d;
-        transform: translate3d(0%, 0, -5em); /* CHRLS exact */
+        transform: translate3d(0, 0, -5em); /* CHRLS exact */
       }
 
       .home_project-card._6 {
         z-index: 6;
         transform-style: preserve-3d;
-        transform: translate3d(0%, 0, 0); /* Front card */
+        transform: translate3d(0, 0, 0); /* Front card */
       }
 
       .home_project-contentholder {
