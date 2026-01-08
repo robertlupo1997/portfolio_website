@@ -124,9 +124,9 @@ If assets cannot be downloaded, create animated CSS patterns:
 ### Success Criteria:
 
 #### Automated Verification:
-- [ ] Assets folder contains: hero-gif.gif, dashes.gif, about-gif.gif, awards-gif.gif, reminder.gif
-- [ ] Assets folder contains: qr.svg, wave.svg
-- [ ] All files are non-zero size
+- [x] Assets folder contains: hero-gif.gif, dashes.gif, about-gif.gif, awards-gif.gif, reminder.gif
+- [x] Assets folder contains: qr.svg, wave.svg
+- [x] All files are non-zero size
 
 #### Manual Verification:
 - [ ] GIFs animate when opened in browser

@@ -8,26 +8,28 @@ const About: React.FC = () => {
         {/* Black background */}
         <div className="home_about-bg"></div>
 
-        {/* Left column - Big text and info box */}
-        <div className="home_about-col">
-          <div className="home_about-titleholder">
-            <div className="home_about-bigtextholder">
-              ML ENGINEER & DATA SCIENTIST. PRODUCTION FOCUSED.
+        <div className="home_about-container">
+          {/* Left column - Big text and info box */}
+          <div className="home_about-col">
+            <div className="home_about-titleholder">
+              <div className="home_about-bigtextholder">
+                ML ENGINEER & DATA SCIENTIST. PRODUCTION FOCUSED.
+              </div>
+            </div>
+            <div className="home_about-intholder">
+              <h2>ABOUT</h2>
+              <p className="home_about-para">
+                Robert "Trey" Lupo builds production ML systems with calibrated outputs.
+                Currently FP&A Analyst at Franklin Street Properties, previously AI Engineering
+                at Origin Construction. MIT Professional Certificate in Data Science,
+                B.A. Statistics from University of South Florida.
+              </p>
+              <img src="./assets/about-gif.gif" alt="" className="home_gif about-para" />
             </div>
           </div>
-          <div className="home_about-intholder">
-            <h2>ABOUT</h2>
-            <p className="home_about-para">
-              Robert "Trey" Lupo builds production ML systems with calibrated outputs.
-              Currently FP&A Analyst at Franklin Street Properties, previously AI Engineering
-              at Origin Construction. MIT Professional Certificate in Data Science,
-              B.A. Statistics from University of South Florida.
-            </p>
-          </div>
-        </div>
 
-        {/* Right column - Orange box with credentials */}
-        <div className="home_about-col about-box">
+          {/* Right column - Orange box with credentials */}
+          <div className="home_about-col about-box">
           <div className="home_about-awardcol">
             <div className="award_group">
               <h5 className="about_awards title">Benchmarks</h5>
@@ -67,7 +69,9 @@ const About: React.FC = () => {
                 <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
               </h6>
             </div>
+            <img src="./assets/awards-gif.gif" alt="" className="home_gif about_awards" />
           </div>
+        </div>
         </div>
       </div>
     </section>

@@ -28,10 +28,9 @@ const Hero: React.FC = () => {
 
       {/* Orange Info Box - 3 columns */}
       <div className="hero_label-wrapper">
-        {/* Column 1: Photo hole */}
+        {/* Column 1: Photo hole with GIF */}
         <div className="hero_label-col hole">
-          {/* Photo placeholder or actual image */}
-          <span style={{ padding: '1em', fontSize: '12px', opacity: 0.5 }}>[PHOTO]</span>
+          <img src="./assets/hero-gif.gif" alt="" className="home_gif hero" />
         </div>
 
         {/* Column 2: Main info */}
@@ -50,6 +49,10 @@ const Hero: React.FC = () => {
             <div className="hero_label-based">
               <h2>MADE IN USA.</h2>
             </div>
+          </div>
+          {/* Dashes GIF */}
+          <div className="hero_gif-holder">
+            <img src="./assets/dashes.gif" alt="" className="home_gif dashes" />
           </div>
         </div>
 

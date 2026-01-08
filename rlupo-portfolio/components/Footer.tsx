@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
         <div className="footer_email-wrapper">
           <div className="footer_hello-holder">
             <h2 className="footer_hello">Say hello</h2>
-            <span className="footer_helloicon">👋</span>
+            <img src="./assets/wave.svg" alt="" className="footer_helloicon" />
           </div>
           <a href={`mailto:${PERSONAL_INFO.email}`} className="footer_email">
             {PERSONAL_INFO.email}

@@ -33,18 +33,20 @@ const Header: React.FC = () => {
           </svg>
         </a>
 
-        {/* Center barcode with time */}
-        <div className="barcode_holder">
-          <h3 className="barcode_avail">{currentTime} EST</h3>
-          <img src="./assets/barcode.svg" alt="" className="barcode center" />
-          <h3 className="barcode_time">AVLB: 2025</h3>
+        {/* Nav group with Say Hello - CHRLS order */}
+        <div className="nav_group">
+          <div className="nav_hello">
+            <span>Say hello</span>
+            <a href="mailto:treylupo1197@gmail.com">treylupo1197@gmail.com</a>
+          </div>
+          <a href="#work" className="nav_link">WORK</a>
         </div>
 
-        {/* Right nav group - desktop */}
-        <div className="nav_group">
-          <a href="#work" className="nav_link">Work</a>
-          <a href="#about" className="nav_link">About</a>
-          <a href="mailto:treylupo1197@gmail.com" className="nav_link">Contact</a>
+        {/* Center barcode with time */}
+        <div className="barcode_holder">
+          <h3 className="barcode_avail">{currentTime}</h3>
+          <img src="./assets/barcode.svg" alt="" className="barcode center" />
+          <h3 className="barcode_time">EST</h3>
         </div>
 
         {/* Mobile Menu Button */}

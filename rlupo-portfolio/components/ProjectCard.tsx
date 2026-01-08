@@ -5,6 +5,7 @@ import DemoModal from './DemoModal';
 interface ProjectCardProps {
   project: Project;
   index: number;
+  cardNumber?: number; // 1-6 for 3D stacking classes
 }
 
 // Map cardColor to CHRLS class
@@ -16,9 +17,10 @@ const colorClassMap: Record<string, string> = {
   'light-cyan': 'blue',
 };
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, cardNumber }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const colorClass = colorClassMap[project.cardColor] || 'orange';
+  const stackClass = cardNumber ? `_${cardNumber}` : '';
 
   return (
     <>
@@ -26,7 +28,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
         href={project.githubUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="home_project-card"
+        className={`home_project-card ${stackClass}`}
         onClick={(e) => {
           if (project.liveUrl) {
             e.preventDefault();
@@ -57,6 +59,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                   <h5>{project.metric}</h5>
                 </div>
               )}
+              <img src="./assets/qr.svg" alt="" className="home_project-qr" />
             </div>
           </div>
 

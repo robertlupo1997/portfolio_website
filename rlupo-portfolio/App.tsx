@@ -4,11 +4,16 @@ import Hero from './components/Hero';
 import ProjectCard from './components/ProjectCard';
 import About from './components/About';
 import Footer from './components/Footer';
+import Preloader from './components/Preloader';
+import CustomCursor from './components/CustomCursor';
 import { PROJECTS } from './constants';
 
 const App: React.FC = () => {
   return (
     <>
+      <CustomCursor />
+      <Preloader />
+
       {/* Noise/grain overlay */}
       <div className="noise"></div>
 
@@ -19,40 +24,47 @@ const App: React.FC = () => {
 
         {/* Projects Section */}
         <section className="section project">
-          <div className="home_project-track view-all">
-            {/* Background marquee - top */}
-            <div className="home_project-bg first">
-              <div className="home_project-bgtxtholder outline">
-                <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
-                <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
-                <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
-                <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
+          <div className="home_project-track view-all" id="track">
+            <div className="home_project-wrapper">
+              {/* Background marquee - top */}
+              <div className="home_project-bg first">
+                <div className="home_project-bgtxtholder outline">
+                  <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
+                  <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
+                  <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
+                  <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
+                </div>
               </div>
-            </div>
 
-            {/* Project grid */}
-            <div className="home_project-content view-all">
-              {PROJECTS.map((project, index) => (
-                <ProjectCard key={project.id} project={project} index={index} />
-              ))}
-            </div>
+              {/* Project grid */}
+              <div className="home_project-content view-all">
+                {PROJECTS.map((project, index) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    index={index}
+                    cardNumber={PROJECTS.length - index}
+                  />
+                ))}
+              </div>
 
-            {/* Background marquee - bottom */}
-            <div className="home_project-bg last">
-              <div className="home_project-bgtxtholder outline">
-                <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
-                <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
-                <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
-                <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
+              {/* Background marquee - bottom */}
+              <div className="home_project-bg last">
+                <div className="home_project-bgtxtholder outline">
+                  <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
+                  <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
+                  <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
+                  <h2 className="home_project-bgtext outline">PRODUCTION MODELS •</h2>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Reminder section */}
           <div className="home_project-reminder">
-            <img src="./assets/barcode.svg" alt="" className="home_project-remindericon" />
+            <img src="./assets/reminder.gif" alt="" className="home_project-remindericon" />
             <span className="home_project-remindertext">MORE PROJECTS IN TRAINING</span>
-            <img src="./assets/barcode.svg" alt="" className="home_project-remindericon" />
+            <img src="./assets/reminder.gif" alt="" className="home_project-remindericon" />
           </div>
         </section>
 
