@@ -1,49 +1,67 @@
-import React from 'react';
-import { ArrowDown } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 
 const Hero: React.FC = () => {
+  const [time, setTime] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12 || 12;
+      setTime(`${hours}:${minutes} ${ampm}`);
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex flex-col justify-between pt-24 pb-8 px-4 md:px-8">
-      
-      {/* Top Details */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 font-mono text-xs uppercase border-b border-black/10 pb-4">
-        <div>
-          <span className="opacity-50 block">Role</span>
-          Machine Learning Engineer
-        </div>
-        <div>
-          <span className="opacity-50 block">Location</span>
-          New York, USA
-        </div>
-        <div>
-          <span className="opacity-50 block">Status</span>
-          Available for hire
-        </div>
-        <div className="text-right hidden md:block">
-           SCROLL DOWN
-        </div>
+    <section className="section hero">
+      {/* Giant Title */}
+      <div className="hero_title-holder">
+        <h1 className="hero_title">TREY</h1>
+        <div className="hero_splitter"></div>
+        <h1 className="hero_title">ML</h1>
       </div>
 
-      {/* Main Typography */}
-      <div className="flex-grow flex flex-col justify-center py-12">
-        <h1 className="text-[14vw] leading-[0.8] font-black tracking-tighter font-display text-black uppercase">
-          Robert<br/>
-          <span className="ml-[10vw] text-orange-600">Lupo</span>
-        </h1>
-      </div>
+      {/* Orange Info Box - 3 columns */}
+      <div className="hero_label-wrapper">
+        {/* Column 1: Photo hole */}
+        <div className="hero_label-col hole">
+          {/* Photo placeholder or actual image */}
+          <span style={{ padding: '1em', fontSize: '12px', opacity: 0.5 }}>[PHOTO]</span>
+        </div>
 
-      {/* Bottom Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 border-t border-black pt-6">
-         <div className="md:col-span-8">
-            <p className="text-xl md:text-3xl font-medium leading-tight max-w-4xl indent-12">
-              An independent developer specialized in machine learning pipelines, predictive modeling, and data-driven solutions. Crafting robust code for complex problems.
+        {/* Column 2: Main info */}
+        <div className="hero_label-col">
+          <div className="hero_label-holder top">
+            <p className="hero_label-paragraph">
+              HYBRID MODEL: FP&A × MACHINE LEARNING. PRODUCTION ML WITH CALIBRATED OUTPUTS.
+              DEPLOYED ON HUGGINGFACE SPACES, DOCKER, VERCEL. FRAMEWORKS: XGBOOST, LIGHTGBM, PYTORCH, SHAP.
             </p>
-         </div>
-         <div className="md:col-span-4 flex justify-end items-end">
-            <div className="w-12 h-12 rounded-full border border-black flex items-center justify-center animate-bounce">
-              <ArrowDown size={20} />
+            <div className="hero_label-copy">TREY©2025</div>
+          </div>
+          <div className="hero_label-holder">
+            <div className="hero_label-title">
+              <h2>MACHINE LEARNING ENGINEER</h2>
             </div>
-         </div>
+            <div className="hero_label-based">
+              <h2>MADE IN USA.</h2>
+            </div>
+          </div>
+        </div>
+
+        {/* Column 3: Barcode and time */}
+        <div className="hero_label-col last">
+          <div className="barcode_group">
+            <h3 className="barcode_avail">AVLB : 2025</h3>
+            <img src="./assets/barcode.svg" alt="" className="barcode center" />
+            <h3 className="barcode_time">OPEN TO WORK</h3>
+          </div>
+          <h3 className="barcode_time" id="clock">{time}</h3>
+        </div>
       </div>
     </section>
   );

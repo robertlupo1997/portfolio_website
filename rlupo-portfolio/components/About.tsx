@@ -1,50 +1,75 @@
 import React from 'react';
-
-const skills = [
-  { title: "Machine Learning", tools: ["PyTorch", "XGBoost", "Scikit-learn"] },
-  { title: "Data Engineering", tools: ["DuckDB", "SQL", "Airflow"] },
-  { title: "Computer Vision", tools: ["OpenCV", "Grounding DINO", "SAM 2"] },
-  { title: "Web Development", tools: ["React", "FastAPI", "Streamlit"] }
-];
+import { PERSONAL_INFO } from '../constants';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="py-24 px-4 md:px-8 bg-black text-[#F0F0F0]">
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-24">
-        <div>
-           <h2 className="text-6xl md:text-8xl font-black font-display tracking-tighter uppercase leading-[0.8]">
-             Data<br/><span className="text-orange-600">Driven.</span>
-           </h2>
-        </div>
-        <div className="flex flex-col justify-end">
-           <p className="text-xl md:text-2xl leading-relaxed font-light opacity-90">
-             I am Robert Lupo, a Machine Learning Engineer based in New York. I specialize in building predictive models and data pipelines that drive business decisions. My work bridges the gap between raw data and actionable insights.
-           </p>
-        </div>
-      </div>
+    <section id="about" className="section about">
+      <div className="home_about-wrapper">
+        {/* Black background */}
+        <div className="home_about-bg"></div>
 
-      <div className="border-t border-white/20 pt-12">
-        <h3 className="font-mono text-sm uppercase opacity-50 mb-8">( Expertise )</h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {skills.map((skill, i) => (
-            <div key={i} className="group hover:bg-white/5 p-6 border border-white/10 transition-colors">
-              <div className="text-orange-600 font-mono text-xs mb-4">0{i + 1}</div>
-              <h4 className="text-2xl font-bold font-display uppercase mb-6">{skill.title}</h4>
-              <ul className="space-y-2">
-                {skill.tools.map(tool => (
-                  <li key={tool} className="font-mono text-sm opacity-70 border-b border-white/10 pb-1 flex justify-between">
-                    <span>{tool}</span>
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity text-orange-600">+</span>
-                  </li>
-                ))}
-              </ul>
+        {/* Left column - Big text and info box */}
+        <div className="home_about-col">
+          <div className="home_about-titleholder">
+            <div className="home_about-bigtextholder">
+              ML ENGINEER & DATA SCIENTIST. PRODUCTION FOCUSED.
             </div>
-          ))}
+          </div>
+          <div className="home_about-intholder">
+            <h2>ABOUT</h2>
+            <p className="home_about-para">
+              Robert "Trey" Lupo builds production ML systems with calibrated outputs.
+              Currently FP&A Analyst at Franklin Street Properties, previously AI Engineering
+              at Origin Construction. MIT Professional Certificate in Data Science,
+              B.A. Statistics from University of South Florida.
+            </p>
+          </div>
+        </div>
+
+        {/* Right column - Orange box with credentials */}
+        <div className="home_about-col about-box">
+          <div className="home_about-awardcol">
+            <div className="award_group">
+              <h5 className="about_awards title">Benchmarks</h5>
+              <h6 className="about_awards">0.97 AUC - KKBOX Churn</h6>
+              <h6 className="about_awards">265-490ms - OVOD Inference</h6>
+              <h6 className="about_awards">135+ Engineered Features</h6>
+            </div>
+            <div className="award_group">
+              <h5 className="about_awards title">Education</h5>
+              <h6 className="about_awards">MIT Data Science Certificate</h6>
+              <h6 className="about_awards">B.A. Statistics, USF</h6>
+            </div>
+          </div>
+          <div className="home_about-awardcol btm">
+            <div className="award_group">
+              <h5 className="about_awards title">Stack</h5>
+              <h6 className="about_awards">Python</h6>
+              <h6 className="about_awards">XGBoost / LightGBM</h6>
+              <h6 className="about_awards">FastAPI / React</h6>
+              <h6 className="about_awards">SHAP / DuckDB</h6>
+            </div>
+            <div className="award_group">
+              <h5 className="about_awards title">Deploy</h5>
+              <h6 className="about_awards">HuggingFace Spaces</h6>
+              <h6 className="about_awards">Docker</h6>
+              <h6 className="about_awards">Vercel</h6>
+            </div>
+            <div className="award_group">
+              <h5 className="about_awards title">Contact</h5>
+              <h6 className="about_awards">
+                <a href={`mailto:${PERSONAL_INFO.email}`}>{PERSONAL_INFO.email}</a>
+              </h6>
+              <h6 className="about_awards">
+                <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+              </h6>
+              <h6 className="about_awards">
+                <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              </h6>
+            </div>
+          </div>
         </div>
       </div>
-
     </section>
   );
 };
