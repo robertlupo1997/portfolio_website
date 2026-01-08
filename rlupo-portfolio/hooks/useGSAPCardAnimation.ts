@@ -73,7 +73,7 @@ export const useGSAPCardAnimation = (
 
       // Phase 2: Sequential card dealing (30-100% of scroll)
       // Each card gets spotlight then exits, remaining cards push forward
-      const exitDistance = -1500; // Far enough to fully exit viewport
+      const exitDistance = window.innerWidth * -0.6; // Responsive: 60% of viewport width
       const totalDealingDuration = 0.7; // 70% of timeline for dealing
       const cardDealDuration = totalDealingDuration / (numCards - 1); // Time per card deal
 
@@ -81,9 +81,10 @@ export const useGSAPCardAnimation = (
       for (let i = 0; i < numCards - 1; i++) {
         const exitingCard = cards[i];
 
-        // Current card exits left - NO OPACITY FADE (CHRLS style)
+        // Current card exits left with slight rotation - NO OPACITY FADE (CHRLS style)
         tl.to(exitingCard, {
           x: exitDistance,
+          rotateY: -15, // Slight rotation as card exits
           duration: cardDealDuration * 0.6, // Exit takes 60% of this card's time
           ease: 'power2.inOut'
         });

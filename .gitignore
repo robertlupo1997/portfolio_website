@@ -1,0 +1,35 @@
+# Archives and backups
+*.zip
+
+# Documents
+*.pdf
+
+# Temp/duplicate folders
+copy-of-app/
+chrls-portfolio-complete/
+portfolio-website/
+starter portfolio website/
+rlupo-portfolio-v2/
+rlupo-portfolio-yves-klein/
+
+# Claude/AI working directories
+.claude/
+thoughts/
+
+# Research and planning docs (keep in separate repo if needed)
+*-analysis.md
+*-enhancement.md
+*ANALYSIS*.md
+*RESEARCH*.md
+*PLAN*.md
+*PROMPT*.md
+
+# Misc
+nul
+chrls.jpg
+chrls2.jpg
+chrls-download/
+claude-20251217T231824Z-3-001/
+claude-code-plugins/
+humanlayer/
+claude.md
