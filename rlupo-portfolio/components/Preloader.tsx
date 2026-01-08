@@ -16,14 +16,22 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const preloaderRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
+  const exitAnimationTriggered = useRef(false);
 
   useEffect(() => {
+    // Track animation state to prevent double-trigger in StrictMode
+    let animationFrameId: number;
+    let timeoutId: ReturnType<typeof setTimeout>;
+    let isCancelled = false;
+
     // Simulate loading progress with easing (faster at start, slower near end)
     let currentProgress = 0;
     const duration = 2500; // Total duration in ms
     const startTime = Date.now();
 
     const updateProgress = () => {
+      if (isCancelled) return;
+
       const elapsed = Date.now() - startTime;
       const t = Math.min(elapsed / duration, 1);
 
@@ -34,49 +42,44 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       setProgress(currentProgress);
 
       if (t < 1) {
-        requestAnimationFrame(updateProgress);
+        animationFrameId = requestAnimationFrame(updateProgress);
       } else {
         // Loading complete - trigger exit animation
-        setTimeout(triggerExitAnimation, 200);
+        timeoutId = setTimeout(triggerExitAnimation, 200);
       }
     };
 
-    requestAnimationFrame(updateProgress);
+    animationFrameId = requestAnimationFrame(updateProgress);
+
+    // Cleanup function to prevent double-animation in StrictMode
+    return () => {
+      isCancelled = true;
+      cancelAnimationFrame(animationFrameId);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   const triggerExitAnimation = () => {
-    if (!window.gsap || !preloaderRef.current) {
+    // Prevent double-trigger in StrictMode
+    if (exitAnimationTriggered.current) return;
+    exitAnimationTriggered.current = true;
+
+    // Try GSAP animation, fallback to CSS transition if issues
+    if (window.gsap && preloaderRef.current) {
+      window.gsap.to(preloaderRef.current, {
+        yPercent: -100,
+        duration: 0.8,
+        ease: 'power3.inOut',
+        onComplete: () => {
+          setIsVisible(false);
+          onComplete?.();
+        }
+      });
+    } else {
+      // Fallback - just hide
       setIsVisible(false);
       onComplete?.();
-      return;
     }
-
-    const gsap = window.gsap;
-    const tl = gsap.timeline({
-      onComplete: () => {
-        setIsVisible(false);
-        onComplete?.();
-      }
-    });
-
-    // CHRLS-style exit: counter slides down, then preloader slides up
-    tl.to(counterRef.current, {
-      y: 50,
-      opacity: 0,
-      duration: 0.4,
-      ease: 'power2.in'
-    })
-    .to(logoRef.current, {
-      y: -30,
-      opacity: 0,
-      duration: 0.3,
-      ease: 'power2.in'
-    }, '-=0.3')
-    .to(preloaderRef.current, {
-      yPercent: -100,
-      duration: 0.8,
-      ease: 'power3.inOut'
-    }, '-=0.1');
   };
 
   if (!isVisible) return null;
