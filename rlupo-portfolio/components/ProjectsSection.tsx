@@ -2,12 +2,17 @@ import React, { useRef } from 'react';
 import ProjectCard from './ProjectCard';
 import { PROJECTS } from '../constants';
 import { useMouseParallax } from '../hooks/useMouseParallax';
+import { useGSAPCardAnimation } from '../hooks/useGSAPCardAnimation';
 
 const ProjectsSection: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
-  // Add mouse parallax effect
-  useMouseParallax(wrapperRef, 0.8);
+  // Mouse parallax effect on wrapper
+  useMouseParallax(wrapperRef, 0.6);
+
+  // GSAP scroll-triggered card animation
+  useGSAPCardAnimation(contentRef, 6);
 
   return (
     <section className="section project">
@@ -23,8 +28,8 @@ const ProjectsSection: React.FC = () => {
             </div>
           </div>
 
-          {/* 3D Stacked Cards - static positioning via CSS */}
-          <div className="home_project-content">
+          {/* 3D Stacked Cards - GSAP animated */}
+          <div className="home_project-content" ref={contentRef}>
             {PROJECTS.slice(0, 6).map((project, index) => (
               <ProjectCard
                 key={project.id}
