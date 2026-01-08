@@ -37,9 +37,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, cardNumber })
       >
         {/* Top: Image/Preview area */}
         <div className="home_project-contentholder">
-          <span style={{ fontSize: '14px', opacity: 0.3, textTransform: 'uppercase' }}>
-            {project.category}
-          </span>
+          {project.imageUrl ? (
+            <img
+              src={project.imageUrl}
+              alt={project.title}
+              className="home_project-img"
+              loading="lazy"
+            />
+          ) : (
+            <span style={{ fontSize: '14px', opacity: 0.3, textTransform: 'uppercase' }}>
+              {project.category}
+            </span>
+          )}
         </div>
 
         {/* Bottom: Ticket info with color */}

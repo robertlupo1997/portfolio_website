@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
           </div>
           {/* Dashes GIF */}
           <div className="hero_gif-holder">
-            <img src="./assets/dashes.gif" alt="" className="home_gif dashes" />
+            <img src="./assets/dashes.gif" alt="" className="home_gif dashes" loading="lazy" />
           </div>
         </div>
 

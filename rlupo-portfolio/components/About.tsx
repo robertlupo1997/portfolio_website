@@ -24,7 +24,7 @@ const About: React.FC = () => {
                 at Origin Construction. MIT Professional Certificate in Data Science,
                 B.A. Statistics from University of South Florida.
               </p>
-              <img src="./assets/about-gif.gif" alt="" className="home_gif about-para" />
+              <img src="./assets/about-gif.gif" alt="" className="home_gif about-para" loading="lazy" />
             </div>
           </div>
 
@@ -69,7 +69,7 @@ const About: React.FC = () => {
                 <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
               </h6>
             </div>
-            <img src="./assets/awards-gif.gif" alt="" className="home_gif about_awards" />
+            <img src="./assets/awards-gif.gif" alt="" className="home_gif about_awards" loading="lazy" />
           </div>
         </div>
         </div>
