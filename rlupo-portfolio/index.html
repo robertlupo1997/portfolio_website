@@ -20,9 +20,9 @@
     <!-- Lenis Smooth Scroll (CHRLS uses v0.2.28) -->
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@0.2.28/bundled/lenis.js"></script>
 
-    <!-- GSAP 3.11.4 + ScrollTrigger (exact CHRLS versions) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <!-- GSAP 3.11.4 + ScrollTrigger (local, exact CHRLS versions) -->
+    <script src="./lib/gsap.min.js"></script>
+    <script src="./lib/ScrollTrigger.min.js"></script>
 
     <style>
       /* ============================================
@@ -364,7 +364,7 @@
         padding-top: 0;
         padding-bottom: 0.1em;
         font-family: 'Space Mono', monospace;
-        font-size: 80px;
+        font-size: 121px; /* CHRLS exact value */
         font-weight: 700;
         line-height: 0.6;
       }
@@ -381,15 +381,16 @@
         100% { transform: translateX(-50%); }
       }
 
-      /* 3D Perspective container */
+      /* 3D Perspective container - EXACT CHRLS values */
       .home_project-content {
-        perspective: 1200px; /* Increased to accommodate larger Z values */
+        perspective: 300vw; /* CHRLS exact value */
         flex: none;
         justify-content: center;
         align-items: center;
         width: 100vw;
         height: 100%;
         display: flex;
+        transform: perspective(275px); /* CHRLS exact value */
         transform-style: preserve-3d;
       }
 
@@ -408,58 +409,57 @@
         backface-visibility: hidden;
       }
 
-      /* Static Z-depth positioning - EXACT CHRLS values (240px increments)
-         Note: Actual transform values are set by GSAP ScrollTrigger */
+      /* Static Z-depth positioning - EXACT CHRLS CSS values (5em increments)
+         These serve as fallback; GSAP overrides with px values on scroll */
       .home_project-card._1 {
         z-index: 1;
         transform-style: preserve-3d;
-        /* Z = 5 * -240 = -1200px (furthest back) */
+        transform: translate3d(0%, 0, -25em); /* CHRLS exact */
       }
 
       .home_project-card._2 {
         z-index: 2;
         transform-style: preserve-3d;
-        /* Z = 4 * -240 = -960px */
+        transform: translate3d(0%, 0, -20em); /* CHRLS exact */
       }
 
       .home_project-card._3 {
         z-index: 3;
         transform-style: preserve-3d;
-        /* Z = 3 * -240 = -720px */
+        transform: translate3d(0%, 0, -15em); /* CHRLS exact */
       }
 
       .home_project-card._4 {
         z-index: 4;
         transform-style: preserve-3d;
-        /* Z = 2 * -240 = -480px */
+        transform: translate3d(0%, 0, -10em); /* CHRLS exact */
       }
 
       .home_project-card._5 {
         z-index: 5;
         transform-style: preserve-3d;
-        /* Z = 1 * -240 = -240px */
+        transform: translate3d(0%, 0, -5em); /* CHRLS exact */
       }
 
       .home_project-card._6 {
         z-index: 6;
         transform-style: preserve-3d;
-        /* Z = 0 (front card) */
+        transform: translate3d(0%, 0, 0); /* Front card */
       }
 
       .home_project-contentholder {
         z-index: 0;
-        perspective: 800px; /* Enable perspective for image depth */
+        perspective: 50em; /* CHRLS exact value */
         border: 0.35em solid var(--black);
         border-bottom-style: dotted;
         border-radius: 0.625em 0.625em 0 0;
         justify-content: center;
         align-items: center;
-        height: 280px;
+        height: 80%; /* CHRLS exact value */
         display: flex;
         overflow: hidden;
         background-color: var(--white-smoke);
         transform-style: preserve-3d;
-        backface-visibility: hidden;
       }
 
       .home_project-img {
@@ -468,21 +468,21 @@
         max-width: none;
         object-fit: cover;
         transform-style: preserve-3d;
-        transform: translate3d(0, 0, -80px); /* Push image back in Z-space */
+        transform: translate3d(0, 0, -5em); /* CHRLS exact value */
         transition: transform 0.3s ease;
       }
 
       .home_project-card:hover .home_project-img {
-        transform: translate3d(0, 0, -40px) scale(1.02); /* Subtle forward movement on hover */
+        transform: translate3d(0, 0, -2.5em) scale(1.02); /* Subtle forward movement on hover */
       }
 
       .home_project-contentholder.btm {
         border-top-style: dotted;
+        border-top-color: var(--black);
         border-bottom-style: solid;
-        border-radius: 0 0 0.625em 0.625em;
+        border-radius: 0.62em; /* CHRLS exact */
         align-items: stretch;
-        height: auto;
-        min-height: 140px;
+        height: 20%; /* CHRLS exact value */
         margin-top: -0.5em;
         padding: 1em;
         display: flex;

@@ -1,28 +1,47 @@
 import { useEffect, useRef } from 'react';
 
+declare global {
+  interface Window {
+    gsap: any;
+  }
+}
+
+/**
+ * Mouse parallax effect using GSAP for smooth integration with ScrollTrigger.
+ * Applies subtle rotation to the card container based on mouse position.
+ * Matches CHRLS behavior with very subtle/minimal rotation.
+ */
 export const useMouseParallax = (
   containerRef: React.RefObject<HTMLElement>,
-  intensity: number = 0.6
+  intensity: number = 0.3 // Reduced for subtlety like CHRLS
 ) => {
-  const frameRef = useRef<number>();
+  const isActiveRef = useRef(false);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
+    // Wait for GSAP to load
+    const initParallax = () => {
+      if (typeof window.gsap === 'undefined') {
+        setTimeout(initParallax, 100);
+        return;
       }
 
-      frameRef.current = requestAnimationFrame(() => {
-        const content = container.querySelector('.home_project-content') as HTMLElement;
-        if (!content) return;
+      const gsap = window.gsap;
+      const content = container.querySelector('.home_project-content') as HTMLElement;
+      if (!content) return;
 
+      const handleMouseMove = (e: MouseEvent) => {
         const rect = container.getBoundingClientRect();
 
         // Only apply parallax when container is in view
-        if (rect.top > window.innerHeight || rect.bottom < 0) return;
+        if (rect.top > window.innerHeight || rect.bottom < 0) {
+          isActiveRef.current = false;
+          return;
+        }
+
+        isActiveRef.current = true;
 
         // Calculate mouse position relative to container center
         const centerX = rect.left + rect.width / 2;
@@ -30,32 +49,47 @@ export const useMouseParallax = (
         const mouseX = (e.clientX - centerX) / (rect.width / 2);
         const mouseY = (e.clientY - centerY) / (rect.height / 2);
 
-        // Calculate rotation (reduced intensity for subtlety)
-        const rotateY = mouseX * intensity * 8; // Max ~5 degrees
-        const rotateX = -mouseY * intensity * 6; // Max ~4 degrees
+        // Calculate rotation (very subtle like CHRLS)
+        const rotateY = mouseX * intensity * 5; // Max ~1.5 degrees
+        const rotateX = -mouseY * intensity * 4; // Max ~1.2 degrees
 
-        // Apply smooth transform
-        content.style.transition = 'transform 0.1s ease-out';
-        content.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      });
+        // Use GSAP for smooth animation that works with ScrollTrigger
+        gsap.to(content, {
+          rotateX: rotateX,
+          rotateY: rotateY,
+          duration: 0.3,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      };
+
+      const handleMouseLeave = () => {
+        if (!isActiveRef.current) return;
+
+        // Smoothly return to center
+        gsap.to(content, {
+          rotateX: 0,
+          rotateY: 0,
+          duration: 0.5,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      };
+
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      container.addEventListener('mouseleave', handleMouseLeave);
+
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        container.removeEventListener('mouseleave', handleMouseLeave);
+      };
     };
 
-    const handleMouseLeave = () => {
-      const content = container.querySelector('.home_project-content') as HTMLElement;
-      if (content) {
-        content.style.transition = 'transform 0.5s ease-out';
-        content.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
-      }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    container.addEventListener('mouseleave', handleMouseLeave);
+    const cleanup = initParallax();
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      container.removeEventListener('mouseleave', handleMouseLeave);
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
+      if (typeof cleanup === 'function') {
+        cleanup();
       }
     };
   }, [containerRef, intensity]);

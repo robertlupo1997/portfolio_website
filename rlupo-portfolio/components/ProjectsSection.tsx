@@ -8,8 +8,8 @@ const ProjectsSection: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Mouse parallax effect on wrapper
-  useMouseParallax(wrapperRef, 0.6);
+  // Mouse parallax effect on wrapper (subtle like CHRLS)
+  useMouseParallax(wrapperRef);
 
   // GSAP scroll-triggered card animation
   useGSAPCardAnimation(contentRef, 6);
