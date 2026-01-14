@@ -17,7 +17,7 @@ export const PROJECTS: Project[] = [
     epoch: "AUG 2024",
     metric: "0.97 AUC",
     cardColor: "coral",
-    imageUrl: "./assets/project-1.jpg"
+    imageUrl: "./assets/project-1.gif"
   },
   {
     id: "obj-detect",
