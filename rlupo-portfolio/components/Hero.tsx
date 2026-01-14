@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLayeredParallax } from '../hooks/useLayeredParallax';
+import MagneticText from './MagneticText';
 
 const Hero: React.FC = () => {
   const [time, setTime] = useState('');
