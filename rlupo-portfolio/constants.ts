@@ -27,7 +27,7 @@ export const PROJECTS: Project[] = [
     epoch: "AUG 2024",
     metric: "265-490ms/img",
     cardColor: "cyan",
-    imageUrl: "./assets/project-2.webp"
+    imageUrl: "./assets/data-globe.jpg"
   },
   {
     id: "amazon-rec",
@@ -37,7 +37,7 @@ export const PROJECTS: Project[] = [
     epoch: "DEC 2024",
     metric: "MIT 100%",
     cardColor: "green",
-    imageUrl: "./assets/project-3.webp"
+    imageUrl: "./assets/network-abstract.jpg"
   },
   {
     id: "foodhub",
@@ -47,7 +47,7 @@ export const PROJECTS: Project[] = [
     epoch: "OCT 2024",
     metric: "MIT IDSS",
     cardColor: "yellow",
-    imageUrl: "./assets/project-4.webp"
+    imageUrl: "./assets/geometric-tech.jpg"
   },
   {
     id: "shinkansen",
@@ -57,7 +57,7 @@ export const PROJECTS: Project[] = [
     epoch: "JAN 2025",
     metric: "MIT IDSS",
     cardColor: "light-cyan",
-    imageUrl: "./assets/project-5.webp"
+    imageUrl: "./assets/abstract-lines.jpg"
   },
   {
     id: "life-expectancy",
@@ -67,6 +67,6 @@ export const PROJECTS: Project[] = [
     epoch: "JUL 2024",
     metric: "Regression",
     cardColor: "coral",
-    imageUrl: "./assets/project-6.webp"
+    imageUrl: "./assets/dna-helix.jpg"
   }
 ];
