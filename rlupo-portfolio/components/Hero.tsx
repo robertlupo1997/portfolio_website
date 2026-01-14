@@ -1,7 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLayeredParallax } from '../hooks/useLayeredParallax';
+import MagneticText from './MagneticText';
 
 const Hero: React.FC = () => {
   const [time, setTime] = useState('');
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Zajno-style layered parallax
+  // Speed: <1 = slow (background), >1 = fast (foreground)
+  useLayeredParallax(heroRef, [
+    { selector: '.hero_title-holder', speed: 0.3, maxOffset: 8 },    // Slowest - feels far back
+    { selector: '.hero_label-wrapper', speed: 0.6, maxOffset: 12 },  // Middle layer
+    { selector: '.hero_barcode-bar', speed: 1.0, maxOffset: 18 },    // Fastest - feels close
+  ]);
 
   useEffect(() => {
     const updateTime = () => {
@@ -18,7 +29,7 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section className="section hero">
+    <section ref={heroRef} className="section hero">
       {/* Giant Title */}
       <div className="hero_title-holder">
         <h1 className="hero_title">TREY</h1>
@@ -56,14 +67,18 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Column 3: Barcode and time */}
-        <div className="hero_label-col last">
-          <div className="barcode_group">
-            <h3 className="barcode_avail">AVLB : 2025</h3>
-            <img src="./assets/barcode.svg" alt="" className="barcode center" />
-            <h3 className="barcode_time">OPEN TO WORK</h3>
-          </div>
-          <h3 className="barcode_time" id="clock">{time}</h3>
+      </div>
+
+      {/* Barcode bar below orange section */}
+      <div className="hero_barcode-bar">
+        <div className="barcode_group">
+          <img src="./assets/barcode.svg" alt="" className="barcode" />
+          <span className="barcode_avail">AVLB : 2025(MMXXV)</span>
+          <img src="./assets/barcode.svg" alt="" className="barcode center" />
+          <span className="barcode_status">OPEN TO WORK</span>
+          <img src="./assets/barcode.svg" alt="" className="barcode center" />
+          <span className="barcode_time" id="clock">{time}</span>
+          <img src="./assets/barcode.svg" alt="" className="barcode" />
         </div>
       </div>
     </section>
