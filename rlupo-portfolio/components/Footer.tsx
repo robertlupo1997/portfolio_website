@@ -1,4 +1,5 @@
 import React from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import { PERSONAL_INFO } from '../constants';
 
 const Footer: React.FC = () => {
@@ -8,8 +9,8 @@ const Footer: React.FC = () => {
       <div className="footer_group">
         <div className="footer_email-wrapper">
           <div className="footer_hello-holder">
-            <h2 className="footer_hello">Say hello</h2>
-            <img src="./assets/wave.svg" alt="" className="footer_helloicon" />
+            <span className="footer_hello">Let's work together</span>
+            <ArrowUpRight className="footer_arrow" size={32} strokeWidth={2} />
           </div>
           <a href={`mailto:${PERSONAL_INFO.email}`} className="footer_email">
             {PERSONAL_INFO.email}
@@ -19,10 +20,12 @@ const Footer: React.FC = () => {
           <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer" className="footer_social">
             GitHub
           </a>
+          <span className="footer_social-divider">/</span>
           <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="footer_social">
             LinkedIn
           </a>
-          <a href={PERSONAL_INFO.huggingface} target="_blank" rel="noopener noreferrer" className="footer_social last">
+          <span className="footer_social-divider">/</span>
+          <a href={PERSONAL_INFO.huggingface} target="_blank" rel="noopener noreferrer" className="footer_social">
             HuggingFace
           </a>
         </div>
@@ -35,10 +38,12 @@ const Footer: React.FC = () => {
         <h1 className="footer_title">ML</h1>
       </div>
 
-      {/* Copyright and attribution */}
-      <div className="footer_copyright">©2025 Robert Lupo</div>
-      <div className="footer_attribution">
-        Design inspired by <a href="https://chrls.design" target="_blank" rel="noopener noreferrer">CHRLS.DSGN</a>
+      {/* Bottom row - Copyright and Social */}
+      <div className="footer_bottom">
+        <div className="footer_copyright">©2025 Robert Lupo</div>
+        <div className="footer_attribution">
+          Design inspired by <a href="https://chrls.design" target="_blank" rel="noopener noreferrer">CHRLS.DSGN</a>
+        </div>
       </div>
     </section>
   );

@@ -12,75 +12,45 @@ interface PreloaderProps {
 
 const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
+  const [isExiting, setIsExiting] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const preloaderRef = useRef<HTMLDivElement>(null);
-  const counterRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const exitAnimationTriggered = useRef(false);
+  const hasCompletedRef = useRef(false);
 
   useEffect(() => {
-    // Track animation state to prevent double-trigger in StrictMode
-    let animationFrameId: number;
-    let timeoutId: ReturnType<typeof setTimeout>;
-    let isCancelled = false;
-
-    // Simulate loading progress with easing (faster at start, slower near end)
-    let currentProgress = 0;
-    const duration = 2500; // Total duration in ms
+    const duration = 2500;
     const startTime = Date.now();
 
     const updateProgress = () => {
-      if (isCancelled) return;
-
       const elapsed = Date.now() - startTime;
       const t = Math.min(elapsed / duration, 1);
-
-      // Easing function: starts fast, slows down at end
       const eased = 1 - Math.pow(1 - t, 3);
-      currentProgress = Math.round(eased * 100);
+      const currentProgress = Math.round(eased * 100);
 
       setProgress(currentProgress);
 
       if (t < 1) {
-        animationFrameId = requestAnimationFrame(updateProgress);
-      } else {
-        // Loading complete - trigger exit animation
-        timeoutId = setTimeout(triggerExitAnimation, 200);
+        requestAnimationFrame(updateProgress);
+      } else if (!hasCompletedRef.current) {
+        hasCompletedRef.current = true;
+        // Trigger exit via state change
+        setTimeout(() => setIsExiting(true), 200);
       }
     };
 
-    animationFrameId = requestAnimationFrame(updateProgress);
-
-    // Cleanup function to prevent double-animation in StrictMode
-    return () => {
-      isCancelled = true;
-      cancelAnimationFrame(animationFrameId);
-      clearTimeout(timeoutId);
-    };
+    requestAnimationFrame(updateProgress);
   }, []);
 
-  const triggerExitAnimation = () => {
-    // Prevent double-trigger in StrictMode
-    if (exitAnimationTriggered.current) return;
-    exitAnimationTriggered.current = true;
-
-    // Try GSAP animation, fallback to CSS transition if issues
-    if (window.gsap && preloaderRef.current) {
-      window.gsap.to(preloaderRef.current, {
-        yPercent: -100,
-        duration: 0.8,
-        ease: 'power3.inOut',
-        onComplete: () => {
-          setIsVisible(false);
-          onComplete?.();
-        }
-      });
-    } else {
-      // Fallback - just hide
-      setIsVisible(false);
-      onComplete?.();
+  // Handle exit animation completion
+  useEffect(() => {
+    if (isExiting) {
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        onComplete?.();
+      }, 800); // Match CSS transition duration
+      return () => clearTimeout(timer);
     }
-  };
+  }, [isExiting, onComplete]);
 
   if (!isVisible) return null;
 
@@ -90,12 +60,13 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       className="preloader"
       style={{
         backgroundColor: 'var(--black)',
-        zIndex: 9999
+        zIndex: 9999,
+        transform: isExiting ? 'translateY(-100%)' : 'translateY(0)',
+        transition: 'transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)'
       }}
     >
       {/* Logo in top-left */}
       <div
-        ref={logoRef}
         className="preloader_logo"
         style={{
           position: 'absolute',
@@ -112,7 +83,6 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
       {/* Counter in bottom-right */}
       <div
-        ref={counterRef}
         className="preloader_num"
         style={{
           color: 'var(--white-smoke)',
