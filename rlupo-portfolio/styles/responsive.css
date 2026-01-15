@@ -42,7 +42,9 @@
   .home_project-contentholder { height: 200px; }
   .home_about-wrapper { padding: 2em; }
   .home_about-container { grid-template-columns: 1fr; }
-  .footer_hello, .footer_email { font-size: 5vw; }
+  .footer_hello { font-size: 1.2rem; }
+  .footer_email { font-size: 5vw; }
+  .footer_bottom { flex-direction: column; gap: 0.5em; align-items: flex-start; }
   .nav_hello { display: none; }
   .project_cursor, .cursor_pad { display: none; }
 }
@@ -62,8 +64,10 @@
   }
   .home_project-content { grid-template-columns: 1fr; padding: 2em 1em; }
   .home_project-contentholder { height: 180px; }
-  .footer_group { flex-direction: column; gap: 2em; }
-  .footer_social-handle { flex-direction: row; flex-wrap: wrap; gap: 1em; }
+  .footer_group { flex-direction: column; gap: 2em; align-items: flex-start; }
+  .footer_social-handle { flex-direction: row; flex-wrap: wrap; gap: 0.5em; justify-content: flex-start; }
+  .footer_email { font-size: 7vw; }
+  .footer_arrow { width: 24px; height: 24px; }
 }
 
 /* Mobile Portrait */
