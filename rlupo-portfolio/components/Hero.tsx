@@ -39,9 +39,18 @@ const Hero: React.FC = () => {
 
       {/* Orange Info Box - 3 columns */}
       <div className="hero_label-wrapper">
-        {/* Column 1: Photo hole with GIF */}
+        {/* Column 1: Photo hole with video */}
         <div className="hero_label-col hole">
-          <img src="./assets/hero-gif.gif" alt="" className="home_gif hero" />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="home_gif hero"
+          >
+            <source src="./assets/hero.webm" type="video/webm" />
+            <source src="./assets/hero.mp4" type="video/mp4" />
+          </video>
         </div>
 
         {/* Column 2: Main info */}

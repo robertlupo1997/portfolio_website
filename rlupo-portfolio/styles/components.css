@@ -1,0 +1,218 @@
+/* ============================================
+   COMPONENT STYLES - Reusable Elements
+   ============================================ */
+
+/* Barcode Elements */
+.barcode {
+  flex: none;
+  height: 1.5rem;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.barcode.center {
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+  padding: 0.15em;
+}
+
+.barcode_avail, .barcode_time {
+  flex: none;
+  padding-bottom: 0.2em;
+  font-family: 'Space Mono', monospace;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 0.8;
+  text-transform: uppercase;
+}
+
+.barcode_holder {
+  justify-content: center;
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.barcode_group {
+  flex: none;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  display: flex;
+}
+
+/* Hero barcode bar - below orange section */
+.hero_barcode-bar {
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.hero_barcode-bar .barcode {
+  flex: none;
+  height: 1.5em;
+  margin: 0 0.4em;
+}
+
+.hero_barcode-bar .barcode_group {
+  display: flex;
+  align-items: center;
+  margin: 0.5em 0;
+}
+
+.hero_barcode-bar .barcode.center {
+  height: 1.3em;
+  margin: 0 0.4em;
+  padding: 0.1em;
+}
+
+.hero_barcode-bar .barcode_avail,
+.hero_barcode-bar .barcode_status,
+.hero_barcode-bar .barcode_time {
+  font-family: 'Space Mono', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 0.8;
+  padding-bottom: 0.15em;
+  text-transform: uppercase;
+  flex: none;
+}
+
+/* ============================================
+   GIF STYLING
+   ============================================ */
+
+.home_gif {
+  mix-blend-mode: darken;
+  margin-top: auto;
+}
+
+.home_gif.about-para {
+  width: 20.5em;
+  max-width: 100%;
+}
+
+.home_gif.about_awards {
+  width: 8.875em;
+  margin-top: 1em;
+}
+
+/* Hero GIF in photo hole */
+.home_gif.hero {
+  padding-bottom: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+/* Dashes GIF holder */
+.hero_gif-holder {
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 1.5em;
+  display: flex;
+  margin-top: 0.5em;
+}
+
+.home_gif.dashes {
+  height: 100%;
+  margin-right: 1em;
+  padding: 0;
+  display: block;
+  mix-blend-mode: darken;
+}
+
+/* ============================================
+   PRELOADER
+   ============================================ */
+
+.preloader {
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  position: fixed;
+  inset: 0%;
+  overflow: hidden;
+  background-color: var(--white-smoke);
+}
+
+.preloader_num {
+  color: var(--black);
+  font-family: 'Space Mono', monospace;
+  font-size: 32px;
+  font-weight: 700;
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+  overflow: hidden;
+}
+
+.preloader_bar {
+  background-color: var(--black);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  transform-origin: left;
+  transition: transform 0.1s ease-out;
+}
+
+.preloader_span {
+  display: inline-block;
+}
+
+/* ============================================
+   CUSTOM CURSOR
+   ============================================ */
+
+.project_cursor {
+  z-index: 99998;
+  background-color: var(--spring-green);
+  border-radius: 50%;
+  width: 6em;
+  height: 6em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  mix-blend-mode: difference;
+}
+
+.cursor_pad {
+  mix-blend-mode: difference;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  inset: 0%;
+  pointer-events: none;
+  z-index: 99997;
+}
+
+/* ============================================
+   NOISE OVERLAY
+   ============================================ */
+
+.noise {
+  z-index: 99999;
+  background-image: url('/assets/grain.gif');
+  background-position: 50%;
+  background-repeat: repeat;
+  background-size: auto;
+  background-attachment: scroll;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  inset: 0%;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+}
