@@ -1,77 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
 const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setCurrentTime(now.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-        timeZone: 'America/New_York'
-      }));
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
     };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navLinks = [
+    { href: '#projects', label: 'Projects' },
+    { href: '#about', label: 'About' },
+    { href: '#contact', label: 'Contact' },
+    { href: '/resume.pdf', label: 'Resume', external: true },
+  ];
+
   return (
-    <>
-      <nav className="nav">
-        {/* Logo */}
-        <a href="#" className="nav_logo">
-          <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
-            <rect x="4" y="4" width="18" height="18" fill="#0f0f0f" />
-            <rect x="28" y="4" width="18" height="18" fill="#ff6d1b" />
-            <rect x="4" y="28" width="18" height="18" fill="#ff6d1b" />
-            <rect x="28" y="28" width="18" height="18" fill="#0f0f0f" />
-          </svg>
-        </a>
+    <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
+      <a href="#hero" className="header-logo">
+        TREY.ML
+      </a>
 
-        {/* Nav group with Say Hello - CHRLS order */}
-        <div className="nav_group">
-          <div className="nav_hello">
-            <span>Say hello</span>
-            <a href="mailto:treylupo1197@gmail.com">treylupo1197@gmail.com</a>
-          </div>
-          <a href="#work" className="nav_link">WORK</a>
-        </div>
-
-        {/* Center barcode with time */}
-        <div className="barcode_holder">
-          <h3 className="barcode_avail">{currentTime}</h3>
-          <img src="./assets/barcode.svg" alt="" className="barcode center" />
-          <h3 className="barcode_time">EST</h3>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="nav_mobile-btn"
-          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+      <nav className="header-nav">
+        {navLinks.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            className="header-nav-link"
+            {...(link.external && {
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            })}
+          >
+            {link.label}
+          </a>
+        ))}
       </nav>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="nav_mobile-menu">
-          <a href="#work" onClick={() => setIsMenuOpen(false)} className="nav_mobile-link">Work</a>
-          <a href="#about" onClick={() => setIsMenuOpen(false)} className="nav_mobile-link">About</a>
-          <a href="mailto:treylupo1197@gmail.com" onClick={() => setIsMenuOpen(false)} className="nav_mobile-link">Contact</a>
-          <div className="nav_mobile-info">
-            <p>{currentTime} EST</p>
-            <p>AVAILABLE FOR WORK</p>
-          </div>
-        </div>
-      )}
-    </>
+    </header>
   );
 };
 

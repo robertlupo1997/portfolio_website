@@ -1,51 +1,63 @@
-import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import React, { useState } from 'react';
 import { PERSONAL_INFO } from '../constants';
 
 const Footer: React.FC = () => {
+  const [copied, setCopied] = useState(false);
+  const currentYear = new Date().getFullYear();
+
+  const handleEmailClick = async () => {
+    try {
+      await navigator.clipboard.writeText(PERSONAL_INFO.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Fallback to mailto
+      window.location.href = `mailto:${PERSONAL_INFO.email}`;
+    }
+  };
+
+  const socialLinks = [
+    { href: PERSONAL_INFO.github, label: 'GitHub' },
+    { href: PERSONAL_INFO.linkedin, label: 'LinkedIn' },
+    { href: PERSONAL_INFO.huggingface, label: 'HuggingFace' },
+    { href: '/resume.pdf', label: 'Resume' },
+  ];
+
   return (
-    <section className="section footer">
-      {/* Top section - Contact */}
-      <div className="footer_group">
-        <div className="footer_email-wrapper">
-          <div className="footer_hello-holder">
-            <span className="footer_hello">Let's work together</span>
-            <ArrowUpRight className="footer_arrow" size={32} strokeWidth={2} />
-          </div>
-          <a href={`mailto:${PERSONAL_INFO.email}`} className="footer_email">
-            {PERSONAL_INFO.email}
-          </a>
-        </div>
-        <div className="footer_social-handle">
-          <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer" className="footer_social">
-            GitHub
-          </a>
-          <span className="footer_social-divider">/</span>
-          <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="footer_social">
-            LinkedIn
-          </a>
-          <span className="footer_social-divider">/</span>
-          <a href={PERSONAL_INFO.huggingface} target="_blank" rel="noopener noreferrer" className="footer_social">
-            HuggingFace
-          </a>
-        </div>
-      </div>
+    <footer className="footer" id="contact">
+      <div className="footer-content">
+        <h2 className="footer-headline">
+          LET'S<br />CONNECT
+        </h2>
 
-      {/* Giant brand text */}
-      <div className="footer_title-holder">
-        <h1 className="footer_title">TREY</h1>
-        <div className="footer_splitter dot"></div>
-        <h1 className="footer_title">ML</h1>
-      </div>
+        <button
+          className="footer-email"
+          onClick={handleEmailClick}
+          type="button"
+          title={copied ? 'Copied!' : 'Click to copy email'}
+        >
+          {copied ? 'Copied!' : PERSONAL_INFO.email}
+        </button>
 
-      {/* Bottom row - Copyright and Social */}
-      <div className="footer_bottom">
-        <div className="footer_copyright">©2025 Robert Lupo</div>
-        <div className="footer_attribution">
-          Design inspired by <a href="https://chrls.design" target="_blank" rel="noopener noreferrer">CHRLS.DSGN</a>
+        <div className="footer-links">
+          {socialLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-link"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
+
+        <p className="footer-copyright">
+          &copy; {currentYear} Trey Lupo
+        </p>
       </div>
-    </section>
+    </footer>
   );
 };
 

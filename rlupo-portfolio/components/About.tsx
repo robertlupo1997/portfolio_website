@@ -1,77 +1,61 @@
 import React from 'react';
-import { PERSONAL_INFO } from '../constants';
+
+const SKILLS = [
+  'Python',
+  'R',
+  'SQL',
+  'Machine Learning',
+  'XGBoost',
+  'Scikit-learn',
+  'Pandas',
+  'NumPy',
+  'TensorFlow',
+  'Claude Code',
+  'FastAPI',
+  'React',
+  'TypeScript',
+];
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="section about">
-      <div className="home_about-wrapper">
-        {/* Black background */}
-        <div className="home_about-bg"></div>
+    <section className="about" id="about">
+      <div className="about-header">
+        <h2 className="about-title">ABOUT</h2>
+      </div>
 
-        <div className="home_about-container">
-          {/* Left column - Big text and info box */}
-          <div className="home_about-col">
-            <div className="home_about-titleholder">
-              <div className="home_about-bigtextholder">
-                ML ENGINEER & DATA SCIENTIST. PRODUCTION FOCUSED.
-              </div>
-            </div>
-            <div className="home_about-intholder">
-              <h2>ABOUT</h2>
-              <p className="home_about-para">
-                Robert "Trey" Lupo builds production ML systems with calibrated outputs.
-                Currently FP&A Analyst at Franklin Street Properties, previously AI Engineering
-                at Origin Construction. MIT Professional Certificate in Data Science,
-                B.A. Statistics from University of South Florida.
-              </p>
-              <img src="./assets/about-gif.gif" alt="" className="home_gif about-para" loading="lazy" />
-            </div>
-          </div>
+      <div className="about-grid">
+        <div className="about-content">
+          <p className="about-statement">
+            I turn data into products that actually work.
+          </p>
 
-          {/* Right column - Orange box with credentials */}
-          <div className="home_about-col about-box">
-          <div className="home_about-awardcol">
-            <div className="award_group">
-              <h5 className="about_awards title">Benchmarks</h5>
-              <h6 className="about_awards">0.97 AUC - KKBOX Churn</h6>
-              <h6 className="about_awards">265-490ms - OVOD Inference</h6>
-              <h6 className="about_awards">135+ Engineered Features</h6>
+          <p className="about-bio">
+            Data Scientist with a B.A. in Statistics from USF. Currently in corporate FP&A
+            at Franklin Street, previously built AI agent prototypes at ORIGIN Construction
+            using Claude Code and FastAPI. I focus on predictive modeling, recommendation
+            systems, and bringing ML from notebook to production.
+          </p>
+
+          <div className="skills">
+            <h3 className="skills-title">Tech Stack</h3>
+            <div className="skills-grid">
+              {SKILLS.map((skill) => (
+                <span key={skill} className="skill-tag">
+                  {skill}
+                </span>
+              ))}
             </div>
-            <div className="award_group">
-              <h5 className="about_awards title">Education</h5>
-              <h6 className="about_awards">MIT Data Science Certificate</h6>
-              <h6 className="about_awards">B.A. Statistics, USF</h6>
-            </div>
-          </div>
-          <div className="home_about-awardcol btm">
-            <div className="award_group">
-              <h5 className="about_awards title">Stack</h5>
-              <h6 className="about_awards">Python</h6>
-              <h6 className="about_awards">XGBoost / LightGBM</h6>
-              <h6 className="about_awards">FastAPI / React</h6>
-              <h6 className="about_awards">SHAP / DuckDB</h6>
-            </div>
-            <div className="award_group">
-              <h5 className="about_awards title">Deploy</h5>
-              <h6 className="about_awards">HuggingFace Spaces</h6>
-              <h6 className="about_awards">Docker</h6>
-              <h6 className="about_awards">Vercel</h6>
-            </div>
-            <div className="award_group">
-              <h5 className="about_awards title">Contact</h5>
-              <h6 className="about_awards">
-                <a href={`mailto:${PERSONAL_INFO.email}`}>{PERSONAL_INFO.email}</a>
-              </h6>
-              <h6 className="about_awards">
-                <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-              </h6>
-              <h6 className="about_awards">
-                <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              </h6>
-            </div>
-            <img src="./assets/awards-gif.gif" alt="" className="home_gif about_awards" loading="lazy" />
           </div>
         </div>
+
+        <div className="about-visual">
+          <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="60" stroke="currentColor" strokeWidth="0.5" opacity="0.2" />
+            <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="0.5" opacity="0.15" />
+            <circle cx="100" cy="100" r="40" stroke="currentColor" strokeWidth="0.5" opacity="0.25" />
+            <line x1="40" y1="100" x2="160" y2="100" stroke="currentColor" strokeWidth="0.5" opacity="0.1" />
+            <line x1="100" y1="40" x2="100" y2="160" stroke="currentColor" strokeWidth="0.5" opacity="0.1" />
+          </svg>
         </div>
       </div>
     </section>

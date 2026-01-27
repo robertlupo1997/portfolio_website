@@ -1,89 +1,67 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Project } from '../types';
-import DemoModal from './DemoModal';
 
 interface ProjectCardProps {
   project: Project;
   index: number;
-  cardNumber?: number; // 1-6 for CSS stacking classes
 }
 
-const colorClassMap: Record<string, string> = {
-  coral: 'orange',
-  cyan: 'cyan',
-  green: 'green',
-  yellow: 'yellow',
-  'light-cyan': 'blue',
-};
+const ArrowIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 12L12 4M12 4H6M12 4V10" />
+  </svg>
+);
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, cardNumber }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const colorClass = colorClassMap[project.cardColor] || 'orange';
-  const stackClass = cardNumber ? `_${cardNumber}` : '';
+const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
+  const projectNumber = String(index + 1).padStart(2, '0');
 
   return (
-    <>
-      <a
-        href={project.githubUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`home_project-card ${stackClass}`}
-        onClick={(e) => {
-          if (project.liveUrl) {
-            e.preventDefault();
-            setIsModalOpen(true);
-          }
-        }}
-      >
-        {/* Top: Image/Preview area */}
-        <div className="home_project-contentholder">
-          {project.imageUrl ? (
-            <img
-              src={project.imageUrl}
-              alt={project.title}
-              className="home_project-img"
-              loading="lazy"
-            />
-          ) : (
-            <span style={{ fontSize: '14px', opacity: 0.3, textTransform: 'uppercase' }}>
-              {project.category}
-            </span>
+    <article className="project-card">
+      {/* Abstract visual placeholder */}
+      <div className="project-card-image">
+        <div className="project-card-visual">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="20" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
+            <circle cx="70" cy="70" r="25" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
+            <line x1="30" y1="30" x2="70" y2="70" stroke="currentColor" strokeWidth="0.5" opacity="0.2" />
+            <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="0.5" opacity="0.15" />
+          </svg>
+        </div>
+      </div>
+
+      <div className="project-card-content">
+        <span className="project-card-number">{projectNumber}</span>
+
+        <h3 className="project-card-title">{project.title}</h3>
+
+        {project.metric && (
+          <span className="project-card-meta">{project.metric}</span>
+        )}
+
+        <div className="project-card-links">
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="project-card-link"
+          >
+            GitHub
+            <ArrowIcon />
+          </a>
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-card-link"
+            >
+              Live Demo
+              <ArrowIcon />
+            </a>
           )}
         </div>
-
-        {/* Bottom: Ticket info with color */}
-        <div className={`home_project-contentholder btm ${colorClass}`}>
-          <div className="home_project-descholder">
-            <h4 className="home_project-title">{project.title}</h4>
-            <div className="home_project-group flex">
-              <div>
-                <h6>EPOCH:</h6>
-                <h5>{project.epoch}</h5>
-              </div>
-              {project.metric && (
-                <div>
-                  <h6>METRIC:</h6>
-                  <h5>{project.metric}</h5>
-                </div>
-              )}
-              <img src="./assets/qr.svg" alt="" className="home_project-qr" />
-            </div>
-          </div>
-          <div className="home_project-descholder right-wing">
-            <img src="./assets/braille.svg" alt="" className="home_project-braille" />
-          </div>
-        </div>
-      </a>
-
-      {project.liveUrl && (
-        <DemoModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          url={project.liveUrl}
-          title={project.title}
-        />
-      )}
-    </>
+      </div>
+    </article>
   );
 };
 

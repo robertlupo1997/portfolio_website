@@ -10,6 +10,9 @@ const CustomCursor: React.FC = () => {
     // Check if touch device
     if ('ontouchstart' in window) return;
 
+    // Add body class to hide default cursor
+    document.body.classList.add('custom-cursor-active');
+
     const cursor = cursorRef.current;
     if (!cursor) return;
 
@@ -22,11 +25,11 @@ const CustomCursor: React.FC = () => {
     const animate = () => {
       if (!running) return;
 
-      // Smooth follow with lerp
       currentX = lerp(currentX, targetX, 0.15);
       currentY = lerp(currentY, targetY, 0.15);
 
-      cursor.style.transform = `translate(${currentX}px, ${currentY}px)`;
+      cursor.style.left = `${currentX}px`;
+      cursor.style.top = `${currentY}px`;
 
       requestAnimationFrame(animate);
     };
@@ -39,18 +42,15 @@ const CustomCursor: React.FC = () => {
 
     const handleMouseLeave = () => setIsVisible(false);
     const handleMouseEnter = () => setIsVisible(true);
-
     const handleMouseDown = () => setIsPressed(true);
     const handleMouseUp = () => setIsPressed(false);
 
-    // Check if hovering over interactive elements
     const handleElementHover = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const interactive = target.closest('a, button, [role="button"], input, textarea, select, .magnetic-text, .project_card, .nav_link, .header_cta');
+      const interactive = target.closest('a, button, [role="button"], input, textarea, select, [data-cursor]');
       setIsHovering(!!interactive);
     };
 
-    // Start animation loop
     requestAnimationFrame(animate);
 
     document.addEventListener('mousemove', handleMouseMove, { passive: true });
@@ -62,6 +62,7 @@ const CustomCursor: React.FC = () => {
 
     return () => {
       running = false;
+      document.body.classList.remove('custom-cursor-active');
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mousemove', handleElementHover);
       document.removeEventListener('mouseleave', handleMouseLeave);
@@ -75,20 +76,17 @@ const CustomCursor: React.FC = () => {
   if (typeof window !== 'undefined' && 'ontouchstart' in window) return null;
 
   const cursorClasses = [
-    'cb-cursor',
-    isHovering ? 'cb-hover' : '',
-    isPressed ? 'cb-pressed' : ''
+    'custom-cursor',
+    isHovering ? 'cursor-hover' : '',
+    isPressed ? 'cursor-click' : ''
   ].filter(Boolean).join(' ');
 
   return (
-    <>
-      <div className="cursor_pad" />
-      <div
-        ref={cursorRef}
-        className={cursorClasses}
-        style={{ opacity: isVisible ? 1 : 0 }}
-      />
-    </>
+    <div
+      ref={cursorRef}
+      className={cursorClasses}
+      style={{ opacity: isVisible ? 1 : 0 }}
+    />
   );
 };
 
