@@ -439,14 +439,14 @@ body.custom-cursor-active [data-cursor] {
   }
 }
 
-/* ----- PROJECTS SECTION ----- */
+/* ----- PROJECTS SECTION (Horizontal Scroll) ----- */
 .projects {
-  padding: var(--space-section) 0;
+  /* No padding - handled by inner elements */
+  overflow: hidden;
 }
 
 .projects-header {
-  padding: 0 var(--container-padding);
-  margin-bottom: var(--space-3xl);
+  padding: var(--space-section) var(--container-padding) var(--space-2xl);
 }
 
 .projects-title {
@@ -459,15 +459,9 @@ body.custom-cursor-active [data-cursor] {
   display: flex;
   gap: var(--space-xl);
   padding: 0 var(--container-padding);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.projects-scroll::-webkit-scrollbar {
-  display: none;
+  padding-right: calc(100vw - 380px - var(--container-padding));
+  /* Remove old scroll styles - GSAP handles horizontal movement */
+  overflow: visible;
 }
 
 /* ----- PROJECT CARD ----- */
@@ -502,38 +496,34 @@ body.custom-cursor-active [data-cursor] {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--transition-slow);
+  transition: transform var(--transition-slow), filter var(--transition-slow);
+  filter: brightness(0.7) saturate(0.8);
 }
 
 .project-card:hover .project-card-image img {
   transform: scale(1.05);
+  filter: brightness(0.8) saturate(1);
 }
 
-/* Abstract visual placeholder */
-.project-card-visual {
-  width: 100%;
-  height: 100%;
+.project-card-overlay {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
-  position: relative;
-  overflow: hidden;
+  pointer-events: none;
 }
 
-.project-card-visual::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 30% 40%, var(--accent-blue) 0%, transparent 50%),
-              radial-gradient(circle at 70% 60%, var(--accent-teal) 0%, transparent 50%);
-  opacity: 0.15;
+.project-overlay {
+  width: 70%;
+  height: 70%;
+  opacity: 0.8;
+  transition: opacity var(--transition-base), transform var(--transition-base);
 }
 
-.project-card-visual svg {
-  width: 60%;
-  height: 60%;
-  opacity: 0.3;
+.project-card:hover .project-overlay {
+  opacity: 1;
+  transform: scale(1.05);
 }
 
 .project-card-content {
@@ -811,6 +801,78 @@ body.custom-cursor-active [data-cursor] {
 .stagger-children.in-view > *:nth-child(9) { animation: fadeUp 0.6s var(--ease-out) 400ms forwards; }
 .stagger-children.in-view > *:nth-child(10) { animation: fadeUp 0.6s var(--ease-out) 450ms forwards; }
 
+/* ----- HAMBURGER MENU ----- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: calc(var(--z-nav) + 10);
+}
+
+.hamburger-line {
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-primary);
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.hamburger.open .hamburger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open .hamburger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile nav overlay */
+.mobile-nav-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg-primary);
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+
+.mobile-nav-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.mobile-nav a {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color var(--transition-fast);
+}
+
+.mobile-nav a:hover {
+  color: var(--accent-blue);
+}
+
 /* ----- RESPONSIVE ----- */
 @media (max-width: 1024px) {
   .about-grid {
@@ -829,8 +891,12 @@ body.custom-cursor-active [data-cursor] {
     --text-section: clamp(1.75rem, 6vw, 3rem);
   }
 
-  .header-nav {
+  .header-nav-desktop {
     display: none;
+  }
+
+  .hamburger {
+    display: flex;
   }
 
   .project-card {
