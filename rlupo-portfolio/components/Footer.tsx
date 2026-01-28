@@ -1,11 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { PERSONAL_INFO } from '../constants';
 
 const Footer: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const currentYear = new Date().getFullYear();
-  const footerRef = useRef<HTMLElement>(null);
-  const textRef = useRef<SVGTextElement>(null);
 
   const handleEmailClick = async () => {
     try {
@@ -13,27 +11,9 @@ const Footer: React.FC = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback to mailto
       window.location.href = `mailto:${PERSONAL_INFO.email}`;
     }
   };
-
-  // Resize text to fit viewport
-  useEffect(() => {
-    const resizeText = () => {
-      if (textRef.current && footerRef.current) {
-        const containerWidth = footerRef.current.offsetWidth;
-        const textBBox = textRef.current.getBBox();
-        const scaleFactor = (containerWidth - 48) / textBBox.width; // 48px for padding
-        textRef.current.style.transform = `scale(${scaleFactor})`;
-        textRef.current.style.transformOrigin = 'left center';
-      }
-    };
-
-    resizeText();
-    window.addEventListener('resize', resizeText);
-    return () => window.removeEventListener('resize', resizeText);
-  }, []);
 
   const socialLinks = [
     { href: PERSONAL_INFO.github, label: 'GitHub' },
@@ -42,21 +22,10 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="footer-giant" id="contact" ref={footerRef}>
+    <footer className="footer-giant" id="contact">
       {/* Giant name spanning viewport */}
       <div className="footer-giant-name">
-        <svg className="footer-name-svg" viewBox="0 0 1000 120" preserveAspectRatio="xMinYMid meet">
-          <text
-            ref={textRef}
-            x="0"
-            y="95"
-            className="footer-name-text"
-            fill="var(--text-primary)"
-            style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '110px', letterSpacing: '-0.03em' }}
-          >
-            TREY LUPO
-          </text>
-        </svg>
+        <span className="footer-name-text">TREY LUPO</span>
       </div>
 
       {/* Bottom bar */}

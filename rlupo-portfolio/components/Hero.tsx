@@ -5,18 +5,12 @@ const Hero: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Trigger animations after mount with slight delay
     const timer = setTimeout(() => setIsLoaded(true), 100);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <section className="hero" id="hero">
-      {/* Location tag at top left */}
-      <span className={`hero-location ${isLoaded ? 'animate' : ''}`} style={{ animationDelay: '0.4s' }}>
-        TAMPA, FL
-      </span>
-
       {/* Main content - bottom aligned */}
       <div className="hero-content">
         <h1 className="hero-name">
@@ -25,8 +19,9 @@ const Hero: React.FC = () => {
               <TextScramble
                 text="TREY"
                 triggerOnView={false}
-                duration={1000}
-                delay={200}
+                triggerOnHover={true}
+                duration={800}
+                delay={300}
               />
             </span>
           </span>
@@ -35,8 +30,9 @@ const Hero: React.FC = () => {
               <TextScramble
                 text="LUPO"
                 triggerOnView={false}
-                duration={1000}
-                delay={400}
+                triggerOnHover={true}
+                duration={800}
+                delay={500}
               />
             </span>
           </span>
@@ -49,6 +45,7 @@ const Hero: React.FC = () => {
 
       {/* Scroll indicator */}
       <div className={`hero-scroll ${isLoaded ? 'animate' : ''}`} style={{ animationDelay: '0.6s' }}>
+        <span className="hero-scroll-text">SCROLL TO VIEW MORE</span>
         <div className="hero-scroll-line" />
       </div>
     </section>

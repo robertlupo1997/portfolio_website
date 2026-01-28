@@ -33,7 +33,6 @@ const About: React.FC = () => {
 
     if (!section || !statement || !decorative) return;
 
-    // Parallax on statement text (slower)
     gsap.to(statement, {
       y: -60,
       ease: 'none',
@@ -45,7 +44,6 @@ const About: React.FC = () => {
       },
     });
 
-    // Parallax on decorative SVG (faster, opposite direction creates overlap effect)
     gsap.to(decorative, {
       y: 80,
       rotation: 15,
@@ -72,8 +70,9 @@ const About: React.FC = () => {
           text="ABOUT"
           as="h2"
           className="about-title-overlap"
-          duration={1200}
+          duration={1000}
           triggerOnView={true}
+          triggerOnHover={true}
           threshold={0.3}
         />
       </div>
@@ -99,15 +98,20 @@ const About: React.FC = () => {
 
         {/* Statement text that overlaps */}
         <p className="about-statement-overlap" ref={statementRef}>
-          I turn data into products that actually work.
+          I adapt fast and learn any language—then amplify it with AI.
         </p>
 
         <div className="about-body">
           <p className="about-bio-overlap">
             Data Scientist with a B.A. in Statistics from USF. Currently in corporate FP&A
             at Franklin Street, previously built AI agent prototypes at ORIGIN Construction
-            using Claude Code and FastAPI. I focus on predictive modeling, recommendation
-            systems, and bringing ML from notebook to production.
+            using Claude Code and FastAPI.
+          </p>
+
+          <p className="about-bio-overlap">
+            My edge: I pick up new languages and frameworks quickly, then multiply my output
+            by pairing them with AI tools. Whether it's Python, R, TypeScript, or whatever
+            the job needs—I learn it, build with it, and ship it.
           </p>
 
           <div className="skills-overlap">

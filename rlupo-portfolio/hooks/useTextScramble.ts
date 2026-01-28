@@ -10,14 +10,14 @@ interface UseTextScrambleOptions {
 interface UseTextScrambleReturn {
   displayText: string;
   isScrambling: boolean;
-  startScramble: () => void;
+  triggerScramble: () => void;
 }
 
-const DEFAULT_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*';
+const DEFAULT_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 export const useTextScramble = ({
   text,
-  duration = 1500,
+  duration = 1000,
   scrambleChars = DEFAULT_CHARS,
   trigger = false,
 }: UseTextScrambleOptions): UseTextScrambleReturn => {
@@ -25,12 +25,13 @@ export const useTextScramble = ({
   const [isScrambling, setIsScrambling] = useState(false);
   const frameRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
+  const hasTriggeredRef = useRef(false);
 
   const getRandomChar = useCallback(() => {
     return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
   }, [scrambleChars]);
 
-  const startScramble = useCallback(() => {
+  const runScramble = useCallback(() => {
     if (isScrambling) return;
 
     setIsScrambling(true);
@@ -41,11 +42,8 @@ export const useTextScramble = ({
 
       const elapsed = currentTime - startTimeRef.current;
       const progress = Math.min(elapsed / duration, 1);
-
-      // Calculate how many characters should be revealed
       const revealedCount = Math.floor(progress * text.length);
 
-      // Build the display string
       let result = '';
       for (let i = 0; i < text.length; i++) {
         if (text[i] === ' ') {
@@ -53,7 +51,6 @@ export const useTextScramble = ({
         } else if (i < revealedCount) {
           result += text[i];
         } else {
-          // Add some randomness to make it feel more organic
           result += Math.random() > 0.3 ? getRandomChar() : text[i];
         }
       }
@@ -72,6 +69,11 @@ export const useTextScramble = ({
     frameRef.current = requestAnimationFrame(animate);
   }, [text, duration, getRandomChar, isScrambling]);
 
+  // Manual trigger for hover effects
+  const triggerScramble = useCallback(() => {
+    runScramble();
+  }, [runScramble]);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -81,14 +83,15 @@ export const useTextScramble = ({
     };
   }, []);
 
-  // Auto-trigger when trigger changes to true
+  // Auto-trigger ONCE when trigger changes to true
   useEffect(() => {
-    if (trigger && !isScrambling) {
-      startScramble();
+    if (trigger && !hasTriggeredRef.current && !isScrambling) {
+      hasTriggeredRef.current = true;
+      runScramble();
     }
-  }, [trigger, startScramble, isScrambling]);
+  }, [trigger, runScramble, isScrambling]);
 
-  return { displayText, isScrambling, startScramble };
+  return { displayText, isScrambling, triggerScramble };
 };
 
 export default useTextScramble;
