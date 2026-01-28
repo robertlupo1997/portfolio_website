@@ -109,10 +109,12 @@ const Header: React.FC = () => {
       const pastHero = window.scrollY > window.innerHeight * 0.5;
       setIsPastHero(pastHero);
 
-      // Auto-collapse nav when scrolling past hero (only on desktop)
-      if (window.innerWidth > 1200) {
-        if (pastHero && isNavExpanded && !isMobileMenuOpen) {
+      // Auto-collapse/expand nav based on scroll position (only on desktop)
+      if (window.innerWidth > 1200 && !isMobileMenuOpen) {
+        if (pastHero && isNavExpanded) {
           setIsNavExpanded(false);
+        } else if (!pastHero && !isNavExpanded) {
+          setIsNavExpanded(true);
         }
       }
     };
