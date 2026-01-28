@@ -252,6 +252,36 @@ h1, h2, h3, h4, h5, h6 {
   transform: translate(-50%, -50%) scale(0.8);
 }
 
+/* Plus cursor for project cards */
+.custom-cursor.cursor-plus {
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border: 1px solid var(--accent-teal);
+  mix-blend-mode: normal;
+}
+
+.custom-cursor.cursor-plus::before,
+.custom-cursor.cursor-plus::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background-color: var(--accent-teal);
+}
+
+.custom-cursor.cursor-plus::before {
+  width: 20px;
+  height: 1px;
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor.cursor-plus::after {
+  width: 1px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+}
+
 /* Hide default cursor */
 body.custom-cursor-active {
   cursor: none;
@@ -259,7 +289,8 @@ body.custom-cursor-active {
 
 body.custom-cursor-active a,
 body.custom-cursor-active button,
-body.custom-cursor-active [data-cursor] {
+body.custom-cursor-active [data-cursor],
+body.custom-cursor-active .project-card-wrapper {
   cursor: none;
 }
 
@@ -1208,29 +1239,10 @@ body.custom-cursor-active [data-cursor] {
   height: 280px;
 }
 
-/* Project card "+" icon on hover */
+/* Project card wrapper - cursor becomes plus on hover */
 .project-card-wrapper {
   position: relative;
-}
-
-.project-card-wrapper::after {
-  content: '+';
-  position: absolute;
-  bottom: 50%;
-  left: 50%;
-  transform: translate(-50%, 50%) scale(0);
-  font-size: 2rem;
-  font-weight: 300;
-  color: var(--accent-teal);
-  opacity: 0;
-  transition: transform var(--transition-base), opacity var(--transition-base);
-  pointer-events: none;
-  z-index: 10;
-}
-
-.project-card-wrapper.hovered::after {
-  transform: translate(-50%, 50%) scale(1);
-  opacity: 1;
+  will-change: transform;
 }
 
 /* ----- ABOUT OVERLAP SECTION ----- */

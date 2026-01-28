@@ -5,6 +5,7 @@ const CustomCursor: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
+  const [isOnCard, setIsOnCard] = useState(false);
 
   useEffect(() => {
     // Check if touch device
@@ -48,7 +49,9 @@ const CustomCursor: React.FC = () => {
     const handleElementHover = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const interactive = target.closest('a, button, [role="button"], input, textarea, select, [data-cursor]');
+      const projectCard = target.closest('.project-card-wrapper');
       setIsHovering(!!interactive);
+      setIsOnCard(!!projectCard && !interactive);
     };
 
     requestAnimationFrame(animate);
@@ -78,7 +81,8 @@ const CustomCursor: React.FC = () => {
   const cursorClasses = [
     'custom-cursor',
     isHovering ? 'cursor-hover' : '',
-    isPressed ? 'cursor-click' : ''
+    isPressed ? 'cursor-click' : '',
+    isOnCard ? 'cursor-plus' : ''
   ].filter(Boolean).join(' ');
 
   return (

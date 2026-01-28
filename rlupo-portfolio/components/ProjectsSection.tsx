@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ProjectCard from './ProjectCard';
@@ -11,6 +11,40 @@ const ProjectsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const magnetStrength = 0.08; // Subtle magnetism strength
+
+  // Magnetism effect handler
+  const handleCardMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>, index: number) => {
+    const card = cardsRef.current[index];
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const deltaX = (e.clientX - centerX) * magnetStrength;
+    const deltaY = (e.clientY - centerY) * magnetStrength;
+
+    gsap.to(card, {
+      x: deltaX,
+      y: deltaY,
+      duration: 0.3,
+      ease: 'power2.out',
+    });
+  }, []);
+
+  const handleCardMouseLeave = useCallback((index: number) => {
+    const card = cardsRef.current[index];
+    if (!card) return;
+
+    gsap.to(card, {
+      x: 0,
+      y: 0,
+      duration: 0.5,
+      ease: 'elastic.out(1, 0.5)',
+    });
+    setHoveredIndex(null);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -66,7 +100,8 @@ const ProjectsSection: React.FC = () => {
               hoveredIndex !== null && hoveredIndex !== index ? 'dimmed' : ''
             } ${hoveredIndex === index ? 'hovered' : ''}`}
             onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
+            onMouseMove={(e) => handleCardMouseMove(e, index)}
+            onMouseLeave={() => handleCardMouseLeave(index)}
           >
             <ProjectCard project={project} index={index} />
           </div>
