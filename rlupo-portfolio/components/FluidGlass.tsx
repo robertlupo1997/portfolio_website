@@ -25,8 +25,8 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
   text = 'TREY LUPO',
   className = '',
   glassColor = [1, 1, 1],
-  bgColor = [0.05, 0.05, 0.05],
-  textColor = [0.15, 0.15, 0.15],
+  bgColor = [0.039, 0.039, 0.043],  // Matches --bg-primary: #0A0A0B
+  textColor = [0.08, 0.08, 0.08],   // Subtle text color
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isSupported, setIsSupported] = useState(true);
@@ -156,8 +156,8 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
       pressureMap: { value: null },
       maskTexture: { value: null },
       uSize: { value: [simWidth, simHeight] },
-      feed0: { value: 0.054 },
-      kill0: { value: 0.0616 },
+      feed0: { value: 0.048 },   // Lower = less pattern growth
+      kill0: { value: 0.058 },  // Lower = patterns die faster
     });
 
     const backgroundProgram = createShaderProgram(defaultVert, backgroundFrag, {
@@ -170,8 +170,10 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
       pressureMap: { value: null },
       backgroundMap: { value: null },
       glassColor: { value: glassColor },
-      shadowFactor: { value: 0.05 },
-      brightFactor: { value: 0.05 },
+      pageBgColor: { value: bgColor },
+      shadowFactor: { value: 0.03 },
+      brightFactor: { value: 0.015 },  // Halved for subtler bubbles
+      edgeFade: { value: 0.35 },
       uSize: { value: [simWidth, simHeight] },
     });
 
