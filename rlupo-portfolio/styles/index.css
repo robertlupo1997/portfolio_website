@@ -1347,6 +1347,67 @@ body.custom-cursor-active .project-card-wrapper {
   transform: translateY(-2px);
 }
 
+/* Services overlap */
+.services-overlap {
+  margin-top: var(--space-3xl);
+}
+
+.services-title-overlap {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-lg);
+}
+
+.services-grid-overlap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.service-card-overlap {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  transition: border-color var(--transition-fast),
+              background-color var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+.service-card-overlap:hover {
+  border-color: var(--accent-teal);
+  background-color: rgba(0, 212, 170, 0.05);
+  transform: translateY(-4px);
+}
+
+.service-card-title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.service-card-description {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .services-grid-overlap {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .services-grid-overlap {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ----- GIANT FOOTER ----- */
 .footer-giant {
   background-color: var(--bg-primary);
@@ -1367,6 +1428,21 @@ body.custom-cursor-active .project-card-wrapper {
   width: 100%;
   height: 100%;
   position: relative;
+  /* CSS mask for smooth edge fade */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
 }
 
 .fluid-glass canvas {

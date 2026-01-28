@@ -39,7 +39,7 @@ const Hero: React.FC = () => {
         </h1>
 
         <p className={`hero-role ${isLoaded ? 'animate' : ''}`} style={{ animationDelay: '0.3s' }}>
-          Data Scientist & AI Builder
+          AI Builder & Engineer
         </p>
       </div>
 

@@ -21,6 +21,21 @@ const SKILLS = [
   'TypeScript',
 ];
 
+const SERVICES = [
+  {
+    title: 'AI Automation',
+    description: 'Turn manual workflows into intelligent systems',
+  },
+  {
+    title: 'Rapid Prototypes',
+    description: 'From idea to working demo in days, not months',
+  },
+  {
+    title: 'Data Products',
+    description: 'Models that drive real business decisions',
+  },
+];
+
 const About: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const statementRef = useRef<HTMLParagraphElement>(null);
@@ -98,20 +113,21 @@ const About: React.FC = () => {
 
         {/* Statement text that overlaps */}
         <p className="about-statement-overlap" ref={statementRef}>
-          I adapt fast and learn any language—then amplify it with AI.
+          I turn ideas into working AI prototypes. Fast.
         </p>
 
         <div className="about-body">
           <p className="about-bio-overlap">
-            Data Scientist with a B.A. in Statistics from USF. Currently in corporate FP&A
-            at Franklin Street, previously built AI agent prototypes at ORIGIN Construction
-            using Claude Code and FastAPI.
+            Statistics grad turned AI builder. I spent 4 months at ORIGIN Construction
+            shipping AI agent prototypes with Claude Code and FastAPI. Now I'm in FP&A
+            at Franklin Street, which means I think about business problems, not just
+            technical ones.
           </p>
 
           <p className="about-bio-overlap">
-            My edge: I pick up new languages and frameworks quickly, then multiply my output
-            by pairing them with AI tools. Whether it's Python, R, TypeScript, or whatever
-            the job needs—I learn it, build with it, and ship it.
+            I help startups and small teams test AI ideas without the enterprise timeline.
+            Need a Claude-powered workflow? A predictive model? A FastAPI backend?
+            Let's build it.
           </p>
 
           <div className="skills-overlap">
@@ -121,6 +137,18 @@ const About: React.FC = () => {
                 <span key={skill} className="skill-tag-overlap">
                   {skill}
                 </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="services-overlap">
+            <h3 className="services-title-overlap">WHAT I BUILD</h3>
+            <div className="services-grid-overlap">
+              {SERVICES.map((service) => (
+                <div key={service.title} className="service-card-overlap">
+                  <h4 className="service-card-title">{service.title}</h4>
+                  <p className="service-card-description">{service.description}</p>
+                </div>
               ))}
             </div>
           </div>

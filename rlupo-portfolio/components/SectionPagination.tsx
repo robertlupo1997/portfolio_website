@@ -73,7 +73,7 @@ const SectionPagination: React.FC = () => {
 
       <div className="pagination-counter">
         <span className="pagination-current">{String(currentIndex + 1).padStart(2, '0')}</span>
-        <span className="pagination-divider">—</span>
+        <span className="pagination-divider">/</span>
         <span className="pagination-total">{String(SECTIONS.length).padStart(2, '0')}</span>
       </div>
 
