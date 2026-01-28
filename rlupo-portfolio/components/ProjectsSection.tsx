@@ -1,44 +1,42 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ProjectCard from './ProjectCard';
+import TextScramble from './TextScramble';
 import { PROJECTS } from '../constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ProjectsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const scrollContainer = scrollRef.current;
+    if (!section) return;
 
-    if (!section || !scrollContainer) return;
+    // Parallax effect for cards at varying speeds
+    cardsRef.current.forEach((card, index) => {
+      if (!card) return;
 
-    // Calculate how far to scroll horizontally
-    const scrollWidth = scrollContainer.scrollWidth;
-    const viewportWidth = window.innerWidth;
-    const scrollDistance = scrollWidth - viewportWidth;
+      // Different parallax speeds based on position
+      const speed = [0.15, 0.1, 0.2, 0.12, 0.18, 0.14][index % 6];
 
-    // Create the horizontal scroll animation
-    const tween = gsap.to(scrollContainer, {
-      x: -scrollDistance,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: () => `+=${scrollDistance}`,
-        pin: true,
-        scrub: 1,
-        invalidateOnRefresh: true,
-        anticipatePin: 1,
-      },
+      gsap.to(card, {
+        y: () => -window.innerHeight * speed,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      });
     });
 
     // Cleanup
     return () => {
-      tween.kill();
       ScrollTrigger.getAll().forEach((t) => {
         if (t.trigger === section) t.kill();
       });
@@ -46,14 +44,32 @@ const ProjectsSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="projects" id="projects" ref={sectionRef}>
-      <div className="projects-header">
-        <h2 className="projects-title">PROJECTS</h2>
+    <section className="projects-scattered" id="projects" ref={sectionRef}>
+      <div className="projects-header-scattered">
+        <span className="projects-counter">[{String(PROJECTS.length).padStart(2, '0')}]</span>
+        <TextScramble
+          text="WORK"
+          as="h2"
+          className="projects-title-scattered"
+          duration={1200}
+          triggerOnView={true}
+          threshold={0.5}
+        />
       </div>
 
-      <div className="projects-scroll" ref={scrollRef}>
+      <div className={`projects-grid-scattered ${hoveredIndex !== null ? 'has-hover' : ''}`}>
         {PROJECTS.map((project, index) => (
-          <ProjectCard key={project.id} project={project} index={index} />
+          <div
+            key={project.id}
+            ref={(el) => (cardsRef.current[index] = el)}
+            className={`project-card-wrapper project-card-wrapper-${index + 1} ${
+              hoveredIndex !== null && hoveredIndex !== index ? 'dimmed' : ''
+            } ${hoveredIndex === index ? 'hovered' : ''}`}
+            onMouseEnter={() => setHoveredIndex(index)}
+            onMouseLeave={() => setHoveredIndex(null)}
+          >
+            <ProjectCard project={project} index={index} />
+          </div>
         ))}
       </div>
     </section>

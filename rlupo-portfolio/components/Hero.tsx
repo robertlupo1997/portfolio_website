@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import TextScramble from './TextScramble';
 
 const Hero: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,12 +22,22 @@ const Hero: React.FC = () => {
         <h1 className="hero-name">
           <span className="hero-name-line">
             <span className={`hero-name-text ${isLoaded ? 'animate' : ''}`} style={{ animationDelay: '0s' }}>
-              TREY
+              <TextScramble
+                text="TREY"
+                triggerOnView={false}
+                duration={1000}
+                delay={200}
+              />
             </span>
           </span>
           <span className="hero-name-line">
             <span className={`hero-name-text ${isLoaded ? 'animate' : ''}`} style={{ animationDelay: '0.1s' }}>
-              LUPO
+              <TextScramble
+                text="LUPO"
+                triggerOnView={false}
+                duration={1000}
+                delay={400}
+              />
             </span>
           </span>
         </h1>

@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import ProjectsSection from './components/ProjectsSection';
 import About from './components/About';
 import Footer from './components/Footer';
+import SectionPagination from './components/SectionPagination';
 import { useLenis } from './hooks/useLenis';
 import { useScrollAnimations } from './hooks/useScrollAnimations';
 import './styles/index.css';
@@ -19,6 +20,7 @@ const App: React.FC = () => {
     <>
       <CustomCursor />
       <Header />
+      <SectionPagination />
 
       <main className="main">
         <Hero />
