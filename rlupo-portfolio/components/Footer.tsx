@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PERSONAL_INFO } from '../constants';
+import FluidGlass from './FluidGlass';
 
 const Footer: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -23,9 +24,9 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="footer-giant" id="contact">
-      {/* Giant name spanning viewport */}
+      {/* Fluid Glass Name Effect */}
       <div className="footer-giant-name">
-        <span className="footer-name-text">TREY LUPO</span>
+        <FluidGlass text="TREY LUPO" />
       </div>
 
       {/* Bottom bar */}

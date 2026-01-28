@@ -1357,8 +1357,30 @@ body.custom-cursor-active .project-card-wrapper {
 
 .footer-giant-name {
   width: 100%;
+  height: clamp(150px, 25vw, 300px);
   overflow: hidden;
   margin-bottom: var(--space-3xl);
+}
+
+/* Fluid Glass Effect */
+.fluid-glass {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.fluid-glass canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.fluid-glass-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer-name-text {
@@ -1627,4 +1649,22 @@ body.custom-cursor-active .project-card-wrapper {
   .footer-name-text {
     font-size: clamp(2.5rem, 12vw, 6rem);
   }
+}
+
+/* ----- FLUID GLASS EFFECT ----- */
+.fluid-glass {
+  width: 100%;
+  height: clamp(150px, 25vw, 300px);
+  position: relative;
+  overflow: hidden;
+}
+
+.fluid-glass canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.fluid-glass-fallback {
+  width: 100%;
 }
