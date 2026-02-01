@@ -402,13 +402,20 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
 
   if (!isSupported) {
     return (
-      <div className={`fluid-glass-fallback ${className}`}>
+      <div className={`fluid-glass-fallback ${className}`} aria-hidden="true" role="presentation">
         <span className="footer-name-text">{text}</span>
       </div>
     );
   }
 
-  return <div ref={containerRef} className={`fluid-glass ${className}`} />;
+  return (
+    <div
+      ref={containerRef}
+      className={`fluid-glass ${className}`}
+      aria-hidden="true"
+      role="presentation"
+    />
+  );
 };
 
 export default FluidGlass;

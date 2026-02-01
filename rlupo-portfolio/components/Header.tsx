@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { PERSONAL_INFO } from '../constants';
+import ThemeToggle from './ThemeToggle';
 
 // Text scramble effect for nav items
 const useNavScramble = (text: string, isActive: boolean) => {
@@ -187,8 +188,9 @@ const Header: React.FC = () => {
           TREY.ML
         </a>
 
-        {/* Right: Location + Contact button */}
+        {/* Right: Theme Toggle + Location + Contact button */}
         <div className="header-right">
+          <ThemeToggle />
           <span className="header-location">TAMPA, FL</span>
           <a href={`mailto:${PERSONAL_INFO.email}`} className="header-contact-btn">
             <span className="contact-btn-text">GET IN TOUCH</span>

@@ -1,9 +1,11 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ProjectCard from './ProjectCard';
+import ProjectFilter from './ProjectFilter';
 import TextScramble from './TextScramble';
 import { PROJECTS } from '../constants';
+import { ProjectCategory } from '../types';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,7 +13,22 @@ const ProjectsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeFilter, setActiveFilter] = useState<ProjectCategory>('all');
   const magnetStrength = 0.08; // Subtle magnetism strength
+
+  // Filter projects based on active filter
+  const filteredProjects = useMemo(() => {
+    if (activeFilter === 'all') return PROJECTS;
+    return PROJECTS.filter(p => p.projectCategory === activeFilter);
+  }, [activeFilter]);
+
+  // Calculate counts for each category
+  const counts = useMemo(() => ({
+    all: PROJECTS.length,
+    ml: PROJECTS.filter(p => p.projectCategory === 'ml').length,
+    analytics: PROJECTS.filter(p => p.projectCategory === 'analytics').length,
+    fpna: PROJECTS.filter(p => p.projectCategory === 'fpna').length,
+  }), []);
 
   // Magnetism effect handler
   const handleCardMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>, index: number) => {
@@ -80,7 +97,7 @@ const ProjectsSection: React.FC = () => {
   return (
     <section className="projects-scattered" id="projects" ref={sectionRef}>
       <div className="projects-header-scattered">
-        <span className="projects-counter">[{String(PROJECTS.length).padStart(2, '0')}]</span>
+        <span className="projects-counter">[{String(filteredProjects.length).padStart(2, '0')}]</span>
         <TextScramble
           text="WORK"
           as="h2"
@@ -91,8 +108,14 @@ const ProjectsSection: React.FC = () => {
         />
       </div>
 
-      <div className={`projects-grid-scattered ${hoveredIndex !== null ? 'has-hover' : ''}`}>
-        {PROJECTS.map((project, index) => (
+      <ProjectFilter
+        activeFilter={activeFilter}
+        onFilterChange={setActiveFilter}
+        counts={counts}
+      />
+
+      <div id="projects-grid" className={`projects-grid-scattered ${hoveredIndex !== null ? 'has-hover' : ''}`} role="tabpanel">
+        {filteredProjects.map((project, index) => (
           <div
             key={project.id}
             ref={(el) => (cardsRef.current[index] = el)}
