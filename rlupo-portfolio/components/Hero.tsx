@@ -39,15 +39,10 @@ const Hero: React.FC = () => {
         </h1>
 
         <p className={`hero-role ${isLoaded ? 'animate' : ''}`} style={{ animationDelay: '0.3s' }}>
-          AI Builder & Engineer
+          FP&A Analyst · Data Scientist
         </p>
       </div>
 
-      {/* Scroll indicator */}
-      <div className={`hero-scroll ${isLoaded ? 'animate' : ''}`} style={{ animationDelay: '0.6s' }}>
-        <span className="hero-scroll-text">SCROLL TO VIEW MORE</span>
-        <div className="hero-scroll-line" />
-      </div>
     </section>
   );
 };

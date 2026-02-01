@@ -6,9 +6,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const useScrollAnimations = () => {
   useEffect(() => {
-    // About section fade-up
+    // About section fade-up (using overlap class names)
     gsap.fromTo(
-      '.about-statement',
+      '.about-statement-overlap',
       { opacity: 0, y: 60 },
       {
         opacity: 1,
@@ -16,7 +16,7 @@ export const useScrollAnimations = () => {
         duration: 1,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.about',
+          trigger: '.about-overlap',
           start: 'top 80%',
           toggleActions: 'play none none reverse',
         },
@@ -24,7 +24,7 @@ export const useScrollAnimations = () => {
     );
 
     gsap.fromTo(
-      '.about-bio',
+      '.about-bio-overlap',
       { opacity: 0, y: 40 },
       {
         opacity: 1,
@@ -32,7 +32,7 @@ export const useScrollAnimations = () => {
         duration: 0.8,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.about-bio',
+          trigger: '.about-bio-overlap',
           start: 'top 85%',
           toggleActions: 'play none none reverse',
         },
@@ -41,7 +41,7 @@ export const useScrollAnimations = () => {
 
     // Skills stagger
     gsap.fromTo(
-      '.skill-tag',
+      '.skill-tag-overlap',
       { opacity: 0, y: 20 },
       {
         opacity: 1,
@@ -50,25 +50,8 @@ export const useScrollAnimations = () => {
         stagger: 0.05,
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: '.skills-grid',
+          trigger: '.skills-grid-overlap',
           start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      }
-    );
-
-    // Footer headline
-    gsap.fromTo(
-      '.footer-headline',
-      { opacity: 0, y: 80 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.footer',
-          start: 'top 80%',
           toggleActions: 'play none none reverse',
         },
       }

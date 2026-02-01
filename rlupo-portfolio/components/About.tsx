@@ -7,32 +7,31 @@ gsap.registerPlugin(ScrollTrigger);
 
 const SKILLS = [
   'Python',
-  'R',
   'SQL',
+  'Excel',
+  'Power BI',
   'Machine Learning',
-  'XGBoost',
+  'LightGBM',
   'Scikit-learn',
   'Pandas',
-  'NumPy',
-  'TensorFlow',
-  'Claude Code',
   'FastAPI',
   'React',
-  'TypeScript',
+  'Claude/AI Tools',
+  'Financial Modeling',
 ];
 
 const SERVICES = [
   {
-    title: 'AI Automation',
-    description: 'Turn manual workflows into intelligent systems',
+    title: 'Financial Analytics',
+    description: 'Dashboards and reports that executives actually use',
   },
   {
-    title: 'Rapid Prototypes',
-    description: 'From idea to working demo in days, not months',
+    title: 'Process Automation',
+    description: 'Python scripts that save hours of manual work',
   },
   {
-    title: 'Data Products',
-    description: 'Models that drive real business decisions',
+    title: 'ML & Prediction',
+    description: 'Models with proper validation that ship to production',
   },
 ];
 
@@ -113,21 +112,20 @@ const About: React.FC = () => {
 
         {/* Statement text that overlaps */}
         <p className="about-statement-overlap" ref={statementRef}>
-          I turn ideas into working AI prototypes. Fast.
+          I make financial data useful.
         </p>
 
         <div className="about-body">
           <p className="about-bio-overlap">
-            Statistics grad turned AI builder. I spent 4 months at ORIGIN Construction
-            shipping AI agent prototypes with Claude Code and FastAPI. Now I'm in FP&A
-            at Franklin Street, which means I think about business problems, not just
-            technical ones.
+            Corporate FP&A Analyst at Franklin Street in Tampa. I build dashboards,
+            automate reports, and use AI tools to make financial analysis faster.
+            My job is turning raw data into insights that help leadership make decisions.
           </p>
 
           <p className="about-bio-overlap">
-            I help startups and small teams test AI ideas without the enterprise timeline.
-            Need a Claude-powered workflow? A predictive model? A FastAPI backend?
-            Let's build it.
+            Background: B.A. Statistics from USF, MIT Data Science certificate, and
+            an AI engineering internship at Origin Construction where I built Python
+            automation tools. I write code that ships—not just models that sit in notebooks.
           </p>
 
           <div className="skills-overlap">
@@ -142,7 +140,7 @@ const About: React.FC = () => {
           </div>
 
           <div className="services-overlap">
-            <h3 className="services-title-overlap">WHAT I BUILD</h3>
+            <h3 className="services-title-overlap">WHAT I DO</h3>
             <div className="services-grid-overlap">
               {SERVICES.map((service) => (
                 <div key={service.title} className="service-card-overlap">
