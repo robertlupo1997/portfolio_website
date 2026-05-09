@@ -152,11 +152,12 @@ Update the About component to reflect current role and focus.
 **File**: `rlupo-portfolio/components/About.tsx`
 
 Update bio content to reflect:
-- FP&A analyst at Franklin Street
-- Building AI-native EPM automation (first of its kind)
-- Statistics degree → ML/AI engineering
+- FP&A analyst at Franklin Street (current title — don't overstate)
+- Building AI-powered automation tools for finance workflows
+- Statistics degree → building toward AI/ML engineering
 - Built production SDK for Oracle EPM Cloud solo
-- Focus: enterprise automation, not academic exercises
+- Frame as "FP&A Analyst building AI tools" not "AI Engineer"
+- The projects speak for themselves — show the work, don't claim a title you don't hold yet
 
 ### Success Criteria:
 
@@ -218,9 +219,10 @@ Update the hero tagline to reflect current focus beyond "FP&A Analyst & Data Sci
 **File**: `rlupo-portfolio/components/Hero.tsx`
 
 Consider updating to something like:
-- "FP&A Analyst & AI Engineer"
-- "Building AI-native enterprise automation"
-- Keep it concise — the hero shouldn't oversell
+- "FP&A Analyst · Data Scientist" (keep current — accurate and honest)
+- "FP&A Analyst · Building with AI" (signals ambition without overclaiming)
+- Do NOT use "AI Engineer" — Trey aspires to that role but doesn't hold it yet
+- Let the projects make the case; the title should be what he actually is today
 
 ### Success Criteria:
 
