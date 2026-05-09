@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trey Lupo — Portfolio Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-primary: #0A0A0B;
+  --bg-secondary: #111113;
+  --bg-tertiary: #18181B;
+  --text-primary: #E8E8EE;
+  --text-secondary: #888899;
+  --text-muted: #555566;
+  --accent-blue: #0066FF;
+  --accent-amber: #F0A500;
+  --accent-amber-dim: rgba(240, 165, 0, 0.12);
+  --accent-blue-dim: rgba(0, 102, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+  --space-section: clamp(5rem, 12vh, 8rem);
+  --max-width: 1200px;
+  --grain-opacity: 0.03;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: var(--grain-opacity);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ============ NAV ============ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: var(--space-md) var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(12px);
+  background: rgba(10, 10, 11, 0.8);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
+}
+
+.nav-left {
+  display: flex;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.nav-left a {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-left a:hover { color: var(--text-primary); }
+
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  color: var(--text-primary);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.nav-cta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--accent-amber);
+  color: var(--accent-amber);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-cta:hover {
+  background: var(--accent-amber);
+  color: var(--bg-primary);
+}
+
+.theme-toggle {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+
+.theme-toggle:hover { border-color: var(--border-hover); }
+
+/* ============ HERO ============ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-4xl) var(--space-xl);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-hook {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  max-width: 16ch;
+  margin-bottom: var(--space-xl);
+}
+
+.hero-hook .accent-amber { color: var(--accent-amber); }
+.hero-hook .accent-blue { color: var(--accent-blue); }
+
+.hero-name {
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 900;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  opacity: 0.08;
+  position: absolute;
+  right: var(--space-xl);
+  bottom: 25%;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  user-select: none;
+}
+
+.hero-name-inline {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.hero-status {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2xl);
+  letter-spacing: 0.02em;
+}
+
+.hero-status .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-amber);
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.hero-ctas {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.btn-primary {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.75rem 2rem;
+  background: var(--accent-blue);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: #0055DD;
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-primary);
+}
+
+/* ============ SECTION HEADERS ============ */
+.section {
+  padding: var(--space-section) var(--space-xl);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--accent-amber);
+  margin-bottom: var(--space-3xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ============ FEATURED PROJECTS ============ */
+.featured-project {
+  margin-bottom: var(--space-4xl);
+  padding-bottom: var(--space-4xl);
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl);
+  align-items: start;
+}
+
+.featured-project:last-child {
+  border-bottom: none;
+}
+
+.fp-left {}
+
+.fp-number {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.1em;
+}
+
+.fp-title {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-md);
+  line-height: 1.1;
+}
+
+.fp-problem {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-bottom: var(--space-lg);
+  line-height: 1.5;
+}
+
+.fp-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+}
+
+.fp-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.fp-pill {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.fp-pill.amber {
+  border-color: var(--accent-amber);
+  color: var(--accent-amber);
+  background: var(--accent-amber-dim);
+}
+
+.fp-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.fp-link:hover { text-decoration: underline; }
+
+.fp-link.private { color: var(--text-muted); }
+
+.fp-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.fp-metric {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--accent-amber), var(--accent-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: right;
+}
+
+.fp-metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  margin-top: var(--space-sm);
+  text-align: right;
+}
+
+/* ============ ALL WORK ============ */
+.filter-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-tab:hover {
+  border-color: var(--text-secondary);
+}
+
+.filter-tab.active {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+
+.work-card {
+  padding: var(--space-lg);
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  transition: all 0.2s;
+}
+
+.work-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-tertiary);
+}
+
+.wc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-sm);
+}
+
+.wc-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.wc-metric {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent-amber);
+  white-space: nowrap;
+}
+
+.wc-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--space-md);
+}
+
+.wc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wc-stack {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.wc-stack-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.wc-link {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+.wc-link:hover { text-decoration: underline; }
+
+/* ============ ABOUT ============ */
+.about-statement {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: var(--space-4xl);
+  max-width: 20ch;
+}
+
+.about-statement .amber { color: var(--accent-amber); }
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: var(--space-4xl);
+  position: relative;
+  padding-left: var(--space-2xl);
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--border);
+}
+
+.tl-entry {
+  position: relative;
+  padding-bottom: var(--space-2xl);
+}
+
+.tl-entry:last-child { padding-bottom: 0; }
+
+.tl-entry::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--space-2xl) + 0px);
+  top: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  border: 1.5px solid var(--bg-primary);
+}
+
+.tl-entry.current::before {
+  background: var(--accent-amber);
+  box-shadow: 0 0 8px rgba(240, 165, 0, 0.4);
+}
+
+.tl-year {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent-amber);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.25rem;
+}
+
+.tl-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.tl-sub {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.skills-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-xl);
+}
+
+.skill-group {}
+
+.sg-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.sg-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.sg-tag {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+
+.sg-tag:hover {
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+/* ============ FOOTER ============ */
+.footer {
+  padding: var(--space-4xl) var(--space-xl) var(--space-xl);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-top: 1px solid var(--border);
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-3xl);
+  flex-wrap: wrap;
+  gap: var(--space-xl);
+}
+
+.footer-message {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 30ch;
+  line-height: 1.5;
+}
+
+.footer-links {
+  display: flex;
+  gap: var(--space-xl);
+}
+
+.footer-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.footer-link:hover { color: var(--text-primary); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border);
+}
+
+.footer-email {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.footer-email:hover { color: var(--accent-amber); }
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .nav-left { display: none; }
+  .nav-center { position: static; transform: none; }
+  .hero { padding: var(--space-3xl) var(--space-md); }
+  .hero-name { display: none; }
+  .section { padding: var(--space-3xl) var(--space-md); }
+  .featured-project {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .fp-right { align-items: flex-start; }
+  .fp-metric { text-align: left; }
+  .fp-metric-label { text-align: left; }
+  .work-grid { grid-template-columns: 1fr; }
+  .footer-top { flex-direction: column; }
+  .footer-bottom { flex-direction: column; gap: var(--space-md); align-items: flex-start; }
+}
+
+/* ============ DIVIDER ============ */
+.section-divider {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.section-divider hr {
+  border: none;
+  height: 1px;
+  background: var(--border);
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-left">
+    <a href="#projects">PROJECTS</a>
+    <a href="#about">ABOUT</a>
+    <a href="#">BLOG <span style="font-size:0.6rem">&#8599;</span></a>
+  </div>
+  <div class="nav-center">TREY LUPO</div>
+  <div class="nav-right">
+    <button class="nav-cta">GET IN TOUCH</button>
+    <button class="theme-toggle" title="Toggle theme">&#9790;</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-name">TREY LUPO</div>
+  <div class="hero-hook">
+    <span class="accent-amber">FP&A Analyst.</span><br>
+    Builds production tools<br>with <span class="accent-blue">AI</span>.
+  </div>
+  <div class="hero-name-inline">TREY LUPO</div>
+  <div class="hero-status">
+    <span class="dot"></span>
+    Currently: Building nspb-api &middot; Open to AI/ML roles &middot; Tampa / Remote
+  </div>
+  <div class="hero-ctas">
+    <a href="#projects" class="btn-primary">SEE THE WORK</a>
+    <a href="https://github.com/robertlupo1997" class="btn-outline" target="_blank">GITHUB &rarr;</a>
+  </div>
+</section>
+
+<!-- FEATURED PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-label">FEATURED WORK</div>
+
+  <!-- nspb-api -->
+  <article class="featured-project">
+    <div class="fp-left">
+      <div class="fp-number">01</div>
+      <h2 class="fp-title">nspb-api</h2>
+      <p class="fp-problem">"Oracle EPM Cloud exposes no public API. I built one."</p>
+      <p class="fp-description">
+        A complete Python SDK for Oracle's Enterprise Performance Management Cloud, covering Planning, Migration, and Data Management APIs. Built solo at Franklin Street to automate FP&A workflows that previously required manual Oracle Smart View exports and vendor consultants.
+      </p>
+      <div class="fp-stack">
+        <span class="fp-pill amber">Python</span>
+        <span class="fp-pill">REST</span>
+        <span class="fp-pill amber">Oracle EPM</span>
+        <span class="fp-pill">SDK Design</span>
+      </div>
+      <span class="fp-link private">Private repo &mdash; enterprise tooling</span>
+    </div>
+    <div class="fp-right">
+      <div class="fp-metric">60+</div>
+      <div class="fp-metric-label">API ENDPOINTS</div>
+    </div>
+  </article>
+
+  <!-- ferroml -->
+  <article class="featured-project">
+    <div class="fp-left">
+      <div class="fp-number">02</div>
+      <h2 class="fp-title">FerroML</h2>
+      <p class="fp-problem">"AutoML tools skip statistical rigor. FerroML doesn't."</p>
+      <p class="fp-description">
+        A statistically rigorous AutoML framework in Rust with Python bindings. Hypothesis-driven model selection with proper statistical testing, confidence intervals on every prediction, and 6,500+ tests. Published on PyPI.
+      </p>
+      <div class="fp-stack">
+        <span class="fp-pill amber">Rust</span>
+        <span class="fp-pill amber">Python</span>
+        <span class="fp-pill">PyPI</span>
+        <span class="fp-pill">Statistics</span>
+      </div>
+      <a href="https://github.com/robertlupo1997/ferroml" class="fp-link" target="_blank">View on GitHub &rarr;</a>
+    </div>
+    <div class="fp-right">
+      <div class="fp-metric">55</div>
+      <div class="fp-metric-label">ML ALGORITHMS</div>
+    </div>
+  </article>
+
+  <!-- hierarchical-revenue-forecast -->
+  <article class="featured-project">
+    <div class="fp-left">
+      <div class="fp-number">03</div>
+      <h2 class="fp-title">Hierarchical Revenue Forecast</h2>
+      <p class="fp-problem">"Revenue forecasting across business lines that actually reconcile."</p>
+      <p class="fp-description">
+        Production-grade multi-LOB revenue forecasting with hierarchical time series models, SHAP explainability for every prediction, and a polyglot architecture spanning Python, Go, and TypeScript. Built for finance teams who need forecasts that add up.
+      </p>
+      <div class="fp-stack">
+        <span class="fp-pill amber">Python</span>
+        <span class="fp-pill">Go</span>
+        <span class="fp-pill">TypeScript</span>
+        <span class="fp-pill">SHAP</span>
+      </div>
+      <a href="https://github.com/robertlupo1997/hierarchical-revenue-forecast" class="fp-link" target="_blank">View on GitHub &rarr;</a>
+    </div>
+    <div class="fp-right">
+      <div class="fp-metric" style="font-size: clamp(2rem, 4vw, 3.5rem);">Multi-LOB</div>
+      <div class="fp-metric-label">HIERARCHICAL RECONCILIATION</div>
+    </div>
+  </article>
+</section>
+
+<!-- ALL WORK -->
+<section class="section">
+  <div class="section-label">ALL WORK</div>
+
+  <div class="filter-tabs">
+    <button class="filter-tab active">All</button>
+    <button class="filter-tab">Machine Learning</button>
+    <button class="filter-tab">Engineering</button>
+    <button class="filter-tab">FP&A</button>
+  </div>
+
+  <div class="work-grid">
+    <div class="work-card">
+      <div class="wc-header">
+        <span class="wc-title">KKBOX Churn Prediction</span>
+        <span class="wc-metric">0.97 AUC</span>
+      </div>
+      <p class="wc-desc">Leak-safe feature engineering, isotonic calibration, temporal backtests, and PSI drift monitoring.</p>
+      <div class="wc-footer">
+        <div class="wc-stack">
+          <span class="wc-stack-tag">Python</span>
+          <span class="wc-stack-tag">&middot;</span>
+          <span class="wc-stack-tag">Streamlit</span>
+          <span class="wc-stack-tag">&middot;</span>
+          <span class="wc-stack-tag">XGBoost</span>
+        </div>
+        <a href="#" class="wc-link">GitHub &rarr;</a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="wc-header">
+        <span class="wc-title">Open-Vocab Object Detection</span>
+        <span class="wc-metric">265-490ms</span>
+      </div>
+      <p class="wc-desc">Text-prompted detection + segmentation with Grounding DINO + SAM 2 on RTX 3070.</p>
+      <div class="wc-footer">
+        <div class="wc-stack">
+          <span class="wc-stack-tag">Python</span>
+          <span class="wc-stack-tag">&middot;</span>
+          <span class="wc-stack-tag">PyTorch</span>
+          <span class="wc-stack-tag">&middot;</span>
+          <span class="wc-stack-tag">COCO</span>
+        </div>
+        <a href="#" class="wc-link">GitHub &rarr;</a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="wc-header">
+        <span class="wc-title">Ironclad</span>
+        <span class="wc-metric">95% CI</span>
+      </div>
+      <p class="wc-desc">Construction cost estimation with statistical confidence intervals for bid analysis.</p>
+      <div class="wc-footer">
+        <div class="wc-stack">
+          <span class="wc-stack-tag">Python</span>
+          <span class="wc-stack-tag">&middot;</span>
+          <span class="wc-stack-tag">ML</span>
+          <span class="wc-stack-tag">&middot;</span>
+          <span class="wc-stack-tag">Statistics</span>
+        </div>
+        <a href="#" class="wc-link">GitHub &rarr;</a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="wc-header">
+        <span class="wc-title">FerroML Plugin</span>
+        <span class="wc-metric">Claude Code</span>
+      </div>
+      <p class="wc-desc">End-to-end machine learning from natural conversation inside Claude Code.</p>
+      <div class="wc-footer">
+        <div class="wc-stack">
+          <span class="wc-stack-tag">Python</span>
+          <span class="wc-stack-tag">&middot;</span>
+          <span class="wc-stack-tag">Plugin</span>
+        </div>
+        <a href="#" class="wc-link">GitHub &rarr;</a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="wc-header">
+        <span class="wc-title">GSD-ML</span>
+        <span class="wc-metric">Autonomous</span>
+      </div>
+      <p class="wc-desc">Claude Code native autonomous ML research — point at a dataset and get a tuned pipeline.</p>
+      <div class="wc-footer">
+        <div class="wc-stack">
+          <span class="wc-stack-tag">Python</span>
+          <span class="wc-stack-tag">&middot;</span>
+          <span class="wc-stack-tag">GSD</span>
+        </div>
+        <a href="#" class="wc-link">GitHub &rarr;</a>
+      </div>
+    </div>
+
+    <div class="work-card">
+      <div class="wc-header">
+        <span class="wc-title">MLForge</span>
+        <span class="wc-metric">AutoML</span>
+      </div>
+      <p class="wc-desc">Autonomous ML research framework for tabular data. CSV + metric in, best pipeline out.</p>
+      <div class="wc-footer">
+        <div class="wc-stack">
+          <span class="wc-stack-tag">Python</span>
+          <span class="wc-stack-tag">&middot;</span>
+          <span class="wc-stack-tag">AutoML</span>
+        </div>
+        <a href="#" class="wc-link">GitHub &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-label">ABOUT</div>
+
+  <div class="about-statement">
+    I make <span class="amber">financial data</span> useful.
+  </div>
+
+  <div class="timeline">
+    <div class="tl-entry">
+      <div class="tl-year">2024</div>
+      <div class="tl-title">B.A. Statistics, University of South Florida</div>
+      <div class="tl-sub">MIT IDSS Data Science Certificate</div>
+    </div>
+    <div class="tl-entry">
+      <div class="tl-year">2025</div>
+      <div class="tl-title">AI Engineering Intern, Origin Construction</div>
+      <div class="tl-sub">APM automation &middot; Procore integrations &middot; AI agent pilots</div>
+    </div>
+    <div class="tl-entry current">
+      <div class="tl-year">2025&ndash;NOW</div>
+      <div class="tl-title">FP&A Analyst, Franklin Street</div>
+      <div class="tl-sub">Built nspb-api SDK &middot; FerroML in Rust &middot; ML deal prediction &middot; Oracle ETL pipeline</div>
+    </div>
+  </div>
+
+  <div class="skills-section">
+    <div class="skill-group">
+      <div class="sg-label">LANGUAGES</div>
+      <div class="sg-items">
+        <span class="sg-tag">Python</span>
+        <span class="sg-tag">TypeScript</span>
+        <span class="sg-tag">SQL</span>
+        <span class="sg-tag">Rust</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="sg-label">FINANCE</div>
+      <div class="sg-items">
+        <span class="sg-tag">Oracle EPM Cloud</span>
+        <span class="sg-tag">FP&A</span>
+        <span class="sg-tag">Financial Modeling</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="sg-label">ML / DATA</div>
+      <div class="sg-items">
+        <span class="sg-tag">Scikit-learn</span>
+        <span class="sg-tag">LightGBM</span>
+        <span class="sg-tag">Pandas</span>
+        <span class="sg-tag">FastAPI</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="sg-label">AI TOOLS</div>
+      <div class="sg-items">
+        <span class="sg-tag">Claude Code</span>
+        <span class="sg-tag">Anthropic SDK</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="sg-label">WEB</div>
+      <div class="sg-items">
+        <span class="sg-tag">React</span>
+        <span class="sg-tag">GSAP</span>
+        <span class="sg-tag">Vite</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-message">
+      Available for AI/ML roles and FP&A automation consulting.
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/robertlupo1997" class="footer-link" target="_blank">GITHUB</a>
+      <a href="https://linkedin.com/in/robertlupo1997" class="footer-link" target="_blank">LINKEDIN</a>
+      <a href="https://huggingface.co/robertlupo1997" class="footer-link" target="_blank">HUGGING FACE</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-email" title="Click to copy">treylupo1197@gmail.com</span>
+    <span class="footer-copy">&copy; 2026 Trey Lupo</span>
+  </div>
+</footer>
+
+</body>
+</html>
