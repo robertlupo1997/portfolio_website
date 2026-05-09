@@ -21,17 +21,28 @@ interface FluidGlassProps {
   textColor?: [number, number, number];
 }
 
+const DARK_BG_COLOR: [number, number, number] = [0.039, 0.039, 0.043]; // #0A0A0B
+const LIGHT_BG_COLOR: [number, number, number] = [0.98, 0.98, 0.98];   // #FAFAFA
+
+const getThemeBgColor = (): [number, number, number] => {
+  const theme = document.documentElement.getAttribute('data-theme');
+  return theme === 'light' ? LIGHT_BG_COLOR : DARK_BG_COLOR;
+};
+
 const FluidGlass: React.FC<FluidGlassProps> = ({
   text = 'TREY LUPO',
   className = '',
   glassColor = [1, 1, 1],
-  bgColor = [0.039, 0.039, 0.043],  // Matches --bg-primary: #0A0A0B
+  bgColor,
   textColor = [0.08, 0.08, 0.08],   // Subtle text color
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isSupported, setIsSupported] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const isVisibleRef = useRef(false);
+  const resumeRef = useRef<(() => void) | null>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
+  const resolvedBgColor = bgColor ?? getThemeBgColor();
 
   // Render text to canvas for mask texture
   const renderTextToCanvas = useCallback((width: number, height: number): HTMLCanvasElement => {
@@ -162,7 +173,7 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
 
     const backgroundProgram = createShaderProgram(defaultVert, backgroundFrag, {
       textTexture: { value: null },
-      bgColor: { value: bgColor },
+      bgColor: { value: resolvedBgColor },
       textColor: { value: textColor },
     });
 
@@ -170,7 +181,7 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
       pressureMap: { value: null },
       backgroundMap: { value: null },
       glassColor: { value: glassColor },
-      pageBgColor: { value: bgColor },
+      pageBgColor: { value: resolvedBgColor },
       shadowFactor: { value: 0.03 },
       brightFactor: { value: 0.015 },  // Halved for subtler bubbles
       edgeFade: { value: 0.35 },
@@ -196,12 +207,17 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
     // Track if resize is needed
     let needsResize = false;
 
+    // Detect mobile for reduced iteration count
+    const isMobile = navigator.maxTouchPoints > 0 || window.innerWidth < 768;
+
     // Animation loop
     let alive = true;
     let rafId: number;
 
     const update = () => {
       if (!alive) return;
+      // Pause the loop when scrolled out of view — resume via resumeRef
+      if (!isVisibleRef.current) return;
       rafId = requestAnimationFrame(update);
 
       // Update flowmap
@@ -236,7 +252,7 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
         maskTexture.needsUpdate = true;
       }
 
-      const iterations = 10;
+      const iterations = isMobile ? 5 : 10;
       for (let i = 0; i < iterations; i++) {
         // Fluid velocity from flowmap
         renderWith(fluidVelocityProgram, velocity_temp, {
@@ -342,26 +358,57 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('resize', handleResize);
 
+    // Listen for theme changes to update bgColor uniforms
+    const themeObserver = new MutationObserver(() => {
+      const newBgColor = getThemeBgColor();
+      if (backgroundProgram.uniforms.bgColor) {
+        backgroundProgram.uniforms.bgColor.value = newBgColor;
+      }
+      if (glassShadingProgram.uniforms.pageBgColor) {
+        glassShadingProgram.uniforms.pageBgColor.value = newBgColor;
+      }
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+
+    // Allow external visibility changes to restart the loop
+    resumeRef.current = () => {
+      if (alive) {
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(update);
+      }
+    };
+
     // Start animation
     rafId = requestAnimationFrame(update);
 
     // Return cleanup function
     return () => {
       alive = false;
+      resumeRef.current = null;
       cancelAnimationFrame(rafId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('resize', handleResize);
+      themeObserver.disconnect();
       if (gl.canvas.parentElement) {
         gl.canvas.parentElement.removeChild(gl.canvas);
       }
     };
-  }, [text, glassColor, bgColor, textColor, renderTextToCanvas]);
+  }, [text, glassColor, resolvedBgColor, textColor, renderTextToCanvas]);
 
-  // Intersection observer for visibility
+  // Intersection observer for visibility — syncs ref and resumes RAF when re-entering view
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting && resumeRef.current) {
+          resumeRef.current();
+        }
+      },
       { threshold: 0.1 }
     );
 
@@ -372,7 +419,7 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
     return () => observer.disconnect();
   }, []);
 
-  // Initialize renderer when visible
+  // Initialize renderer once when it first becomes visible
   useEffect(() => {
     // Check WebGL support
     const canvas = document.createElement('canvas');
@@ -388,17 +435,20 @@ const FluidGlass: React.FC<FluidGlassProps> = ({
       // Might still work with regular floats
     }
 
-    if (isVisible && !cleanupRef.current) {
+    if (isVisibleRef.current && !cleanupRef.current) {
       cleanupRef.current = initRenderer() || null;
     }
+  }, [isVisible, initRenderer]);
 
+  // Unmount-only cleanup — separate from init so visibility changes don't destroy the context
+  useEffect(() => {
     return () => {
       if (cleanupRef.current) {
         cleanupRef.current();
         cleanupRef.current = null;
       }
     };
-  }, [isVisible, initRenderer]);
+  }, []);
 
   if (!isSupported) {
     return (

@@ -24,7 +24,6 @@ export const PROJECTS: Project[] = [
     liveUrl: "https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction",
     epoch: "AUG 2024",
     metric: "0.97 AUC",
-    cardColor: "coral",
     imageUrl: "/assets/kkbox-churn.jpg"
   },
   {
@@ -35,7 +34,6 @@ export const PROJECTS: Project[] = [
     githubUrl: "https://github.com/robertlupo1997/open-vocabulary-object-detection",
     epoch: "AUG 2024",
     metric: "265-490ms/img",
-    cardColor: "cyan",
     imageUrl: "/assets/objdetect-matrix.jpg"
   },
   {
@@ -46,7 +44,6 @@ export const PROJECTS: Project[] = [
     githubUrl: "https://github.com/robertlupo1997/Amazon-Product-Recommendation-System",
     epoch: "DEC 2024",
     metric: "MIT 100%",
-    cardColor: "green",
     imageUrl: "/assets/amazon-network.jpg"
   },
   {
@@ -57,7 +54,6 @@ export const PROJECTS: Project[] = [
     githubUrl: "https://github.com/robertlupo1997/FoodHub-Data-Analysis",
     epoch: "OCT 2024",
     metric: "MIT IDSS",
-    cardColor: "yellow",
     imageUrl: "/assets/foodhub-heatmap.png"
   },
   {
@@ -68,7 +64,6 @@ export const PROJECTS: Project[] = [
     githubUrl: "https://github.com/robertlupo1997/Shinkansen-Travel-Experience-Prediction-Hackathon",
     epoch: "JAN 2025",
     metric: "MIT IDSS",
-    cardColor: "light-cyan",
     imageUrl: "/assets/shinkansen-shibuya.jpg"
   },
   {
@@ -79,7 +74,6 @@ export const PROJECTS: Project[] = [
     githubUrl: "https://github.com/robertlupo1997/LifeExpectancyPrediction",
     epoch: "JUL 2024",
     metric: "Regression",
-    cardColor: "coral",
     imageUrl: "/assets/life-heartbeat.jpg"
   }
 ];

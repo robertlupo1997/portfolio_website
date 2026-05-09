@@ -151,7 +151,11 @@ const Header: React.FC = () => {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if ((window as any).lenis) {
+      (window as any).lenis.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const toggleNav = () => {
@@ -174,7 +178,6 @@ const Header: React.FC = () => {
               </div>
             ) : (
               <button className="valiente-hamburger" onClick={toggleNav} aria-label="Expand navigation">
-                <span className="hamburger-line" />
                 <span className="hamburger-line" />
                 <span className="hamburger-line" />
                 <span className="hamburger-line" />

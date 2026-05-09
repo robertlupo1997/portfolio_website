@@ -19,6 +19,9 @@ export const useLenis = () => {
       touchMultiplier: 2,
     });
 
+    // Expose lenis on window so other components can use lenis.scrollTo()
+    (window as any).lenis = lenisRef.current;
+
     // Connect Lenis to ScrollTrigger
     lenisRef.current.on('scroll', ScrollTrigger.update);
 
@@ -30,6 +33,7 @@ export const useLenis = () => {
 
     return () => {
       lenisRef.current?.destroy();
+      delete (window as any).lenis;
     };
   }, []);
 

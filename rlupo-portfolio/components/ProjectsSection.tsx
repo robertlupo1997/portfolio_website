@@ -75,7 +75,7 @@ const ProjectsSection: React.FC = () => {
       const speed = [0.15, 0.1, 0.2, 0.12, 0.18, 0.14][index % 6];
 
       gsap.to(card, {
-        y: () => -window.innerHeight * speed,
+        yPercent: () => (-window.innerHeight * speed / card.offsetHeight) * 100,
         ease: 'none',
         scrollTrigger: {
           trigger: section,
@@ -115,20 +115,24 @@ const ProjectsSection: React.FC = () => {
       />
 
       <div id="projects-grid" className={`projects-grid-scattered ${hoveredIndex !== null ? 'has-hover' : ''}`} role="tabpanel">
-        {filteredProjects.map((project, index) => (
-          <div
-            key={project.id}
-            ref={(el) => (cardsRef.current[index] = el)}
-            className={`project-card-wrapper project-card-wrapper-${index + 1} ${
-              hoveredIndex !== null && hoveredIndex !== index ? 'dimmed' : ''
-            } ${hoveredIndex === index ? 'hovered' : ''}`}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseMove={(e) => handleCardMouseMove(e, index)}
-            onMouseLeave={() => handleCardMouseLeave(index)}
-          >
-            <ProjectCard project={project} index={index} />
-          </div>
-        ))}
+        {filteredProjects.length === 0 ? (
+          <p className="projects-empty-state">No projects in this category yet.</p>
+        ) : (
+          filteredProjects.map((project, index) => (
+            <div
+              key={project.id}
+              ref={(el) => (cardsRef.current[index] = el)}
+              className={`project-card-wrapper project-card-wrapper-${index + 1} ${
+                hoveredIndex !== null && hoveredIndex !== index ? 'dimmed' : ''
+              } ${hoveredIndex === index ? 'hovered' : ''}`}
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseMove={(e) => handleCardMouseMove(e, index)}
+              onMouseLeave={() => handleCardMouseLeave(index)}
+            >
+              <ProjectCard project={project} index={index} />
+            </div>
+          ))
+        )}
       </div>
     </section>
   );

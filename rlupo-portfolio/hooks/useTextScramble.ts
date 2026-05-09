@@ -13,7 +13,7 @@ interface UseTextScrambleReturn {
   triggerScramble: () => void;
 }
 
-const DEFAULT_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const DEFAULT_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export const useTextScramble = ({
   text,

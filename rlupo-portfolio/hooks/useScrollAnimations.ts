@@ -6,8 +6,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 export const useScrollAnimations = () => {
   useEffect(() => {
+    const triggers: ScrollTrigger[] = [];
+
     // About section fade-up (using overlap class names)
-    gsap.fromTo(
+    const anim1 = gsap.fromTo(
       '.about-statement-overlap',
       { opacity: 0, y: 60 },
       {
@@ -22,8 +24,9 @@ export const useScrollAnimations = () => {
         },
       }
     );
+    if (anim1.scrollTrigger) triggers.push(anim1.scrollTrigger);
 
-    gsap.fromTo(
+    const anim2 = gsap.fromTo(
       '.about-bio-overlap',
       { opacity: 0, y: 40 },
       {
@@ -38,9 +41,10 @@ export const useScrollAnimations = () => {
         },
       }
     );
+    if (anim2.scrollTrigger) triggers.push(anim2.scrollTrigger);
 
     // Skills stagger
-    gsap.fromTo(
+    const anim3 = gsap.fromTo(
       '.skill-tag-overlap',
       { opacity: 0, y: 20 },
       {
@@ -56,10 +60,11 @@ export const useScrollAnimations = () => {
         },
       }
     );
+    if (anim3.scrollTrigger) triggers.push(anim3.scrollTrigger);
 
-    // Cleanup
+    // Cleanup — only kill triggers created in this hook
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      triggers.forEach((t) => t.kill());
     };
   }, []);
 };

@@ -12,9 +12,11 @@ starter portfolio website/
 rlupo-portfolio-v2/
 rlupo-portfolio-yves-klein/
 
-# Claude/AI working directories
+# Claude/AI working directories (settings are local-only)
 .claude/
-thoughts/
+
+# Track thoughts directory (design decisions, architecture notes)
+# thoughts/ — intentionally NOT ignored
 
 # Research and planning docs (keep in separate repo if needed)
 *-analysis.md

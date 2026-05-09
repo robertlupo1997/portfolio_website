@@ -22,7 +22,6 @@
   --accent-blue-hover: #3385FF;
   --accent-teal: #00D4AA;
   --accent-teal-hover: #00E8BB;
-  --accent-orange: #FF6B35;
 
   /* Borders */
   --border-subtle: rgba(255, 255, 255, 0.08);
@@ -85,6 +84,9 @@
   --z-cursor: 9999;
   --z-nav: 100;
   --z-modal: 200;
+
+  /* Scrolled header background */
+  --bg-scrolled: rgba(10, 10, 11, 0.85);
 }
 
 /* Light Theme Variables */
@@ -106,6 +108,8 @@
 
   --border-subtle: rgba(0, 0, 0, 0.08);
   --border-medium: rgba(0, 0, 0, 0.15);
+
+  --bg-scrolled: rgba(250, 250, 250, 0.85);
 }
 
 /* System preference detection */
@@ -123,6 +127,7 @@
     --accent-teal: #00A888;
     --border-subtle: rgba(0, 0, 0, 0.08);
     --border-medium: rgba(0, 0, 0, 0.15);
+    --bg-scrolled: rgba(250, 250, 250, 0.85);
   }
 }
 
@@ -1063,7 +1068,7 @@ body.custom-cursor-active .project-card-wrapper {
 }
 
 .header-valiente.scrolled {
-  background-color: rgba(10, 10, 11, 0.85);
+  background-color: var(--bg-scrolled, rgba(10, 10, 11, 0.85));
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
@@ -1334,7 +1339,16 @@ body.custom-cursor-active .project-card-wrapper {
 /* Project card wrapper - cursor becomes plus on hover */
 .project-card-wrapper {
   position: relative;
-  will-change: transform;
+}
+
+/* Empty state when a filter returns no projects */
+.projects-empty-state {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  color: var(--text-muted);
+  text-align: center;
+  padding: var(--space-4xl) 0;
 }
 
 /* ----- ABOUT OVERLAP SECTION ----- */
