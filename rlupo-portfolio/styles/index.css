@@ -362,28 +362,28 @@ body.custom-cursor-active [data-cursor] {
 }
 
 .hero-hook {
-  font-size: clamp(2rem, 5vw, 3.8rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
   color: var(--text-primary);
-  max-width: 16ch;
-  margin-bottom: var(--space-xl);
+  max-width: 14ch;
+  margin-bottom: var(--space-2xl);
 }
 
 .accent-amber { color: var(--accent-amber); }
 .accent-blue { color: var(--accent-blue); }
 
 .hero-name-ghost {
-  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-size: clamp(6rem, 18vw, 14rem);
   font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
   color: var(--text-primary);
-  opacity: 0.08;
+  opacity: 0.04;
   position: absolute;
-  right: var(--space-xl);
-  bottom: 25%;
+  right: -2%;
+  bottom: 15%;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   user-select: none;
@@ -472,9 +472,20 @@ body.custom-cursor-active [data-cursor] {
 
 /* ============ SECTION HEADERS ============ */
 .section {
-  padding: var(--space-section) var(--space-xl);
+  padding: clamp(5rem, 14vh, 10rem) var(--space-xl);
   max-width: var(--max-width);
   margin: 0 auto;
+}
+
+.section-alt {
+  background: var(--bg-secondary);
+  padding: clamp(5rem, 14vh, 10rem) 0;
+}
+
+.section-alt > .section-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
 }
 
 .section-label {
@@ -520,11 +531,11 @@ body.custom-cursor-active [data-cursor] {
 }
 
 .fp-title {
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
   margin-bottom: var(--space-md);
-  line-height: 1.1;
+  line-height: 1.05;
 }
 
 .fp-problem {
@@ -587,10 +598,10 @@ body.custom-cursor-active [data-cursor] {
 }
 
 .fp-metric {
-  font-size: clamp(3rem, 6vw, 5rem);
+  font-size: clamp(4rem, 10vw, 8rem);
   font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.04em;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
   background: linear-gradient(135deg, var(--accent-amber), var(--accent-blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -752,12 +763,12 @@ body.custom-cursor-active [data-cursor] {
 
 /* ============ ABOUT ============ */
 .about-statement {
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
   margin-bottom: var(--space-4xl);
-  max-width: 20ch;
+  max-width: 18ch;
 }
 
 .about-statement .amber { color: var(--accent-amber); }
@@ -865,15 +876,21 @@ body.custom-cursor-active [data-cursor] {
 /* ============ MANIFESTO ============ */
 .manifesto {
   margin-bottom: var(--space-4xl);
+  padding: var(--space-4xl) 0;
   text-align: center;
 }
 
 .manifesto-line {
-  font-size: clamp(1.2rem, 3vw, 2rem);
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  line-height: 1.6;
-  color: var(--text-primary);
+  font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  color: var(--text-muted);
+  transition: color 0.3s;
+}
+
+.manifesto-line:hover {
+  color: var(--accent-amber);
 }
 
 /* ============ FOOTER ============ */
