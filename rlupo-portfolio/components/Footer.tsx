@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PERSONAL_INFO } from '../constants';
-import FluidGlass from './FluidGlass';
+import TextScramble from './TextScramble';
 
 const Footer: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -24,9 +24,9 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="footer-giant" id="contact">
-      {/* Fluid Glass Name Effect */}
+      {/* Name display */}
       <div className="footer-giant-name">
-        <FluidGlass text="TREY LUPO" />
+        <TextScramble text="TREY LUPO" as="span" triggerOnView={true} triggerOnHover={true} duration={1200} />
       </div>
 
       {/* Bottom bar */}
@@ -42,6 +42,7 @@ const Footer: React.FC = () => {
           onClick={handleEmailClick}
           type="button"
           title={copied ? 'Copied!' : 'Click to copy email'}
+          aria-live="polite"
         >
           {copied ? 'Copied!' : PERSONAL_INFO.email}
         </button>

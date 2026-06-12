@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { PERSONAL_INFO } from '../constants';
-import ThemeToggle from './ThemeToggle';
+import TextScramble from './TextScramble';
 
 // Text scramble effect for nav items
 const useNavScramble = (text: string, isActive: boolean) => {
@@ -92,15 +92,15 @@ const NavItem: React.FC<{ href: string; text: string; isExpanded: boolean; onCli
       className="valiente-nav-link"
       onMouseEnter={triggerHoverScramble}
       onClick={onClick}
+      aria-label={text}
     >
-      {displayText}
+      <span aria-hidden="true">{displayText}</span>
     </a>
   );
 };
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isPastHero, setIsPastHero] = useState(false);
   const [isNavExpanded, setIsNavExpanded] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -108,7 +108,6 @@ const Header: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
       const pastHero = window.scrollY > window.innerHeight * 0.5;
-      setIsPastHero(pastHero);
 
       // Auto-collapse/expand nav based on scroll position (only on desktop)
       if (window.innerWidth > 1200 && !isMobileMenuOpen) {
@@ -188,12 +187,11 @@ const Header: React.FC = () => {
 
         {/* Center: Logo */}
         <a href="#hero" className="header-logo-center" onClick={scrollToTop}>
-          TREY.ML
+          <TextScramble text="TREY LUPO" triggerOnView={false} triggerOnHover={true} duration={600} />
         </a>
 
-        {/* Right: Theme Toggle + Location + Contact button */}
+        {/* Right: Location + Contact button */}
         <div className="header-right">
-          <ThemeToggle />
           <span className="header-location">TAMPA, FL</span>
           <a href={`mailto:${PERSONAL_INFO.email}`} className="header-contact-btn">
             <span className="contact-btn-text">GET IN TOUCH</span>

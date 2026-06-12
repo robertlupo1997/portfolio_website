@@ -57,7 +57,39 @@ lab.treylupo.com       → ML experiments / interactive notebooks
 Each subdomain = separate Vercel project + CNAME record.
 
 ## Skills to Use
-- `/frontend-design` — For any UI/design work
+
+### Design Skills (use for all UI/design work)
+
+**Core design workflow:**
+- `/impeccable` — Primary design skill with 23 commands: `/impeccable audit` (a11y + perf), `/impeccable critique` (UX review), `/impeccable polish` (pre-ship), `/impeccable animate` (GSAP-ready motion), `/impeccable bolder` (amplify dull designs)
+- `/design-taste-frontend` — Anti-slop frontend skill. Prevents generic AI aesthetics, enforces premium layout/typography/motion
+- `/high-end-visual-design` — Soft, premium UI with whitespace and spring motion (Notion/Linear tier)
+- `/emil-design-eng` — Emil Kowalski's design engineering philosophy. Use when reviewing animations, micro-interactions, invisible polish details
+
+**Design inspiration & research:**
+- `npx designlang <url>` — Extract any site's full design system (tokens, Tailwind config, shadcn theme, Figma vars). Run on reference portfolios before building new sections.
+  - Example: `npx designlang https://linear.app` → outputs to `./design-extract-output/`
+- `/ui-ux-pro-max` — 161 reasoning rules + 67 UI styles + design system generator. Use when deciding on visual direction.
+- HTML template reference: `https://github.com/zarazhangrui/beautiful-html-templates` — 34 high-quality HTML slide deck templates (editorial, brutalist, retro, soft styles). Browse for layout/color/typography inspiration before designing new sections.
+
+**Animation & prototyping:**
+- `/huashu-design` — HTML prototypes, animations, interactive demos. Use to plan complex GSAP sequences before coding.
+- `/image-to-code` — Generate site from image reference, then implement the code to match
+
+**Other available skills:**
+- `/minimalist-ui` — Editorial product UI, restrained palette, crisp structure
+- `/redesign-existing-projects` — Audit existing UI then fix layout/spacing/hierarchy
+- `/full-output-enforcement` — Forces complete code output (no placeholder stubs)
+- `/industrial-brutalist-ui` — Hard mechanical aesthetic (use sparingly)
+
+**shadcn/ui (if adding components):**
+```bash
+cd rlupo-portfolio
+npx shadcn@latest init
+npx shadcn@latest add button card dialog
+```
+
+### Process Skills
 - `/superpowers:brainstorming` — Before any new feature or section design
 - `/superpowers:writing-plans` — Before multi-step implementation work
 - `/superpowers:executing-plans` — When executing a written plan

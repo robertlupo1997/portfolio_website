@@ -19,7 +19,6 @@ export default defineConfig({
         manualChunks: {
           'vendor': ['react', 'react-dom'],
           'animation': ['gsap', 'lenis'],
-          'webgl': ['ogl']
         }
       }
     }
