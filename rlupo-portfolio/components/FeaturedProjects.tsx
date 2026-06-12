@@ -82,10 +82,10 @@ const FeaturedEntry: React.FC<{
 
     const tween = gsap.fromTo(
       img,
-      { yPercent: -8, scale: 1.15 },
+      { yPercent: -5, scale: 1.08 },
       {
-        yPercent: 8,
-        scale: 1.15,
+        yPercent: 5,
+        scale: 1.08,
         ease: 'none',
         scrollTrigger: {
           trigger: wrap,

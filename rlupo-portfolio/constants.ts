@@ -46,7 +46,7 @@ export const FEATURED_PROJECTS: Project[] = [
     stack: ["Rust", "Python", "PyPI", "Statistics"],
     primaryStack: ["Rust", "Python"],
     featured: true,
-    imageUrl: "/assets/objdetect-matrix.jpg",
+    imageUrl: "/assets/plate-ferroml-comparison.png",
   },
   {
     id: "revenue-forecast",
@@ -81,7 +81,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "Streamlit", "XGBoost"],
     primaryStack: ["Python"],
     featured: false,
-    imageUrl: "/assets/kkbox-churn.jpg",
+    imageUrl: "/assets/plate-kkbox-models.png",
   },
   {
     id: "obj-detect",
