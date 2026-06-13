@@ -1,8 +1,8 @@
 import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import FeaturedProjects from './components/FeaturedProjects';
-import AllWork from './components/AllWork';
+// import CredentialStrip from './components/CredentialStrip';
+import ProjectList from './components/ProjectList';
 import About from './components/About';
 import Footer from './components/Footer';
 import Cursor from './components/Cursor';
@@ -19,14 +19,12 @@ const App: React.FC = () => {
       <Cursor />
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <Header />
-
       <main id="main-content" className="main">
         <Hero />
-        <FeaturedProjects />
-        <AllWork />
+        {/* <CredentialStrip /> */}
+        <ProjectList />
         <About />
       </main>
-
       <Footer />
     </>
   );
