@@ -1,4 +1,4 @@
-import { Project, ProjectCategory } from './types';
+import { Project, ProjectCategory, Credential } from './types';
 
 export const PERSONAL_INFO = {
   email: "treylupo1197@gmail.com",
@@ -183,4 +183,15 @@ export const SKILL_GROUPS = [
   { label: "ML / DATA", items: ["Scikit-learn", "LightGBM", "Pandas", "FastAPI"] },
   { label: "AI TOOLS", items: ["Claude Code", "Anthropic SDK"] },
   { label: "WEB", items: ["React", "GSAP", "Vite"] },
+];
+
+export const CREDENTIALS: Credential[] = [
+  { label: 'MIT Data Science Certificate' },
+  { label: 'B.A. Statistics · USF' },
+  { label: '6,500+ Tests · FerroML' },
+  { label: '60+ API Endpoints · nspb-api' },
+  { label: '0.97 AUC · KKBOX Churn' },
+  { label: 'Franklin Street FP&A' },
+  { label: 'Python · Rust · TypeScript · SQL' },
+  { label: 'Origin Construction · AI Intern' },
 ];

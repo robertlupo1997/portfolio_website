@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-// import CredentialStrip from './components/CredentialStrip';
+import CredentialStrip from './components/CredentialStrip';
 import ProjectList from './components/ProjectList';
 import About from './components/About';
 import Footer from './components/Footer';
@@ -21,7 +21,7 @@ const App: React.FC = () => {
       <Header />
       <main id="main-content" className="main">
         <Hero />
-        {/* <CredentialStrip /> */}
+        <CredentialStrip />
         <ProjectList />
         <About />
       </main>

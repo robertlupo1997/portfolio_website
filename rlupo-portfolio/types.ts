@@ -18,3 +18,7 @@ export interface Project {
   problem?: string;
   imageUrl?: string;
 }
+
+export interface Credential {
+  label: string;
+}

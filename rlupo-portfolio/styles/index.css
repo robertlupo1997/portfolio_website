@@ -447,6 +447,56 @@ a:focus-visible {
   .folio-year, .folio-category, .folio-metric { display: none; }
 }
 
+/* ----- CREDENTIAL STRIP ----- */
+.credential-strip {
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
+  padding: var(--space-md) 0;
+}
+
+.credential-track {
+  display: flex;
+  gap: var(--space-lg);
+  white-space: nowrap;
+  animation: marquee 40s linear infinite;
+}
+
+.credential-strip:hover .credential-track {
+  animation-play-state: paused;
+}
+
+.credential-item {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-label);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.credential-sep {
+  color: var(--text-tertiary);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .credential-track {
+    animation: none;
+    flex-wrap: wrap;
+    white-space: normal;
+    justify-content: center;
+  }
+}
+
 /* ----- LINE-MASK REVEALS ----- */
 /* Descender headroom inside SplitText mask wrappers (tight line-heights clip p/y/g) */
 .sr-line {
