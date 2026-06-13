@@ -1,6 +1,6 @@
 /* ============================================
    TREY LUPO PORTFOLIO — The Invisible Frame
-   Dark only | Signal Blue accent | Satoshi
+   Dark only | Signal Blue accent
    ============================================ */
 
 /* ----- CSS VARIABLES ----- */
@@ -143,27 +143,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
   line-height: 0.85;
   letter-spacing: -0.03em;
-}
-
-.text-hero {
-  font-size: var(--text-hero);
-  font-weight: 500;
-  line-height: 0.85;
-  letter-spacing: -0.04em;
-}
-
-.text-section {
-  font-size: var(--text-section);
-  font-weight: 500;
-  line-height: 0.9;
-}
-
-.text-mono {
-  font-family: var(--font-mono);
-}
-
-.text-muted {
-  color: var(--text-secondary);
 }
 
 .text-accent {
@@ -810,7 +789,6 @@ body.custom-cursor-active [data-cursor] {
 @media (max-width: 768px) {
   :root {
     --text-hero: clamp(2.5rem, 12vw, 5rem);
-    --text-section: clamp(1.5rem, 5vw, 2.5rem);
     --space-section: 100px;
   }
 
@@ -851,15 +829,9 @@ body.custom-cursor-active [data-cursor] {
     scroll-behavior: auto !important;
   }
 
-  html.lenis, html.lenis body {
-    scroll-behavior: auto !important;
-  }
-
   .hero-descriptor,
   .hero-cta-wrap,
-  .about-statement-text,
-  .about-bio,
-  .skill-tag {
+  .folio-entry {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;

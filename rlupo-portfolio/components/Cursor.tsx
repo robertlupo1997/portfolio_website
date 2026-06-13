@@ -32,7 +32,7 @@ const Cursor: React.FC = () => {
 
       const target = e.target as HTMLElement;
       const isHoverable = !!target.closest('a, button, [data-cursor="hover"]');
-      const isProject = !!target.closest('.fp-entry, .work-item');
+      const isProject = !!target.closest('.folio-entry');
 
       cursor.classList.toggle('cursor--hover', isHoverable);
       cursor.classList.toggle('cursor--project', isProject && !isHoverable);
