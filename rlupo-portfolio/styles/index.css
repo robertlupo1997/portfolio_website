@@ -5,41 +5,30 @@
 
 /* ----- CSS VARIABLES ----- */
 :root {
-  /* Colors — Void Palette */
+  --bg-void: #050506;
   --bg-primary: #0A0A0B;
-  --bg-secondary: #111113;
-  --bg-tertiary: #18181B;
-  --bg-card: #111113;
-  --bg-card-hover: #18181B;
-
-  /* Text */
-  --text-primary: #E8E8EE;
-  --text-secondary: #888899;
-  --text-muted: #7A7A8C; /* 4.7:1 on void — WCAG AA */
-
-  /* Accent — Signal Blue only */
-  --accent-blue: #0066FF;
-  --accent-blue-hover: #0055DD;
-
-  /* Borders */
+  --bg-elevated: #111113;
+  --bg-surface: #18181B;
+  --text-primary: #E8E5DF;
+  --text-secondary: #8A8780;
+  --text-tertiary: #5A5855;
+  --accent: #C87533;
+  --accent-dim: #A35E28;
+  --accent-subtle: #2A1D12;
   --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-medium: rgba(255, 255, 255, 0.15);
-
-  /* Typography */
-  --font-sans: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --border-default: rgba(255, 255, 255, 0.10);
+  --border-emphasis: rgba(255, 255, 255, 0.16);
+  --font-display: 'Space Grotesk', -apple-system, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-
-  /* Font Sizes — extraction-informed scale */
-  --text-xs: 0.7rem;
-  --text-sm: 0.8rem;
-  --text-base: 0.95rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.5rem;
-  --text-hero: clamp(3.2rem, 8vw, 8rem);
-  --text-section: clamp(1.8rem, 4vw, 3rem);
-  --text-number: 4.5rem;
-
-  /* Spacing — generous section breaks (simonholm: 160/100px) */
+  --text-hero: clamp(2.5rem, 8vw, 4.5rem);
+  --text-h1: 2.25rem;
+  --text-h2: 1.5rem;
+  --text-h3: 1.125rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-mono-label: 0.75rem;
+  --text-mono-nav: 0.875rem;
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 1rem;
@@ -48,38 +37,18 @@
   --space-2xl: 3rem;
   --space-3xl: 4rem;
   --space-4xl: 6rem;
-  --space-section: 160px;
-  --space-section-mid: 100px;
-
-  /* Layout — tight page margins (simonholm: 0.7rem) */
-  --page-margin: max(0.7rem, calc((100vw - 1280px) / 2));
-  --max-width: 1280px;
-
-  /* Border Radius — square corners everywhere */
-  --radius-sm: 0;
-  --radius-md: 0;
-  --radius-lg: 0;
-  --radius-full: 0;
-
-  /* Easing — from both extractions */
+  --space-section: 8rem;
+  --page-margin: max(1.5rem, calc((100vw - 1200px) / 2));
+  --max-width: 1200px;
+  --radius-none: 0;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
   --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-
-  /* Transitions — atmospheric timing */
-  --transition-micro: 200ms ease-in-out;
-  --transition-fast: 300ms var(--ease-out);
-  --transition-base: 800ms var(--ease-out);
-  --transition-slow: 1200ms var(--ease-out-expo);
-  --transition-atmospheric: 1800ms var(--ease-out-expo);
-
-  /* Z-Index */
   --z-cursor: 9999;
   --z-nav: 100;
   --z-modal: 200;
-
-  /* Scrolled header background */
-  --bg-scrolled: rgba(10, 10, 11, 0.85);
 }
 
 /* ----- RESET & BASE ----- */
@@ -117,9 +86,9 @@ html.lenis, html.lenis body {
 
 body {
   font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-size: var(--text-body);
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.6;
   color: var(--text-primary);
   background-color: var(--bg-primary);
   overflow-x: hidden;
@@ -137,7 +106,7 @@ body {
 
 /* Selection */
 ::selection {
-  background-color: var(--accent-blue);
+  background-color: var(--accent);
   color: var(--text-primary);
 }
 
@@ -198,7 +167,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-accent {
-  color: var(--accent-blue);
+  color: var(--accent);
 }
 
 /* ----- LAYOUT ----- */
@@ -254,7 +223,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .mobile-nav a:hover {
-  color: var(--accent-blue);
+  color: var(--accent);
 }
 
 /* ----- UTILITY CLASSES ----- */
@@ -285,13 +254,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 *:focus-visible {
-  outline: 2px solid var(--accent-blue);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--accent-blue);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -301,7 +270,7 @@ a:focus-visible {
   left: 50%;
   transform: translateX(-50%);
   padding: 1rem 2rem;
-  background: var(--accent-blue);
+  background: var(--accent);
   color: var(--bg-primary);
   font-weight: 600;
   z-index: 10000;
@@ -328,7 +297,7 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.15em;
   margin-bottom: var(--space-2xl);
 }
@@ -378,7 +347,7 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.12em;
   margin-bottom: var(--space-2xl);
   opacity: 0;
@@ -410,7 +379,7 @@ a:focus-visible {
   font-weight: 400;
   letter-spacing: 0.06em;
   color: var(--text-secondary);
-  border: 1px solid var(--border-medium);
+  border: 1px solid var(--border-emphasis);
   padding: 0.6rem 1.5rem;
   transition: color var(--transition-micro), border-color var(--transition-micro), transform 160ms var(--ease-out);
 }
@@ -426,13 +395,13 @@ a:focus-visible {
   font-weight: 400;
   letter-spacing: 0.06em;
   color: var(--text-primary);
-  background-color: var(--accent-blue);
+  background-color: var(--accent);
   padding: 0.6rem 1.5rem;
   transition: background-color var(--transition-micro), transform 160ms var(--ease-out);
 }
 
 .hero-cta-primary:hover {
-  background-color: var(--accent-blue-hover);
+  background-color: var(--accent-dim);
 }
 
 /* ----- HERO DIVIDER ----- */
@@ -516,7 +485,7 @@ a:focus-visible {
 
 .fp-image-placeholder {
   aspect-ratio: 16 / 9;
-  background: var(--bg-secondary);
+  background: var(--bg-elevated);
 }
 
 /* Entrance animation — CSS class toggled by IntersectionObserver */
@@ -554,7 +523,7 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-number);
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   line-height: 0.85;
   letter-spacing: -0.05em;
   opacity: 0.3;
@@ -565,7 +534,7 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.15em;
   margin-bottom: var(--space-sm);
 }
@@ -614,7 +583,7 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.1em;
 }
 
@@ -690,7 +659,7 @@ a:focus-visible {
 }
 
 .work-filter:hover {
-  border-color: var(--border-medium);
+  border-color: var(--border-emphasis);
   color: var(--text-primary);
 }
 
@@ -701,7 +670,7 @@ a:focus-visible {
 }
 
 .work-filter:focus-visible {
-  outline: 2px solid var(--accent-blue);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -732,7 +701,7 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.05em;
   flex: 0 0 2.5rem;
 }
@@ -748,7 +717,7 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.08em;
   flex: 0 0 auto;
 }
@@ -763,7 +732,7 @@ a:focus-visible {
 }
 
 .work-item-arrow {
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   flex: 0 0 auto;
   transition: transform var(--transition-micro);
 }
@@ -858,7 +827,7 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.15em;
   text-transform: lowercase;
   margin-bottom: var(--space-sm);
@@ -882,7 +851,7 @@ a:focus-visible {
 }
 
 .skill-tag-overlap:hover {
-  border-color: var(--border-medium);
+  border-color: var(--border-emphasis);
 }
 
 .services-overlap {
@@ -892,7 +861,7 @@ a:focus-visible {
 .services-title-overlap {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   text-transform: lowercase;
   letter-spacing: 0.15em;
   margin-bottom: var(--space-lg);
@@ -915,7 +884,7 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.05em;
   flex: 0 0 5.5rem;
   padding-top: 0.15rem;
@@ -978,12 +947,12 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.05em;
 }
 
 .footer-divider {
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   font-size: var(--text-xs);
 }
 
@@ -1011,7 +980,7 @@ a:focus-visible {
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: var(--accent-blue);
+  background-color: var(--accent);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s var(--ease-out);
@@ -1026,7 +995,7 @@ a:focus-visible {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.05em;
   transition: color var(--transition-micro);
 }
@@ -1097,7 +1066,7 @@ a:focus-visible {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--border-medium);
+  border: 1px solid var(--border-emphasis);
   transition: border-color var(--transition-fast), color var(--transition-fast), transform 160ms var(--ease-out);
 }
 
@@ -1138,7 +1107,7 @@ a:focus-visible {
 }
 
 .valiente-nav-link:hover {
-  color: var(--accent-blue);
+  color: var(--accent);
 }
 
 .valiente-hamburger {
@@ -1159,7 +1128,7 @@ a:focus-visible {
 }
 
 .valiente-hamburger:hover .hamburger-line {
-  background-color: var(--accent-blue);
+  background-color: var(--accent);
 }
 
 .hamburger-mobile {
@@ -1280,7 +1249,7 @@ body.custom-cursor-active [data-cursor] {
   left: 0;
   width: 300px;
   aspect-ratio: 4 / 3;
-  background: var(--bg-secondary);
+  background: var(--bg-elevated);
   border: 1px solid var(--border-subtle);
   overflow: hidden;
   pointer-events: none;
@@ -1320,7 +1289,7 @@ body.custom-cursor-active [data-cursor] {
 .work-preview-category {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--text-muted);
+  color: var(--text-tertiary);
   letter-spacing: 0.15em;
 }
 
