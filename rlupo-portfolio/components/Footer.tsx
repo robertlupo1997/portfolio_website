@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { PERSONAL_INFO } from '../constants';
-import TextScramble from './TextScramble';
 
 const Footer: React.FC = () => {
   const [copied, setCopied] = useState(false);
-  const currentYear = new Date().getFullYear();
 
   const handleEmailClick = async () => {
     try {
@@ -16,51 +14,33 @@ const Footer: React.FC = () => {
     }
   };
 
-  const socialLinks = [
-    { href: PERSONAL_INFO.github, label: 'GitHub' },
-    { href: PERSONAL_INFO.linkedin, label: 'LinkedIn' },
-    { href: PERSONAL_INFO.huggingface, label: 'HuggingFace' },
-  ];
-
   return (
-    <footer className="footer-giant" id="contact">
-      {/* Name display */}
-      <div className="footer-giant-name">
-        <TextScramble text="TREY LUPO" as="span" triggerOnView={true} triggerOnHover={true} duration={1200} />
+    <footer className="footer" id="contact">
+      <div className="footer-statement">
+        Building at the intersection of finance and machine learning.
       </div>
 
-      {/* Bottom bar */}
-      <div className="footer-bottom">
-        <div className="footer-bottom-left">
-          <span className="footer-location">TAMPA, FL</span>
-          <span className="footer-divider">|</span>
-          <span className="footer-year">&copy;{currentYear}</span>
+      <div className="footer-grid">
+        <div className="footer-col">
+          <span className="footer-label">©2026 Trey Lupo</span>
+          <span className="footer-label">Tampa, FL</span>
         </div>
 
-        <button
-          className="footer-email-btn"
-          onClick={handleEmailClick}
-          type="button"
-          title={copied ? 'Copied!' : 'Click to copy email'}
-          aria-live="polite"
-        >
-          {copied ? 'Copied!' : PERSONAL_INFO.email}
-        </button>
+        <div className="footer-col">
+          <button
+            className="footer-email"
+            onClick={handleEmailClick}
+            type="button"
+            aria-live="polite"
+          >
+            {copied ? 'copied!' : PERSONAL_INFO.email}
+          </button>
+        </div>
 
-        <div className="footer-bottom-right">
-          {socialLinks.map((link, index) => (
-            <React.Fragment key={link.label}>
-              <a
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-social-link"
-              >
-                {link.label}
-              </a>
-              {index < socialLinks.length - 1 && <span className="footer-divider">|</span>}
-            </React.Fragment>
-          ))}
+        <div className="footer-col footer-col--right">
+          <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
+          <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a>
+          <a href={PERSONAL_INFO.huggingface} target="_blank" rel="noopener noreferrer" className="footer-link">HuggingFace</a>
         </div>
       </div>
     </footer>
