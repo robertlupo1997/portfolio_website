@@ -53,13 +53,18 @@ const Hero: React.FC = () => {
           <TextScramble text="Trey Lupo" triggerOnView={false} triggerOnHover={true} duration={1500} delay={200} />
         </h1>
         <p className={`hero-descriptor ${isLoaded ? 'visible' : ''}`}>
-          AI/ML systems engineer.
+          AI/ML systems engineer building precision tools<br />
+          for finance, forecasting, and production ML.
         </p>
         <div className={`hero-cta-wrap ${isLoaded ? 'visible' : ''}`}>
           <a ref={ctaRef} href={`mailto:${PERSONAL_INFO.email}`} className="btn-primary">
             Get in touch
           </a>
         </div>
+      </div>
+      <div className="hero-folio-label" aria-hidden="true">
+        <span>Folio</span>
+        <span>/2026</span>
       </div>
     </section>
   );

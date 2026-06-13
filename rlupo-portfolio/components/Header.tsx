@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { PERSONAL_INFO } from '../constants';
 import TextScramble from './TextScramble';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -52,7 +51,6 @@ const Header: React.FC = () => {
         <nav className="header-nav">
           <a href="#projects" className="nav-link">Projects</a>
           <a href="#about" className="nav-link">Info</a>
-          <a href={`mailto:${PERSONAL_INFO.email}`} className="nav-link nav-link--accent">Contact</a>
         </nav>
 
         <button
@@ -70,7 +68,6 @@ const Header: React.FC = () => {
         <nav className="mobile-nav">
           <a href="#projects" onClick={handleNavClick}>Projects</a>
           <a href="#about" onClick={handleNavClick}>Info</a>
-          <a href={`mailto:${PERSONAL_INFO.email}`} onClick={handleNavClick}>Contact</a>
         </nav>
       </div>
     </>

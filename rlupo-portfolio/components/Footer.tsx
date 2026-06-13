@@ -17,15 +17,10 @@ const Footer: React.FC = () => {
   return (
     <footer className="footer" id="contact">
       <div className="footer-statement">
-        Building at the intersection of finance and machine learning.
+        Let's build something.
       </div>
 
       <div className="footer-grid">
-        <div className="footer-col">
-          <span className="footer-label">©2026 Trey Lupo</span>
-          <span className="footer-label">Tampa, FL</span>
-        </div>
-
         <div className="footer-col">
           <button
             className="footer-email"
@@ -37,11 +32,17 @@ const Footer: React.FC = () => {
           </button>
         </div>
 
-        <div className="footer-col footer-col--right">
+        <div className="footer-col">
           <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
           <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a>
           <a href={PERSONAL_INFO.huggingface} target="_blank" rel="noopener noreferrer" className="footer-link">HuggingFace</a>
         </div>
+      </div>
+
+      <div className="footer-colophon">
+        <span className="footer-label">Design + Development · Trey Lupo</span>
+        <span className="footer-label">Fonts · Space Grotesk · Inter · JetBrains Mono</span>
+        <span className="footer-label">©2026 Tampa, FL</span>
       </div>
     </footer>
   );
