@@ -57,7 +57,7 @@ const Hero: React.FC = () => {
         </div>
       </div>
       <div className="hero-folio-label" aria-hidden="true">
-        <span>Folio</span>
+        <span>Portfolio</span>
         <span>/2026</span>
       </div>
     </section>

@@ -34,7 +34,7 @@ const ProjectList: React.FC = () => {
   return (
     <section className="folio" id="projects">
       <div className="folio-header">
-        <h2 className="section-label">Folio /2026</h2>
+        <h2 className="section-label">Portfolio /2026</h2>
       </div>
 
       <div className="folio-list" onMouseLeave={() => setPreview(null)}>

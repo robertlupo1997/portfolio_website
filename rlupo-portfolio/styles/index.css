@@ -1,3 +1,5 @@
+@import '@fontsource-variable/cascadia-mono';
+
 /* ============================================
    TREY LUPO PORTFOLIO — The Invisible Frame
    Dark only | Signal Blue accent
@@ -19,6 +21,7 @@
   --border-default: rgba(255, 255, 255, 0.10);
   --border-emphasis: rgba(255, 255, 255, 0.16);
   --font-display: 'Space Grotesk', -apple-system, sans-serif;
+  --font-editorial: 'Cascadia Mono Variable', 'Cascadia Mono', monospace;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
   --text-hero: clamp(3.5rem, 10vw, 7rem);
@@ -333,9 +336,9 @@ a:focus-visible {
 }
 
 .hero-name {
-  font-family: var(--font-display);
+  font-family: var(--font-editorial);
   font-size: var(--text-hero);
-  font-weight: 600;
+  font-weight: 300;
   line-height: 0.9;
   letter-spacing: -0.04em;
   color: var(--text-primary);
@@ -350,9 +353,9 @@ a:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font-family: var(--font-display);
+  font-family: var(--font-editorial);
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 600;
+  font-weight: 300;
   line-height: 0.9;
   letter-spacing: -0.03em;
   color: var(--text-tertiary);
