@@ -1,16 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import TextScramble from './TextScramble';
 import { PERSONAL_INFO } from '../constants';
 
 const Hero: React.FC = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
   const ctaRef = useRef<HTMLAnchorElement>(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const btn = ctaRef.current;
@@ -52,11 +46,11 @@ const Hero: React.FC = () => {
         <h1 className="hero-name">
           <TextScramble text="Trey Lupo" triggerOnView={false} triggerOnHover={true} duration={1500} delay={200} />
         </h1>
-        <p className={`hero-descriptor ${isLoaded ? 'visible' : ''}`}>
+        <p className="hero-descriptor">
           AI/ML systems engineer building precision tools<br />
           for finance, forecasting, and production ML.
         </p>
-        <div className={`hero-cta-wrap ${isLoaded ? 'visible' : ''}`}>
+        <div className="hero-cta-wrap">
           <a ref={ctaRef} href={`mailto:${PERSONAL_INFO.email}`} className="btn-primary">
             Get in touch
           </a>

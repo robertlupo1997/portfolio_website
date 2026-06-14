@@ -1,16 +1,13 @@
-import React, { useState, useMemo, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import gsap from 'gsap';
 import { FEATURED_PROJECTS, ALL_PROJECTS } from '../constants';
 import { Project } from '../types';
-import LineReveal from './LineReveal';
 
 const ALL = [...FEATURED_PROJECTS, ...ALL_PROJECTS];
 
 const ProjectList: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [preview, setPreview] = useState<Project | null>(null);
+  const [preview, setPreview] = React.useState<Project | null>(null);
 
   const canPreview = useMemo(
     () =>
@@ -19,24 +16,6 @@ const ProjectList: React.FC = () => {
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
     []
   );
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            observer.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.05 }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const el = previewRef.current;
@@ -53,11 +32,7 @@ const ProjectList: React.FC = () => {
   }, [canPreview]);
 
   return (
-    <section
-      className={`folio ${isVisible ? 'folio--visible' : ''}`}
-      id="projects"
-      ref={sectionRef}
-    >
+    <section className="folio" id="projects">
       <div className="folio-header">
         <h2 className="section-label">Folio /2026</h2>
       </div>
@@ -70,7 +45,6 @@ const ProjectList: React.FC = () => {
             target={project.githubUrl || project.liveUrl ? '_blank' : undefined}
             rel="noopener noreferrer"
             className="folio-entry"
-            style={{ transitionDelay: `${index * 0.06}s` } as React.CSSProperties}
             onMouseEnter={() => canPreview && setPreview(project)}
           >
             <div className="folio-entry-left">
@@ -79,7 +53,7 @@ const ProjectList: React.FC = () => {
             </div>
 
             <div className="folio-entry-main">
-              <LineReveal as="span" className="folio-title">{project.title}</LineReveal>
+              <span className="folio-title">{project.title}</span>
               {project.imageUrl && (
                 <div className="folio-thumb">
                   <img src={project.imageUrl} alt="" loading="lazy" />

@@ -29,21 +29,6 @@ const Cursor: React.FC = () => {
       }
       xTo(e.clientX);
       yTo(e.clientY);
-
-      const target = e.target as HTMLElement;
-      const isHoverable = !!target.closest('a, button, [data-cursor="hover"]');
-      const isProject = !!target.closest('.folio-entry');
-
-      cursor.classList.toggle('cursor--hover', isHoverable);
-      cursor.classList.toggle('cursor--project', isProject && !isHoverable);
-    };
-
-    const handleMouseDown = () => {
-      gsap.to(cursor, { scale: 1.5, duration: 0.1, ease: 'power2.out' });
-    };
-
-    const handleMouseUp = () => {
-      gsap.to(cursor, { scale: 1, duration: 0.2, ease: 'power3.out' });
     };
 
     const handleMouseLeave = () => {
@@ -55,22 +40,28 @@ const Cursor: React.FC = () => {
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('mouseleave', handleMouseLeave);
     document.addEventListener('mouseenter', handleMouseEnter);
 
     return () => {
       document.body.classList.remove('custom-cursor-active');
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('mouseleave', handleMouseLeave);
       document.removeEventListener('mouseenter', handleMouseEnter);
     };
   }, []);
 
-  return <div ref={cursorRef} className="cursor" />;
+  return (
+    <div ref={cursorRef} className="cursor">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 10V2H10" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M22 2H30V10" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M30 22V30H22" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M10 30H2V22" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="16" cy="16" r="2" fill="currentColor" />
+      </svg>
+    </div>
+  );
 };
 
 export default Cursor;

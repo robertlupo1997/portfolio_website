@@ -45,8 +45,10 @@
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 8px;
-  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-sm: 225ms;
+  --duration-md: 300ms;
+  --easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decel: cubic-bezier(0, 0, 0.2, 1);
   --z-cursor: 9999;
   --z-nav: 100;
   --z-modal: 200;
@@ -179,7 +181,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 280ms var(--ease-out), visibility 280ms var(--ease-out);
+  transition: opacity var(--duration-md) var(--easing), visibility var(--duration-md) var(--easing);
 }
 
 .mobile-nav-overlay.open {
@@ -199,7 +201,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transition: color var(--transition-fast);
+  transition: color var(--duration-sm) var(--easing);
 }
 
 .mobile-nav a:hover {
@@ -254,7 +256,7 @@ a:focus-visible {
   color: var(--bg-primary);
   font-weight: 600;
   z-index: 10000;
-  transition: top 0.3s;
+  transition: top var(--duration-md) var(--easing);
   border-radius: var(--radius-sm);
 }
 
@@ -265,6 +267,40 @@ a:focus-visible {
 *:focus,
 *:focus-visible {
   cursor: auto !important;
+}
+
+/* ============================================
+   PRELOADER
+   ============================================ */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background-color: var(--bg-primary);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: var(--page-margin);
+  transition: opacity var(--duration-md) var(--easing);
+}
+
+.preloader-counter {
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  color: var(--text-tertiary);
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.site-content {
+  opacity: 0;
+  transition: opacity var(--duration-md) var(--easing);
+}
+
+.site-content--visible {
+  opacity: 1;
 }
 
 /* ============================================
@@ -328,26 +364,8 @@ a:focus-visible {
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: var(--space-2xl);
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.8s var(--ease-out-expo) 0.4s, transform 0.8s var(--ease-out-expo) 0.4s;
 }
 
-.hero-descriptor.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.hero-cta-wrap {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.8s var(--ease-out-expo) 0.6s, transform 0.8s var(--ease-out-expo) 0.6s;
-}
-
-.hero-cta-wrap.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 .btn-primary {
   display: inline-block;
@@ -360,7 +378,7 @@ a:focus-visible {
   background-color: var(--accent);
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-md);
-  transition: background-color 200ms var(--ease-out), transform 160ms var(--ease-out);
+  transition: background-color var(--duration-sm) var(--easing), transform var(--duration-sm) var(--easing);
   will-change: transform;
 }
 
@@ -395,6 +413,15 @@ a:focus-visible {
   border-bottom: 1px solid var(--border-subtle);
   text-decoration: none;
   position: relative;
+  transition: opacity var(--duration-md) var(--easing);
+}
+
+.folio-list:hover .folio-entry {
+  opacity: 0.4;
+}
+
+.folio-list:hover .folio-entry:hover {
+  opacity: 1;
 }
 
 .folio-entry:first-child {
@@ -405,15 +432,6 @@ a:focus-visible {
   padding-left: clamp(2rem, 6vw, 8rem);
 }
 
-.folio .folio-entry {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
-}
-.folio--visible .folio-entry {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 .folio-entry-left {
   display: flex;
@@ -452,11 +470,6 @@ a:focus-visible {
   letter-spacing: -0.03em;
   color: var(--text-primary);
   text-transform: uppercase;
-  transition: color 0.3s var(--ease-out);
-}
-
-.folio-entry:hover .folio-title {
-  color: var(--accent);
 }
 
 .folio-thumb {
@@ -465,12 +478,6 @@ a:focus-visible {
   overflow: hidden;
   border-radius: var(--radius-sm);
   flex-shrink: 0;
-  opacity: 0.7;
-  transition: opacity 0.3s var(--ease-out);
-}
-
-.folio-entry:hover .folio-thumb {
-  opacity: 1;
 }
 
 .folio-thumb img {
@@ -518,7 +525,7 @@ a:focus-visible {
   pointer-events: none;
   z-index: calc(var(--z-nav) - 1);
   opacity: 0;
-  transition: opacity 200ms var(--ease-out);
+  transition: opacity var(--duration-md) var(--easing);
 }
 .folio-preview--visible { opacity: 1; }
 .folio-preview img { width: 100%; height: 100%; object-fit: cover; }
@@ -780,7 +787,7 @@ a:focus-visible {
   border: none;
   cursor: pointer;
   padding: 0;
-  transition: color 200ms var(--ease-out);
+  transition: color var(--duration-sm) var(--easing);
 }
 
 .footer-email:hover { color: var(--accent); }
@@ -790,7 +797,7 @@ a:focus-visible {
   font-size: var(--text-mono-label);
   color: var(--text-tertiary);
   letter-spacing: 0.06em;
-  transition: color 200ms var(--ease-out);
+  transition: color var(--duration-sm) var(--easing);
 }
 
 .footer-link:hover { color: var(--text-primary); }
@@ -845,7 +852,7 @@ a:focus-visible {
   font-weight: 400;
   letter-spacing: 0.02em;
   color: var(--text-secondary);
-  transition: color 200ms var(--ease-out);
+  transition: color var(--duration-sm) var(--easing);
 }
 
 .nav-link:hover { color: var(--text-primary); }
@@ -869,7 +876,7 @@ a:focus-visible {
   width: 24px;
   height: 1.5px;
   background-color: var(--text-primary);
-  transition: transform 200ms var(--ease-out), opacity 200ms var(--ease-out);
+  transition: transform var(--duration-sm) var(--easing), opacity var(--duration-sm) var(--easing);
 }
 
 .hamburger.open .hamburger-line:nth-child(1) {
@@ -894,35 +901,14 @@ a:focus-visible {
   position: fixed;
   top: 0;
   left: 0;
-  width: 12px;
-  height: 12px;
-  background-color: var(--text-primary);
-  border-radius: 50%;
+  width: 32px;
+  height: 32px;
   pointer-events: none;
   z-index: var(--z-cursor);
   transform: translate(-50%, -50%);
   mix-blend-mode: difference;
-  transition: width 0.25s var(--ease-out),
-              height 0.25s var(--ease-out),
-              background-color 0.25s var(--ease-out),
-              border-color 0.25s var(--ease-out);
-  will-change: transform;
-  border: 2px solid transparent;
+  color: var(--text-primary);
   opacity: 0;
-}
-
-.cursor--hover {
-  width: 40px;
-  height: 40px;
-  background-color: transparent;
-  border-color: var(--text-primary);
-}
-
-.cursor--project {
-  width: 48px;
-  height: 48px;
-  background-color: transparent;
-  border-color: var(--text-primary);
 }
 
 body.custom-cursor-active {
