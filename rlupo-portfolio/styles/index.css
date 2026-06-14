@@ -368,6 +368,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
 }
 
 /* Scanline overlay */
@@ -380,8 +381,8 @@ h1, h2, h3, h4, h5, h6 {
     0deg,
     transparent,
     transparent 2px,
-    rgba(0, 0, 0, 0.04) 2px,
-    rgba(0, 0, 0, 0.04) 4px
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
   );
   pointer-events: none;
   z-index: 1;

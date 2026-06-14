@@ -22,6 +22,7 @@ export const FEATURED_PROJECTS: Project[] = [
     projectCategory: "fpna",
     description: "A complete Python SDK for Oracle's Enterprise Performance Management Cloud, covering Planning, Migration, and Data Management APIs.",
     problem: "Oracle EPM Cloud exposes no public API. I built one.",
+    githubUrl: "https://github.com/robertlupo1997/nspb-api",
     epoch: "/26",
     metric: "60+",
     metricLabel: "API ENDPOINTS",

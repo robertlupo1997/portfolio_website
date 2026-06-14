@@ -16,6 +16,7 @@ const Carousel: React.FC = () => {
   } = useCarousel({ totalSlides: FEATURED_PROJECTS.length });
 
   const trackRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const prevIndex = useRef(0);
 
   useEffect(() => {
@@ -28,11 +29,15 @@ const Carousel: React.FC = () => {
       ease: 'power3.out',
     });
 
+    if (prevIndex.current !== activeIndex && sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     prevIndex.current = activeIndex;
   }, [activeIndex]);
 
   return (
-    <section className="carousel" id="projects" {...swipeHandlers}>
+    <section className="carousel" id="projects" ref={sectionRef} {...swipeHandlers}>
       <div className="carousel-track" ref={trackRef}>
         {FEATURED_PROJECTS.map((project, i) => (
           <CarouselSlide
