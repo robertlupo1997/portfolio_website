@@ -846,11 +846,13 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
 
   .carousel-slide-image {
     grid-column: 1;
+    grid-row: 2;
     padding: var(--space-md);
   }
 
   .carousel-slide-footer {
     grid-column: 1;
+    grid-row: 3;
     flex-wrap: wrap;
     padding-left: var(--space-xl);
     gap: var(--space-md);
