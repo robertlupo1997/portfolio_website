@@ -9,8 +9,6 @@ interface TerminalPanelProps {
 }
 
 const TerminalPanel: React.FC<TerminalPanelProps> = ({ project, index, isActive }) => {
-  const url = project.githubUrl || project.liveUrl;
-
   return (
     <div className="terminal-panel">
       <div className="terminal-header">
@@ -56,20 +54,6 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ project, index, isActive 
           <span className="terminal-label">STACK:</span>
           <span className="terminal-value">{project.stack.join(' / ')}</span>
         </div>
-      </div>
-
-      <div className="terminal-footer">
-        {url && (
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="terminal-visit"
-          >
-            [ VISIT -&gt; ]
-          </a>
-        )}
-        {isActive && <span className="cursor-blink" />}
       </div>
     </div>
   );
