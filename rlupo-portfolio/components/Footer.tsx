@@ -41,8 +41,8 @@ const Footer: React.FC = () => {
 
       <div className="footer-colophon">
         <span className="footer-label">Design + Development · Trey Lupo</span>
-        <span className="footer-label">Fonts · Space Grotesk · Inter · JetBrains Mono</span>
-        <span className="footer-label">©2026 Tampa, FL</span>
+        <span className="footer-label">Fonts · Departure Mono · Inter</span>
+        <span className="footer-label">&copy;2026 Tampa, FL</span>
       </div>
     </footer>
   );

@@ -1,38 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useState, useEffect } from 'react';
 import TextScramble from './TextScramble';
 
-gsap.registerPlugin(ScrollTrigger);
+interface HeaderProps {
+  onInfoClick: () => void;
+}
 
-const Header: React.FC = () => {
+const Header: React.FC<HeaderProps> = ({ onInfoClick }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const headerRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const header = headerRef.current;
-    if (!header) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const showAnim = gsap.from(header, {
-      yPercent: -100,
-      paused: true,
-      duration: 0.3,
-      ease: 'power2.out',
-    }).progress(1);
-
-    ScrollTrigger.create({
-      start: 'top top',
-      end: 'max',
-      onUpdate: (self) => {
-        self.direction === -1 ? showAnim.play() : showAnim.reverse();
-      },
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
@@ -43,14 +17,14 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="header" ref={headerRef}>
-        <a href="#hero" className="header-name">
-          <TextScramble text="Trey Lupo" triggerOnView={false} triggerOnHover={true} duration={600} />
+      <header className="header">
+        <a href="#projects" className="header-name">
+          <TextScramble text="TREY LUPO" triggerOnView={false} triggerOnHover={true} duration={600} />
         </a>
 
         <nav className="header-nav">
-          <a href="#projects" className="nav-link">Projects</a>
-          <a href="#about" className="nav-link">Info</a>
+          <a href="#projects" className="header-pill">PROJECTS</a>
+          <button className="header-pill" onClick={onInfoClick}>INFO</button>
         </nav>
 
         <button
@@ -66,8 +40,8 @@ const Header: React.FC = () => {
 
       <div className={`mobile-nav-overlay ${isMobileMenuOpen ? 'open' : ''}`}>
         <nav className="mobile-nav">
-          <a href="#projects" onClick={handleNavClick}>Projects</a>
-          <a href="#about" onClick={handleNavClick}>Info</a>
+          <a href="#projects" onClick={handleNavClick}>PROJECTS</a>
+          <button onClick={() => { handleNavClick(); onInfoClick(); }}>INFO</button>
         </nav>
       </div>
     </>
