@@ -3,9 +3,10 @@ import TextScramble from './TextScramble';
 
 interface HeaderProps {
   onInfoClick: () => void;
+  onProjectsClick: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onInfoClick }) => {
+const Header: React.FC<HeaderProps> = ({ onInfoClick, onProjectsClick }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -18,12 +19,12 @@ const Header: React.FC<HeaderProps> = ({ onInfoClick }) => {
   return (
     <>
       <header className="header">
-        <a href="#projects" className="header-name">
+        <span className="header-name">
           <TextScramble text="TREY LUPO" triggerOnView={false} triggerOnHover={true} duration={600} />
-        </a>
+        </span>
 
         <nav className="header-nav">
-          <a href="#projects" className="header-pill">PROJECTS</a>
+          <button className="header-pill" onClick={onProjectsClick}>PROJECTS</button>
           <button className="header-pill" onClick={onInfoClick}>INFO</button>
         </nav>
 
@@ -40,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ onInfoClick }) => {
 
       <div className={`mobile-nav-overlay ${isMobileMenuOpen ? 'open' : ''}`}>
         <nav className="mobile-nav">
-          <a href="#projects" onClick={handleNavClick}>PROJECTS</a>
+          <button onClick={() => { handleNavClick(); onProjectsClick(); }}>PROJECTS</button>
           <button onClick={() => { handleNavClick(); onInfoClick(); }}>INFO</button>
         </nav>
       </div>

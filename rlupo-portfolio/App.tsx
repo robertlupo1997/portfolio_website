@@ -1,9 +1,8 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import Header from './components/Header';
 import Carousel from './components/Carousel';
-import ArchiveList from './components/ArchiveList';
-import Footer from './components/Footer';
 import InfoOverlay from './components/InfoOverlay';
+import ProjectsOverlay from './components/ProjectsOverlay';
 import Cursor from './components/Cursor';
 import Preloader from './components/Preloader';
 import { useLenis } from './hooks/useLenis';
@@ -13,10 +12,21 @@ import './styles/index.css';
 const App: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [projectsOpen, setProjectsOpen] = useState(false);
+  const goToRef = useRef<((index: number) => void) | null>(null);
   const onPreloaderComplete = useCallback(() => setLoaded(true), []);
 
-  useLenis(loaded && !infoOpen);
+  const anyOverlayOpen = infoOpen || projectsOpen;
+  useLenis(loaded && !anyOverlayOpen);
   useScrollAnimations();
+
+  const handleGoToSlide = useCallback((index: number) => {
+    goToRef.current?.(index);
+  }, []);
+
+  const handleRegisterGoTo = useCallback((goTo: (index: number) => void) => {
+    goToRef.current = goTo;
+  }, []);
 
   return (
     <>
@@ -24,14 +34,20 @@ const App: React.FC = () => {
       <Cursor />
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <div className={`site-content ${loaded ? 'site-content--visible' : ''}`}>
-        <Header onInfoClick={() => setInfoOpen(true)} />
+        <Header
+          onInfoClick={() => setInfoOpen(true)}
+          onProjectsClick={() => setProjectsOpen(true)}
+        />
         <main id="main-content" className="main">
-          <Carousel />
-          <ArchiveList />
+          <Carousel onRegisterGoTo={handleRegisterGoTo} />
         </main>
-        <Footer />
       </div>
       <InfoOverlay isOpen={infoOpen} onClose={() => setInfoOpen(false)} />
+      <ProjectsOverlay
+        isOpen={projectsOpen}
+        onClose={() => setProjectsOpen(false)}
+        onGoToSlide={handleGoToSlide}
+      />
     </>
   );
 };
