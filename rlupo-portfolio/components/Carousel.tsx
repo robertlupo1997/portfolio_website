@@ -4,19 +4,28 @@ import { CAROUSEL_PROJECTS } from '../constants';
 import { useCarousel } from '../hooks/useCarousel';
 import CarouselSlide from './CarouselSlide';
 
-const Carousel: React.FC = () => {
+interface CarouselProps {
+  onRegisterGoTo?: (goTo: (index: number) => void) => void;
+}
+
+const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
   const {
     activeIndex,
     isFirst,
     isLast,
     next,
     prev,
+    goTo,
     swipeHandlers,
   } = useCarousel({ totalSlides: CAROUSEL_PROJECTS.length });
 
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const prevIndex = useRef(0);
+
+  useEffect(() => {
+    if (onRegisterGoTo) onRegisterGoTo(goTo);
+  }, [onRegisterGoTo, goTo]);
 
   useEffect(() => {
     const track = trackRef.current;
