@@ -563,53 +563,6 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes blink { 50% { opacity: 0; } }
 
 /* ============================================
-   ARCHIVE LIST
-   ============================================ */
-
-.archive {
-  padding: var(--space-section) var(--page-margin);
-}
-
-.archive-header {
-  font-family: var(--font-departure);
-  font-size: var(--text-label);
-  font-weight: 400;
-  color: var(--accent-dim);
-  letter-spacing: 0.1em;
-  margin-bottom: var(--space-2xl);
-}
-
-.archive-list { display: flex; flex-direction: column; }
-
-.archive-row {
-  display: grid;
-  grid-template-columns: 4rem 1fr auto auto 2rem;
-  align-items: center;
-  gap: var(--space-lg);
-  padding: var(--space-lg) 0;
-  border-bottom: 1px solid var(--border-subtle);
-  text-decoration: none;
-  transition: opacity var(--duration-md) var(--ease-out),
-              background-color var(--duration-md) var(--ease-out);
-}
-
-.archive-row:first-child { border-top: 1px solid var(--border-subtle); }
-
-.archive-list:hover .archive-row { opacity: 0.4; }
-.archive-list:hover .archive-row:hover { opacity: 1; background-color: var(--bg-elevated); }
-.archive-row:active { transform: scale(0.99); }
-
-.archive-index { font-family: var(--font-departure); font-size: var(--text-label); color: var(--accent); letter-spacing: 0.06em; }
-.archive-title { font-family: var(--font-departure); font-size: var(--text-nav); color: var(--text-primary); }
-.archive-category { font-family: var(--font-departure); font-size: var(--text-label); color: var(--accent-dim); letter-spacing: 0.04em; text-align: right; }
-.archive-metric { font-family: var(--font-departure); font-size: var(--text-label); color: var(--text-primary); font-variant-numeric: tabular-nums; text-align: right; }
-.archive-arrow { font-family: var(--font-departure); font-size: var(--text-label); color: var(--accent-dim); transition: transform var(--duration-md) var(--ease-out); }
-
-@media (hover: hover) and (pointer: fine) {
-  .archive-row:hover .archive-arrow { transform: translateX(4px); }
-}
-
-/* ============================================
    INFO OVERLAY
    ============================================ */
 
@@ -872,73 +825,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ============================================
-   FOOTER
-   ============================================ */
-
-.footer {
-  border-top: 1px solid var(--border-subtle);
-  padding: var(--space-section) var(--page-margin) var(--space-2xl);
-}
-
-.footer-statement {
-  font-family: var(--font-departure);
-  font-size: var(--text-display);
-  font-weight: 400;
-  line-height: 1.0;
-  letter-spacing: 0.02em;
-  color: var(--text-primary);
-  max-width: 20ch;
-  margin-bottom: var(--space-4xl);
-}
-
-.footer-grid {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: var(--space-xl);
-}
-
-.footer-col {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-}
-
-.footer-email {
-  font-family: var(--font-departure);
-  font-size: var(--text-nav);
-  color: var(--accent);
-  transition: color var(--duration-sm) var(--ease-out);
-}
-.footer-email:hover { color: var(--text-primary); }
-
-.footer-link {
-  font-family: var(--font-departure);
-  font-size: var(--text-label);
-  color: var(--accent-dim);
-  letter-spacing: 0.06em;
-  transition: color var(--duration-sm) var(--ease-out);
-}
-.footer-link:hover { color: var(--text-primary); }
-
-.footer-label {
-  font-family: var(--font-departure);
-  font-size: var(--text-label);
-  color: var(--text-tertiary);
-  letter-spacing: 0.04em;
-}
-
-.footer-colophon {
-  display: flex;
-  gap: var(--space-2xl);
-  margin-top: var(--space-4xl);
-  padding-top: var(--space-lg);
-  border-top: 1px solid var(--border-subtle);
-  flex-wrap: wrap;
-}
-
-/* ============================================
    CURSOR
    ============================================ */
 
@@ -1011,9 +897,6 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
   }
   .projects-category, .projects-metric { grid-column: 2; text-align: left; }
   .projects-arrow { display: none; }
-
-  .footer-grid { flex-direction: column; gap: var(--space-lg); }
-  .footer-colophon { flex-direction: column; gap: var(--space-sm); }
 
   .cursor { display: none; }
   body.custom-cursor-active,
