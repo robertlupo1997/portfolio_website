@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useCallback } from 'react';
-import { SKILL_GROUPS, TIMELINE } from '../constants';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { SKILL_GROUPS, TIMELINE, PERSONAL_INFO } from '../constants';
 
 interface InfoOverlayProps {
   isOpen: boolean;
@@ -10,6 +10,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const returnRef = useRef<HTMLElement | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') onClose();
@@ -46,6 +47,16 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
       document.body.style.overflow = '';
     };
   }, [isOpen, handleKeyDown]);
+
+  const handleEmailClick = async () => {
+    try {
+      await navigator.clipboard.writeText(PERSONAL_INFO.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.location.href = `mailto:${PERSONAL_INFO.email}`;
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -112,6 +123,31 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
                 </span>
               </div>
             ))}
+          </div>
+
+          <div className="info-section">
+            <p className="info-prompt">$ contact --reach-out</p>
+            <div className="info-contact">
+              <div className="info-contact-statement">Let's build something.</div>
+              <button
+                className="info-contact-email"
+                onClick={handleEmailClick}
+                type="button"
+                aria-live="polite"
+              >
+                {copied ? 'copied!' : PERSONAL_INFO.email}
+              </button>
+              <div className="info-contact-links">
+                <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href={PERSONAL_INFO.huggingface} target="_blank" rel="noopener noreferrer">HuggingFace</a>
+              </div>
+              <div className="info-contact-colophon">
+                <span>Design + Development · Trey Lupo</span>
+                <span>Fonts · Departure Mono · Inter</span>
+                <span>&copy;2026 Tampa, FL</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
