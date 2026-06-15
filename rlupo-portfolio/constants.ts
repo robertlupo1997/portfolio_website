@@ -112,6 +112,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "ML", "Statistics"],
     primaryStack: ["Python"],
     featured: false,
+    imageUrl: "/assets/ironclad-battle.jpg",
   },
   {
     id: "ferroml-plugin",
@@ -126,6 +127,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "Plugin"],
     primaryStack: ["Python"],
     featured: false,
+    imageUrl: "/assets/clockwork-globe.jpg",
   },
   {
     id: "gsd-ml",
@@ -140,6 +142,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "GSD"],
     primaryStack: ["Python"],
     featured: false,
+    imageUrl: "/assets/lavoisier-lab.jpg",
   },
   {
     id: "mlforge",
@@ -154,6 +157,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "AutoML"],
     primaryStack: ["Python"],
     featured: false,
+    imageUrl: "/assets/forge-farrier.jpg",
   },
 ];
 
