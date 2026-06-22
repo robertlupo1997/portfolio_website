@@ -795,6 +795,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 .info-contact-links a:hover { color: var(--text-primary); }
 
+.info-resume-link {
+  border: 1px solid var(--accent);
+  padding: 0.3rem 0.8rem;
+  color: var(--accent) !important;
+  transition: background-color var(--duration-md) var(--ease-out),
+              color var(--duration-md) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .info-resume-link:hover {
+    background-color: var(--accent);
+    color: var(--bg-primary) !important;
+  }
+}
+
 .info-contact-colophon {
   display: flex;
   flex-direction: column;

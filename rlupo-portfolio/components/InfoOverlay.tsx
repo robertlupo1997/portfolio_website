@@ -141,6 +141,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
                 <a href={PERSONAL_INFO.github} target="_blank" rel="noopener noreferrer">GitHub</a>
                 <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 <a href={PERSONAL_INFO.huggingface} target="_blank" rel="noopener noreferrer">HuggingFace</a>
+                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="info-resume-link">Resume</a>
               </div>
               <div className="info-contact-colophon">
                 <span>Design + Development · Trey Lupo</span>
