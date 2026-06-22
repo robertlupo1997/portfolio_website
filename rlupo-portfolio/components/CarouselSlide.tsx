@@ -8,8 +8,6 @@ interface CarouselSlideProps {
   isActive: boolean;
   onPrev: () => void;
   onNext: () => void;
-  isFirst: boolean;
-  isLast: boolean;
   activeIndex: number;
   totalSlides: number;
 }
@@ -20,8 +18,6 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   isActive,
   onPrev,
   onNext,
-  isFirst,
-  isLast,
   activeIndex,
   totalSlides,
 }) => {
@@ -65,13 +61,13 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
         )}
         {isActive && <span className="cursor-blink" />}
         <nav className="carousel-nav" aria-label="Project navigation">
-          <button className="carousel-btn" onClick={onPrev} disabled={isFirst} aria-label="Previous project">
+          <button className="carousel-btn" onClick={onPrev} aria-label="Previous project">
             <span aria-hidden="true">&larr;</span> PREV
           </button>
           <span className="carousel-counter">
-            {String(activeIndex + 1).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
+            {String(activeIndex).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
           </span>
-          <button className="carousel-btn" onClick={onNext} disabled={isLast} aria-label="Next project">
+          <button className="carousel-btn" onClick={onNext} aria-label="Next project">
             NEXT <span aria-hidden="true">&rarr;</span>
           </button>
         </nav>

@@ -27,8 +27,19 @@ export const useCarousel = ({ totalSlides, transitionDuration = 350 }: UseCarous
     setTimeout(() => setIsTransitioning(false), transitionDuration);
   }, [activeIndex, isTransitioning, totalSlides, transitionDuration]);
 
-  const next = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
-  const prev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
+  const next = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setActiveIndex(prev => prev === totalSlides - 1 ? 0 : prev + 1);
+    setTimeout(() => setIsTransitioning(false), transitionDuration);
+  }, [isTransitioning, totalSlides, transitionDuration]);
+
+  const prev = useCallback(() => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setActiveIndex(prev => prev === 0 ? totalSlides - 1 : prev - 1);
+    setTimeout(() => setIsTransitioning(false), transitionDuration);
+  }, [isTransitioning, totalSlides, transitionDuration]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -73,8 +84,6 @@ export const useCarousel = ({ totalSlides, transitionDuration = 350 }: UseCarous
   return {
     activeIndex,
     isTransitioning,
-    isFirst: activeIndex === 0,
-    isLast: activeIndex === totalSlides - 1,
     next,
     prev,
     goTo,

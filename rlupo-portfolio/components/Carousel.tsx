@@ -11,8 +11,6 @@ interface CarouselProps {
 const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
   const {
     activeIndex,
-    isFirst,
-    isLast,
     next,
     prev,
     goTo,
@@ -31,9 +29,12 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
     const track = trackRef.current;
     if (!track) return;
 
+    const delta = Math.abs(activeIndex - prevIndex.current);
+    const isWrap = delta > 1;
+
     gsap.to(track, {
       x: `-${activeIndex * 100}vw`,
-      duration: 0.35,
+      duration: isWrap ? 0 : 0.35,
       ease: 'power3.out',
     });
 
@@ -55,8 +56,6 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
             isActive={i === activeIndex}
             onPrev={prev}
             onNext={next}
-            isFirst={isFirst}
-            isLast={isLast}
             activeIndex={activeIndex}
             totalSlides={CAROUSEL_PROJECTS.length}
           />
