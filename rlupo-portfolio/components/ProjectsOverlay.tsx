@@ -49,7 +49,7 @@ const ProjectsOverlay: React.FC<ProjectsOverlayProps> = ({ isOpen, onClose, onGo
   }, [isOpen, handleKeyDown]);
 
   const handleRowClick = (index: number) => {
-    onGoToSlide(index);
+    onGoToSlide(index + 1);
     onClose();
   };
 

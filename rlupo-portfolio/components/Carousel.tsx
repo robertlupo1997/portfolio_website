@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { CAROUSEL_PROJECTS } from '../constants';
 import { useCarousel } from '../hooks/useCarousel';
 import CarouselSlide from './CarouselSlide';
+import HeroSlide from './HeroSlide';
 
 interface CarouselProps {
   onRegisterGoTo?: (goTo: (index: number) => void) => void;
@@ -15,7 +16,7 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
     prev,
     goTo,
     swipeHandlers,
-  } = useCarousel({ totalSlides: CAROUSEL_PROJECTS.length });
+  } = useCarousel({ totalSlides: CAROUSEL_PROJECTS.length + 1 });
 
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -48,16 +49,23 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
   return (
     <section className="carousel" id="projects" ref={sectionRef} {...swipeHandlers}>
       <div className="carousel-track" ref={trackRef}>
+        <HeroSlide
+          isActive={activeIndex === 0}
+          onPrev={prev}
+          onNext={next}
+          activeIndex={activeIndex}
+          totalSlides={CAROUSEL_PROJECTS.length + 1}
+        />
         {CAROUSEL_PROJECTS.map((project, i) => (
           <CarouselSlide
             key={project.id}
             project={project}
             index={i}
-            isActive={i === activeIndex}
+            isActive={i + 1 === activeIndex}
             onPrev={prev}
             onNext={next}
             activeIndex={activeIndex}
-            totalSlides={CAROUSEL_PROJECTS.length}
+            totalSlides={CAROUSEL_PROJECTS.length + 1}
           />
         ))}
       </div>
