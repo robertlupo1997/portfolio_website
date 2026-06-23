@@ -956,6 +956,52 @@ h1, h2, h3, h4, h5, h6 {
   .projects-row:hover .projects-arrow { transform: translateX(4px); }
 }
 
+/* --- Activity Log --- */
+.activity-row {
+  display: grid;
+  grid-template-columns: 5rem 9rem 7rem 1fr;
+  gap: var(--space-sm);
+  align-items: baseline;
+}
+
+.activity-date {
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.activity-project {
+  color: var(--accent);
+}
+
+.activity-label {
+  color: var(--text-secondary);
+}
+
+.activity-note {
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .activity-row {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs);
+  }
+
+  .activity-date {
+    grid-column: 1;
+  }
+
+  .activity-project {
+    grid-column: 2;
+    text-align: right;
+  }
+
+  .activity-label,
+  .activity-note {
+    grid-column: 1 / -1;
+  }
+}
+
 /* ============================================
    CURSOR
    ============================================ */
