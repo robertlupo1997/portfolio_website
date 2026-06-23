@@ -23,6 +23,7 @@ const AsciiGrid: React.FC<AsciiGridProps> = ({ isActive }) => {
   const mouseRef = useRef({ x: -1000, y: -1000 });
   const gridRef = useRef<number[]>([]);
   const dimsRef = useRef({ cols: 0, rows: 0 });
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   const resize = useCallback(() => {
     const canvas = canvasRef.current;
@@ -36,12 +37,14 @@ const AsciiGrid: React.FC<AsciiGridProps> = ({ isActive }) => {
   }, []);
 
   useEffect(() => {
+    if (isMobile) return;
     resize();
     window.addEventListener('resize', resize);
     return () => window.removeEventListener('resize', resize);
-  }, [resize]);
+  }, [resize, isMobile]);
 
   useEffect(() => {
+    if (isMobile) return;
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
     };
@@ -54,7 +57,7 @@ const AsciiGrid: React.FC<AsciiGridProps> = ({ isActive }) => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     if (!isActive) {
@@ -124,6 +127,8 @@ const AsciiGrid: React.FC<AsciiGridProps> = ({ isActive }) => {
       cancelAnimationFrame(frameRef.current);
     };
   }, [isActive]);
+
+  if (isMobile) return null;
 
   return (
     <canvas
