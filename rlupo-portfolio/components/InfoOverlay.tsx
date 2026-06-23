@@ -11,6 +11,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const returnRef = useRef<HTMLElement | null>(null);
+  const hasOpened = useRef(false);
   const [copied, setCopied] = useState(false);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -57,6 +58,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
     const duration = prefersReducedMotion ? 0 : 0.3;
 
     if (isOpen) {
+      hasOpened.current = true;
       el.style.visibility = 'visible';
       el.style.pointerEvents = 'auto';
       gsap.fromTo(el,
@@ -64,6 +66,7 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
         { opacity: 1, y: 0, duration, ease: 'expo.out' }
       );
     } else {
+      if (!hasOpened.current) return;
       gsap.to(el, {
         opacity: 0,
         y: 8,
@@ -94,7 +97,6 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
       role="dialog"
       aria-modal="true"
       aria-label="About Trey Lupo"
-      aria-hidden={!isOpen}
       style={{ visibility: 'hidden', pointerEvents: 'none' }}
     >
       <button

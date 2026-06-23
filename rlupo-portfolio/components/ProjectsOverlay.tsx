@@ -12,6 +12,7 @@ const ProjectsOverlay: React.FC<ProjectsOverlayProps> = ({ isOpen, onClose, onGo
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const returnRef = useRef<HTMLElement | null>(null);
+  const hasOpened = useRef(false);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') onClose();
@@ -57,6 +58,7 @@ const ProjectsOverlay: React.FC<ProjectsOverlayProps> = ({ isOpen, onClose, onGo
     const duration = prefersReducedMotion ? 0 : 0.3;
 
     if (isOpen) {
+      hasOpened.current = true;
       el.style.visibility = 'visible';
       el.style.pointerEvents = 'auto';
       gsap.fromTo(el,
@@ -64,6 +66,7 @@ const ProjectsOverlay: React.FC<ProjectsOverlayProps> = ({ isOpen, onClose, onGo
         { opacity: 1, y: 0, duration, ease: 'expo.out' }
       );
     } else {
+      if (!hasOpened.current) return;
       gsap.to(el, {
         opacity: 0,
         y: 8,
@@ -89,7 +92,6 @@ const ProjectsOverlay: React.FC<ProjectsOverlayProps> = ({ isOpen, onClose, onGo
       role="dialog"
       aria-modal="true"
       aria-label="All projects"
-      aria-hidden={!isOpen}
       style={{ visibility: 'hidden', pointerEvents: 'none' }}
     >
       <button
