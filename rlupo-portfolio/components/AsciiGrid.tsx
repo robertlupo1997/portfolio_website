@@ -19,6 +19,7 @@ function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
 const AsciiGrid: React.FC<AsciiGridProps> = ({ isActive }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameRef = useRef<number>(0);
+  const runningRef = useRef<boolean>(false);
   const mouseRef = useRef({ x: -1000, y: -1000 });
   const gridRef = useRef<number[]>([]);
   const dimsRef = useRef({ cols: 0, rows: 0 });
@@ -66,7 +67,17 @@ const AsciiGrid: React.FC<AsciiGridProps> = ({ isActive }) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      ctx.fillStyle = BG;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
+
+    runningRef.current = true;
+
     const draw = (time: number) => {
+      if (!runningRef.current) return;
+
       const { cols, rows } = dimsRef.current;
       const grid = gridRef.current;
       const mouse = mouseRef.current;
@@ -108,7 +119,10 @@ const AsciiGrid: React.FC<AsciiGridProps> = ({ isActive }) => {
     };
 
     frameRef.current = requestAnimationFrame(draw);
-    return () => cancelAnimationFrame(frameRef.current);
+    return () => {
+      runningRef.current = false;
+      cancelAnimationFrame(frameRef.current);
+    };
   }, [isActive]);
 
   return (
