@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { Project } from '../types';
 import TerminalPanel from './TerminalPanel';
 
@@ -24,6 +25,24 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   const [animating, setAnimating] = useState(false);
   const hasImage = Boolean(project.imageUrl);
   const url = project.githubUrl || project.liveUrl;
+  const terminalRef = useRef<HTMLDivElement>(null);
+  const wasActive = useRef(false);
+
+  useEffect(() => {
+    if (wasActive.current && !isActive && terminalRef.current) {
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const lines = terminalRef.current.querySelectorAll('.terminal-line');
+        gsap.to(lines, {
+          opacity: 0,
+          y: -4,
+          duration: 0.2,
+          ease: 'expo.out',
+          stagger: 0.03,
+        });
+      }
+    }
+    wasActive.current = isActive;
+  }, [isActive]);
 
   useEffect(() => {
     if (isActive) {
@@ -37,7 +56,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
   return (
     <div className={`carousel-slide ${animating ? 'carousel-slide--active' : ''} ${!hasImage ? 'carousel-slide--no-image' : ''}`}>
-      <div className="carousel-slide-terminal">
+      <div className="carousel-slide-terminal" ref={terminalRef}>
         <TerminalPanel project={project} index={index} isActive={animating} />
       </div>
 
