@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import gsap from 'gsap';
 import { PowerGlitch } from 'powerglitch';
 import AsciiGrid from './AsciiGrid';
 
@@ -54,11 +55,37 @@ const HeroSlide: React.FC<HeroSlideProps> = ({
   activeIndex,
   totalSlides,
 }) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (!isActive || hasAnimated.current || !contentRef.current) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      hasAnimated.current = true;
+      return;
+    }
+
+    hasAnimated.current = true;
+    const children = contentRef.current.children;
+
+    gsap.fromTo(children,
+      { y: 12, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        ease: 'expo.out',
+        stagger: 0.08,
+        delay: 0.1,
+      }
+    );
+  }, [isActive]);
+
   return (
     <div className={`carousel-slide carousel-slide--hero ${isActive ? 'carousel-slide--active' : ''}`}>
       <AsciiGrid isActive={isActive} />
 
-      <div className="hero-content">
+      <div className="hero-content" ref={contentRef}>
         <GlitchName />
         <div className="hero-tagline">
           $ whoami — <span>AI/ML Systems Engineer</span>
