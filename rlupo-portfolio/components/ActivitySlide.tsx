@@ -18,27 +18,16 @@ const ActivitySlide: React.FC<ActivitySlideProps> = ({
   totalSlides,
 }) => {
   const bodyRef = useRef<HTMLDivElement>(null);
-  const hasAnimated = useRef(false);
 
   useEffect(() => {
-    if (!isActive || hasAnimated.current || !bodyRef.current) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      hasAnimated.current = true;
-      return;
-    }
+    if (!isActive || !bodyRef.current) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    hasAnimated.current = true;
     const lines = bodyRef.current.querySelectorAll('.terminal-line');
     gsap.fromTo(lines,
       { y: 6, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.4, ease: 'expo.out', stagger: 0.06, delay: 0.1 }
     );
-  }, [isActive]);
-
-  useEffect(() => {
-    if (isActive) {
-      hasAnimated.current = false;
-    }
   }, [isActive]);
 
   return (
