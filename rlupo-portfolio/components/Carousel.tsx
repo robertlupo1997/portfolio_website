@@ -30,13 +30,14 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
     const track = trackRef.current;
     if (!track) return;
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const delta = Math.abs(activeIndex - prevIndex.current);
     const isWrap = delta > 1;
 
     gsap.to(track, {
       x: `-${activeIndex * 100}vw`,
-      duration: isWrap ? 0 : 0.35,
-      ease: 'power3.out',
+      duration: prefersReducedMotion ? 0 : (isWrap ? 0 : 0.5),
+      ease: 'expo.out',
     });
 
     if (prevIndex.current !== activeIndex && sectionRef.current) {
