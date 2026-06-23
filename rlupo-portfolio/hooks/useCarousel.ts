@@ -17,28 +17,31 @@ export const useCarousel = ({ totalSlides, transitionDuration = 350 }: UseCarous
   const [isTransitioning, setIsTransitioning] = useState(false);
   const swipeRef = useRef<SwipeState>({ startX: 0, startY: 0, startTime: 0, isDragging: false });
   const containerRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(0 as any);
 
   const goTo = useCallback((index: number) => {
     if (isTransitioning) return;
     const clamped = Math.max(0, Math.min(totalSlides - 1, index));
-    if (clamped === activeIndex) return;
     setIsTransitioning(true);
     setActiveIndex(clamped);
-    setTimeout(() => setIsTransitioning(false), transitionDuration);
-  }, [activeIndex, isTransitioning, totalSlides, transitionDuration]);
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setIsTransitioning(false), transitionDuration);
+  }, [isTransitioning, totalSlides, transitionDuration]);
 
   const next = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setActiveIndex(prev => prev === totalSlides - 1 ? 0 : prev + 1);
-    setTimeout(() => setIsTransitioning(false), transitionDuration);
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setIsTransitioning(false), transitionDuration);
   }, [isTransitioning, totalSlides, transitionDuration]);
 
   const prev = useCallback(() => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setActiveIndex(prev => prev === 0 ? totalSlides - 1 : prev - 1);
-    setTimeout(() => setIsTransitioning(false), transitionDuration);
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setIsTransitioning(false), transitionDuration);
   }, [isTransitioning, totalSlides, transitionDuration]);
 
   useEffect(() => {
