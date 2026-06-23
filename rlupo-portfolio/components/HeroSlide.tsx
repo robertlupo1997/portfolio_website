@@ -101,6 +101,10 @@ const HeroSlide: React.FC<HeroSlideProps> = ({
         </div>
       </div>
 
+      <button className="hero-projects-btn" onClick={onNext} aria-label="View projects">
+        [ PROJECTS &rarr; ]
+      </button>
+
       <div className="carousel-slide-footer">
         <nav className="carousel-nav" aria-label="Project navigation">
           <button className="carousel-btn" onClick={onPrev} aria-label="Previous slide">
