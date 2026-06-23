@@ -984,25 +984,6 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
 
 @media (max-width: 1024px) {
   :root { --page-indent: 3.5rem; }
-
-  .carousel-slide {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
-  }
-
-  .carousel-slide--no-image {
-    grid-template-rows: 1fr auto;
-  }
-
-  .carousel-slide-image {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .carousel-slide-footer {
-    grid-column: 1;
-    grid-row: 3;
-  }
 }
 
 @media (max-width: 768px) {
@@ -1014,17 +995,29 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
   .header-nav { display: none; }
   .hamburger { display: flex; }
 
-  .carousel-slide { padding-top: 64px; }
+  .carousel-slide {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    padding-top: 64px;
+  }
+
+  .carousel-slide--no-image {
+    grid-template-rows: 1fr auto;
+  }
 
   .carousel-slide-terminal {
     align-items: flex-start;
   }
 
   .carousel-slide-image {
+    grid-column: 1;
+    grid-row: 2;
     padding: var(--space-md);
   }
 
   .carousel-slide-footer {
+    grid-column: 1;
+    grid-row: 3;
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-md);

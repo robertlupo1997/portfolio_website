@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 
 interface AsciiGridProps {
   isActive: boolean;
@@ -23,7 +23,16 @@ const AsciiGrid: React.FC<AsciiGridProps> = ({ isActive }) => {
   const mouseRef = useRef({ x: -1000, y: -1000 });
   const gridRef = useRef<number[]>([]);
   const dimsRef = useRef({ cols: 0, rows: 0 });
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 767px)');
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
 
   const resize = useCallback(() => {
     const canvas = canvasRef.current;
