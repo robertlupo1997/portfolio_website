@@ -85,7 +85,7 @@ const ProjectsOverlay: React.FC<ProjectsOverlayProps> = ({ isOpen, onClose, onGo
                 role="button"
                 tabIndex={0}
                 onClick={() => handleRowClick(i)}
-                onKeyDown={(e) => { if (e.key === 'Enter') handleRowClick(i); }}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleRowClick(i); } }}
               >
                 <span className="projects-index">P/{String(i + 1).padStart(2, '0')}</span>
                 <span className="projects-title">{project.title}</span>

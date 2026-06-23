@@ -98,15 +98,15 @@ const AsciiGrid: React.FC<AsciiGridProps> = ({ isActive }) => {
           const proximity = Math.max(0, 1 - dist / INFLUENCE_RADIUS);
           const eased = proximity * proximity * proximity;
           const idx = x + y * cols;
-          grid[idx] = lerp(grid[idx], eased, 0.12);
+          grid[idx] = lerp(grid[idx], eased, 0.18);
           const val = grid[idx];
           const wave = Math.sin(time * 0.001 + x * 0.15 + y * 0.1) * 0.5 + 0.5;
-          const intensity = Math.min(1, val + wave * 0.15 * 0.3);
+          const intensity = Math.min(1, val + wave * 0.08);
           if (intensity < 0.05) continue;
           const charIdx = Math.floor(intensity * (CHARS.length - 1));
 
-          if (val > 0.7) ctx.fillStyle = ACCENT;
-          else if (val > 0.3) ctx.fillStyle = BRIGHT;
+          if (val > 0.6) ctx.fillStyle = ACCENT;
+          else if (val > 0.35) ctx.fillStyle = BRIGHT;
           else if (intensity > 0.15) ctx.fillStyle = MID;
           else ctx.fillStyle = DIM;
 
