@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import gsap from 'gsap';
 import { SKILL_GROUPS, TIMELINE, PERSONAL_INFO } from '../constants';
 
 interface InfoOverlayProps {
@@ -48,6 +49,34 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
     };
   }, [isOpen, handleKeyDown]);
 
+  useEffect(() => {
+    const el = overlayRef.current;
+    if (!el) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const duration = prefersReducedMotion ? 0 : 0.3;
+
+    if (isOpen) {
+      el.style.visibility = 'visible';
+      el.style.pointerEvents = 'auto';
+      gsap.fromTo(el,
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration, ease: 'expo.out' }
+      );
+    } else {
+      gsap.to(el, {
+        opacity: 0,
+        y: 8,
+        duration: prefersReducedMotion ? 0 : 0.25,
+        ease: 'expo.out',
+        onComplete: () => {
+          el.style.visibility = 'hidden';
+          el.style.pointerEvents = 'none';
+        },
+      });
+    }
+  }, [isOpen]);
+
   const handleEmailClick = async () => {
     try {
       await navigator.clipboard.writeText(PERSONAL_INFO.email);
@@ -58,8 +87,6 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!isOpen) return null;
-
   return (
     <div
       ref={overlayRef}
@@ -67,6 +94,8 @@ const InfoOverlay: React.FC<InfoOverlayProps> = ({ isOpen, onClose }) => {
       role="dialog"
       aria-modal="true"
       aria-label="About Trey Lupo"
+      aria-hidden={!isOpen}
+      style={{ visibility: 'hidden', pointerEvents: 'none' }}
     >
       <button
         ref={closeRef}

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback } from 'react';
+import gsap from 'gsap';
 import { CAROUSEL_PROJECTS } from '../constants';
 
 interface ProjectsOverlayProps {
@@ -48,12 +49,38 @@ const ProjectsOverlay: React.FC<ProjectsOverlayProps> = ({ isOpen, onClose, onGo
     };
   }, [isOpen, handleKeyDown]);
 
+  useEffect(() => {
+    const el = overlayRef.current;
+    if (!el) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const duration = prefersReducedMotion ? 0 : 0.3;
+
+    if (isOpen) {
+      el.style.visibility = 'visible';
+      el.style.pointerEvents = 'auto';
+      gsap.fromTo(el,
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration, ease: 'expo.out' }
+      );
+    } else {
+      gsap.to(el, {
+        opacity: 0,
+        y: 8,
+        duration: prefersReducedMotion ? 0 : 0.25,
+        ease: 'expo.out',
+        onComplete: () => {
+          el.style.visibility = 'hidden';
+          el.style.pointerEvents = 'none';
+        },
+      });
+    }
+  }, [isOpen]);
+
   const handleRowClick = (index: number) => {
     onGoToSlide(index + 1);
     onClose();
   };
-
-  if (!isOpen) return null;
 
   return (
     <div
@@ -62,6 +89,8 @@ const ProjectsOverlay: React.FC<ProjectsOverlayProps> = ({ isOpen, onClose, onGo
       role="dialog"
       aria-modal="true"
       aria-label="All projects"
+      aria-hidden={!isOpen}
+      style={{ visibility: 'hidden', pointerEvents: 'none' }}
     >
       <button
         ref={closeRef}
