@@ -1,4 +1,4 @@
-import { Project, ProjectCategory, Credential } from './types';
+import { Project, ProjectCategory, Credential, ActivityEntry } from './types';
 
 export const PERSONAL_INFO = {
   email: "treylupo1197@gmail.com",
@@ -202,3 +202,22 @@ export const CREDENTIALS: Credential[] = [
   { label: 'Python · Rust · TypeScript · SQL' },
   { label: 'Origin Construction · AI Intern' },
 ];
+
+export const ACTIVITY_LOG: ActivityEntry[] = [
+  { date: '2026-06', project: 'portfolio', label: 'redesigned', note: 'GSAP terminal carousel' },
+  { date: '2026-06', project: 'FerroML', label: 'v0.3.0', note: '6,500 tests · PyPI' },
+  { date: '2026-06', project: 'nspb-api', label: 'v2.1', note: '60+ endpoints shipped' },
+  { date: '2026-05', project: 'gsd-ml', label: 'released', note: 'autonomous ML research' },
+  { date: '2026-05', project: 'FerroML Plugin', label: 'released', note: 'Claude Code integration' },
+  { date: '2026-04', project: 'ironclad', label: 'v1.0', note: '95% CI cost estimation' },
+  { date: '2026-03', project: 'MLForge', label: 'released', note: 'CSV in · pipeline out' },
+  { date: '2025-12', project: 'nspb-api', label: 'v1.0', note: 'Oracle EPM SDK launched' },
+  { date: '2025-09', project: 'revenue-forecast', label: 'deployed', note: 'multi-LOB reconciliation' },
+  { date: '2024-11', project: 'KKBOX', label: 'published', note: '0.97 AUC · HuggingFace' },
+];
+
+export const ACTIVITY_SUMMARY = {
+  duration: '2 years shipping',
+  projects: `${CAROUSEL_PROJECTS.length} projects`,
+  languages: '4 languages',
+};

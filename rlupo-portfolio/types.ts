@@ -22,3 +22,10 @@ export interface Project {
 export interface Credential {
   label: string;
 }
+
+export interface ActivityEntry {
+  date: string;
+  project: string;
+  label: string;
+  note: string;
+}
