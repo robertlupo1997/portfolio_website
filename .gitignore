@@ -3,6 +3,8 @@
 
 # Documents
 *.pdf
+# ...but the deployed resume must be tracked
+!rlupo-portfolio/public/resume.pdf
 
 # Temp/duplicate folders
 copy-of-app/
