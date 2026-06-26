@@ -35,10 +35,31 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
     const delta = Math.abs(activeIndex - prevIndex.current);
     const isWrap = delta > 1;
 
-    gsap.to(track, {
-      x: `-${activeIndex * 100}vw`,
-      duration: prefersReducedMotion ? 0 : (isWrap ? 0 : 0.5),
-      ease: 'expo.out',
+    // delta === 0 covers initial mount: snap into place, no blur pulse on a non-move.
+    if (prefersReducedMotion || isWrap || delta === 0) {
+      gsap.set(track, { x: `-${activeIndex * 100}vw`, filter: 'blur(0px)' });
+      prevIndex.current = activeIndex;
+      return;
+    }
+
+    const progress = { value: 0 };
+    const targetX = activeIndex * 100;
+    const startX = prevIndex.current * 100;
+
+    gsap.to(progress, {
+      value: 1,
+      duration: 0.6,
+      ease: 'power2.inOut',
+      onUpdate: () => {
+        const p = progress.value;
+        const x = startX + (targetX - startX) * p;
+        const blur = 4 * p * (1 - p) * 2.5;
+        track.style.transform = `translateX(-${x}vw)`;
+        track.style.filter = blur > 0.1 ? `blur(${blur}px)` : 'none';
+      },
+      onComplete: () => {
+        track.style.filter = 'none';
+      },
     });
 
     if (prevIndex.current !== activeIndex && sectionRef.current) {
