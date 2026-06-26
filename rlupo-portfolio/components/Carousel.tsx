@@ -18,7 +18,7 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
     prev,
     goTo,
     swipeHandlers,
-  } = useCarousel({ totalSlides: CAROUSEL_PROJECTS.length + 2 });
+  } = useCarousel({ totalSlides: CAROUSEL_PROJECTS.length + 2, transitionDuration: 650 });
 
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -38,7 +38,8 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
 
     // delta === 0 covers initial mount: snap into place, no blur pulse on a non-move.
     if (prefersReducedMotion || isWrap || delta === 0) {
-      gsap.set(track, { x: `-${activeIndex * 100}vw`, filter: 'blur(0px)' });
+      track.style.transform = `translateX(-${activeIndex * 100}vw)`;
+      track.style.filter = 'none';
       prevIndex.current = activeIndex;
       return;
     }
