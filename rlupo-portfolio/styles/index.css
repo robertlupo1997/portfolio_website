@@ -489,12 +489,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   padding: var(--space-2xl);
   overflow: hidden;
-  clip-path: inset(0 0 0 100%);
-  transition: clip-path var(--duration-reveal) var(--ease-out);
-}
-
-.carousel-slide--active .carousel-slide-image {
-  clip-path: inset(0 0 0 0);
+  clip-path: inset(0 100% 0 0);
 }
 
 .carousel-slide-footer {

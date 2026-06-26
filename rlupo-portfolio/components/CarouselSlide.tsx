@@ -27,6 +27,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   const url = project.githubUrl || project.liveUrl;
   const terminalRef = useRef<HTMLDivElement>(null);
   const wasActive = useRef(false);
+  const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (wasActive.current && !isActive && terminalRef.current) {
@@ -54,6 +55,25 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
     }
   }, [isActive]);
 
+  useEffect(() => {
+    if (isActive && imageRef.current) {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.set(imageRef.current, { clipPath: 'inset(0 0 0 0)', x: 0 });
+        return;
+      }
+      gsap.fromTo(imageRef.current,
+        { clipPath: 'inset(0 100% 0 0)', x: 20 },
+        {
+          clipPath: 'inset(0 0% 0 0)',
+          x: 0,
+          duration: 0.5,
+          ease: 'expo.out',
+          delay: 0.1,
+        }
+      );
+    }
+  }, [isActive]);
+
   return (
     <div className={`carousel-slide ${animating ? 'carousel-slide--active' : ''} ${!hasImage ? 'carousel-slide--no-image' : ''}`}>
       <div className="carousel-slide-terminal" ref={terminalRef}>
@@ -61,7 +81,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       </div>
 
       {hasImage && (
-        <div className="carousel-slide-image">
+        <div className="carousel-slide-image" ref={imageRef}>
           <div className="carousel-slide-image-inner scanlines">
             <img
               src={project.imageUrl}
