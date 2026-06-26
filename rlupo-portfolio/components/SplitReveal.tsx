@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo, ElementType } from 'react';
+import React, { useRef, useLayoutEffect, useMemo, ElementType } from 'react';
 import gsap from 'gsap';
 
 interface SplitRevealProps {
@@ -24,12 +24,12 @@ const SplitReveal: React.FC<SplitRevealProps> = ({
 
   const words = useMemo(() => text.split(' '), [text]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!trigger || !containerRef.current) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const inners = containerRef.current.querySelectorAll('.split-reveal-inner');
-    gsap.fromTo(inners,
+    const tween = gsap.fromTo(inners,
       { yPercent: 105 },
       {
         yPercent: 0,
@@ -39,6 +39,7 @@ const SplitReveal: React.FC<SplitRevealProps> = ({
         delay,
       }
     );
+    return () => { tween.kill(); };
   }, [trigger, delay, duration, stagger]);
 
   return (
