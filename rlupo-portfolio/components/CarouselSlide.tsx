@@ -56,12 +56,14 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   }, [isActive]);
 
   useEffect(() => {
-    if (isActive && imageRef.current) {
+    const el = imageRef.current;
+    if (!el) return;
+    if (isActive) {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        gsap.set(imageRef.current, { clipPath: 'inset(0 0 0 0)', x: 0 });
+        gsap.set(el, { clipPath: 'inset(0 0 0 0)', x: 0 });
         return;
       }
-      gsap.fromTo(imageRef.current,
+      gsap.fromTo(el,
         { clipPath: 'inset(0 100% 0 0)', x: 20 },
         {
           clipPath: 'inset(0 0% 0 0)',
@@ -71,6 +73,10 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
           delay: 0.1,
         }
       );
+    } else {
+      // Cancel an in-flight reveal and reset the off-screen slide to its hidden start state.
+      gsap.killTweensOf(el);
+      gsap.set(el, { clipPath: 'inset(0 100% 0 0)', x: 20 });
     }
   }, [isActive]);
 
