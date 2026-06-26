@@ -1074,6 +1074,22 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
   body.custom-cursor-active button { cursor: auto; }
 }
 
+/* --- Split Reveal --- */
+.split-reveal {
+  display: inline;
+}
+
+.split-reveal-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.split-reveal-inner {
+  display: inline-block;
+  will-change: transform;
+}
+
 /* ============================================
    REDUCED MOTION
    ============================================ */
