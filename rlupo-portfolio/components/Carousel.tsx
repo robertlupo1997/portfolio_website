@@ -5,6 +5,7 @@ import { useCarousel } from '../hooks/useCarousel';
 import CarouselSlide from './CarouselSlide';
 import HeroSlide from './HeroSlide';
 import ActivitySlide from './ActivitySlide';
+import SlideProgress from './SlideProgress';
 
 interface CarouselProps {
   onRegisterGoTo?: (goTo: (index: number) => void) => void;
@@ -99,6 +100,7 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
           totalSlides={CAROUSEL_PROJECTS.length + 2}
         />
       </div>
+      <SlideProgress activeIndex={activeIndex} totalSlides={CAROUSEL_PROJECTS.length + 2} />
     </section>
   );
 };
