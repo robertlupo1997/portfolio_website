@@ -39,7 +39,7 @@ const App: React.FC = () => {
           onProjectsClick={() => setProjectsOpen(true)}
         />
         <main id="main-content" className="main">
-          <Carousel onRegisterGoTo={handleRegisterGoTo} />
+          <Carousel onRegisterGoTo={handleRegisterGoTo} loaded={loaded} />
         </main>
       </div>
       <InfoOverlay isOpen={infoOpen} onClose={() => setInfoOpen(false)} />

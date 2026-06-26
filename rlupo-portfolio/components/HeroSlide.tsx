@@ -1,10 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import AsciiGrid from './AsciiGrid';
 import SplitReveal from './SplitReveal';
 
 interface HeroSlideProps {
   isActive: boolean;
+  revealReady: boolean;
   onPrev: () => void;
   onNext: () => void;
   activeIndex: number;
@@ -13,6 +14,7 @@ interface HeroSlideProps {
 
 const HeroSlide: React.FC<HeroSlideProps> = ({
   isActive,
+  revealReady,
   onPrev,
   onNext,
   activeIndex,
@@ -23,8 +25,8 @@ const HeroSlide: React.FC<HeroSlideProps> = ({
   const bioRef = useRef<HTMLParagraphElement>(null);
   const credsRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!isActive || hasAnimated.current) return;
+  useLayoutEffect(() => {
+    if (!isActive || !revealReady || hasAnimated.current) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       hasAnimated.current = true;
       return;
@@ -36,7 +38,7 @@ const HeroSlide: React.FC<HeroSlideProps> = ({
       { y: 8, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.6, ease: 'expo.out', stagger: 0.15, delay: 0.4 }
     );
-  }, [isActive]);
+  }, [isActive, revealReady]);
 
   return (
     <div className={`carousel-slide carousel-slide--hero ${isActive ? 'carousel-slide--active' : ''}`}>
@@ -47,7 +49,7 @@ const HeroSlide: React.FC<HeroSlideProps> = ({
           text="TREY LUPO"
           as="div"
           className="hero-name"
-          trigger={isActive && !hasAnimated.current}
+          trigger={isActive && revealReady && !hasAnimated.current}
           delay={0.1}
           duration={0.8}
           stagger={0.12}

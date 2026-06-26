@@ -9,9 +9,10 @@ import SlideProgress from './SlideProgress';
 
 interface CarouselProps {
   onRegisterGoTo?: (goTo: (index: number) => void) => void;
+  loaded?: boolean;
 }
 
-const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
+const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) => {
   const {
     activeIndex,
     next,
@@ -48,7 +49,7 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
     const targetX = activeIndex * 100;
     const startX = prevIndex.current * 100;
 
-    gsap.to(progress, {
+    const tween = gsap.to(progress, {
       value: 1,
       duration: 0.6,
       ease: 'power2.inOut',
@@ -69,6 +70,8 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
     }
 
     prevIndex.current = activeIndex;
+
+    return () => { tween.kill(); };
   }, [activeIndex]);
 
   return (
@@ -76,6 +79,7 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo }) => {
       <div className="carousel-track" ref={trackRef}>
         <HeroSlide
           isActive={activeIndex === 0}
+          revealReady={loaded}
           onPrev={prev}
           onNext={next}
           activeIndex={activeIndex}
