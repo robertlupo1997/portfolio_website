@@ -6,6 +6,9 @@
 # ...but the deployed resume must be tracked
 !rlupo-portfolio/public/resume.pdf
 
+# Resume drafts/audit — contain personal + employer-confidential data, keep LOCAL ONLY
+thoughts/resume/
+
 # Temp/duplicate folders
 copy-of-app/
 chrls-portfolio-complete/
