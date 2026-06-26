@@ -39,16 +39,18 @@ const SplitReveal: React.FC<SplitRevealProps> = ({
         delay,
       }
     );
-    return () => { tween.kill(); };
+    return () => { tween.kill(); gsap.set(inners, { yPercent: 0 }); };
   }, [trigger, delay, duration, stagger]);
 
   return (
     <Tag className={`split-reveal ${className}`} ref={containerRef as any}>
       {words.map((word, i) => (
-        <span key={i} className="split-reveal-word">
-          <span className="split-reveal-inner">{word}</span>
-          {i < words.length - 1 && ' '}
-        </span>
+        <React.Fragment key={i}>
+          <span className="split-reveal-word">
+            <span className="split-reveal-inner">{word}</span>
+          </span>
+          {i < words.length - 1 ? ' ' : null}
+        </React.Fragment>
       ))}
     </Tag>
   );
