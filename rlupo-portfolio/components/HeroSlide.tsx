@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import gsap from 'gsap';
-import { PowerGlitch } from 'powerglitch';
 import AsciiGrid from './AsciiGrid';
+import SplitReveal from './SplitReveal';
 
 interface HeroSlideProps {
   isActive: boolean;
@@ -11,43 +11,6 @@ interface HeroSlideProps {
   totalSlides: number;
 }
 
-const GlitchName: React.FC = React.memo(() => {
-  const nameRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!nameRef.current) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const { stopGlitch } = PowerGlitch.glitch(nameRef.current, {
-      playMode: 'always',
-      createContainers: true,
-      hideOverflow: false,
-      timing: { duration: 5000, iterations: Infinity },
-      glitchTimeSpan: { start: 0.85, end: 0.95 },
-      shake: { velocity: 15, amplitudeX: 0.2, amplitudeY: 0.1 },
-      slice: {
-        count: 6,
-        velocity: 15,
-        minHeight: 0.02,
-        maxHeight: 0.15,
-        hueRotate: true,
-        cssFilters: '',
-      },
-      pulse: false,
-    });
-
-    return () => stopGlitch();
-  }, []);
-
-  return (
-    <div ref={nameRef} className="hero-name">
-      TREY LUPO
-    </div>
-  );
-});
-
-GlitchName.displayName = 'GlitchName';
-
 const HeroSlide: React.FC<HeroSlideProps> = ({
   isActive,
   onPrev,
@@ -55,29 +18,23 @@ const HeroSlide: React.FC<HeroSlideProps> = ({
   activeIndex,
   totalSlides,
 }) => {
-  const contentRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
+  const taglineRef = useRef<HTMLDivElement>(null);
+  const bioRef = useRef<HTMLParagraphElement>(null);
+  const credsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!isActive || hasAnimated.current || !contentRef.current) return;
+    if (!isActive || hasAnimated.current) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       hasAnimated.current = true;
       return;
     }
-
     hasAnimated.current = true;
-    const children = contentRef.current.children;
 
-    gsap.fromTo(children,
-      { y: 12, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.6,
-        ease: 'expo.out',
-        stagger: 0.08,
-        delay: 0.1,
-      }
+    const elements = [taglineRef.current, bioRef.current, credsRef.current].filter(Boolean);
+    gsap.fromTo(elements,
+      { y: 8, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: 'expo.out', stagger: 0.15, delay: 0.4 }
     );
   }, [isActive]);
 
@@ -85,16 +42,24 @@ const HeroSlide: React.FC<HeroSlideProps> = ({
     <div className={`carousel-slide carousel-slide--hero ${isActive ? 'carousel-slide--active' : ''}`}>
       <AsciiGrid isActive={isActive} />
 
-      <div className="hero-content" ref={contentRef}>
-        <GlitchName />
-        <div className="hero-tagline">
+      <div className="hero-content">
+        <SplitReveal
+          text="TREY LUPO"
+          as="div"
+          className="hero-name"
+          trigger={isActive && !hasAnimated.current}
+          delay={0.1}
+          duration={0.8}
+          stagger={0.12}
+        />
+        <div className="hero-tagline" ref={taglineRef}>
           $ whoami — <span>AI/ML Systems Engineer</span>
         </div>
-        <p className="hero-bio">
+        <p className="hero-bio" ref={bioRef}>
           Corporate FP&A Analyst at Franklin Street. I build Python SDKs that replace
           manual Oracle exports, ML frameworks in Rust, and revenue models that reconcile.
         </p>
-        <div className="hero-creds">
+        <div className="hero-creds" ref={credsRef}>
           <span><span className="hero-label">EDU </span>B.A. Statistics · USF</span>
           <span><span className="hero-label">CERT </span>MIT Data Science</span>
           <span><span className="hero-label">LANG </span>Python / Rust / TypeScript / SQL</span>
