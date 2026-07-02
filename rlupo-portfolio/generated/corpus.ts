@@ -30,9 +30,8 @@ export const CORPUS: Chunk[] = [
     "id": "project-nspb-api",
     "sourceType": "project",
     "title": "nspb-api",
-    "url": "https://github.com/robertlupo1997/nspb-api",
     "slideIndex": 1,
-    "text": "nspb-api — //api engineering ('26)\nA complete Python SDK for Oracle's Enterprise Performance Management Cloud, covering Planning, Migration, and Data Management APIs.\nProblem: Oracle EPM Cloud exposes no public API. I built one.\nStack: Python, REST, Oracle EPM, SDK Design\nResult: 60+ API ENDPOINTS"
+    "text": "nspb-api — //api engineering ('26)\nA complete Python SDK for Oracle's Enterprise Performance Management Cloud, covering Planning, Migration, and Data Management APIs. Private build — case study available on request.\nProblem: Oracle EPM Cloud exposes no public API. I built one.\nStack: Python, REST, Oracle EPM, SDK Design\nResult: 60+ API ENDPOINTS"
   },
   {
     "id": "project-ferroml",
@@ -56,7 +55,7 @@ export const CORPUS: Chunk[] = [
     "title": "KKBOX Churn Prediction",
     "url": "https://github.com/robertlupo1997/kkbox-churn-prediction",
     "slideIndex": 4,
-    "text": "KKBOX Churn Prediction — //ml · production ('24)\nLeak-safe feature engineering, isotonic calibration, temporal backtests, and PSI drift monitoring.\nStack: Python, Streamlit, XGBoost\nResult: 0.97 AUC AUC\nLive demo: https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction"
+    "text": "KKBOX Churn Prediction — //ml · production ('24)\nLeak-safe feature engineering, isotonic calibration, temporal backtests, and PSI drift monitoring.\nStack: Python, Streamlit, XGBoost\nResult: 0.97 AUC\nLive demo: https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction"
   },
   {
     "id": "project-obj-detect",

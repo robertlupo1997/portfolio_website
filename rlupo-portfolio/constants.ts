@@ -20,9 +20,8 @@ export const FEATURED_PROJECTS: Project[] = [
     title: "nspb-api",
     category: "//api engineering",
     projectCategory: "fpna",
-    description: "A complete Python SDK for Oracle's Enterprise Performance Management Cloud, covering Planning, Migration, and Data Management APIs.",
+    description: "A complete Python SDK for Oracle's Enterprise Performance Management Cloud, covering Planning, Migration, and Data Management APIs. Private build — case study available on request.",
     problem: "Oracle EPM Cloud exposes no public API. I built one.",
-    githubUrl: "https://github.com/robertlupo1997/nspb-api",
     epoch: "'26",
     metric: "60+",
     metricLabel: "API ENDPOINTS",
@@ -63,7 +62,6 @@ export const FEATURED_PROJECTS: Project[] = [
     stack: ["Python", "Go", "TypeScript", "SHAP"],
     primaryStack: ["Python"],
     featured: true,
-    imageUrl: "/assets/plate-ferroml-intervals.png",
   },
 ];
 
@@ -77,7 +75,7 @@ export const ALL_PROJECTS: Project[] = [
     githubUrl: "https://github.com/robertlupo1997/kkbox-churn-prediction",
     liveUrl: "https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction",
     epoch: "'24",
-    metric: "0.97 AUC",
+    metric: "0.97",
     metricLabel: "AUC",
     stack: ["Python", "Streamlit", "XGBoost"],
     primaryStack: ["Python"],
