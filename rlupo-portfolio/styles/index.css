@@ -1016,6 +1016,23 @@ body.custom-cursor-active button,
 body.custom-cursor-active [data-cursor] { cursor: none; }
 
 /* ============================================
+   ASK PANEL
+   ============================================ */
+
+.ask-panel { position: fixed; inset: 0; z-index: 60; display: flex; align-items: flex-start; justify-content: center; padding-top: 12vh; background: rgba(0, 0, 0, 0.85); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.ask-panel--open { opacity: 1; pointer-events: auto; }
+.ask-panel__inner { width: min(640px, 92vw); border: 1px solid rgba(255, 255, 255, 0.2); background: #0a0a0a; padding: 1.5rem; }
+.ask-panel__bar { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; letter-spacing: 0.1em; }
+.ask-panel__input { width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.3); color: inherit; font: inherit; padding: 0.5rem 0; outline: none; }
+.ask-panel__starters { list-style: none; padding: 0; margin: 1rem 0 0; }
+.ask-panel__starter, .ask-panel__citation, .ask-panel__close { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; text-align: left; padding: 0.35rem 0; opacity: 0.7; }
+.ask-panel__starter:hover, .ask-panel__citation:hover { opacity: 1; text-decoration: underline; }
+.ask-panel__answer { margin-top: 1.25rem; line-height: 1.6; white-space: pre-wrap; }
+.ask-panel__status, .ask-panel__error { margin-top: 1.25rem; opacity: 0.6; }
+.ask-panel__citations { margin-top: 1rem; padding-left: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, 0.15); }
+@media (prefers-reduced-motion: reduce) { .ask-panel { transition: none; } }
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 
@@ -1067,6 +1084,9 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
   body.custom-cursor-active,
   body.custom-cursor-active a,
   body.custom-cursor-active button { cursor: auto; }
+
+  .ask-panel { padding-top: 0; }
+  .ask-panel__inner { width: 100vw; min-height: 100vh; }
 }
 
 /* --- Split Reveal --- */

@@ -4,9 +4,10 @@ import TextScramble from './TextScramble';
 interface HeaderProps {
   onInfoClick: () => void;
   onProjectsClick: () => void;
+  onAskClick: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onInfoClick, onProjectsClick }) => {
+const Header: React.FC<HeaderProps> = ({ onInfoClick, onProjectsClick, onAskClick }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const Header: React.FC<HeaderProps> = ({ onInfoClick, onProjectsClick }) => {
         <nav className="header-nav">
           <button className="header-pill" onClick={onProjectsClick}>PROJECTS</button>
           <button className="header-pill" onClick={onInfoClick}>INFO</button>
+          <button className="header-pill" onClick={onAskClick}>ASK ⌘K</button>
         </nav>
 
         <button
@@ -43,6 +45,7 @@ const Header: React.FC<HeaderProps> = ({ onInfoClick, onProjectsClick }) => {
         <nav className="mobile-nav">
           <button onClick={() => { handleNavClick(); onProjectsClick(); }}>PROJECTS</button>
           <button onClick={() => { handleNavClick(); onInfoClick(); }}>INFO</button>
+          <button onClick={() => { handleNavClick(); onAskClick(); }}>ASK</button>
         </nav>
       </div>
     </>

@@ -7,6 +7,10 @@ export default defineConfig({
     port: 3000,
     host: '0.0.0.0',
   },
+  test: {
+    // Exclude Playwright e2e tests from vitest
+    exclude: ['tests/**', 'node_modules/**'],
+  },
   plugins: [react()],
   resolve: {
     alias: {
