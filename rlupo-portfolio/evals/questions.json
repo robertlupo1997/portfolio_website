@@ -18,5 +18,6 @@
   { "q": "What Claude Code plugins has he created?", "expectSourceIds": ["project-ferroml-plugin"] },
   { "q": "How many tests does FerroML have?", "expectSourceIds": ["project-ferroml", "credentials"] },
   { "q": "What SHAP explainability work has he done?", "expectSourceIds": ["project-revenue-forecast"] },
-  { "q": "What is the KKBOX churn model's accuracy score?", "expectSourceIds": ["project-kkbox", "credentials"] }
+  { "q": "What is the KKBOX churn model's accuracy score?", "expectSourceIds": ["project-kkbox", "credentials"] },
+  { "q": "Can I see Trey's resume?", "expectSourceIds": ["resume"] }
 ]

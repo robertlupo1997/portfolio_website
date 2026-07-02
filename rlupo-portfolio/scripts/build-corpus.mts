@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import {
   CAROUSEL_PROJECTS, PERSONAL_INFO, TIMELINE, SKILL_GROUPS, CREDENTIALS,
 } from '../constants';
@@ -12,6 +12,11 @@ const chunks: Chunk[] = [
   recordToChunk('credentials', 'credentials', 'Credentials', CREDENTIALS),
   ...CAROUSEL_PROJECTS.map((p, i) => projectToChunk(p, i + 1)), // slide 0 = hero
 ];
+
+chunks.push({
+  id: 'resume', sourceType: 'resume', title: 'Resume', url: '/resume.pdf',
+  text: readFileSync(new URL('../content/resume.txt', import.meta.url), 'utf8'),
+});
 
 for (const p of CAROUSEL_PROJECTS) {
   if (!p.githubUrl) continue;
