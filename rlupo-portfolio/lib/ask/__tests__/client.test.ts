@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { createSSEParser, localFallback, askQuestion } from '../client';
 
 describe('createSSEParser', () => {
@@ -25,6 +25,23 @@ describe('localFallback', () => {
 });
 
 describe('askQuestion', () => {
+  it('emits fallback when stream ends cleanly with no done event', async () => {
+    const reads = [
+      Promise.resolve({ done: false, value: new TextEncoder().encode('data: {"type":"text","text":"hello"}\n\n') }),
+      Promise.resolve({ done: true, value: undefined }),
+    ];
+    let i = 0;
+    const fakeFetch = (async () => ({
+      ok: true,
+      status: 200,
+      body: { getReader: () => ({ read: () => reads[i++] }) },
+    })) as unknown as typeof fetch;
+    const events: any[] = [];
+    await askQuestion('python', (e) => events.push(e), fakeFetch);
+    expect(events.some((e) => e.type === 'citations')).toBe(true);
+    expect(events.at(-1)).toEqual({ type: 'done' });
+  });
+
   it('emits local fallback when the stream fails mid-read', async () => {
     const reads = [
       Promise.resolve({ done: false, value: new TextEncoder().encode('data: {"type":"text","text":"partial"}\n\n') }),
