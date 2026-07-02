@@ -24,10 +24,23 @@ const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide }) => 
   const [error, setError] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const generationRef = useRef(0);
   const busy = status === 'searching' || status === 'streaming';
 
   useEffect(() => {
-    if (isOpen) inputRef.current?.focus();
+    if (isOpen) {
+      // Fix 2: reset to fresh idle state on every open
+      setQuestion('');
+      setAnswer('');
+      setCitations([]);
+      setError('');
+      setStatus('idle');
+      inputRef.current?.focus();
+    } else {
+      // Fix 1: cancel any in-flight stream so stale callbacks are silently dropped
+      generationRef.current++;
+      setStatus('idle');
+    }
   }, [isOpen]);
 
   useEffect(() => {
@@ -67,7 +80,10 @@ const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide }) => 
     setCitations([]);
     setError('');
     setStatus('searching');
+    // Fix 1: capture generation so callbacks from a closed/reopened panel are discarded
+    const gen = ++generationRef.current;
     void askQuestion(q, (e) => {
+      if (gen !== generationRef.current) return;
       if (e.type === 'searching') setStatus('searching');
       if (e.type === 'text') { setStatus('streaming'); setAnswer((a) => a + e.text); }
       if (e.type === 'citations') setCitations(e.citations);
@@ -78,7 +94,7 @@ const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide }) => 
 
   const citationClick = (c: Citation) => {
     if (typeof c.slideIndex === 'number') { onClose(); onGoToSlide(c.slideIndex); }
-    else if (c.url) window.open(c.url, '_blank', 'noopener');
+    else if (c.url) window.open(c.url, '_blank', 'noopener,noreferrer');
   };
 
   return (

@@ -30,6 +30,11 @@ const App: React.FC = () => {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  const handleAskClose = useCallback(() => {
+    setAskOpen(false);
+    if (window.location.pathname === '/ask') window.history.replaceState(null, '', '/');
+  }, []);
+
   const handleGoToSlide = useCallback((index: number) => {
     goToRef.current?.(index);
   }, []);
@@ -61,7 +66,7 @@ const App: React.FC = () => {
       />
       <AskPanel
         isOpen={askOpen}
-        onClose={() => setAskOpen(false)}
+        onClose={handleAskClose}
         onGoToSlide={handleGoToSlide}
       />
     </>

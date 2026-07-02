@@ -41,3 +41,19 @@ test('escape closes; /ask route opens the panel on load', async ({ page }) => {
   await page.waitForSelector('.site-content--visible', { timeout: 10_000 });
   await expect(page.getByTestId('ask-panel')).toHaveClass(/ask-panel--open/);
 });
+
+test('close then reopen shows fresh idle state with starters visible', async ({ page }) => {
+  // Open and ask a question (stream completes immediately via mock)
+  await page.keyboard.press('ControlOrMeta+k');
+  await page.locator('.ask-panel__input').fill('What has Trey built in Rust?');
+  await page.keyboard.press('Enter');
+  await expect(page.getByTestId('ask-answer')).toContainText('FerroML [1]');
+  // Close
+  await page.keyboard.press('Escape');
+  await expect(page.getByTestId('ask-panel')).not.toHaveClass(/ask-panel--open/);
+  // Reopen — must show starters and empty input (idle state)
+  await page.keyboard.press('ControlOrMeta+k');
+  await expect(page.getByTestId('ask-panel')).toHaveClass(/ask-panel--open/);
+  await expect(page.locator('.ask-panel__starters')).toBeVisible();
+  await expect(page.locator('.ask-panel__input')).toHaveValue('');
+});
