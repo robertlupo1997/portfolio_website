@@ -25,6 +25,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Connection', 'keep-alive');
 
   const client = new Anthropic() as unknown as AnthropicLike; // reads ANTHROPIC_API_KEY
-  for await (const e of askEngine(question, { client, corpus: CORPUS })) res.write(formatSSE(e));
-  res.end();
+  try {
+    for await (const e of askEngine(question, { client, corpus: CORPUS })) res.write(formatSSE(e));
+  } finally {
+    res.end();
+  }
 }
