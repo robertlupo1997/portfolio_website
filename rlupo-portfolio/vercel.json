@@ -1,0 +1,3 @@
+{
+  "rewrites": [{ "source": "/ask", "destination": "/index.html" }]
+}
