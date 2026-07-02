@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { projectToChunk, recordToChunk } from '../corpus-builder';
+import { projectToChunk, recordToChunk, readmeToChunks } from '../corpus-builder';
 import type { Project } from '../../../types';
 
 const project: Project = {
@@ -26,5 +26,19 @@ describe('recordToChunk', () => {
     const c = recordToChunk('bio', 'bio', 'About Trey', { name: 'Trey Lupo', role: 'FP&A Analyst' });
     expect(c.text).toContain('name: Trey Lupo');
     expect(c.text).toContain('role: FP&A Analyst');
+  });
+});
+
+describe('readmeToChunks', () => {
+  it('strips code fences and images, chunks long content, keeps ids stable', () => {
+    const fence = '`'.repeat(3); // avoid literal triple backticks (they break this doc's markdown fences)
+    const md = `# FerroML\n\n![badge](x.png)\n\nA Rust ML library.\n\n${fence}rust\nfn main() {}\n${fence}\n\n` + 'Detail. '.repeat(400);
+    const chunks = readmeToChunks('ferroml', 'FerroML', 'https://github.com/robertlupo1997/ferroml', md);
+    expect(chunks.length).toBeGreaterThan(1);
+    expect(chunks[0].id).toBe('readme-ferroml-0');
+    expect(chunks[0].sourceType).toBe('readme');
+    expect(chunks[0].text).toContain('A Rust ML library.');
+    expect(chunks[0].text).not.toContain('fn main');
+    expect(chunks.every((c) => c.text.length <= 1200)).toBe(true);
   });
 });

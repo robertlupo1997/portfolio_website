@@ -97,5 +97,271 @@ export const CORPUS: Chunk[] = [
     "url": "https://github.com/robertlupo1997/mlforge",
     "slideIndex": 9,
     "text": "MLForge — //automl ('26)\nAutonomous ML research framework for tabular data. CSV + metric in, best pipeline out.\nStack: Python, AutoML\nResult: AutoML FRAMEWORK"
+  },
+  {
+    "id": "readme-ferroml-0",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": "FerroML\n\n**Statistically rigorous AutoML in Rust with Python bindings.**\n\n> **Status: v1.0.1** — 55+ ML algorithms, 6,500+ tests passing (4,364 Rust + 2,137 Python), GPU acceleration, native sparse support, sklearn-compatible API (`score`, `partial_fit`, `decision_function`), validated against sklearn/scipy/xgboost/lightgbm/statsmodels/linfa with 489+ cross-library correctness tests and 5-layer correctness verification (Reference-Match, Textbook, Property/Invariant, Adversarial, Frankenstein). See Project Status for details.\n\nFerroML is a high-performance machine learning library that prioritizes statistical rigor over black-box automation. Unlike traditional AutoML tools that hide statistical assumptions, FerroML makes them explicit and testable.\n\nKey Features\n\n- **Statistical Rigor First** — Confidence intervals on all predictions, hypothesis testing for model comparison, multiple testing correction (Bonferroni, Holm, Benjamini-Hochberg)\n- **Transparent Assumptions** — All statistical assumptions are documented and tested. No hidden magic.\n- **Reproducible Results** — Deterministic by default with explicit randomness control\n- **High Performance** — Written in Rust with SIMD acce"
+  },
+  {
+    "id": "readme-ferroml-1",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": "leration, parallel processing via Rayon, GPU acceleration via wgpu, and native sparse matrix support\n- **Python Bindings** — Seamless NumPy/Polars integration via PyO3\n\nInstallation\n\nRust\n\nPython (3.10-3.13)\n\nQuick Start\n\nRust\n\nPython\n\nText Classification Pipeline (Python)\n\nClaude Code Plugin\n\nUse FerroML from natural language with the FerroML Plugin for Claude Code. Say \"I have sales data, predict next month's revenue\" and Claude handles data profiling, model selection, training, diagnostics, and reporting — all powered by FerroML under the hood.\n\nThe plugin bundles 5 slash commands, an autonomous ML agent, and hooks that enforce diagnostic quality on every model. It calls FerroML's Python API directly — no MCP server or subprocess overhead. See the plugin repo for full documentation.\n\nArchitecture\n\nModules\n\n| Module | Description |\n|--------|-------------|\n| `stats` | Hypothesis testing, confidence intervals, effect sizes, multiple testing correction |\n| `models` | Linear, logistic, ridge, lasso, elastic net, decision trees, random forests, gradient boosting, SVM (kernel + linear), KNN, naive bayes (Gaussian/Multinomial/Bernoulli/Categorical), extra trees, AdaBoost, SGD, QDA, iso"
+  },
+  {
+    "id": "readme-ferroml-2",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": "tonic regression, isolation forest, LOF, Gaussian processes |\n| `ensemble` | Bagging, stacking, voting classifiers with diversity-weighted selection |\n| `hpo` | Bayesian optimization, Hyperband, ASHA, random/grid search |\n| `preprocessing` | Imputation, one-hot/target encoding, standard/robust scaling, feature selection, SMOTE/ADASYN resampling, CountVectorizer, TfidfTransformer |\n| `clustering` | KMeans (k-means++), DBSCAN, HDBSCAN, AgglomerativeClustering (Ward/complete/average/single), GaussianMixture (EM, 4 covariance types) |\n| `neural` | MLPClassifier, MLPRegressor with training diagnostics, MC Dropout uncertainty |\n| `decomposition` | PCA, IncrementalPCA, TruncatedSVD, LDA, FactorAnalysis, t-SNE |\n| `pipeline` | DAG-based pipeline execution with caching and parallel processing |\n| `cv` | K-Fold, Stratified K-Fold, Group K-Fold, Time Series Split, Nested CV |\n| `automl` | Automated model selection with statistical model comparison |\n| `explainability` | Permutation importance, SHAP values, partial dependence |\n| `metrics` | Classification (ROC-AUC, F1, MCC) and regression (R², RMSE, MAE) metrics |\n| `onnx` | Export trained models to ONNX format for deployment |\n| `datasets` |"
+  },
+  {
+    "id": "readme-ferroml-3",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": " Built-in datasets (Iris, Diabetes, etc.) for testing and examples |\n\nStatistical Features\n\nFerroML distinguishes itself through rigorous statistical methodology:\n\n- **Corrected Resampled t-test** (Nadeau-Bengio) for comparing cross-validated models\n- **Multiple Testing Correction** — Bonferroni, Holm-Bonferroni, Benjamini-Hochberg FDR\n- **Confidence Intervals** on all CV scores and predictions\n- **Assumption Testing** — Normality, homoscedasticity, independence checks\n- **Effect Size Reporting** — Cohen's d, confidence intervals for differences\n\nExamples\n\nRun the included examples:\n\nFeature Flags\n\n| Feature | Description |\n|---------|-------------|\n| `parallel` | Parallel processing (enabled by default) |\n| `simd` | SIMD acceleration for distance calculations |\n| `sparse` | Native sparse matrix operations |\n| `onnx` | ONNX model export (enabled by default) |\n| `faer-backend` | BLAS-backed linear algebra via faer (enabled by default) |\n| `gpu` | GPU acceleration via wgpu (GEMM, distance matrix) |\n\nDocumentation\n\n- **Rust API**: Generated by `cargo doc` — see API docs\n- **Python API**: Generated by pdoc — see Python docs\n\nPerformance\n\nBenchmarks vs scikit-learn\n\nAll benchmarks produ"
+  },
+  {
+    "id": "readme-ferroml-4",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": "ce matching predictions (100% correctness). Results from cross-library benchmark (2026-03-27, 10K samples):\n\n| Model | vs sklearn | Status |\n|-------|-----------|--------|\n| KMeans | **0.26x** | **3.9x FASTER** |\n| StandardScaler | **0.29x** | **3.4x FASTER** |\n| GaussianNB | **0.37x** | **2.7x FASTER** |\n| DecisionTree | 1.1-1.3x | ~Parity |\n| SVC RBF | 1.54x | Competitive (improved from 7.7x) |\n| HistGBT | 2.0x | Competitive |\n| LogReg | 2.1x | Competitive |\n| KNN | 4.0x | Known limitation |\n\nNo model is more than 5x slower than sklearn. FerroML wins on **predict universally** (zero Python overhead), on **tree/ensemble models** (Rayon parallel construction), and achieves **parity or better on linear algebra** thanks to faer SVD and Cholesky solvers. Full results with methodology and analysis: docs/benchmarks.md\n\nArchitecture\n\n- **Rayon parallelism** — Automatic parallel iteration for ensemble training\n- **SIMD operations** — Vectorized distance calculations\n- **GPU acceleration** — wgpu-based GEMM, distance matrices, MLP forward/backward (8 WGSL shaders with auto CPU/GPU dispatch)\n- **Native sparse support** — CsrMatrix operations for 12 models, TfidfTransformer, sparse scalers\n-"
+  },
+  {
+    "id": "readme-ferroml-5",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": " **faer-backend** — BLAS-accelerated linear algebra (Cholesky, matrix solve) via faer\n- **Barnes-Hut t-SNE** — O(N log N) visualization with VP-tree and QuadTree\n- **LTO optimization** — Link-time optimization in release builds\n\nLicense\n\nLicensed under either of:\n\n- Apache License, Version 2.0 (LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0)\n- MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)\n\nat your option.\n\nProject Status\n\nCurrent State (v1.0.0)\n\nFerroML is **v1.0.0**, hardened through 32 plans (1-6, A-Z) and 4 v1.0 phases of correctness, performance, and feature work:\n\n| Metric | Status |\n|--------|--------|\n| **Tests** | 6,500+ passing (4,364 Rust + 2,137 Python), 0 failing, 26 ignored (slow AutoML system tests) |\n| **Correctness Tests** | 1,140 (553 edge_cases + 304 correctness + 88 adversarial + 103 integration + 36 regression + 56 vs_linfa) |\n| **Cross-Library Validation** | 489+ tests (vs sklearn, scipy, xgboost, lightgbm, statsmodels, linfa) |\n| **Frankenstein Tests** | 37 Python + 8 Rust composition tests (pipeline, ensemble, serialization, thread safety) |\n| **5-Layer Verification** | Reference-Match, Textbook, Property/Invariant, Adversarial"
+  },
+  {
+    "id": "readme-ferroml-6",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": ", Frankenstein — all passing |\n| **Python Test Files** | 60+ end-to-end test files |\n| **Python Bindings** | ~99% coverage (55+ models, 22+ preprocessors, 6 decomposition, 37 explainability) |\n| **sklearn API** | `score()` on 56 models, `partial_fit` on 10, `decision_function` on 13 classifiers |\n| **Benchmarks** | 86+ Criterion benchmarks with CI regression baseline |\n| **GPU Tests** | ~188 tests for wgpu shader acceleration |\n| **Sparse Tests** | ~55 sparse model tests + 90 sparse infrastructure tests |\n\nWhat's Implemented\n\n- **Linear Models**: LinearRegression, LogisticRegression, Ridge, Lasso, ElasticNet, RidgeCV, LassoCV, ElasticNetCV, RidgeClassifier, Quantile, Robust, Perceptron, SGD\n- **Trees & Ensembles**: DecisionTree, RandomForest, ExtraTrees, GradientBoosting, HistGradientBoosting, AdaBoost, Bagging, Stacking, Voting\n- **Instance-Based**: KNN (classifier + regressor) with KD-Tree/Ball-Tree acceleration, NearestCentroid\n- **SVM**: SVC, SVR (kernel), LinearSVC, LinearSVR\n- **Probabilistic**: Gaussian/Multinomial/Bernoulli/Categorical Naive Bayes, QuadraticDiscriminantAnalysis (QDA)\n- **Gaussian Processes**: GaussianProcessRegressor, GaussianProcessClassifier (RBF, Matern,"
+  },
+  {
+    "id": "readme-ferroml-7",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": " Constant, White kernels)\n- **Multi-Output**: MultiOutputRegressor, MultiOutputClassifier wrappers\n- **Anomaly Detection**: IsolationForest, LocalOutlierFactor (LOF)\n- **Clustering**: KMeans (k-means++), DBSCAN, HDBSCAN, AgglomerativeClustering (4 linkage methods), GaussianMixture (EM, 4 covariance types, BIC/AIC)\n- **Calibration**: TemperatureScaling, Sigmoid (Platt), Isotonic\n- **Regression**: IsotonicRegression (monotonic constraints)\n- **Neural Networks**: MLPClassifier, MLPRegressor with training diagnostics, MC Dropout\n- **Decomposition**: PCA, IncrementalPCA, TruncatedSVD, LDA, FactorAnalysis, t-SNE\n- **Preprocessing**: 25+ transformers (scalers, encoders, imputers, SMOTE variants, RFE, CountVectorizer, TfidfTransformer)\n- **Explainability**: TreeSHAP (Lundberg 2018), KernelSHAP (10 typed variants), PDP, ICE, H-statistic\n- **HPO**: TPE, Hyperband, ASHA, BOHB, Bayesian optimization\n\nAccuracy Validation\n\nFerroML is validated against scikit-learn with 58 fixture-based comparisons and 489+ cross-library correctness tests:\n\n| Category | Tests | Status |\n|----------|-------|--------|\n| Models (sklearn comparison) | 17 | All passing |\n| Preprocessing (sklearn comparison) | 15 | All"
+  },
+  {
+    "id": "readme-ferroml-8",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": " passing |\n| Clustering correctness | 102 | All passing |\n| Neural network correctness | 49 | All passing |\n| Preprocessing correctness | 101 | All passing |\n\n| Algorithm Type | Tolerance |\n|----------------|-----------|\n| Closed-form (Linear, PCA) | 1e-8 |\n| Iterative (Lasso, Logistic) | 1e-4 |\n| Tree-based | 1e-6 |\n| Ensemble (RF, GB) | 5% (RNG variance) |\n\nFull accuracy report: docs/accuracy-report.md\n\nSee CHANGELOG.md for detailed change history.\n\nCommon Gotchas\n\nThings that have bitten us. Learn from our mistakes.\n\nAdding a Model (The #1 Mistake)\n\nEvery new model requires **three** updates — miss one and Python silently breaks:\n\n1. Rust impl in `ferroml-core/src/`\n2. PyO3 wrapper in `ferroml-python/src/`\n3. Re-export in `ferroml-python/python/ferroml/<submodule>/__init__.py`\n\nModule Layout Surprises\n\n- **Gradient boosting lives in `ferroml.trees`**, not `ferroml.ensemble`. This trips everyone up.\n- **AutoML classes are in `ferroml.automl`**, not re-exported at the top level. Use `from ferroml.automl import AutoML, AutoMLConfig`.\n- **`ensemble`** is only for meta-estimators (Bagging, Stacking, Voting).\n\nBuild & Test\n\n- **Always use `--release`** with maturin: `maturin develop -"
+  },
+  {
+    "id": "readme-ferroml-9",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": "-release`. Debug builds are 10-50x slower and will make you think models are broken.\n- **`cargo test` only tests `ferroml-core`** (workspace default-members). Python bindings are tested via `pytest`, not `cargo test --workspace`.\n- **Don't add new `.rs` files in `ferroml-core/tests/`** — each file becomes a separate binary. We consolidated from 19 to 6 files to shrink the debug build from 350 GB to 14 GB.\n- **Clippy uses `-D warnings`** — all warnings are errors. If your algorithm has 200+ lines, add `#[allow(clippy::too_many_lines)]`.\n\nLinear Algebra\n\n- **Use `nalgebra` or `faer`, never `ndarray-linalg`**. We removed ndarray-linalg to eliminate the OpenBLAS system dependency. Do not re-add it.\n\nNumerical Stability\n\n- **Tolerances vary by algorithm type** when comparing to sklearn: closed-form (1e-8), iterative (1e-4), tree-based (1e-6), ensemble (5% for RNG variance). Using the wrong tolerance gives false test failures.\n- **SVC with RBF kernels** is ~1.5x slower than sklearn (improved from 7.7x). Competitive for most workloads.\n- **IncrementalPCA** accumulates rounding errors in streaming mode — this is inherent to the algorithm, not a FerroML bug.\n\nONNX Export\n\nONNX roundtrip is "
+  },
+  {
+    "id": "readme-ferroml-10",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": "finicky. We've fixed subtle issues in AdaBoost (weighted-sum approximation), HistGBT (bin-threshold ULP nudge), BernoulliNB (neg_prob for absent features), and SVM (requires 2 outputs). Always test roundtrips aggressively after touching model serialization.\n\nKnown Limitations\n\nFerroML is production-ready with the following known limitations. For model-specific details, see the Notes section in each model's docstring (`help(Model)`).\n\nRandomForest Parallel Non-Determinism\n\nRandomForest and ExtraTrees use Rayon for parallel tree construction. Due to work-stealing scheduling, results may vary slightly between runs even with the same `random_state`. For reproducible results, set `n_jobs=1`.\n\nSparse Algorithm Support\n\n12 models support sparse input (CSR format) via the `fit_sparse()`/`predict_sparse()` API. For unsupported models, sparse matrices are converted to dense automatically. Very large sparse datasets (>100K features) may cause memory issues during conversion.\n\nONNX Export (ort RC)\n\nONNX export depends on `ort 2.0.0-rc.11` (release candidate). The API is stable and all 118 roundtrip tests pass, but users should be aware this is a pre-release dependency. Pin your ort version to "
+  },
+  {
+    "id": "readme-ferroml-11",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": "avoid surprises on upgrade.\n\nPer-Model Notes\n\nSee individual model docstrings for model-specific limitations and recommendations (e.g., SVC scaling sensitivity, GP models without pickle support, HistGBT NaN handling behavior). Use `help(Model)` or check the Notes section in each model's documentation.\n\nBenchmarks\n\nFerroML achieves competitive or better performance than scikit-learn across most algorithms. No model is more than 5x slower. Highlights: KMeans 3.9x faster, StandardScaler 3.4x faster, GaussianNB 2.7x faster. Full methodology and results: docs/benchmarks.md.\n\nContributing\n\nContributions are welcome! Please read the contributing guidelines before submitting PRs.\n\nDevelopment Setup\n\n1. **Install pre-commit hooks** (recommended):\n\n   \n\n   Pre-commit hooks will automatically run on every commit to ensure:\n   - Code is formatted with `cargo fmt`\n   - Code passes `cargo clippy` lints\n   - Quick unit tests pass\n   - No debug macros (`todo!()`, `unimplemented!()`, `dbg!()`) in production code\n   - No large files (>1MB) are accidentally committed\n\n2. **Run hooks manually** (useful before pushing):\n\n   \n\n3. **Troubleshoot hook failures**: If a hook fails, fix the underlying issue "
+  },
+  {
+    "id": "readme-ferroml-12",
+    "sourceType": "readme",
+    "title": "FerroML README",
+    "url": "https://github.com/robertlupo1997/ferroml",
+    "text": "rather than skipping hooks."
+  },
+  {
+    "id": "readme-revenue-forecast-0",
+    "sourceType": "readme",
+    "title": "Hierarchical Revenue Forecast README",
+    "url": "https://github.com/robertlupo1997/hierarchical-revenue-forecast",
+    "text": "Multi-LOB Revenue Forecasting System (MLRF)\n\nProduction-grade revenue forecasting system with hierarchical reconciliation and SHAP explainability.\n\nUses the Kaggle Store Sales dataset (54 stores × 33 product families = 1,782 time series) as a proxy for multi-LOB revenue prediction.\n\nDemo\n\n**Key Features:**\n- 📊 **$1B+ Revenue Forecasting** across 54 stores and 33 product categories\n- 🔍 **SHAP Explainability** - Understand why the model makes each prediction\n- 📈 **Model Comparison** - LightGBM vs AutoARIMA vs ETS vs SeasonalNaive\n- 🎯 **0.48 RMSLE** - Competitive with Kaggle top 20%\n- ⚡ **Sub-10ms inference** with Go + ONNX Runtime\n- 🔄 **Hierarchical Reconciliation** using MinTrace method\n\nQuick Start\n\nArchitecture\n\n**Data Flow**: Kaggle CSV -> Polars preprocessing -> Feature matrix -> LightGBM/statsforecast training -> ONNX export -> Go inference -> React dashboard\n\n**Hierarchy**: Total (1) -> Store (54) -> Product Family (33) -> Bottom level (1,782 series)\n\nAPI Endpoints\n\n| Endpoint | Method | Description |\n|----------|--------|-------------|\n| `/health` | GET | Health check |\n| `/predict` | POST | Single prediction with caching |\n| `/predict/batch` | POST | Batch predictions |"
+  },
+  {
+    "id": "readme-revenue-forecast-1",
+    "sourceType": "readme",
+    "title": "Hierarchical Revenue Forecast README",
+    "url": "https://github.com/robertlupo1997/hierarchical-revenue-forecast",
+    "text": "\n| `/explain` | POST | Real-time SHAP waterfall data |\n| `/hierarchy` | GET | Full hierarchy tree with predictions |\n| `/admin/reload-features` | POST | Hot-reload feature store (requires admin key) |\n\nExample: Single Prediction\n\nExample: SHAP Explanation\n\nAPI Error Responses\n\nAll API endpoints return structured error responses:\n\nError Codes\n\n| Code | HTTP Status | Description |\n|------|-------------|-------------|\n| `AUTH_REQUIRED` | 401 | API key missing or invalid |\n| `INVALID_REQUEST` | 400 | Malformed request body or missing fields |\n| `INVALID_STORE` | 400 | Store number out of range (1-54) |\n| `INVALID_FAMILY` | 400 | Unknown product family |\n| `INVALID_DATE` | 400 | Date format error or out of range |\n| `INVALID_HORIZON` | 400 | Horizon must be 15, 30, 60, or 90 days |\n| `MODEL_UNAVAILABLE` | 503 | ONNX model not loaded |\n| `INFERENCE_FAILED` | 500 | Model prediction error |\n| `PARSE_ERROR` | 400 | JSON parsing failed |\n| `SHAP_UNAVAILABLE` | 503 | SHAP service not connected |\n| `SHAP_ERROR` | 500 | SHAP computation failed |\n| `FEATURE_STORE_UNAVAILABLE` | 503 | Feature store not loaded |\n| `HIERARCHY_UNAVAILABLE` | 503 | Hierarchy data not available |\n| `RELOAD_FAILED` | 5"
+  },
+  {
+    "id": "readme-revenue-forecast-2",
+    "sourceType": "readme",
+    "title": "Hierarchical Revenue Forecast README",
+    "url": "https://github.com/robertlupo1997/hierarchical-revenue-forecast",
+    "text": "00 | Feature store reload failed |\n\nExample Error Response\n\nDevelopment\n\nPython (mlrf-data, mlrf-ml)\n\nGo API\n\nDashboard\n\nDocker Compose\n\nPerformance Targets\n\n- API P95 latency: <10ms (with Redis cache)\n- Dashboard load: <2s\n- Model RMSLE: <0.5 (competitive with Kaggle top 20%)\n\nData Files (gitignored)\n\nKey Technical Decisions\n\n- **Polars over Pandas**: Rust-backed, 80x faster for large datasets\n- **statsforecast + hierarchicalforecast (Nixtla)**: Pure Python hierarchical forecasting\n- **Go + ONNX Runtime**: Sub-10ms inference latency with pre-allocated tensors\n- **Redis + TinyLFU**: Local cache layer for hot predictions\n- **visx for SHAP waterfall**: Custom implementation (shapjs lacks waterfall support)\n\nProject Structure\n\nLicense\n\nMIT"
+  },
+  {
+    "id": "readme-kkbox-0",
+    "sourceType": "readme",
+    "title": "KKBOX Churn Prediction README",
+    "url": "https://github.com/robertlupo1997/kkbox-churn-prediction",
+    "text": "---\ntitle: KKBOX Churn Prediction\nemoji: \"🎵\"\ncolorFrom: purple\ncolorTo: blue\nsdk: docker\napp_port: 7860\npinned: false\nlicense: mit\n---\n\nKKBOX Churn Prediction\n\n> **0.97 AUC with honest temporal validation** - A production-ready churn prediction pipeline with React dashboard, FastAPI backend, and SHAP explanations.\n\nLive Demo\n\nRun the full stack locally:\n\nOr visit the **Live Demo on Hugging Face Spaces**\n\nResults\n\nFinal Model Performance\n\n| Metric | Starting | Final | Target | Kaggle Winner |\n|--------|----------|-------|--------|---------------|\n| **AUC** | 0.7755 | **0.9696** | 0.85 | ~0.99* |\n| **Log Loss** | 0.41 | **0.1127** | <0.15 | 0.08 |\n| **Brier Score** | 0.125 | **0.033** | <0.08 | - |\n\n> *Kaggle winners used random splits with data leakage. Our 0.97 AUC uses strict temporal validation (train on past, validate on future).\n\nKey Achievements\n\n- **14% above target AUC** (0.97 vs 0.85 target)\n- **Within 0.03 log loss of winning solution** (0.11 vs 0.08)\n- **Perfect calibration** - predicted probabilities match actual churn rates\n- **131 engineered features** including winner-inspired patterns\n- **Zero data leakage** - all features use only past information\n- **Full-stack ap"
+  },
+  {
+    "id": "readme-kkbox-1",
+    "sourceType": "readme",
+    "title": "KKBOX Churn Prediction README",
+    "url": "https://github.com/robertlupo1997/kkbox-churn-prediction",
+    "text": "plication** - React dashboard + FastAPI + SHAP explanations\n\nThe Problem\n\nKKBOX, Asia's leading music streaming service, needed to predict which users would churn (not renew their subscription). This was a Kaggle competition with 970K users and transaction/listening history.\n\n**Challenge**: High AUC alone isn't enough - the model must output well-calibrated probabilities for business decisions.\n\nSolution Architecture\n\nQuick Start\n\nOption 1: Full Stack (Recommended)\n\nOption 2: ML Pipeline Only\n\nOption 3: Frontend Development\n\nProject Structure\n\nDashboard Features\n\n| Page | Description |\n|------|-------------|\n| **Dashboard** | KPI cards, risk distribution, member filtering, CSV export |\n| **Member Lookup** | Search members, view predictions, SHAP waterfall charts |\n| **Model Performance** | AUC/Log Loss metrics, calibration curves, lift charts |\n| **Feature Importance** | Grouped feature analysis, SHAP beeswarm plots |\n| **ROI Calculator** | Business impact modeling for retention campaigns |\n\nAPI Endpoints\n\nFeature Engineering\n\nFeatures were designed based on Bryan Gregory's 1st place solution:\n\nTop Predictive Features\n\n| Feature | Importance | Description |\n|---------|------------|"
+  },
+  {
+    "id": "readme-kkbox-2",
+    "sourceType": "readme",
+    "title": "KKBOX Churn Prediction README",
+    "url": "https://github.com/robertlupo1997/kkbox-churn-prediction",
+    "text": "-------------|\n| `auto_renew_ratio_30d` | 1.000 | Ratio of auto-renew transactions (30 days) |\n| `auto_renew_ratio_60d` | 0.222 | Ratio of auto-renew transactions (60 days) |\n| `cancel_count_30d` | 0.107 | Number of cancellations (30 days) |\n| `latest_auto_renew` | 0.055 | Whether latest transaction was auto-renewed |\n| `tx_count_60d` | 0.037 | Transaction count (60 days) |\n\nFeature Categories (131 total)\n\n- **Transaction features** (35): Payment patterns across 5 time windows\n- **User log features** (50): Listening behavior, completion rates\n- **Trend features** (10): Week-over-week, month-over-month changes\n- **Historical churn** (10): `last_N_is_churn`, `churn_rate`\n- **Winner-inspired** (15): `autorenew_not_cancel`, `amt_per_day`\n- **Demographics** (5): Age, gender, tenure, registration channel\n\nCalibration: The Secret Weapon\n\nRaw model outputs are confidence scores, not probabilities. Calibration fixes this:\n\n**Impact**: Log loss dropped from 0.41 to 0.11 while AUC slightly improved.\n\nTech Stack\n\n| Layer | Technologies |\n|-------|--------------|\n| **ML** | XGBoost, LightGBM, CatBoost, scikit-learn, SHAP |\n| **Data** | DuckDB, pandas, numpy, Optuna |\n| **API** | FastAPI, uvicor"
+  },
+  {
+    "id": "readme-kkbox-3",
+    "sourceType": "readme",
+    "title": "KKBOX Churn Prediction README",
+    "url": "https://github.com/robertlupo1997/kkbox-churn-prediction",
+    "text": "n, Pydantic |\n| **Frontend** | React 19, TypeScript, Vite, Recharts, Tailwind |\n| **Infrastructure** | Docker, GitHub Actions, Hugging Face Spaces |\n\nDevelopment\n\nWhat I Learned\n\nThis project taught me the difference between **ranking** (AUC) and **calibration** (log loss):\n\n1. **AUC measures ranking** - Are churners scored higher than non-churners?\n2. **Log loss measures calibration** - Does 80% prediction mean 80% actual probability?\n3. **These are independent** - Perfect AUC with terrible log loss is possible\n4. **Calibration is often free** - Isotonic regression preserves ranking while fixing probabilities\n\nSee LEARNERS_GUIDE.md for the full learning journey.\n\nReferences\n\n- WSDM KKBox Churn Prediction Challenge\n- Bryan Gregory's 1st Place Solution (arXiv:1802.03396)\n- Isotonic Calibration\n\n---\n\n**Built as a portfolio project demonstrating end-to-end ML engineering**: feature engineering, model training, calibration, API development, and interactive dashboard."
+  },
+  {
+    "id": "readme-obj-detect-0",
+    "sourceType": "readme",
+    "title": "Open-Vocab Object Detection README",
+    "url": "https://github.com/robertlupo1997/open-vocabulary-object-detection",
+    "text": "Open-Vocabulary Object Detection (OVOD) \n\n   \n\n**Production-ready OVOD system combining Grounding DINO + SAM 2 for text-conditioned object detection and segmentation.**\n\n✨ Features\n\n- 🎯 **Text-to-Detection**: Query images with natural language prompts  \n- 🔍 **Auto Box Format**: Handles normalized cxcywh, pixel xyxy, normalized xyxy\n- ⚡ **Optimized Performance**: ~265ms/image on RTX 3070\n- 📊 **COCO Evaluation**: Multiple prompt strategies with micro-metrics\n- 🖥️ **Streamlit Demo**: Interactive web interface\n- 🔧 **Production Tools**: Makefile targets, environment locking\n\n📓 OVOD Notebook: Explainer & TL;DR\n\nWe include a portfolio-grade explainer notebook designed for ML engineers and reviewers:\n\n- **Path:** `notebooks/OVOD_Explainer_TLDR.ipynb`  \n- **What you'll learn:** Architecture (GroundingDINO + SAM2), prompt strategies, evaluation (COCO/mAP), CPU vs GPU trade-offs, and production considerations.  \n- **CPU-safe by default:** The notebook gracefully runs without a GPU. Heavy sections are gated.\n\nQuickstart (local Jupyter)\n\nNon-interactive run (papermill)\n\nOutputs\n* The notebook writes artifacts to `notebooks/outputs/` (ignored by git except for a `.gitkeep` placeholder).\n* "
+  },
+  {
+    "id": "readme-obj-detect-1",
+    "sourceType": "readme",
+    "title": "Open-Vocab Object Detection README",
+    "url": "https://github.com/robertlupo1997/open-vocabulary-object-detection",
+    "text": "Keep the repo lean: don't commit rendered images/HTML.\n\nGPU notes (WSL2 / Linux)\n* If you have NVIDIA drivers + CUDA available and want to run the heavy sections:\n  \n* In WSL2, verify GPU access with: `python -c \"import torch; print(torch.cuda.is_available())\"`\n\n🚀 Quickstart\n\n🎯 Prompt Strategies\n\n| Strategy | Classes | Best For | Recommended Thresholds |\n|----------|---------|----------|------------------------|\n| `person` | 1 | Person detection | `--box-thr 0.2 --text-thr 0.15` |\n| `common` | 18 | General use | `--box-thr 0.25 --text-thr 0.20` |\n| `full` | 80 | Full COCO eval | `--box-thr 0.25 --text-thr 0.20` |\n\n🏗️ Architecture\n\n- **Grounding DINO**: Text-conditioned object detection\n- **SAM 2**: High-quality segmentation masks\n- **Auto Format Detection**: Handles varying coordinate formats\n- **Smart Aliasing**: Maps \"car bike\" → \"bicycle\", \"motorbike\" → \"motorcycle\"\n\n📋 Model Zoo\n\n| Model | Config | FPS (RTX 3070) | COCO mAP | Notes |\n|-------|--------|----------------|----------|-------|\n| GroundingDINO | SwinT-OGC | ~3.8 | Varies by prompt | Text-conditioned detection |\n| SAM 2 | Hiera-Small | ~12-15 | N/A | Segmentation only |\n| **OVOD Pipeline** | **Combined** | **~2-4** "
+  },
+  {
+    "id": "readme-obj-detect-2",
+    "sourceType": "readme",
+    "title": "Open-Vocab Object Detection README",
+    "url": "https://github.com/robertlupo1997/open-vocabulary-object-detection",
+    "text": "| **0.001+** | **End-to-end system** |\n\n**Tested Configurations:**\n- GroundingDINO: `groundingdino_swint_ogc.pth` \n- SAM 2: `sam2_hiera_small.pt`\n- Hardware: RTX 3070, CUDA 11.8+\n\n⚡ Performance\n\n- **Latency**: 265-490 ms/image (RTX 3070)\n- **Detection Quality**: Auto-tuned thresholds per prompt strategy  \n- **COCO mAP**: Non-zero evaluation with proper coordinate handling\n\n📁 Repository Structure\n\n🛠️ Development\n\n📝 Notes\n\n- **Box Formats**: Detector outputs vary. `eval.py` auto-detects and converts to COCO `xywh` pixels.\n- **SAM-2**: Repo submodule or editable install supported; paths auto-discovered.\n- **Data**: Expects COCO val2017 dataset at project root `data/coco/`\n- **CUDA vs CPU**: Performance metrics are for CUDA. CI uses CPU-only PyTorch for compatibility.\n- **Dependencies**: GroundingDINO installed from source for latest features.\n\n🔧 Troubleshooting\n\n- **SAM-2 not found**: Ensure editable install or local `sam2/` path exists\n- **0.000 mAP**: Now auto-handled via coordinate format detection + aliasing  \n- **Streamlit warnings**: Fixed with `use_container_width=True`\n- **Windows setup**: Use `pip install pycocotools-windows` or WSL (recommended for CUDA workflows)\n\n✅ Sta"
+  },
+  {
+    "id": "readme-obj-detect-3",
+    "sourceType": "readme",
+    "title": "Open-Vocab Object Detection README",
+    "url": "https://github.com/robertlupo1997/open-vocabulary-object-detection",
+    "text": "tus\n\n- [x] Streamlit demo with prompt search\n- [x] COCO evaluation pipeline\n- [x] Auto box format detection\n- [x] Production Makefile targets\n- [x] Environment locking\n- [x] Performance benchmarks (265ms/img RTX 3070)\n\n📜 Third-Party Acknowledgments\n\nThis project builds upon excellent work from:\n\n- **Grounding DINO** (Apache-2.0) - Text-conditioned object detection\n- **SAM 2** (Apache-2.0) - Segment Anything Model 2\n- **COCO Dataset** (CC BY 4.0) - Evaluation benchmarks\n\nSee NOTICE for complete attribution details.\n\n---\n\n🤖 **Generated with Claude Code**"
+  },
+  {
+    "id": "readme-ironclad-0",
+    "sourceType": "readme",
+    "title": "Ironclad README",
+    "url": "https://github.com/robertlupo1997/ironclad",
+    "text": "Ironclad — Construction Cost Estimation That Beats the Average Human\n\n> \"The only estimator that tells you how confident it is.\"\n\nWhat This Is\n\nAI-powered construction takeoff and cost estimation that targets **+/- 5-10% accuracy** on detailed plans — beating the average human estimator's +/- 20-30% while being 10-50x faster.\n\nThe Opportunity\n\n| Method | Accuracy | Speed |\n|--------|----------|-------|\n| Average human (Class 3) | -20% to +30% | Days to weeks |\n| Good human (Class 1-2) | -5% to +15% | Days |\n| Best AI tools (Togal, InEight) | 2-5% error | 12-40 minutes |\n| **Ironclad (target)** | **+/- 5-10% with confidence intervals** | **Minutes** |\n\n98% of construction projects experience cost overruns. Estimating errors cost U.S. companies $273B/year. The average estimator is bad — we just need to be less bad, faster, and honest about uncertainty.\n\nMVP Scope\n\nPhase 1: Plan Reader (CV Pipeline)\n- Ingest PDF/DWG blueprints\n- Detect and classify building elements (walls, doors, windows, rooms, MEP symbols)\n- OCR dimensions, annotations, and schedules\n- Output structured quantity takeoff (linear feet, square footage, counts)\n\nPhase 2: Cost Engine\n- Map quantities to RSMeans cost dat"
+  },
+  {
+    "id": "readme-ironclad-1",
+    "sourceType": "readme",
+    "title": "Ironclad README",
+    "url": "https://github.com/robertlupo1997/ironclad",
+    "text": "abase (API: $396-5,973/yr)\n- Apply location factors (970+ North American cities)\n- Labor + material + equipment breakdown per line item\n- Historical cost calibration from Procore project data\n\nPhase 3: Confidence Intervals (The Differentiator)\n- Every estimate comes with a range: \"$2.1M - $2.4M (90% confidence)\"\n- Uncertainty decomposition: which line items have the most variance?\n- Flag high-risk items that need human review\n- Learn from actuals to tighten intervals over time\n\nPhase 4: Feedback Loop\n- Ingest actual project costs post-construction\n- Compare predicted vs actual per line item\n- Retrain models per building type / market / trade\n- Track accuracy improvement over time\n\nTech Stack\n\n- **Plan Reading**: Florence-2-large-ft (LoRA) + YOLOE-26 + SAM 3 fine-tuned on architectural plans\n- **OCR**: PaddleOCR PP-OCRv5 (primary) + Surya/TrOCR (fallback) + PaddleOCR-VL-1.5 (VLM verification)\n- **Cost Database**: 1build API (evaluate first) / RSMeans API (Gordian) / BLS via FRED API (free fallback)\n- **ML Engine**: FerroML (custom Rust+Python AutoML with CIs, hypothesis testing, SIMD acceleration) + SALib (variance decomposition) + PyMC (Bayesian calibration)\n- **Historical Data**: "
+  },
+  {
+    "id": "readme-ironclad-2",
+    "sourceType": "readme",
+    "title": "Ironclad README",
+    "url": "https://github.com/robertlupo1997/ironclad",
+    "text": "Procore API integration (deferred post-MVP due to Sep 2025 API policy changes)\n- **Model Serving**: ONNX Runtime (Phase 1) → Triton Inference Server (Phase 2)\n- **MLOps**: MLflow (experiment tracking, model registry)\n- **Backend**: FastAPI + Celery/Redis (acks_late=True)\n- **Frontend**: React (reuse NetsuiteDashboard patterns)\n\nTraining Data Sources\n\n| Dataset | Size | Contents | License |\n|---------|------|----------|---------|\n| MLSTRUCT-FP | 954 multi-unit plans | Wall segmentation | **MIT** (commercial OK) |\n| ProcTHOR (Allen AI) | Unlimited synthetic | Procedural 3D houses/plans | Apache 2.0 |\n| ArchCAD-400K | 413K annotated chunks | 27-class CAD annotations | Academic (negotiate) |\n| CubiCasa5K | 5,000 plans | 80+ class room segmentation | CC BY-NC (negotiate) |\n| FloorPlanCAD | 16K SVG plans | 30-class symbol spotting | CC BY-NC (negotiate) |\n| Roboflow Architectural | 4,663 images | 14-class floor plan detection | Verify per-project |\n| ResPlan (2025) | 17K vector plans | Room connectivity graphs | Check license |\n| SYNBUILD-3D (2025) | 6.2M synthetic buildings | 3D wireframes + floor plans | Check license |\n\n**Note**: MEP symbol detection is the biggest training data gap —"
+  },
+  {
+    "id": "readme-ironclad-3",
+    "sourceType": "readme",
+    "title": "Ironclad README",
+    "url": "https://github.com/robertlupo1997/ironclad",
+    "text": " no adequate public dataset exists. Custom synthetic generation required.\n\nCompetitive Landscape (March 2026)\n\n$167M+ in VC funding deployed to construction AI estimation startups in the last 12 months.\n\n| Competitor | Approach | Ironclad Differentiator |\n|-----------|----------|------------------------|\n| Togal.AI ($17M) | Cloud AI takeoff + TogalCHAT, 97% area detection | Broader coverage (50 classes), confidence intervals |\n| Bobyard ($35M) | Pure-play AI takeoff, multiple trades | Confidence intervals, open-source option |\n| Attentive.ai ($31M) | AI takeoff + human QA, 98%+ accuracy | Fully automated, confidence intervals |\n| MeltPlan ($14M) | Risk-oriented AI estimation | Full Monte Carlo P10/P50/P90 + tornado diagrams |\n| Bluebeam Max | AI-augmented markup (Claude + Firmus AI acquisition) | End-to-end pipeline; complementary positioning |\n| InEight | Enterprise AI estimation, 1.8% error rate | Price accessibility, transparency, self-hosted |\n| Procore Estimating | Platform-integrated, 4% error | Full CV automation; position as feed-into-Procore |\n| PlanSwift 2026 | Desktop AI + NLP + real-time pricing | Cloud-native, confidence intervals |\n| Kreo | BIM + 2D AI takeoff, 95% ac"
+  },
+  {
+    "id": "readme-ironclad-4",
+    "sourceType": "readme",
+    "title": "Ironclad README",
+    "url": "https://github.com/robertlupo1997/ironclad",
+    "text": "curacy | Scanned/poor PDF handling, confidence intervals |\n\n**Key differentiators (no competitor offers these):**\n- Monte Carlo confidence intervals (P10/P50/P90) with variance decomposition\n- Self-hosted / open-source option\n- Bayesian calibration from actuals with AACE classification\n- Scanned/poor-quality PDF handling via multi-engine OCR\n\nWhy \"Better Than Human\" Is Achievable\n\nHumans are bad at estimation for systematic, fixable reasons:\n\n1. **Missed quantities** — CV doesn't skip rooms or forget to count fixtures\n2. **Math errors** — no broken spreadsheet formulas\n3. **Inconsistency** — same plans always produce same takeoff\n4. **Stale pricing** — API pulls live cost data, not last year's numbers\n5. **No fatigue** — 200-sheet plan set gets the same attention on sheet 200 as sheet 1\n6. **Bias** — humans anchor on round numbers and past projects; ML doesn't\n\nWe DON'T try to beat humans on:\n- Site condition judgment (we flag uncertainty instead)\n- Subcontractor market dynamics (we use ranges)\n- Scope interpretation ambiguity (we highlight conflicts)\n\nProject Structure\n\nLicense\n\nMIT"
+  },
+  {
+    "id": "readme-ferroml-plugin-0",
+    "sourceType": "readme",
+    "title": "FerroML Plugin README",
+    "url": "https://github.com/robertlupo1997/ferroml-plugin",
+    "text": "FerroML Plugin for Claude Code\n\nEnd-to-end machine learning from natural conversation. Say \"I have sales data, predict next month's revenue\" and Claude handles everything -- data profiling, model selection, training, diagnostics, and a plain-language report.\n\nPowered by FerroML, a statistically rigorous ML library written in Rust.\n\nInstall\n\nFerroML itself must be installed in your Python environment:\n\nThe plugin's session-start hook will remind you if it's missing.\n\nCommands\n\n| Command | What it does |\n|---------|-------------|\n| `/ml [file]` | End-to-end ML project -- profile, train, evaluate, report |\n| `/ml-eval [model]` | Full diagnostics on a trained model |\n| `/ml-report [audience]` | Plain-language summary for `boss`, `client`, `team`, or `technical` |\n| `/ml-status [data]` | Check if a deployed model is still healthy (drift detection) |\n| `/ml-compare [file]` | Compare multiple models with statistical significance tests |\n\nAll arguments are optional. Claude will ask for what it needs.\n\nWhat You Get\n\nEvery ML session includes:\n\n- **Model recommendations** based on your data characteristics\n- **Statistical diagnostics** -- not just accuracy, but residuals, confidence interval"
+  },
+  {
+    "id": "readme-ferroml-plugin-1",
+    "sourceType": "readme",
+    "title": "FerroML Plugin README",
+    "url": "https://github.com/robertlupo1997/ferroml-plugin",
+    "text": "s, feature importance, assumption tests\n- **Plain-language explanations** adapted to your technical level\n- **Session state** persisted in `.ferroml-session.json` so you can pick up where you left off\n\nHow It Works\n\nThe plugin bundles:\n\n- **1 skill** (55 files) -- the core ML intelligence with 6 workflows, 30 template scripts, 14 reference docs\n- **5 commands** -- discoverable entry points for common workflows\n- **3 hooks** -- session bootstrap, data file validation, diagnostic quality enforcement\n- **1 agent** -- autonomous ML engineer for heavy workloads (AutoML, multi-model comparison)\n\nClaude uses FerroML's Python API directly (`import ferroml`). No MCP server, no subprocess calls, no overhead.\n\nExamples\n\nOr just talk naturally:\n\nRequirements\n\n- Claude Code CLI, desktop app, or IDE extension\n- Python 3.10+\n- `pip install ferroml` (or `pip install ferroml[all]` for Polars/Pandas support)\n\nLicense\n\nMIT OR Apache-2.0"
+  },
+  {
+    "id": "readme-gsd-ml-0",
+    "sourceType": "readme",
+    "title": "GSD-ML README",
+    "url": "https://github.com/robertlupo1997/gsd-ml",
+    "text": "gsd-ml\n\nClaude Code native autonomous ML research tool.\n\nWhat is this?\n\ngsd-ml turns Claude Code into an autonomous ML researcher. Claude Code edits train.py, runs experiments via Bash, parses metrics, and makes keep/revert decisions through git — no subprocesses, no double-billing. Ships as an npm package (skills and workflows into `~/.claude/`) plus a Python utilities package (`gsd_ml`) for data profiling, checkpointing, and diagnostics.\n\nInstall\n\nOptional extras for deep learning and fine-tuning:\n\nQuick Start\n\nIn Claude Code, run:\n\nThis profiles your dataset, scaffolds a `.ml/` experiment directory, runs iterative training with automatic keep/revert decisions, and exports the best model.\n\nFor other domains:\n\nDomains\n\n| Domain | Command | Models |\n|--------|---------|--------|\n| Tabular | `/gsd:ml data.csv target` | sklearn, XGBoost, LightGBM |\n| DL Image | `/gsd:ml images/ --domain dl --task image_classification` | timm (ResNet, EfficientNet, ...) |\n| DL Text | `/gsd:ml data.csv target --domain dl --task text_classification` | transformers |\n| Fine-Tuning | `/gsd:ml data.jsonl --domain ft --model-name meta-llama/...` | peft, trl (LoRA/QLoRA) |\n\n> DL and FT domains check for GPU "
+  },
+  {
+    "id": "readme-gsd-ml-1",
+    "sourceType": "readme",
+    "title": "GSD-ML README",
+    "url": "https://github.com/robertlupo1997/gsd-ml",
+    "text": "availability at startup. CPU-only machines still work but run slowly.\n\nSkills\n\n| Skill | Purpose |\n|-------|---------|\n| `/gsd:ml` | Run a full ML experiment |\n| `/gsd:ml-status` | Show experiment history and metrics |\n| `/gsd:ml-resume` | Resume an interrupted experiment |\n| `/gsd:ml-clean` | Remove experiment artifacts (.ml/ directory) |\n| `/gsd:ml-diagnose` | Run diagnostics on current model performance |\n\nHow It Works\n\n1. **Skills** (`~/.claude/commands/gsd-ml/`) are Claude Code slash commands with YAML frontmatter\n2. **Workflows** (`~/.claude/gsd-ml/workflows/`) are step-by-step markdown instructions that Claude Code follows\n3. **Templates** (`~/.claude/gsd-ml/templates/`) provide starter train.py files for each domain (tabular, DL image, DL text, fine-tuning)\n4. **References** (`~/.claude/gsd-ml/references/`) are lookup tables (e.g., metric-map.md maps metrics to sklearn scoring strings)\n5. Claude Code reads/writes files, runs training via Bash, parses metrics, and manages experiment state through git\n\nExperiment state lives in `.ml/`:\n- `config.json` -- experiment configuration (domain, target, metric, guardrails)\n- `checkpoint.json` -- current progress (iteration, best scor"
+  },
+  {
+    "id": "readme-gsd-ml-2",
+    "sourceType": "readme",
+    "title": "GSD-ML README",
+    "url": "https://github.com/robertlupo1997/gsd-ml",
+    "text": "e, keeps/reverts)\n- `results.jsonl` -- metric history across iterations\n- `experiments.md` -- human-readable journal of each iteration\n\nFrom mlforge\n\ngsd-ml replaces mlforge's subprocess-spawning CLI with native Claude Code execution.\n\n**Migration:**\n- Replace `from mlforge` with `from gsd_ml`\n- Replace `mlforge` CLI commands with `/gsd:ml` slash commands\n- `.ml/` directory structure is unchanged\n- All Python utilities carry over with identical APIs\n\nRequirements\n\n- Claude Code\n- Python 3.11+\n- Node.js 16.7+"
+  },
+  {
+    "id": "readme-mlforge-0",
+    "sourceType": "readme",
+    "title": "MLForge README",
+    "url": "https://github.com/robertlupo1997/mlforge",
+    "text": "mlforge\n\nAn autonomous ML research framework. Point it at a dataset and a goal, and it runs structured experiments overnight using **Claude Code** as the autonomous researcher.\n\nSupports **tabular ML**, **deep learning** (PyTorch), and **LLM fine-tuning** (LoRA/QLoRA).\n\nInspired by Karpathy's autoresearch.\n\n---\n\nQuick Start\n\n**Requirements**: Python 3.11+, uv, Claude Code CLI installed and authenticated. CPU-only for tabular; GPU optional for deep learning and fine-tuning.\n\n---\n\nHow It Works\n\nEvery experiment is a git commit. Crash? `--resume` picks up where you left off.\n\n---\n\nThree Domains\n\nTabular ML\n\nscikit-learn, XGBoost, LightGBM with Optuna hyperparameter search. Auto-detects classification vs. regression and selects the appropriate metric.\n\nMetrics: accuracy, f1, rmse, mae, r2, and more.\n\nDeep Learning\n\nPyTorch with timm (images) and transformers (text). Generates GPU-aware training templates.\n\nMetrics: accuracy, f1, loss.\n\nFine-Tuning\n\nLoRA/QLoRA via peft and trl. Point it at a HuggingFace model and a dataset.\n\nMetrics: perplexity, rouge1, rougeL, loss.\n\n---\n\nKey Features\n\n| Feature | Description |\n|---|---|\n| **Auto-profiling** | Detects task type, picks metric, generates"
+  },
+  {
+    "id": "readme-mlforge-1",
+    "sourceType": "readme",
+    "title": "MLForge README",
+    "url": "https://github.com/robertlupo1997/mlforge",
+    "text": " data pipeline |\n| **Plugin system** | Shared core engine with domain-specific plugins |\n| **Protocol prompts** | Jinja2 CLAUDE.md templates control agent behavior |\n| **Git for state** | Branch per run, commit on keep, hard reset on revert |\n| **Multi-draft start** | 3-5 diverse initial solutions, pick best, iterate linearly |\n| **Branch-on-stagnation** | 3 consecutive reverts -> branch from best-ever, try different model family |\n| **Diagnostics** | Tells the agent *where* the model fails (worst slices, bias, correlation) |\n| **Swarm mode** | Parallel agents in git worktrees with file-locked scoreboard |\n| **Guardrails** | Cost caps, time limits, disk usage, per-experiment timeouts |\n| **Checkpoint/resume** | Crash recovery for unattended overnight runs |\n| **Experiment journal** | Hypothesis -> result -> diff tracking in experiments.md |\n| **Retrospective** | Post-run summary: what worked, what didn't, metric trajectory |\n\n---\n\nArchitecture\n\n---\n\nCLI Reference\n\nRun (default subcommand)\n\n| Argument | Default | Description |\n|---|---|---|\n| `dataset` | *(required)* | Path to dataset (CSV or Parquet) |\n| `goal` | *(required)* | What to predict or optimize |\n| `--domain` | `tabular`"
+  },
+  {
+    "id": "readme-mlforge-2",
+    "sourceType": "readme",
+    "title": "MLForge README",
+    "url": "https://github.com/robertlupo1997/mlforge",
+    "text": " | Plugin domain: `tabular`, `deeplearning`, `finetuning` |\n| `--metric` | auto-detected | Metric to optimize |\n| `--direction` | auto | Override metric direction: `minimize` or `maximize` |\n| `--budget-minutes` | `60` | Time budget in minutes |\n| `--budget-usd` | `5.0` | USD cost cap |\n| `--budget-experiments` | `50` | Maximum experiment count |\n| `--output-dir` | auto | Experiment output directory |\n| `--resume` | -- | Resume a previous run |\n| `--model` | -- | Claude model to use |\n| `--custom-claude-md` | -- | Path to custom CLAUDE.md template |\n| `--custom-frozen` | -- | Additional frozen files |\n| `--custom-mutable` | -- | Additional mutable files |\n| `--swarm` | `false` | Enable parallel swarm mode |\n| `--n-agents` | `3` | Number of swarm agents |\n| `--enable-drafts` | `false` | Multi-draft initial exploration |\n| `--model-name` | -- | HuggingFace model name (fine-tuning) |\n| `--dry-run` | -- | Profile dataset and show plan without executing |\n| `--notify` | -- | Notification on completion: `desktop` or `webhook:<url>` |\n| `-v, --verbose` | -- | Enable DEBUG-level console logging |\n\n---\n\nProject Structure\n\n---\n\nDocumentation\n\n- **Getting Started** -- Installation, first expe"
+  },
+  {
+    "id": "readme-mlforge-3",
+    "sourceType": "readme",
+    "title": "MLForge README",
+    "url": "https://github.com/robertlupo1997/mlforge",
+    "text": "riment, simple vs expert mode\n- **Tabular ML Guide** -- Baselines, diagnostics, stagnation, model families\n- **Deep Learning Guide** -- Image/text classification, GPU config\n- **Fine-Tuning Guide** -- LoRA/QLoRA, data format, memory planning\n- **Swarm Guide** -- Parallel agents, scoreboard, budget splitting\n- **Configuration Reference** -- All CLI flags, config file, metrics\n\n---\n\nTesting\n\n---\n\nAcknowledgments\n\nThis project builds on ideas from the **AI-for-science / autonomous-research** community:\n\n| Project | Key Idea Borrowed |\n|---|---|\n| autoresearch | \"Point AI at a problem, let it research overnight\" -- the founding inspiration |\n| AIDE (WecoAI) | Multi-draft start, atomic improvements, frozen/mutable separation |\n| SELA (MetaGPT) | Stage-wise pipeline concept informing staged mutable zones |\n| AutoKaggle (Alibaba) | Unit testing concept for ML pipelines |\n| ML-Agent (Shanghai AI Lab) | Domain-specific approaches outperform scale alone |\n| The AI Scientist (Sakana AI) | Full research lifecycle vision |\n| pi-autoresearch (John Paton) | Checkpoint/resume patterns |\n| autoresearch-at-home (Darien Schettler) | Multi-agent coordination patterns |\n\n---\n\nLicense\n\nMIT"
   }
 ];

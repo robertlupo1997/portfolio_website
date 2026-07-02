@@ -30,3 +30,21 @@ export function recordToChunk(
 ): Chunk {
   return { id, sourceType, title, text: flatten(data).join('\n') };
 }
+
+export function readmeToChunks(projectId: string, title: string, url: string, markdown: string): Chunk[] {
+  const cleaned = markdown
+    .replace(/[`]{3}[\s\S]*?[`]{3}/g, '') // [`]{3} not literal fences — see test note
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/^#+\s*/gm, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+  const chunks: Chunk[] = [];
+  for (let i = 0; i < cleaned.length; i += 1200) {
+    chunks.push({
+      id: `readme-${projectId}-${chunks.length}`, sourceType: 'readme',
+      title: `${title} README`, url, text: cleaned.slice(i, i + 1200),
+    });
+  }
+  return chunks;
+}
