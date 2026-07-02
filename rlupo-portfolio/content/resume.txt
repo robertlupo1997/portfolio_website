@@ -8,15 +8,15 @@ AI/ML engineer who ships production systems, not notebooks — a statistically r
 
 EXPERIENCE
 
-Franklin Street Financial Partners — FP&A Analyst (ML & AI lead)
+Franklin Street — FP&A Analyst (ML & AI lead)
 Tampa, FL · Sep 2025 – Present
 
 · Shipped a production ML deal-closure prediction pipeline: AUC 0.874, calibration error 4.8%; ExtraTrees + XGBoost with MAPIE conformal prediction, walk-forward temporal validation, 51 automated tests.
-· Built full-stack AI financial dashboard (React 19/TypeScript + FastAPI + Azure SQL) with AI variance narratives via Claude API streaming, consolidated P&L, drill-downs, three-tier caching — replacing a 132-page monthly report.
+· Built full-stack AI financial dashboard (React 19/TypeScript + FastAPI + Azure SQL) with AI variance narratives via Claude API streaming, consolidated P&L, drill-downs, three-tier caching — replacing a 132-page monthly report and cutting variance analysis from 8+ hours to under 1 hour.
 · Built Oracle NSPB / EPM Cloud automation — production ETL for revenue and valuation-model uploads with 114+ tests (open-sourced as the nspb-api SDK).
 · Led enterprise AI adoption as "AI Champion" — scaled Claude from 5 to 15 users with onboarding curriculum, shared prompt library, and licensing business case.
 · Designed KERNEL Method v3.0, an 8-stage framework for transparent formula-driven financial narratives used across all 7 business lines.
-· Authored a 12-market CRE analysis workbook (37 sheets, 2,000+ formulas, 63 charts); caught a ~$270B multifamily data gap that fed the CFO's board presentation.
+· Authored a 12-market CRE analysis workbook (37 sheets, 2,000+ formulas, 63 charts) informing decisions across a $500M+ portfolio; caught a ~$270B multifamily data gap that fed the CFO's board presentation.
 
 Origin Construction — AI Engineering Intern
 Jun 2025 – Sep 2025
@@ -27,7 +27,7 @@ SELECTED PROJECTS (full set at treylupo.com)
 · FerroML — statistically rigorous AutoML framework in Rust with Python bindings; 55+ algorithms, 6,500+ tests, on PyPI; hypothesis-driven model selection with proper statistical testing.
 · nspb-api — complete Python SDK for Oracle EPM Cloud (Planning, Migration, Data Management); 60+ API endpoints.
 · Hierarchical Revenue Forecast / DealForecast — multi-LOB forecasting with hierarchical time series, conformal intervals, SHAP explainability (AUC 0.874).
-· KKBOX Churn Prediction — leak-safe features, isotonic calibration, temporal backtests, PSI drift monitoring; 0.97 AUC; live on Hugging Face Spaces.
+· KKBOX Churn Prediction — leak-safe features, isotonic calibration, temporal backtests, PSI drift monitoring on a 30GB+ user transaction dataset; 0.97 AUC; live on Hugging Face Spaces.
 · Open-Vocab Object Detection — text-prompted detection + segmentation (Grounding DINO + SAM 2), 265–490 ms/image on RTX 3070.
 · AI tooling — MLForge & GSD-ML (autonomous tabular ML research) and a FerroML Claude Code plugin.
 
