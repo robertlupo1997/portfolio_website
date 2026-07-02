@@ -57,6 +57,30 @@ describe('askEngine', () => {
     expect(JSON.stringify(secondMessages.at(-1)?.content)).toContain('[1] FerroML');
   });
 
+  it('emits fallback text and stable citation numbering when all MAX_ROUNDS end in tool_use', async () => {
+    const client = scriptedClient([
+      toolUseEvents('tu_1', { query: 'rust' }),
+      toolUseEvents('tu_2', { query: 'rust' }),
+      toolUseEvents('tu_3', { query: 'rust' }),
+      toolUseEvents('tu_4', { query: 'rust' }),
+    ]);
+    const events: object[] = [];
+    for await (const e of askEngine('rust question', { client, corpus })) events.push(e);
+
+    const searching = events.filter((e: any) => e.type === 'searching');
+    const text = events.filter((e: any) => e.type === 'text');
+    const citations = events.filter((e: any) => e.type === 'citations');
+
+    expect(searching).toHaveLength(4);
+    expect(text).toHaveLength(1);
+    expect((text[0] as any).text).toContain('search budget');
+    expect(citations).toHaveLength(1);
+    expect((citations[0] as any).citations).toHaveLength(1);
+    expect((citations[0] as any).citations[0].n).toBe(1);
+    expect(events.at(-1)).toEqual({ type: 'done' });
+    expect(client.calls.length).toBe(4);
+  });
+
   it('emits error (not a crash) when the client throws', async () => {
     const client = { messages: { create: async () => { throw new Error('boom'); } } };
     const events = [];

@@ -36,6 +36,7 @@ export async function* askEngine(
 ): AsyncGenerator<AskEvent> {
   const { client, corpus, model = ASK_MODEL } = deps;
   const numbered = new Map<string, Citation>(); // chunk id -> citation (stable numbering)
+  let anyText = false;
   const messages: Array<{ role: string; content: unknown }> = [
     { role: 'user', content: question },
   ];
@@ -56,7 +57,7 @@ export async function* askEngine(
         if (ev.type === 'content_block_start' && ev.content_block?.type === 'tool_use') {
           toolUses.push({ id: ev.content_block.id, json: '' });
         } else if (ev.type === 'content_block_delta') {
-          if (ev.delta?.type === 'text_delta') { text += ev.delta.text; yield { type: 'text', text: ev.delta.text }; }
+          if (ev.delta?.type === 'text_delta') { text += ev.delta.text; anyText = true; yield { type: 'text', text: ev.delta.text }; }
           if (ev.delta?.type === 'input_json_delta' && toolUses.length) toolUses[toolUses.length - 1].json += ev.delta.partial_json;
         } else if (ev.type === 'message_delta' && ev.delta?.stop_reason) {
           stopReason = ev.delta.stop_reason;
@@ -88,6 +89,7 @@ export async function* askEngine(
       messages.push({ role: 'user', content: results });
     }
 
+    if (!anyText) yield { type: 'text', text: "I hit my search budget before writing an answer — the sources below are the closest matches. Try a more specific question." };
     yield { type: 'citations', citations: [...numbered.values()].sort((a, b) => a.n - b.n) };
     yield { type: 'done' };
   } catch {
