@@ -56,9 +56,13 @@ export async function askQuestion(
   const reader = res.body!.getReader();
   const decoder = new TextDecoder();
   const parser = createSSEParser();
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    for (const e of parser.feed(decoder.decode(value, { stream: true }))) onEvent(e);
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      for (const e of parser.feed(decoder.decode(value, { stream: true }))) onEvent(e);
+    }
+  } catch {
+    emitFallback();
   }
 }
