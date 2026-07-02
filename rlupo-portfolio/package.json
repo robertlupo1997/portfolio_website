@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "build:corpus": "tsx scripts/build-corpus.mts",
+    "evals": "tsx scripts/run-evals.mts",
     "test:e2e": "playwright test"
   },
   "dependencies": {
