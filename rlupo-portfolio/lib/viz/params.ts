@@ -19,7 +19,7 @@ export const VIZ_PARAMS: Record<string, VizParams> = {
   'ferroml':          { archetype: 'lattice',       seed: 22, density: 1.2, speed: 0.8, tint: '#E85D3A' },
   // Wavefield — displaced plane for time-series / forecasting
   'revenue-forecast': { archetype: 'wavefield',    seed: 31, density: 0.8, speed: 0.5, tint: '#C8882A' },
-  'kkbox':            { archetype: 'wavefield',    seed: 44, density: 1.0, speed: 0.7, tint: '#C8882A' },
+  'kkbox':            { archetype: 'wavefield',    seed: 44, density: 1.0, speed: 0.7, tint: '#5A9090' },
   // Particleflow — streaming particles for ML pipelines and agent tooling
   'ferroml-plugin':   { archetype: 'particleflow', seed: 53, density: 0.9, speed: 1.1, tint: '#5A9090' },
   'gsd-ml':           { archetype: 'particleflow', seed: 61, density: 1.1, speed: 1.2, tint: '#5A9090' },

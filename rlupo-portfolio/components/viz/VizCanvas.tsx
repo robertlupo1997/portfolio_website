@@ -35,9 +35,15 @@ function VelocityBridge({
 function ComposerMount({
   effectRef,
   tint,
+  waveAmp,
+  waveFreq,
+  wavePhase,
 }: {
   effectRef: React.RefObject<AsciiEffectImpl | null>;
   tint: string;
+  waveAmp?: number;
+  waveFreq?: number;
+  wavePhase?: number;
 }) {
   const { gl } = useThree();
   const [ready, setReady] = useState(false);
@@ -68,9 +74,14 @@ function ComposerMount({
         glyphAtlas, glyphTiles: TERMINAL_SYMBOLS.length,
         volumeShading: true,
         tintColor: tintVec,
-        postfx: { contrastAdjust: 1.6, scanlineIntensity: 0.06, vignetteIntensity: 0.2 },
+        postfx: {
+          contrastAdjust: 1.6, scanlineIntensity: 0.06, vignetteIntensity: 0.2,
+          waveAmplitude: waveAmp ?? 0,
+          waveFrequency: waveFreq ?? 10,
+          wavePhase: wavePhase ?? 0,
+        },
       }),
-    [tintVec, glyphAtlas],
+    [tintVec, glyphAtlas, waveAmp, waveFreq, wavePhase],
   );
 
   useEffect(() => {
@@ -235,7 +246,8 @@ export const VizCanvas: React.FC<VizCanvasProps> = ({
         }}
       >
         <VizScene spec={spec} />
-        <ComposerMount effectRef={effectRef} tint={params.tint} />
+        <ComposerMount effectRef={effectRef} tint={params.tint}
+          waveAmp={spec.waveAmp} waveFreq={spec.waveFreq} wavePhase={spec.wavePhase} />
         <VelocityBridge effectRef={effectRef} velocityRef={velocityRef} />
       </Canvas>
     </div>

@@ -1,5 +1,5 @@
 // components/VizCaptureRoute.tsx
-import React, { Suspense, lazy, useRef } from 'react';
+import { Suspense, lazy, useRef } from 'react';
 import { VIZ_PARAMS } from '../lib/viz/params';
 
 const VizCanvasLazy = lazy(

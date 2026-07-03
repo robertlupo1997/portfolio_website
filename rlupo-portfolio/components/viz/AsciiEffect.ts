@@ -75,6 +75,7 @@ uniform float noiseSpeed;
 uniform float waveAmplitude;
 uniform float waveFrequency;
 uniform float waveSpeed;
+uniform float wavePhase;
 uniform float glitchIntensity;
 uniform float glitchFrequency;
 uniform float brightnessAdjust;
@@ -128,8 +129,8 @@ void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor)
     }
   }
   if (effectiveWaveAmp > 0.0) {
-    workUV.x += sin(workUV.y * waveFrequency + time * waveSpeed) * effectiveWaveAmp;
-    workUV.y += cos(workUV.x * waveFrequency + time * waveSpeed) * effectiveWaveAmp;
+    workUV.x += sin(workUV.y * waveFrequency + time * waveSpeed + wavePhase) * effectiveWaveAmp;
+    workUV.y += cos(workUV.x * waveFrequency + time * waveSpeed + wavePhase) * effectiveWaveAmp;
   }
   vec4 sampledColor;
   if (aberrationStrength > 0.0) {
@@ -218,7 +219,8 @@ export class AsciiEffectImpl extends Effect {
   constructor(opts: AsciiEffectOptions = {}) {
     const {
       cellSize = 9, invert = true, color = true,
-      mousePos = new Vector2(0, 0),
+      // glow must not render until real pointer input
+      mousePos = new Vector2(-10000, -10000),
       resolution = new Vector2(1920, 1080),
       postfx = {},
       glyphAtlas = null, glyphTiles = 0,
@@ -258,6 +260,7 @@ export class AsciiEffectImpl extends Effect {
         ['waveAmplitude',      new Uniform(postfx.waveAmplitude ?? 0)],
         ['waveFrequency',      new Uniform(postfx.waveFrequency ?? 10)],
         ['waveSpeed',          new Uniform(postfx.waveSpeed ?? 1)],
+        ['wavePhase',          new Uniform(postfx.wavePhase ?? 0)],
         ['glitchIntensity',    new Uniform(postfx.glitchIntensity ?? 0)],
         ['glitchFrequency',    new Uniform(postfx.glitchFrequency ?? 2)],
         ['brightnessAdjust',   new Uniform(postfx.brightnessAdjust ?? 0)],

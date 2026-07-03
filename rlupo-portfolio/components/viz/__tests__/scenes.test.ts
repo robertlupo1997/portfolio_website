@@ -50,4 +50,20 @@ describe('buildSceneSpec determinism and constraints', () => {
       expect(spec.tint, id).toBe(params.tint);
     }
   });
+
+  it('wavefield: different seeds produce different wave fields (seed-variance guard)', () => {
+    const a = buildSceneSpec({ archetype: 'wavefield', seed: 31, density: 0.8, speed: 0.5, tint: '#C8882A' });
+    const b = buildSceneSpec({ archetype: 'wavefield', seed: 44, density: 1.0, speed: 0.7, tint: '#5A9090' });
+    const differs = a.waveFreq !== b.waveFreq || a.waveAmp !== b.waveAmp || a.wavePhase !== b.wavePhase;
+    expect(differs, 'waveFreq/waveAmp/wavePhase must differ between seeds 31 and 44').toBe(true);
+  });
+
+  it('wavefield: same seed always produces identical wave fields (determinism)', () => {
+    const params = { archetype: 'wavefield' as const, seed: 31, density: 0.8, speed: 0.5, tint: '#C8882A' };
+    const a = buildSceneSpec(params);
+    const b = buildSceneSpec(params);
+    expect(a.waveFreq).toBe(b.waveFreq);
+    expect(a.waveAmp).toBe(b.waveAmp);
+    expect(a.wavePhase).toBe(b.wavePhase);
+  });
 });

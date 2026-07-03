@@ -1,5 +1,6 @@
 // components/viz/scenes.ts
 import { VizParams } from '../../types';
+import { mulberry32 } from '../../lib/viz/params';
 
 export type GeometryType = 'box' | 'sphere' | 'plane' | 'octahedron';
 
@@ -15,6 +16,9 @@ export interface SceneSpec {
   spacing: number;
   gridSize?: number;       // lattice: dimension of n×n×n grid
   planeSegments?: number;  // wavefield: subdivision count
+  waveFreq?: number;       // wavefield: seeded frequency (0.8–1.6)
+  waveAmp?: number;        // wavefield: seeded amplitude (0.6–1.2)
+  wavePhase?: number;      // wavefield: seeded phase offset (0–2π)
 }
 
 export function buildLatticeSpec(p: VizParams): SceneSpec {
@@ -30,6 +34,10 @@ export function buildLatticeSpec(p: VizParams): SceneSpec {
 }
 
 export function buildWavefieldSpec(p: VizParams): SceneSpec {
+  const rng = mulberry32(p.seed);
+  const waveFreq  = 0.8 + rng() * 0.8;          // 0.8–1.6
+  const waveAmp   = 0.6 + rng() * 0.6;           // 0.6–1.2
+  const wavePhase = rng() * 2 * Math.PI;         // 0–2π
   return {
     archetype: 'wavefield', seed: p.seed, density: p.density, speed: p.speed, tint: p.tint,
     instanceCount: 1,
@@ -37,6 +45,7 @@ export function buildWavefieldSpec(p: VizParams): SceneSpec {
     animationAmplitude: 0.4 * p.speed,
     spacing: 0,
     planeSegments: Math.max(10, Math.round(40 * p.density)),
+    waveFreq, waveAmp, wavePhase,
   };
 }
 
