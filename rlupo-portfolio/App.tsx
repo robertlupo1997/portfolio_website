@@ -8,6 +8,7 @@ import Cursor from './components/Cursor';
 import Preloader from './components/Preloader';
 import { useLenis } from './hooks/useLenis';
 import { useScrollAnimations } from './hooks/useScrollAnimations';
+import { VizCaptureRoute } from './components/VizCaptureRoute';
 import './styles/index.css';
 
 const App: React.FC = () => {
@@ -42,6 +43,13 @@ const App: React.FC = () => {
   const handleRegisterGoTo = useCallback((goTo: (index: number) => void) => {
     goToRef.current = goTo;
   }, []);
+
+  if (import.meta.env.DEV) {
+    const captureId = new URLSearchParams(window.location.search).get('viz-capture');
+    if (captureId) {
+      return <VizCaptureRoute id={captureId} />;
+    }
+  }
 
   return (
     <>

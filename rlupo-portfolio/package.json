@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
+    "build:viz": "tsx scripts/capture-viz.mts",
     "build:corpus": "tsx scripts/build-corpus.mts",
     "evals": "tsx scripts/run-evals.mts",
     "test:e2e": "playwright test"
