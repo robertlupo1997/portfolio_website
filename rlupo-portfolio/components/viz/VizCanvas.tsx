@@ -20,8 +20,8 @@ function VelocityBridge({
   effectRef,
   velocityRef,
 }: {
-  effectRef: React.MutableRefObject<AsciiEffectImpl | null>;
-  velocityRef: React.MutableRefObject<number>;
+  effectRef: React.RefObject<AsciiEffectImpl | null>;
+  velocityRef: React.RefObject<number>;
 }) {
   useFrame(() => {
     effectRef.current?.setTransitionVelocity(velocityRef.current);
@@ -36,7 +36,7 @@ function ComposerMount({
   effectRef,
   tint,
 }: {
-  effectRef: React.MutableRefObject<AsciiEffectImpl | null>;
+  effectRef: React.RefObject<AsciiEffectImpl | null>;
   tint: string;
 }) {
   const { gl } = useThree();
@@ -44,7 +44,7 @@ function ComposerMount({
   const frameCount = useRef(0);
 
   useFrame(() => {
-    frameCount.current++;
+    if (!ready) frameCount.current++;
     if (frameCount.current >= 3 && !ready) {
       setTimeout(() => {
         try {
@@ -108,6 +108,13 @@ function VizScene({ spec }: { spec: SceneSpec }) {
     [spec.tint, spec.archetype],
   );
 
+  useEffect(() => {
+    return () => {
+      geometry?.dispose();
+      material.dispose();
+    };
+  }, [geometry, material]);
+
   // Seed-deterministic initial positions
   useEffect(() => {
     const mesh = meshRef.current;
@@ -135,7 +142,7 @@ function VizScene({ spec }: { spec: SceneSpec }) {
     mesh.instanceMatrix.needsUpdate = true;
   }, [spec, dummy]);
 
-  useFrame((_, delta) => {
+  useFrame((_, _delta) => {
     const mesh = meshRef.current;
     const buf = initialPositions.current;
     if (!mesh || !buf || spec.archetype === 'wavefield') return;
@@ -176,6 +183,8 @@ export const VizCanvas: React.FC<VizCanvasProps> = ({
   const effectRef = useRef<AsciiEffectImpl | null>(null);
   const velocityRef = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const canvasElRef = useRef<HTMLCanvasElement | null>(null);
+  const onContextLostRef = useRef<((e: Event) => void) | null>(null);
 
   useEffect(() => { velocityRef.current = transitionVelocity; }, [transitionVelocity]);
 
@@ -197,9 +206,17 @@ export const VizCanvas: React.FC<VizCanvasProps> = ({
     return () => ro.disconnect();
   }, [handleResize]);
 
-  if (!loaded || !params) return null;
+  const spec = useMemo(() => (params ? buildSceneSpec(params) : null), [params]);
 
-  const spec = buildSceneSpec(params);
+  useEffect(() => {
+    return () => {
+      if (canvasElRef.current && onContextLostRef.current) {
+        canvasElRef.current.removeEventListener('webglcontextlost', onContextLostRef.current);
+      }
+    };
+  }, []);
+
+  if (!loaded || !params || !spec) return null;
 
   return (
     <div
@@ -215,9 +232,9 @@ export const VizCanvas: React.FC<VizCanvasProps> = ({
         onCreated={({ gl }) => {
           const canvas = gl.domElement;
           const onLost = (e: Event) => { e.preventDefault(); onFallback(); };
+          canvasElRef.current = canvas;
+          onContextLostRef.current = onLost;
           canvas.addEventListener('webglcontextlost', onLost);
-          // Return cleanup (R3F calls onCreated return value on unmount)
-          return () => canvas.removeEventListener('webglcontextlost', onLost);
         }}
       >
         <VizScene spec={spec} />
