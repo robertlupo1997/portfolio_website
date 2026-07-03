@@ -1,4 +1,5 @@
 import { Project, ProjectCategory, Credential, ActivityEntry } from './types';
+import { VIZ_PARAMS } from './lib/viz/params';
 
 export const PERSONAL_INFO = {
   email: "treylupo1197@gmail.com",
@@ -29,7 +30,7 @@ export const FEATURED_PROJECTS: Project[] = [
     stack: ["Python", "REST", "Oracle EPM", "SDK Design"],
     primaryStack: ["Python", "Oracle EPM"],
     featured: true,
-    imageUrl: "/assets/amazon-network.jpg",
+    vizParams: VIZ_PARAMS['nspb-api'],
   },
   {
     id: "ferroml",
@@ -46,7 +47,7 @@ export const FEATURED_PROJECTS: Project[] = [
     stack: ["Rust", "Python", "PyPI", "Statistics"],
     primaryStack: ["Rust", "Python"],
     featured: true,
-    imageUrl: "/assets/plate-ferroml-comparison.png",
+    vizParams: VIZ_PARAMS['ferroml'],
   },
   {
     id: "revenue-forecast",
@@ -62,6 +63,7 @@ export const FEATURED_PROJECTS: Project[] = [
     stack: ["Python", "Go", "TypeScript", "SHAP"],
     primaryStack: ["Python"],
     featured: true,
+    vizParams: VIZ_PARAMS['revenue-forecast'],
   },
 ];
 
@@ -80,7 +82,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "Streamlit", "XGBoost"],
     primaryStack: ["Python"],
     featured: false,
-    imageUrl: "/assets/plate-kkbox-models.png",
+    vizParams: VIZ_PARAMS['kkbox'],
   },
   {
     id: "obj-detect",
@@ -95,7 +97,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "PyTorch", "COCO"],
     primaryStack: ["Python"],
     featured: false,
-    imageUrl: "/assets/objdetect-matrix.jpg",
+    vizParams: VIZ_PARAMS['obj-detect'],
   },
   {
     id: "ironclad",
@@ -110,7 +112,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "ML", "Statistics"],
     primaryStack: ["Python"],
     featured: false,
-    imageUrl: "/assets/ironclad-battle.jpg",
+    vizParams: VIZ_PARAMS['ironclad'],
   },
   {
     id: "ferroml-plugin",
@@ -125,7 +127,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "Plugin"],
     primaryStack: ["Python"],
     featured: false,
-    imageUrl: "/assets/clockwork-globe.jpg",
+    vizParams: VIZ_PARAMS['ferroml-plugin'],
   },
   {
     id: "gsd-ml",
@@ -140,7 +142,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "GSD"],
     primaryStack: ["Python"],
     featured: false,
-    imageUrl: "/assets/lavoisier-lab.jpg",
+    vizParams: VIZ_PARAMS['gsd-ml'],
   },
   {
     id: "mlforge",
@@ -155,7 +157,7 @@ export const ALL_PROJECTS: Project[] = [
     stack: ["Python", "AutoML"],
     primaryStack: ["Python"],
     featured: false,
-    imageUrl: "/assets/forge-farrier.jpg",
+    vizParams: VIZ_PARAMS['mlforge'],
   },
 ];
 

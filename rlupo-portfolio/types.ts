@@ -1,5 +1,13 @@
 export type ProjectCategory = 'all' | 'ml' | 'engineering' | 'fpna';
 
+export interface VizParams {
+  archetype: 'lattice' | 'wavefield' | 'particleflow' | 'wireframe';
+  seed: number;
+  density: number;
+  speed: number;
+  tint: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -17,6 +25,7 @@ export interface Project {
   featured: boolean;
   problem?: string;
   imageUrl?: string;
+  vizParams?: VizParams;
 }
 
 export interface Credential {
