@@ -29,9 +29,9 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) =
   const prevIndex = useRef(0);
 
   const [contextLost, setContextLost] = useState(false);
-  const [transitionVelocity, setTransitionVelocity] = useState(0);
+  const velocityRef = useRef(0);
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [prefersReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   const vizProjectIndex = activeIndex - 1;
   const activeVizParams =
@@ -74,11 +74,11 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) =
         track.style.transform = `translateX(-${x}vw)`;
         track.style.filter = blur > 0.1 ? `blur(${blur}px)` : 'none';
         const vel = 4 * p * (1 - p);
-        setTransitionVelocity(vel);
+        velocityRef.current = vel;
       },
       onComplete: () => {
         track.style.filter = 'none';
-        setTransitionVelocity(0);
+        velocityRef.current = 0;
       },
     });
 
@@ -135,7 +135,7 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) =
             <VizCanvas
               params={activeVizParams}
               loaded={loaded}
-              transitionVelocity={transitionVelocity}
+              velocityRef={velocityRef}
               onFallback={() => setContextLost(true)}
             />
           </React.Suspense>

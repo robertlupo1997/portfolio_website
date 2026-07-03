@@ -1079,7 +1079,7 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
 }
 
 .viz-canvas-region canvas {
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 /* ============================================

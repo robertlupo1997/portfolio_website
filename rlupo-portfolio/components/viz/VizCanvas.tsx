@@ -173,20 +173,17 @@ function VizScene({ spec }: { spec: SceneSpec }) {
 export interface VizCanvasProps {
   params: VizParams | null;
   loaded: boolean;
-  transitionVelocity: number;
+  velocityRef: React.RefObject<number>;
   onFallback: () => void;
 }
 
 export const VizCanvas: React.FC<VizCanvasProps> = ({
-  params, loaded, transitionVelocity, onFallback,
+  params, loaded, velocityRef, onFallback,
 }) => {
   const effectRef = useRef<AsciiEffectImpl | null>(null);
-  const velocityRef = useRef(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasElRef = useRef<HTMLCanvasElement | null>(null);
   const onContextLostRef = useRef<((e: Event) => void) | null>(null);
-
-  useEffect(() => { velocityRef.current = transitionVelocity; }, [transitionVelocity]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = containerRef.current?.getBoundingClientRect();
@@ -228,7 +225,7 @@ export const VizCanvas: React.FC<VizCanvasProps> = ({
       <Canvas
         dpr={[1, 1.5]}
         camera={{ position: [0, 0, 5], fov: 50 }}
-        style={{ background: 'transparent', pointerEvents: 'none' }}
+        style={{ background: 'transparent' }}
         onCreated={({ gl }) => {
           const canvas = gl.domElement;
           const onLost = (e: Event) => { e.preventDefault(); onFallback(); };
