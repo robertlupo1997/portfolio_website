@@ -42,6 +42,16 @@ test('escape closes; /ask route opens the panel on load', async ({ page }) => {
   await expect(page.getByTestId('ask-panel')).toHaveClass(/ask-panel--open/);
 });
 
+test.describe('mobile sheet', () => {
+  test.use({ viewport: { width: 375, height: 812 } });
+  test('close button is tappable above the header', async ({ page }) => {
+    await page.keyboard.press('ControlOrMeta+k');
+    await expect(page.getByTestId('ask-panel')).toHaveClass(/ask-panel--open/);
+    await page.locator('.ask-panel__close').click();
+    await expect(page.getByTestId('ask-panel')).not.toHaveClass(/ask-panel--open/);
+  });
+});
+
 test('close then reopen shows fresh idle state with starters visible', async ({ page }) => {
   // Open and ask a question (stream completes immediately via mock)
   await page.keyboard.press('ControlOrMeta+k');

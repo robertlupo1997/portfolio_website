@@ -1085,7 +1085,9 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
   body.custom-cursor-active a,
   body.custom-cursor-active button { cursor: auto; }
 
-  .ask-panel { padding-top: 0; }
+  /* Above the header (z-index 100): the full-screen sheet must own the whole
+     viewport or the header buries the close button under the hamburger. */
+  .ask-panel { padding-top: 0; z-index: 110; }
   .ask-panel__inner { width: 100vw; min-height: 100vh; }
 }
 
