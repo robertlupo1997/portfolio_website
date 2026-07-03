@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { CAROUSEL_PROJECTS } from '../constants';
 import { useCarousel } from '../hooks/useCarousel';
@@ -6,6 +6,9 @@ import CarouselSlide from './CarouselSlide';
 import HeroSlide from './HeroSlide';
 import ActivitySlide from './ActivitySlide';
 import SlideProgress from './SlideProgress';
+const VizCanvas = React.lazy(() =>
+  import('./viz/VizCanvas').then((m) => ({ default: m.VizCanvas })),
+);
 
 interface CarouselProps {
   onRegisterGoTo?: (goTo: (index: number) => void) => void;
@@ -24,6 +27,17 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) =
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const prevIndex = useRef(0);
+
+  const [contextLost, setContextLost] = useState(false);
+  const [transitionVelocity, setTransitionVelocity] = useState(0);
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const vizProjectIndex = activeIndex - 1;
+  const activeVizParams =
+    vizProjectIndex >= 0 && vizProjectIndex < CAROUSEL_PROJECTS.length
+      ? (CAROUSEL_PROJECTS[vizProjectIndex].vizParams ?? null)
+      : null;
 
   useEffect(() => {
     if (onRegisterGoTo) onRegisterGoTo(goTo);
@@ -59,9 +73,12 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) =
         const blur = 4 * p * (1 - p) * 2.5;
         track.style.transform = `translateX(-${x}vw)`;
         track.style.filter = blur > 0.1 ? `blur(${blur}px)` : 'none';
+        const vel = 4 * p * (1 - p);
+        setTransitionVelocity(vel);
       },
       onComplete: () => {
         track.style.filter = 'none';
+        setTransitionVelocity(0);
       },
     });
 
@@ -75,7 +92,13 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) =
   }, [activeIndex]);
 
   return (
-    <section className="carousel" id="projects" ref={sectionRef} {...swipeHandlers}>
+    <section
+      className="carousel"
+      id="projects"
+      ref={sectionRef}
+      style={{ position: 'relative' }}
+      {...swipeHandlers}
+    >
       <div className="carousel-track" ref={trackRef}>
         <HeroSlide
           isActive={activeIndex === 0}
@@ -95,6 +118,7 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) =
             onNext={next}
             activeIndex={activeIndex}
             totalSlides={CAROUSEL_PROJECTS.length + 2}
+            useFallback={contextLost}
           />
         ))}
         <ActivitySlide
@@ -105,6 +129,18 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) =
           totalSlides={CAROUSEL_PROJECTS.length + 2}
         />
       </div>
+      {!prefersReducedMotion && (
+        <div className="viz-canvas-region">
+          <React.Suspense fallback={null}>
+            <VizCanvas
+              params={activeVizParams}
+              loaded={loaded}
+              transitionVelocity={transitionVelocity}
+              onFallback={() => setContextLost(true)}
+            />
+          </React.Suspense>
+        </div>
+      )}
       <SlideProgress activeIndex={activeIndex} totalSlides={CAROUSEL_PROJECTS.length + 2} />
     </section>
   );

@@ -368,6 +368,8 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   height: 100%;
   will-change: transform, filter;
+  position: relative;
+  z-index: 1;
 }
 
 /* --- Carousel Slide --- */
@@ -1062,6 +1064,25 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
 @media (prefers-reduced-motion: reduce) { .ask-panel { transition: none; } }
 
 /* ============================================
+   VIZ CANVAS REGION
+   ============================================ */
+
+.viz-canvas-region {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.viz-canvas-region canvas {
+  pointer-events: none;
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 
@@ -1078,6 +1099,8 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
   .header-nav { display: none; }
   .hamburger { display: flex; }
 
+  .viz-canvas-region { display: none; }
+
   .carousel-slide {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
@@ -1086,6 +1109,13 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
 
   .carousel-slide-image {
     display: none;
+  }
+
+  .carousel-slide-image--fallback {
+    display: flex;
+    grid-column: 1 / -1;
+    max-height: 40vh;
+    padding: var(--space-md);
   }
 
   .carousel-slide-terminal {

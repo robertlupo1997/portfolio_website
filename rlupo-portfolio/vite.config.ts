@@ -9,7 +9,7 @@ export default defineConfig({
   },
   test: {
     // Exclude Playwright e2e tests from vitest
-    exclude: ['tests/**/*.spec.ts', 'node_modules/**'],
+    exclude: ['tests/**/*.spec.ts', 'e2e/**/*.spec.ts', 'node_modules/**'],
   },
   plugins: [react()],
   resolve: {

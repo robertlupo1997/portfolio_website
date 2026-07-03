@@ -228,7 +228,7 @@ export const VizCanvas: React.FC<VizCanvasProps> = ({
       <Canvas
         dpr={[1, 1.5]}
         camera={{ position: [0, 0, 5], fov: 50 }}
-        style={{ background: 'transparent' }}
+        style={{ background: 'transparent', pointerEvents: 'none' }}
         onCreated={({ gl }) => {
           const canvas = gl.domElement;
           const onLost = (e: Event) => { e.preventDefault(); onFallback(); };

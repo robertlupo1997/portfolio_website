@@ -142,7 +142,7 @@ const AsciiGrid: React.FC<AsciiGridProps> = ({ isActive }) => {
   return (
     <canvas
       ref={canvasRef}
-      style={{ position: 'absolute', inset: 0, zIndex: 0 }}
+      style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none' }}
       aria-hidden="true"
     />
   );

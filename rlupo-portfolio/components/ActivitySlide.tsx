@@ -65,17 +65,19 @@ const ActivitySlide: React.FC<ActivitySlideProps> = ({
       </div>
 
       <div className="carousel-slide-footer">
-        <nav className="carousel-nav" aria-label="Project navigation">
-          <button className="carousel-btn" onClick={onPrev} aria-label="Previous slide">
-            <span aria-hidden="true">&larr;</span> PREV
-          </button>
-          <span className="carousel-counter">
-            {String(activeIndex).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
-          </span>
-          <button className="carousel-btn" onClick={onNext} aria-label="Next slide">
-            NEXT <span aria-hidden="true">&rarr;</span>
-          </button>
-        </nav>
+        {isActive && (
+          <nav className="carousel-nav" aria-label="Project navigation">
+            <button className="carousel-btn" onClick={onPrev} aria-label="Previous slide">
+              <span aria-hidden="true">&larr;</span> PREV
+            </button>
+            <span className="carousel-counter">
+              {String(activeIndex).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
+            </span>
+            <button className="carousel-btn" onClick={onNext} aria-label="Next slide">
+              NEXT <span aria-hidden="true">&rarr;</span>
+            </button>
+          </nav>
+        )}
       </div>
     </div>
   );

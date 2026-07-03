@@ -11,6 +11,7 @@ interface CarouselSlideProps {
   onNext: () => void;
   activeIndex: number;
   totalSlides: number;
+  useFallback?: boolean;
 }
 
 const CarouselSlide: React.FC<CarouselSlideProps> = ({
@@ -21,10 +22,13 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   onNext,
   activeIndex,
   totalSlides,
+  useFallback,
 }) => {
   const [animating, setAnimating] = useState(false);
-  const hasImage = Boolean(project.imageUrl);
   const url = project.githubUrl || project.liveUrl;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const showFallback = (useFallback ?? false) || prefersReducedMotion || isMobile;
   const terminalRef = useRef<HTMLDivElement>(null);
   const wasActive = useRef(false);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -81,22 +85,25 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   }, [isActive]);
 
   return (
-    <div className={`carousel-slide ${animating ? 'carousel-slide--active' : ''} ${!hasImage ? 'carousel-slide--no-image' : ''}`}>
+    <div className={`carousel-slide ${animating ? 'carousel-slide--active' : ''}`}>
       <div className="carousel-slide-terminal" ref={terminalRef}>
         <TerminalPanel project={project} index={index} isActive={animating} />
       </div>
 
-      {hasImage && (
-        <div className="carousel-slide-image" ref={imageRef}>
-          <div className="carousel-slide-image-inner scanlines">
-            <img
-              src={project.imageUrl}
-              alt={`${project.title} project`}
-              loading={index === 0 ? 'eager' : 'lazy'}
-            />
-          </div>
-        </div>
-      )}
+      <div
+        className={`carousel-slide-image${showFallback ? ' carousel-slide-image--fallback' : ''}`}
+        ref={imageRef}
+      >
+        {showFallback ? (
+          <img
+            src={`/viz/${project.id}.png`}
+            alt={`${project.title} visualization`}
+            loading={index === 0 ? 'eager' : 'lazy'}
+          />
+        ) : (
+          <div aria-hidden="true" style={{ width: '100%', height: '100%' }} />
+        )}
+      </div>
 
       <div className="carousel-slide-footer">
         {url && (
@@ -105,17 +112,19 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
           </a>
         )}
         {isActive && <span className="cursor-blink" />}
-        <nav className="carousel-nav" aria-label="Project navigation">
-          <button className="carousel-btn" onClick={onPrev} aria-label="Previous project">
-            <span aria-hidden="true">&larr;</span> PREV
-          </button>
-          <span className="carousel-counter">
-            {String(activeIndex).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
-          </span>
-          <button className="carousel-btn" onClick={onNext} aria-label="Next project">
-            NEXT <span aria-hidden="true">&rarr;</span>
-          </button>
-        </nav>
+        {isActive && (
+          <nav className="carousel-nav" aria-label="Project navigation">
+            <button className="carousel-btn" onClick={onPrev} aria-label="Previous project">
+              <span aria-hidden="true">&larr;</span> PREV
+            </button>
+            <span className="carousel-counter">
+              {String(activeIndex).padStart(2, '0')} / {String(totalSlides).padStart(2, '0')}
+            </span>
+            <button className="carousel-btn" onClick={onNext} aria-label="Next project">
+              NEXT <span aria-hidden="true">&rarr;</span>
+            </button>
+          </nav>
+        )}
       </div>
     </div>
   );
