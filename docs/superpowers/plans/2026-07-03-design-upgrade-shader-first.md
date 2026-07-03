@@ -3,6 +3,8 @@
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 >
 > **Pre-flight rule (project memory):** before executing, run each task's test code against the real codebase in a scratch worktree first to catch integration bugs before touching the main branch.
+>
+> **Pre-flight DONE 2026-07-03:** Tasks 2/3/4 pure code ran green in a sandbox (19/19 tests) after 3 import-path fixes (test files sit three levels below root, not two) — already applied to this plan. GL/DOM code (createGlyphTexture, VizCanvas, e2e, capture script) could not be sandboxed; Task 3/5 implementers should watch the reference's composer-mount workaround and the `Uniform` generic note in the risks list.
 
 **Goal:** Push treylupo.com to award-tier visual quality — one WebGL/ASCII generative visual per project card, Space Grotesk 400 type system, 4px-grid spacing, sanctioned motion vocabulary, and an outcome-led copy pass — while keeping the dark olive + red-coral terminal identity and leaving all push/deploy/merge decisions to Trey.
 
@@ -152,7 +154,7 @@ EOF
 // lib/viz/__tests__/params.test.ts
 import { describe, it, expect } from 'vitest';
 import { VIZ_PARAMS, mulberry32 } from '../params';
-import { CAROUSEL_PROJECTS } from '../../constants';
+import { CAROUSEL_PROJECTS } from '../../../constants';
 
 const PROJECT_IDS = CAROUSEL_PROJECTS.map(p => p.id);
 
@@ -725,8 +727,8 @@ EOF
 // components/viz/__tests__/scenes.test.ts
 import { describe, it, expect } from 'vitest';
 import { buildSceneSpec } from '../scenes';
-import { VIZ_PARAMS } from '../../lib/viz/params';
-import { VizParams } from '../../types';
+import { VIZ_PARAMS } from '../../../lib/viz/params';
+import { VizParams } from '../../../types';
 
 const SAMPLE: Record<VizParams['archetype'], VizParams> = {
   lattice:      { archetype: 'lattice',      seed: 11, density: 1.0, speed: 0.6, tint: '#E85D3A' },
