@@ -6,6 +6,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/SpaceGrotesk-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ============================================
    TREY LUPO PORTFOLIO — Terminal Carousel
    Olive + Red-Coral | Departure Mono
@@ -27,7 +35,7 @@
 
   /* --- Typography --- */
   --font-departure: 'Departure Mono', monospace;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* --- Type Scale --- */
   --text-display: clamp(2rem, 5vw, 3rem);
@@ -58,13 +66,34 @@
 
   /* --- Motion (Emil Kowalski framework) --- */
   --duration-instant: 100ms;
-  --duration-sm: 150ms;
-  --duration-md: 200ms;
+  --duration-sm: 225ms;
+  --duration-md: 300ms;
   --duration-lg: 350ms;
   --duration-reveal: 400ms;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --stagger: 40ms;
+
+  /* --- Design-upgrade easings --- */
+  --ease-micro: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-entrance: cubic-bezier(0, 0, 0.2, 1);
+  --duration-bg-sweep: 400ms;
+
+  /* --- 4px spacing scale --- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-8: 32px;
+  --sp-9: 36px;
+  --sp-10: 40px;
+
+  /* --- Type rhythm --- */
+  --leading-display: 0.95;
+  --leading-body: 1.5;
+  --letter-spacing-sm: 0.36px;
+  --letter-spacing-label: 0.52px;
 
   /* --- Z-index --- */
   --z-cursor: 9999;
