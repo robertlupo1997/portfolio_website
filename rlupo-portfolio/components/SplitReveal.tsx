@@ -1,9 +1,11 @@
-import React, { useRef, useLayoutEffect, useMemo, ElementType } from 'react';
+import React, { useRef, useLayoutEffect, useMemo } from 'react';
 import gsap from 'gsap';
 
 interface SplitRevealProps {
   text: string;
-  as?: ElementType;
+  /* HTML tags only: R3F v9 augments JSX.IntrinsicElements with Three elements,
+     which collapses a bare ElementType union's children to `never`. */
+  as?: 'div' | 'span' | 'h1' | 'h2' | 'h3' | 'p';
   className?: string;
   trigger: boolean;
   delay?: number;
