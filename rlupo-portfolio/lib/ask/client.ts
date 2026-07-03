@@ -47,7 +47,9 @@ export async function askQuestion(
       body: JSON.stringify({ question }),
     });
   } catch { return emitFallback(); }
-  if (res.status === 503) return emitFallback();
+  // Infra failures (no API in dev = 404, key missing = 503, server errors) degrade
+  // to the local fallback; 400/429 carry messages the user must see, so they stay errors.
+  if (res.status === 404 || res.status === 503 || res.status >= 500) return emitFallback();
   if (!res.ok) {
     const msg = (await res.json().catch(() => null))?.error ?? 'Something went wrong.';
     onEvent({ type: 'error', message: msg });

@@ -42,6 +42,25 @@ describe('askQuestion', () => {
     expect(events.at(-1)).toEqual({ type: 'done' });
   });
 
+  it('emits local fallback on 404 (dev server has no /api/ask)', async () => {
+    const fakeFetch = (async () => ({ ok: false, status: 404 })) as unknown as typeof fetch;
+    const events: any[] = [];
+    await askQuestion('python machine learning', (e) => events.push(e), fakeFetch);
+    expect(events.some((e) => e.type === 'citations')).toBe(true);
+    expect(events.at(-1)).toEqual({ type: 'done' });
+    expect(events.some((e) => e.type === 'error')).toBe(false);
+  });
+
+  it('surfaces 429 as an error, not a fallback', async () => {
+    const fakeFetch = (async () => ({
+      ok: false, status: 429,
+      json: async () => ({ error: 'Rate limit reached — try again in a minute.' }),
+    })) as unknown as typeof fetch;
+    const events: any[] = [];
+    await askQuestion('python', (e) => events.push(e), fakeFetch);
+    expect(events).toEqual([{ type: 'error', message: 'Rate limit reached — try again in a minute.' }]);
+  });
+
   it('emits local fallback when the stream fails mid-read', async () => {
     const reads = [
       Promise.resolve({ done: false, value: new TextEncoder().encode('data: {"type":"text","text":"partial"}\n\n') }),
