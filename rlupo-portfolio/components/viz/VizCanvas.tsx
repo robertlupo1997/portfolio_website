@@ -5,7 +5,7 @@ import React, {
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer } from '@react-three/postprocessing';
 import {
-  BoxGeometry, BufferAttribute, Color, DoubleSide, InstancedMesh, MeshStandardMaterial,
+  BoxGeometry, BufferAttribute, Color, InstancedMesh, MeshBasicMaterial, MeshStandardMaterial,
   Object3D, OctahedronGeometry, PlaneGeometry, SphereGeometry,
   Vector3 as ThreeVector3,
 } from 'three';
@@ -75,7 +75,8 @@ function ComposerMount({
         volumeShading: true,
         tintColor: tintVec,
         postfx: {
-          contrastAdjust: 1.6, scanlineIntensity: 0.06, vignetteIntensity: 0.2,
+          contrastAdjust: 1.6, brightnessAdjust: -0.15,
+          scanlineIntensity: 0.06, vignetteIntensity: 0.2,
           waveAmplitude: waveAmp ?? 0,
           waveFrequency: waveFreq ?? 10,
           wavePhase: wavePhase ?? 0,
@@ -104,33 +105,58 @@ function VizScene({ spec }: { spec: SceneSpec }) {
   const meshRef = useRef<InstancedMesh>(null);
   const dummy = useMemo(() => new Object3D(), []);
   const initialPositions = useRef<Float32Array | null>(null);
+  const { camera } = useThree();
+  const tintColor = useMemo(() => new Color(spec.tint), [spec.tint]);
+
+  // Per-archetype camera: wavefield needs oblique view to show wave relief as terrain.
+  useEffect(() => {
+    if (spec.archetype === 'wavefield') {
+      camera.position.set(0, -2.2, 5.5);
+      camera.lookAt(0, 0.4, 0);
+    } else {
+      camera.position.set(0, 0, 5);
+      camera.lookAt(0, 0, 0);
+    }
+  }, [spec.archetype, camera]);
 
   const geometry = useMemo(() => {
     switch (spec.geometryType) {
-      case 'box':         return new BoxGeometry(0.22, 0.22, 0.22); // enlarged: 0.12 was sub-cell at 9px
-      case 'sphere':      return new SphereGeometry(0.06, 4, 4);
-      case 'plane':       return new PlaneGeometry(8, 8, spec.planeSegments ?? 40, spec.planeSegments ?? 40);
+      case 'box':         return new BoxGeometry(0.22, 0.22, 0.22);
+      case 'sphere':      return new SphereGeometry(0.18, 5, 5); // 0.06→0.18: enough cell coverage for mean≥12
+      case 'plane': {
+        const g = new PlaneGeometry(8, 8, spec.planeSegments ?? 40, spec.planeSegments ?? 40);
+        // Pre-allocate color attribute so wavefield vertexColors can write each frame.
+        const colorBuf = new Float32Array(g.attributes.position.count * 3);
+        g.setAttribute('color', new BufferAttribute(colorBuf, 3));
+        return g;
+      }
       // detail=1 → 32 faces, recognizable octahedral form, ~4× the cell coverage of detail=0
       case 'octahedron':  return new OctahedronGeometry(1.5, 1);
     }
   }, [spec.geometryType, spec.planeSegments, spec.density]);
 
   const material = useMemo(() => {
-    // Emissive boosts shadow-face rawLum above the 0.06 glyph floor.
-    // With ambient=0.3 + dir=0.6, emissive headroom before rawLum hits 0.79:
-    //   #A6A77E (L=0.636): max emissive ≈ 0.34 → use 0.1 (wireframe wants face contrast)
-    //   #E85D3A (L=0.512): max emissive ≈ 0.64 → use 0.25
-    //   #5A9090 (L=0.502): max emissive ≈ 0.67 → use 0.25
-    const emissiveIntensity = spec.archetype === 'wireframe' ? 0.1
-      : spec.archetype === 'wavefield'    ? 0.15
-      : 0.25; // lattice + particleflow
+    // Wavefield uses vertexColors to encode wave height directly into luminance,
+    // bypassing normal/light (which only work reliably for face-on camera + non-raking lights).
+    if (spec.archetype === 'wavefield') {
+      return new MeshBasicMaterial({ vertexColors: true });
+    }
+    // bfg = 1.78 − 2.56·rawLum (invert=true). Good glyph range: rawLum ∈ [0.10, 0.65].
+    // Lower emissive → lower rawLum → heavier glyphs (bfg closer to 1). Wireframe uses ambient
+    // contrast for face shading; lattice/particleflow need emissive to lift dark tints (orange
+    // luma=0.30) above the 0.06 rawLum gate.
+    // wireframe=0.35: ambient+emissive baseline keeps dark faces above glyph floor while
+    // side light creates face contrast. particleflow=0.55: large sphere coverage needs
+    // high emissive so dark-hemisphere cells reach heavy-glyph rawLum with brightnessAdjust=-0.15.
+    const emissiveIntensity = spec.archetype === 'wireframe' ? 0.35
+      : spec.archetype === 'lattice'      ? 0.35
+      : 0.55; // particleflow
     return new MeshStandardMaterial({
       color: spec.tint,
       emissive: new Color(spec.tint),
       emissiveIntensity,
       roughness: 0.85,
       metalness: 0,
-      side: spec.archetype === 'wavefield' ? DoubleSide : undefined,
     });
   }, [spec.tint, spec.archetype]);
 
@@ -176,25 +202,34 @@ function VizScene({ spec }: { spec: SceneSpec }) {
     const mesh = meshRef.current;
     const t = performance.now() * 0.001 * spec.speed;
 
-    // Wavefield: displace plane vertices in Z each frame so normals vary and
-    // directional lighting creates visible wave-terrain bands.
+    // Wavefield: displace plane vertices in Z AND encode height into vertex color.
+    // MeshBasicMaterial reads vertexColors directly — no normal/light dependency.
+    // With brightnessAdjust=-0.15: empty threshold rawLum=0.789. Height range [0.12, 1.50]
+    // gives: troughs→rawLum≈luma*0.12 ('X', heavy) and crests→rawLum≈luma*1.50 (sparse or empty).
     if (spec.archetype === 'wavefield') {
       const geo = mesh?.geometry;
       if (!geo) return;
-      const pos = geo.attributes.position as BufferAttribute;
-      const freq = spec.waveFreq ?? 1.0;
-      const amp  = (spec.waveAmp ?? 1.2) * 0.45;
+      const pos   = geo.attributes.position as BufferAttribute;
+      const color = geo.attributes.color    as BufferAttribute | undefined;
+      const freq  = spec.waveFreq ?? 1.0;
+      const amp   = (spec.waveAmp ?? 1.2) * 0.55; // ×0.55 → max ~1.2u displacement
       const phase = spec.wavePhase ?? 0;
+      const maxZ  = amp * 1.6; // approximate peak amplitude of combined waves
       for (let i = 0; i < pos.count; i++) {
         const x = pos.getX(i);
         const y = pos.getY(i);
-        pos.setZ(i,
-          Math.sin(x * freq + t + phase) * amp +
-          Math.sin(y * freq * 0.7 + t * 1.3 + phase * 0.5) * amp * 0.6,
-        );
+        const z = Math.sin(x * freq + t + phase) * amp
+                + Math.sin(y * freq * 0.7 + t * 1.3 + phase * 0.5) * amp * 0.6;
+        pos.setZ(i, z);
+        if (color) {
+          // heightFactor 0=trough→heavy glyph, 1=crest→sparse/empty. Normalized to theoretical max.
+          const hf = Math.min(1, Math.max(0, (z + maxZ) / (2 * maxZ)));
+          const lum = 0.12 + 1.38 * hf; // [0.12, 1.50]
+          color.setXYZ(i, tintColor.r * lum, tintColor.g * lum, tintColor.b * lum);
+        }
       }
       pos.needsUpdate = true;
-      geo.computeVertexNormals();
+      if (color) color.needsUpdate = true;
       return;
     }
 
@@ -213,12 +248,22 @@ function VizScene({ spec }: { spec: SceneSpec }) {
   return (
     <>
       <color attach="background" args={['#0a0a0a']} />
-      {/* ambient=0.3 + dir=0.6 keeps scene rawLum in [0.15,0.75] across all tints
-          under invert=true (glyph zone [0.06,0.79]). Higher ambient blew out
-          lit faces → bfg→0 → charValue≈0.05 → near-invisible glyphs. */}
-      <ambientLight intensity={0.3} />
-      <directionalLight position={[2, 4, 5]} intensity={0.6} />
-      <directionalLight position={[-3, -1, 3]} intensity={0.15} />
+      {/* Wireframe: horizontal side light creates face contrast without over-lighting
+          olive (luma=0.636), which would push lit faces above rawLum=0.789 → empty cells.
+          Others: oblique key [4,2,1] avoids full camera-alignment, creating face shading.
+          With brightnessAdjust=-0.15: effective empty threshold rawLum=0.789 (was 0.695). */}
+      {spec.archetype === 'wireframe' ? (
+        <>
+          <ambientLight intensity={0.30} />
+          <directionalLight position={[5, 1, 0]} intensity={0.30} />
+        </>
+      ) : (
+        <>
+          <ambientLight intensity={0.28} />
+          <directionalLight position={[4, 2, 1]} intensity={0.85} />
+          <directionalLight position={[-3, -1, 3]} intensity={0.12} />
+        </>
+      )}
       <instancedMesh ref={meshRef} args={[geometry, material, spec.instanceCount]} />
     </>
   );
