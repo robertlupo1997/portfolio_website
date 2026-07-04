@@ -36,7 +36,7 @@ export function buildLatticeSpec(p: VizParams): SceneSpec {
 export function buildWavefieldSpec(p: VizParams): SceneSpec {
   const rng = mulberry32(p.seed);
   const waveFreq  = 0.8 + rng() * 0.8;          // 0.8–1.6
-  const waveAmp   = 0.6 + rng() * 0.6;           // 0.6–1.2
+  const waveAmp   = 1.2 + rng() * 1.0;           // 1.2–2.2 (raised for visible vertex displacement)
   const wavePhase = rng() * 2 * Math.PI;         // 0–2π
   return {
     archetype: 'wavefield', seed: p.seed, density: p.density, speed: p.speed, tint: p.tint,
@@ -62,10 +62,10 @@ export function buildParticleflowSpec(p: VizParams): SceneSpec {
 export function buildWireframeSpec(p: VizParams): SceneSpec {
   return {
     archetype: 'wireframe', seed: p.seed, density: p.density, speed: p.speed, tint: p.tint,
-    instanceCount: Math.max(1, Math.round(3 * p.density)),
+    instanceCount: 1,   // single centered octahedron; spread=0 in VizCanvas
     geometryType: 'octahedron',
     animationAmplitude: 0.5 * p.speed,
-    spacing: 2.5,
+    spacing: 0,
   };
 }
 

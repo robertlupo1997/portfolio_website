@@ -5,7 +5,7 @@ import React, {
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { EffectComposer } from '@react-three/postprocessing';
 import {
-  BoxGeometry, Color, InstancedMesh, MeshStandardMaterial,
+  BoxGeometry, BufferAttribute, Color, DoubleSide, InstancedMesh, MeshStandardMaterial,
   Object3D, OctahedronGeometry, PlaneGeometry, SphereGeometry,
   Vector3 as ThreeVector3,
 } from 'three';
@@ -107,17 +107,32 @@ function VizScene({ spec }: { spec: SceneSpec }) {
 
   const geometry = useMemo(() => {
     switch (spec.geometryType) {
-      case 'box':         return new BoxGeometry(0.12, 0.12, 0.12);
+      case 'box':         return new BoxGeometry(0.22, 0.22, 0.22); // enlarged: 0.12 was sub-cell at 9px
       case 'sphere':      return new SphereGeometry(0.06, 4, 4);
       case 'plane':       return new PlaneGeometry(8, 8, spec.planeSegments ?? 40, spec.planeSegments ?? 40);
-      case 'octahedron':  return new OctahedronGeometry(0.5 + spec.density * 0.2);
+      // detail=1 → 32 faces, recognizable octahedral form, ~4× the cell coverage of detail=0
+      case 'octahedron':  return new OctahedronGeometry(1.5, 1);
     }
   }, [spec.geometryType, spec.planeSegments, spec.density]);
 
-  const material = useMemo(
-    () => new MeshStandardMaterial({ color: spec.tint, roughness: 0.2, metalness: 0, wireframe: spec.archetype === 'wireframe' }),
-    [spec.tint, spec.archetype],
-  );
+  const material = useMemo(() => {
+    // Emissive boosts shadow-face rawLum above the 0.06 glyph floor.
+    // With ambient=0.3 + dir=0.6, emissive headroom before rawLum hits 0.79:
+    //   #A6A77E (L=0.636): max emissive ≈ 0.34 → use 0.1 (wireframe wants face contrast)
+    //   #E85D3A (L=0.512): max emissive ≈ 0.64 → use 0.25
+    //   #5A9090 (L=0.502): max emissive ≈ 0.67 → use 0.25
+    const emissiveIntensity = spec.archetype === 'wireframe' ? 0.1
+      : spec.archetype === 'wavefield'    ? 0.15
+      : 0.25; // lattice + particleflow
+    return new MeshStandardMaterial({
+      color: spec.tint,
+      emissive: new Color(spec.tint),
+      emissiveIntensity,
+      roughness: 0.85,
+      metalness: 0,
+      side: spec.archetype === 'wavefield' ? DoubleSide : undefined,
+    });
+  }, [spec.tint, spec.archetype]);
 
   useEffect(() => {
     return () => {
@@ -140,7 +155,11 @@ function VizScene({ spec }: { spec: SceneSpec }) {
       };
     })();
     const buf = new Float32Array(spec.instanceCount * 3);
-    const spread = spec.archetype === 'particleflow' ? 5 : spec.spacing * (spec.gridSize ?? 4);
+    // Wireframe: 0 spread → single centered instance. Lattice: cap at 4.5 so
+    // instances stay within the 7×4.66 unit viewport (density=1 gave spread=8.4 → off-screen).
+    const spread = spec.archetype === 'particleflow' ? 5
+      : spec.archetype === 'wireframe'    ? 0
+      : Math.min(spec.spacing * (spec.gridSize ?? 4), 4.5);
     for (let i = 0; i < spec.instanceCount; i++) {
       buf[i * 3]     = (rng() - 0.5) * spread;
       buf[i * 3 + 1] = (rng() - 0.5) * spread;
@@ -155,9 +174,32 @@ function VizScene({ spec }: { spec: SceneSpec }) {
 
   useFrame((_, _delta) => {
     const mesh = meshRef.current;
-    const buf = initialPositions.current;
-    if (!mesh || !buf || spec.archetype === 'wavefield') return;
     const t = performance.now() * 0.001 * spec.speed;
+
+    // Wavefield: displace plane vertices in Z each frame so normals vary and
+    // directional lighting creates visible wave-terrain bands.
+    if (spec.archetype === 'wavefield') {
+      const geo = mesh?.geometry;
+      if (!geo) return;
+      const pos = geo.attributes.position as BufferAttribute;
+      const freq = spec.waveFreq ?? 1.0;
+      const amp  = (spec.waveAmp ?? 1.2) * 0.45;
+      const phase = spec.wavePhase ?? 0;
+      for (let i = 0; i < pos.count; i++) {
+        const x = pos.getX(i);
+        const y = pos.getY(i);
+        pos.setZ(i,
+          Math.sin(x * freq + t + phase) * amp +
+          Math.sin(y * freq * 0.7 + t * 1.3 + phase * 0.5) * amp * 0.6,
+        );
+      }
+      pos.needsUpdate = true;
+      geo.computeVertexNormals();
+      return;
+    }
+
+    const buf = initialPositions.current;
+    if (!mesh || !buf) return;
     for (let i = 0; i < spec.instanceCount; i++) {
       dummy.position.set(buf[i * 3], buf[i * 3 + 1], buf[i * 3 + 2]);
       dummy.position.y += Math.sin(t + i * 0.31) * spec.animationAmplitude;
@@ -171,8 +213,12 @@ function VizScene({ spec }: { spec: SceneSpec }) {
   return (
     <>
       <color attach="background" args={['#0a0a0a']} />
+      {/* ambient=0.3 + dir=0.6 keeps scene rawLum in [0.15,0.75] across all tints
+          under invert=true (glyph zone [0.06,0.79]). Higher ambient blew out
+          lit faces → bfg→0 → charValue≈0.05 → near-invisible glyphs. */}
       <ambientLight intensity={0.3} />
-      <directionalLight position={[2, 4, 5]} intensity={3} />
+      <directionalLight position={[2, 4, 5]} intensity={0.6} />
+      <directionalLight position={[-3, -1, 3]} intensity={0.15} />
       <instancedMesh ref={meshRef} args={[geometry, material, spec.instanceCount]} />
     </>
   );
@@ -247,7 +293,8 @@ export const VizCanvas: React.FC<VizCanvasProps> = ({
       >
         <VizScene spec={spec} />
         <ComposerMount effectRef={effectRef} tint={params.tint}
-          waveAmp={spec.waveAmp} waveFreq={spec.waveFreq} wavePhase={spec.wavePhase} />
+          waveAmp={params.archetype === 'wavefield' ? 0 : spec.waveAmp}
+          waveFreq={spec.waveFreq} wavePhase={spec.wavePhase} />
         <VelocityBridge effectRef={effectRef} velocityRef={velocityRef} />
       </Canvas>
     </div>
