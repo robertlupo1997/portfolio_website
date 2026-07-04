@@ -14,6 +14,23 @@ import { buildSceneSpec, SceneSpec } from './scenes';
 import { AsciiEffectImpl, createGlyphTexture, TERMINAL_SYMBOLS } from './AsciiEffect';
 
 // ---------------------------------------------------------------------------
+// Inner: watches THIS canvas for context loss. Living inside the R3F tree ties
+// the listener's lifecycle to the canvas it watches — the effect cleanup runs
+// before R3F disposes the context on unmount, so routine disposal of an old
+// canvas can never masquerade as a real context loss.
+// ---------------------------------------------------------------------------
+function ContextLossSentry({ onFallback }: { onFallback: () => void }) {
+  const gl = useThree((s) => s.gl);
+  useEffect(() => {
+    const canvas = gl.domElement;
+    const onLost = (e: Event) => { e.preventDefault(); onFallback(); };
+    canvas.addEventListener('webglcontextlost', onLost);
+    return () => canvas.removeEventListener('webglcontextlost', onLost);
+  }, [gl, onFallback]);
+  return null;
+}
+
+// ---------------------------------------------------------------------------
 // Inner: syncs transitionVelocity ref → AsciiEffectImpl uniform each frame
 // ---------------------------------------------------------------------------
 function VelocityBridge({
@@ -300,8 +317,6 @@ export const VizCanvas: React.FC<VizCanvasProps> = ({
 }) => {
   const effectRef = useRef<AsciiEffectImpl | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasElRef = useRef<HTMLCanvasElement | null>(null);
-  const onContextLostRef = useRef<((e: Event) => void) | null>(null);
 
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     const rect = containerRef.current?.getBoundingClientRect();
@@ -323,14 +338,6 @@ export const VizCanvas: React.FC<VizCanvasProps> = ({
 
   const spec = useMemo(() => (params ? buildSceneSpec(params) : null), [params]);
 
-  useEffect(() => {
-    return () => {
-      if (canvasElRef.current && onContextLostRef.current) {
-        canvasElRef.current.removeEventListener('webglcontextlost', onContextLostRef.current);
-      }
-    };
-  }, []);
-
   if (!loaded || !params || !spec) return null;
 
   return (
@@ -344,14 +351,8 @@ export const VizCanvas: React.FC<VizCanvasProps> = ({
         dpr={[1, 1.5]}
         camera={{ position: [0, 0, 5], fov: 50 }}
         style={{ background: 'transparent' }}
-        onCreated={({ gl }) => {
-          const canvas = gl.domElement;
-          const onLost = (e: Event) => { e.preventDefault(); onFallback(); };
-          canvasElRef.current = canvas;
-          onContextLostRef.current = onLost;
-          canvas.addEventListener('webglcontextlost', onLost);
-        }}
       >
+        <ContextLossSentry onFallback={onFallback} />
         <VizScene spec={spec} />
         <ComposerMount effectRef={effectRef} tint={params.tint}
           waveAmp={params.archetype === 'wavefield' ? 0 : spec.waveAmp}

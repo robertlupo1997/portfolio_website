@@ -523,6 +523,32 @@ h1, h2, h3, h4, h5, h6 {
   clip-path: inset(0 100% 0 0);
 }
 
+/* Fallback (context-lost / reduced-motion) on desktop: pin the still image to
+   the exact .viz-canvas-region box (right 45%, full height) so its letterbox
+   margins never paint over the content column. */
+@media (min-width: 769px) {
+  .carousel-slide { position: relative; }
+
+  .carousel-slide-image--fallback {
+    /* grid-area:auto — placed grid children resolve their absolute containing
+       block to their grid AREA (column 2 = half width); auto restores the
+       slide's padding box so the percentages match .viz-canvas-region. */
+    grid-area: auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45%;
+    height: 100%;
+    padding: 0;
+  }
+
+  .carousel-slide-image--fallback img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
 .carousel-slide-footer {
   grid-column: 1 / -1;
   grid-row: 2;

@@ -15,6 +15,19 @@ interface CarouselProps {
   loaded?: boolean;
 }
 
+// A lost WebGL context makes three/postprocessing throw during React commits
+// (null getContextAttributes) in the window between the loss event and the
+// region unmounting. Without a boundary that error unmounts the entire app.
+class VizErrorBoundary extends React.Component<
+  { onError: () => void; children: React.ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch() { this.props.onError(); }
+  render() { return this.state.failed ? null : this.props.children; }
+}
+
 const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) => {
   const {
     activeIndex,
@@ -129,16 +142,20 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) =
           totalSlides={CAROUSEL_PROJECTS.length + 2}
         />
       </div>
-      {!prefersReducedMotion && (
+      {/* contextLost unmounts the dead Canvas: re-rendering a lost GL context
+          throws (null getContextAttributes) and would blank the whole app. */}
+      {!prefersReducedMotion && !contextLost && (
         <div className="viz-canvas-region">
-          <React.Suspense fallback={null}>
-            <VizCanvas
-              params={activeVizParams}
-              loaded={loaded}
-              velocityRef={velocityRef}
-              onFallback={() => setContextLost(true)}
-            />
-          </React.Suspense>
+          <VizErrorBoundary onError={() => setContextLost(true)}>
+            <React.Suspense fallback={null}>
+              <VizCanvas
+                params={activeVizParams}
+                loaded={loaded}
+                velocityRef={velocityRef}
+                onFallback={() => setContextLost(true)}
+              />
+            </React.Suspense>
+          </VizErrorBoundary>
         </div>
       )}
       <SlideProgress activeIndex={activeIndex} totalSlides={CAROUSEL_PROJECTS.length + 2} />
