@@ -31,7 +31,7 @@ export const CORPUS: Chunk[] = [
     "sourceType": "project",
     "title": "nspb-api",
     "slideIndex": 1,
-    "text": "nspb-api — //api engineering ('26)\nA complete Python SDK for Oracle's Enterprise Performance Management Cloud, covering Planning, Migration, and Data Management APIs. Private build — case study available on request.\nProblem: Oracle EPM Cloud exposes no public API. I built one.\nStack: Python, REST, Oracle EPM, SDK Design\nResult: 60+ API ENDPOINTS"
+    "text": "nspb-api — //api engineering ('26)\n60-endpoint Python SDK for Oracle EPM Cloud — covers Planning, Migration, and Data Management APIs that Oracle ships with no client library. Private build; case study on request.\nProblem: Oracle EPM Cloud exposes no public API. I built one.\nStack: Python, REST, Oracle EPM, SDK Design\nResult: 60+ API ENDPOINTS"
   },
   {
     "id": "project-ferroml",
@@ -39,7 +39,7 @@ export const CORPUS: Chunk[] = [
     "title": "FerroML",
     "url": "https://github.com/robertlupo1997/ferroml",
     "slideIndex": 2,
-    "text": "FerroML — //systems · automl ('26)\nA statistically rigorous AutoML framework in Rust with Python bindings. Hypothesis-driven model selection with proper statistical testing.\nProblem: AutoML tools skip statistical rigor. FerroML doesn't.\nStack: Rust, Python, PyPI, Statistics\nResult: 55 ML ALGORITHMS"
+    "text": "FerroML — //systems · automl ('26)\n55-algorithm AutoML framework in Rust with Python bindings that replaces benchmark theater with proper statistical hypothesis testing. Ships on PyPI; 6,500+ tests.\nProblem: AutoML tools skip statistical rigor. FerroML doesn't.\nStack: Rust, Python, PyPI, Statistics\nResult: 55 ML ALGORITHMS"
   },
   {
     "id": "project-revenue-forecast",
@@ -47,7 +47,7 @@ export const CORPUS: Chunk[] = [
     "title": "Hierarchical Revenue Forecast",
     "url": "https://github.com/robertlupo1997/hierarchical-revenue-forecast",
     "slideIndex": 3,
-    "text": "Hierarchical Revenue Forecast — //time series ('26)\nProduction-grade multi-LOB revenue forecasting with hierarchical time series models and SHAP explainability.\nProblem: Revenue forecasting across business lines that actually reconcile.\nStack: Python, Go, TypeScript, SHAP\nResult: Multi-LOB HIERARCHICAL RECONCILIATION"
+    "text": "Hierarchical Revenue Forecast — //time series ('26)\nHierarchical revenue forecasting across multiple business lines with temporal reconciliation, cross-validation, and SHAP attribution. Deployed in production at Franklin Street.\nProblem: Revenue forecasting across business lines that actually reconcile.\nStack: Python, Go, TypeScript, SHAP\nResult: Multi-LOB HIERARCHICAL RECONCILIATION"
   },
   {
     "id": "project-kkbox",
@@ -55,7 +55,7 @@ export const CORPUS: Chunk[] = [
     "title": "KKBOX Churn Prediction",
     "url": "https://github.com/robertlupo1997/kkbox-churn-prediction",
     "slideIndex": 4,
-    "text": "KKBOX Churn Prediction — //ml · production ('24)\nLeak-safe feature engineering, isotonic calibration, temporal backtests, and PSI drift monitoring.\nStack: Python, Streamlit, XGBoost\nResult: 0.97 AUC\nLive demo: https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction"
+    "text": "KKBOX Churn Prediction — //ml · production ('24)\n0.97 AUC subscription churn model — leak-safe temporal feature engineering, isotonic probability calibration, and PSI drift monitoring on the KKBOX Kaggle benchmark.\nStack: Python, Streamlit, XGBoost\nResult: 0.97 AUC\nLive demo: https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction"
   },
   {
     "id": "project-obj-detect",
@@ -63,7 +63,7 @@ export const CORPUS: Chunk[] = [
     "title": "Open-Vocab Object Detection",
     "url": "https://github.com/robertlupo1997/open-vocabulary-object-detection",
     "slideIndex": 5,
-    "text": "Open-Vocab Object Detection — //computer vision ('24)\nText-prompted detection + segmentation with Grounding DINO + SAM 2 on RTX 3070.\nStack: Python, PyTorch, COCO\nResult: 265-490ms PER IMAGE"
+    "text": "Open-Vocab Object Detection — //computer vision ('24)\nOpen-vocabulary detection and segmentation via text prompts — Grounding DINO + SAM 2 at 265–490 ms per image on RTX 3070, no fine-tuning required.\nStack: Python, PyTorch, COCO\nResult: 265-490ms PER IMAGE"
   },
   {
     "id": "project-ironclad",
@@ -71,7 +71,7 @@ export const CORPUS: Chunk[] = [
     "title": "Ironclad",
     "url": "https://github.com/robertlupo1997/ironclad",
     "slideIndex": 6,
-    "text": "Ironclad — //construction ml ('26)\nConstruction cost estimation with statistical confidence intervals for bid analysis.\nStack: Python, ML, Statistics\nResult: 95% CI CONFIDENCE"
+    "text": "Ironclad — //construction ml ('26)\nConstruction cost estimation with 95% confidence intervals per line item, built for bid analysis at Origin Construction. Replaces point estimates with statistical ranges.\nStack: Python, ML, Statistics\nResult: 95% CI CONFIDENCE"
   },
   {
     "id": "project-ferroml-plugin",
@@ -79,7 +79,7 @@ export const CORPUS: Chunk[] = [
     "title": "FerroML Plugin",
     "url": "https://github.com/robertlupo1997/ferroml-plugin",
     "slideIndex": 7,
-    "text": "FerroML Plugin — //ai tooling ('26)\nEnd-to-end machine learning from natural conversation inside Claude Code.\nStack: Python, Plugin\nResult: Claude Code PLUGIN"
+    "text": "FerroML Plugin — //ai tooling ('26)\nEnd-to-end machine learning from natural conversation inside Claude Code — invoke FerroML's full pipeline through a first-party plugin without leaving the editor.\nStack: Python, Plugin\nResult: Claude Code PLUGIN"
   },
   {
     "id": "project-gsd-ml",
@@ -87,7 +87,7 @@ export const CORPUS: Chunk[] = [
     "title": "GSD-ML",
     "url": "https://github.com/robertlupo1997/gsd-ml",
     "slideIndex": 8,
-    "text": "GSD-ML — //ai tooling ('26)\nClaude Code native autonomous ML research — point at a dataset and get a tuned pipeline.\nStack: Python, GSD\nResult: Autonomous ML RESEARCH"
+    "text": "GSD-ML — //ai tooling ('26)\nPoint Claude Code at a dataset and metric; get a validated, tuned ML pipeline — autonomous research that handles feature engineering, model selection, and evaluation.\nStack: Python, GSD\nResult: Autonomous ML RESEARCH"
   },
   {
     "id": "project-mlforge",
@@ -95,7 +95,7 @@ export const CORPUS: Chunk[] = [
     "title": "MLForge",
     "url": "https://github.com/robertlupo1997/mlforge",
     "slideIndex": 9,
-    "text": "MLForge — //automl ('26)\nAutonomous ML research framework for tabular data. CSV + metric in, best pipeline out.\nStack: Python, AutoML\nResult: AutoML FRAMEWORK"
+    "text": "MLForge — //automl ('26)\nCSV in, best-pipeline out — autonomous ML research framework for tabular data that searches preprocessing, feature engineering, and model selection without human steering.\nStack: Python, AutoML\nResult: AutoML FRAMEWORK"
   },
   {
     "id": "resume",
