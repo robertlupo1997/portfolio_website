@@ -15,7 +15,7 @@ export function mulberry32(seed: number): () => number {
 // #A6A77E = --accent-dim (muted olive). No amber/cyan tokens exist in :root; these extend the palette.
 export const VIZ_PARAMS: Record<string, VizParams> = {
   // Lattice — crystalline SDKs / frameworks
-  'nspb-api':         { archetype: 'lattice',      seed: 11, density: 1.0, speed: 0.6, tint: '#E85D3A' },
+  'nspb-api':         { archetype: 'lattice',      seed: 11, density: 1.5, speed: 0.6, tint: '#E85D3A' },
   'ferroml':          { archetype: 'lattice',       seed: 22, density: 1.2, speed: 0.8, tint: '#E85D3A' },
   // Wavefield — displaced plane for time-series / forecasting
   'revenue-forecast': { archetype: 'wavefield',    seed: 31, density: 0.8, speed: 0.5, tint: '#C8882A' },
