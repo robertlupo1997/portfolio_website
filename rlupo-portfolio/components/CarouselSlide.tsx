@@ -77,6 +77,21 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
           delay: 0.1,
         }
       );
+      if (isActive && terminalRef.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const lines = terminalRef.current.querySelectorAll('.terminal-line');
+        gsap.fromTo(
+          lines,
+          { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
+          {
+            clipPath: 'inset(0 0% 0 0)',
+            opacity: 1,
+            duration: 0.3,
+            ease: 'cubic-bezier(0, 0, 0.2, 1)',
+            stagger: 0.04,
+            delay: 0.12,
+          },
+        );
+      }
     } else {
       // Cancel an in-flight reveal and reset the off-screen slide to its hidden start state.
       gsap.killTweensOf(el);
