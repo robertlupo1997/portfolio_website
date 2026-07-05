@@ -1,0 +1,45 @@
+TREY LUPO
+AI/ML Engineer
+treylupo1197@gmail.com · 813-495-0406 · Tampa, FL · treylupo.com
+github.com/robertlupo1997 · linkedin.com/in/robertlupo1997
+
+SUMMARY
+ML engineer with embedded finance domain expertise — shipping production ML and LLM systems, not notebooks.
+First technical owner inside a commercial real estate firm: production ML pipelines, streaming LLM integrations, and AI tooling used by the CFO's org. Statistics (USF) + Rust systems programming (FerroML, PyPI) — from model math to production API. MIT IDSS Data Science & Machine Learning Certificate.
+
+EXPERIENCE
+
+FP&A Analyst — Franklin Street
+Tampa, FL · Sep 2025–Present
+
+· Shipped a production ML deal-closure pipeline (AUC 0.874, calibration error 4.8%) — ExtraTrees + XGBoost with MAPIE conformal intervals, walk-forward temporal validation, engineered leak-safe features, 51 automated tests — replacing analyst-scored CRM data with calibrated probability estimates.
+· Built full-stack AI financial dashboard (React 19/TypeScript + FastAPI + Azure SQL) with AI-generated variance narratives via Claude API (streaming LLM integration), consolidated P&L, drill-downs, three-tier caching — replacing a 132-page monthly report and cutting variance analysis from 8+ hours to under 1 hour.
+· Built Oracle NSPB / EPM Cloud automation — production ETL for revenue and valuation-model uploads with 114+ tests (open-sourced as the nspb-api SDK).
+· Domain grounding: CRE analytics informing decisions across a $500M+ portfolio; surfaced a $270B+ multifamily data gap that informed the CFO's board presentation.
+
+AI Engineering Intern — Origin Construction
+Jun 2025–Sep 2025
+· Automated project-management workflows, integrated Procore APIs, and piloted AI agents for construction operations.
+
+PROJECTS
+
+· FerroML — statistically rigorous AutoML framework in Rust with Python bindings; 55+ algorithms, 6,500+ tests; published on PyPI.
+· KKBOX Churn Prediction — leak-safe features, isotonic calibration, temporal backtests, PSI drift monitoring on a 30GB+ user transaction dataset; 0.97 AUC; live on Hugging Face Spaces.
+· Local-LLM orchestration (Ornith) — designed and operate a 24/7 system using Claude Code as orchestrator delegating implementation to locally served 9B/35B-MoE models (Ollama): propose-only task loop, sandboxed verification gates (bwrap, no-network), git-worktree isolation, human-review inbox; model-written code merges only after automated checks and review.
+· treylupo.com — portfolio site with an embedded AI answer engine: agentic retrieval (RAG) over projects and resume with streaming, citation-grounded answers; Anthropic API, serverless SSE, rate-limited, eval-suite-verified. Full project set at treylupo.com.
+· nspb-api — complete Python SDK for Oracle EPM Cloud (Planning, Migration, Data Management); 60+ API endpoints.
+· Hierarchical Revenue Forecast — open-source generalization of the production deal-closure work: multi-LOB reconciliation, SHAP explainability dashboard (Python/Go/TypeScript).
+· Open-Vocab Object Detection — text-prompted detection + segmentation (Grounding DINO + SAM 2), 265–490 ms/image on RTX 3070.
+
+EDUCATION
+
+B.A. Statistics, University of South Florida — May 2024
+Data Science & Machine Learning Certificate, MIT IDSS — 2024
+
+SKILLS
+
+Languages: Python · Rust · TypeScript · SQL · R
+ML / Data: scikit-learn · XGBoost · LightGBM · PyTorch · Pandas · FastAPI · MAPIE · SHAP
+AI tooling: Claude API / Anthropic SDK · Claude Code
+Finance: Oracle EPM / NSPB Cloud · NetSuite · FP&A · financial modeling
+Web / infra: React · GSAP · Vite · Azure SQL

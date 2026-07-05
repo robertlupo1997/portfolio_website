@@ -1,0 +1,6 @@
+{
+  "rewrites": [{ "source": "/ask", "destination": "/index.html" }],
+  "functions": {
+    "api/ask.ts": { "maxDuration": 30 }
+  }
+}

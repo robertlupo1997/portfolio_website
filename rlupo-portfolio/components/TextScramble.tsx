@@ -71,8 +71,9 @@ const TextScramble: React.FC<TextScrambleProps> = ({
       className: `text-scramble ${className} ${isScrambling ? 'scrambling' : ''}`,
       onMouseEnter: handleMouseEnter,
       'data-text': text,
+      'aria-label': text,
     },
-    displayText
+    React.createElement('span', { 'aria-hidden': true }, displayText)
   );
 };
 

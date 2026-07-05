@@ -1,11 +1,15 @@
 import path from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   server: {
     port: 3000,
     host: '0.0.0.0',
+  },
+  test: {
+    // Exclude Playwright e2e tests from vitest
+    exclude: ['tests/**/*.spec.ts', 'e2e/**/*.spec.ts', 'node_modules/**'],
   },
   plugins: [react()],
   resolve: {
@@ -19,7 +23,6 @@ export default defineConfig({
         manualChunks: {
           'vendor': ['react', 'react-dom'],
           'animation': ['gsap', 'lenis'],
-          'webgl': ['ogl']
         }
       }
     }
