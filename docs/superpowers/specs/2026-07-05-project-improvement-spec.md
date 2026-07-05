@@ -1,7 +1,8 @@
 # Project-improvement spec — treylupo.com cards (Workstream B)
 
-**Date:** 2026-07-05 · **Author:** Claude (Fable 5) for Trey · **Status:** DRAFT — needs
-Trey's taste pass (questions at the end), execution post-Fable (Opus)
+**Date:** 2026-07-05 · **Author:** Claude (Fable 5) for Trey · **Status:** APPROVED —
+Trey answered all taste questions 2026-07-05 evening (§Decisions at the end);
+execution post-Fable (Opus)
 **Launch gate served:** (a) "project cards/writeups improved" — one of the three gates
 before deploy. Local only; NO pushes until Vercel Step 0.
 
@@ -64,12 +65,15 @@ citable; nothing invented.
   isotonic"); tell the visitor what the live demo IS (React dashboard + SHAP waterfalls
   + ROI calculator).
 
-### Open-Vocab Object Detection (all #5)
-- **Metric:** latency range is honest but weak — pair it with the working-mAP story or
-  keep latency and add "no fine-tuning" as the qualifier. (COCO mAP number exists but
-  isn't headline-strong; taste Q4.)
-- **Surface:** the coordinate-format debugging narrative (readme-obj-detect-1:260) is the
-  interesting engineering signal for the description or writeup.
+### Open-Vocab Object Detection (all #5) — **DECISION: REMOVE**
+- Trey 2026-07-05: remove the card entirely ("I didn't really do anything" — mostly
+  wiring existing models). Execution: drop from `constants.ts`, drop its corpus chunks
+  (Ask engine must not tout a project the site no longer shows), remove its viz capture
+  from the build list. Repo can stay public on GitHub.
+- The freed ALL slot has NO launch replacement. Future candidate: Trey wants to build a
+  Plotly-style AI charting/viz tool ("Plotty AI" — name unconfirmed, he'll clarify).
+  That is a post-launch PROJECT to brainstorm and build, not card copy; do not gate
+  anything on it.
 
 ### Ironclad (all #6)
 - **Fix:** completion honesty (#3 above).
@@ -105,15 +109,21 @@ citable; nothing invented.
 - Order: MUST-FIX table → metric/stack fields → new card → description rewrites.
 - NO pushes until Vercel Step 0 (guard: `docs/superpowers/plans/2026-07-04-p1-finish-line.md:156-165`).
 
-## Trey taste questions (~15 min, async — answer inline or in chat)
+## Decisions (Trey, 2026-07-05 evening — all questions closed)
 
-1. **Ask-My-Work card:** featured slide (which of the three yields?) or first of ALL?
-2. **MLForge:** merge into GSD-ML card (recommended) or keep both with a lineage line?
-3. **Tone:** keep the combative edges ("benchmark theater", "Oracle ships no client
-   library — I built one") or soften? My read: keep — they're your voice.
-4. **Obj-detect metric:** latency ("265-490ms/image, zero fine-tuning") or accuracy
-   (mAP story)? Latency is honest and concrete; mAP number is not headline-strong.
-5. **Ironclad status:** reframe copy as design-stage (keep card) or pull the card until
-   Phase 1 ships?
-6. **nspb CTA:** mailto, or Ask-engine deep-link ("ask me about nspb-api")? The second
-   feeds gate (c)'s AI-section story.
+1. **Ask-My-Work: FEATURED**; Revenue Forecast moves to ALL (yields its featured slide).
+2. **MLForge merges into one GSD-ML card** with lineage line. NOTE from Trey: the GSD-ML
+   project itself "needs more work" — expect a post-launch improvement pass on the
+   project (not just the card); don't oversell current state in the copy.
+3. **Tone: keep the combative edges** ("benchmark theater" etc.).
+4. **Obj-detect: REMOVED** (see its section above). Future backlog: Plotly-style AI viz
+   tool, name TBD.
+5. **Ironclad: keep the card, reframe as design-stage.** NOTE: Trey's recall of the
+   project is low — the rewritten copy must be self-explanatory from the README alone
+   ($273B problem, ±5-10% vs human ±20-30%, Monte Carlo P10/P50/P90) and claim nothing
+   beyond the spec + FerroML core.
+6. **nspb CTA: Ask-engine deep-link** ("Ask me about nspb-api").
+7. *(C spec)* **Panel backdrop: olive-tinted dim** matching site overlays.
+
+Resulting card set (8): featured = nspb-api, FerroML, **Ask-My-Work (new)**; ALL =
+Revenue Forecast, KKBOX, Ironclad, FerroML Plugin, GSD-ML (absorbing MLForge).
