@@ -149,17 +149,23 @@ git commit -m "content: corpus regen for resume v3"
 git push origin main
 ```
 
-### Task 4: Vercel + key + domain (TREY — manual, browser)
+### Task 4: Vercel promotion + key (TREY — manual, browser)
 
-**Files:** none (Vercel dashboard + registrar + Anthropic console).
+**Files:** none (Vercel dashboard + Anthropic console).
+
+**REALITY UPDATE 2026-07-04 ~23:45:** the Vercel project ALREADY EXISTS and is Git-connected
+to `main` with the domain attached — the 771043b push auto-deployed to treylupo.com and Trey
+**rolled production back** to the prior deployment. Therefore: ⚠️ pushes to `main` are
+production events. Tasks 1–3 must NOT be pushed until Step 0 is done.
 
 **Interfaces:**
-- Consumes: `main` pushed (Task 3).
+- Consumes: Tasks 1–3 committed locally (NOT pushed until Step 0 makes pushing safe).
 - Produces: live site; Task 5 verifies it.
 
-- [ ] **Step 1 (Trey):** vercel.com/new → import `robertlupo1997/portfolio_website` → **Root Directory: `rlupo-portfolio`** → deploy. Site is live on `<project>.vercel.app` immediately (ask panel in fallback mode).
-- [ ] **Step 2 (Trey):** console.anthropic.com → new workspace with **monthly spend cap** ($5–10) → create API key in that workspace → Vercel → Settings → Environment Variables → `ANTHROPIC_API_KEY` (Production) → redeploy.
-- [ ] **Step 3 (Trey):** Vercel → Domains → add `treylupo.com` → apply the DNS records it shows at the registrar. Wait for cert issuance.
+- [ ] **Step 0 (Trey):** Vercel → Project → Settings → Git → change **Production Branch** from `main` to a new pinned branch (e.g. `production`), OR confirm the instant rollback paused auto-promotion. After this, `main` pushes only create preview deployments.
+- [ ] **Step 1:** Push Tasks 1–3; review the resulting **preview URL** (real deployed site, not public-facing).
+- [ ] **Step 2 (Trey):** console.anthropic.com (separate account/billing from Claude Max) → add ~$5 prepaid credit → workspace with **monthly spend cap** → create `ANTHROPIC_API_KEY` → Vercel env var (Production). OPTIONAL for launch — the ask panel serves its fallback without it.
+- [ ] **Step 3 (Trey):** When the preview is approved: promote the deployment to Production (or merge to the `production` branch). Domain is already attached; no DNS work needed.
 
 ### Task 5: Live verification
 
