@@ -65,6 +65,42 @@ Prepared this session, **pushed only on Trey's go** (public-facing):
 - atlas: paused by design (career spec decision 5: trading stays out of the top-3). Revisit post-Sep-1 as understudy's consumer.
 - nspb-api/nspb-tools: stable, complete, private. No action except the case-study/Ask-engine story already in the B spec.
 
+## DISPOSITION MATRIX — every project, one verdict (added 2026-07-06 late session, per Trey's "spec every last one" mandate)
+
+Finish-state specs were produced by dedicated planning agents (opus/sonnet), each committed INTO its project's repo. Every project Trey owns now has exactly one disposition.
+
+### FINISHED (evidence exists; no plan needed)
+| Project | Evidence / residual |
+|---|---|
+| portfolio_website | Launch gates executed+reviewed this session; READY TO PUSH pending Step 0 |
+| understudy | Published v0.1, fresh-clone verified; residual = P4 portfolio port (below) |
+| kkbox-churn | 0.97 AUC, live HF Space, CI, release; optional: refresh stale release tag |
+| hierarchical-revenue-forecast | Strong README, CI; optional: add a release tag |
+| nspb-api / nspb-tools | Complete, stable, private by design; public story = card + Ask engine |
+| claude-toolkit | Living personal toolkit — no done bar applies; keep off portfolio |
+| ReadFlow | Works (125/125 sentences verified); 4 tiny finish-for-self tasks — `~/experiments/ReadFlow/docs/2026-07-06-finish-state-disposition.md` |
+
+### PLAN-TO-FINISH (spec committed in-repo; sessions estimated)
+| Project | Spec | Bar & size | Scheduling call |
+|---|---|---|---|
+| FerroML P3 | `~/experiments/ferroml/thoughts/2026-07-06-p3-intelligent-automl-v1-spec.md` | 5 phases; statistically-grounded selection + honest benchmark + model card → PyPI 1.1.0 | Jul-Aug (career P3, due Aug 29) |
+| Ask Terminal | `docs/superpowers/plans/2026-07-06-ask-terminal-implementation.md` (cf37e38) | 9 tasks; client-driven loop, $5 caps | Post-launch flagship, Jul |
+| gsd-ml | `~/experiments/gsd-ml/docs/2026-07-06-finish-state-spec.md` (63012cf) | 6 phases; **`pip install gsd-ml` currently 404s — public claim broken** | Phase A (PyPI publish) = credibility-urgent, this week |
+| ferroml-plugin | `~/experiments/ferroml/ferroml-plugin/docs/2026-07-06-finish-state-spec.md` | 3 phases; **install broken publicly (no marketplace.json, wrong README command)** | Phase 1 = credibility-urgent, this week |
+| ledge/Gjald | `~/projects/ledge/docs/2026-07-06-finish-state-spec.md` (6726b1b) | FINISH, 2 sessions; suite 787/788 green (README's "480" stale) | ⚠️ **Phase 1 de-identify FIRST — "Franklin Street"/FS-PARENT named in seed.py + 3 SKILL.md files (synthetic data; reskin to fictional co). HARD GATE before any public exposure.** Then candidate future card (FP&A-meets-AI) |
+| ironclad | `~/projects/ironclad/docs/2026-07-06-finish-state-spec.md` (4a11da2) | 5 sessions to a MEASURABLE v1 (no public dataset exists — hand-curate ~5 public-sector bid packages) OR stay design-stage permanently | Trey chooses at review; if build: September, post-P3 |
+| atlas | `~/projects/atlas/docs/2026-07-06-finish-state-spec.md` (0b240e9+9687453) | 6 phases + human-only money gate; execution loop has never run one cycle; ~58% understudy-delegable; de-risk checkpoint = one Mode B cycle first | Personal track, not portfolio; run behind everything above via understudy queue |
+
+### TERMINAL (decided; rationale recorded)
+mlforge (superseded by gsd-ml; banner committed, push on go) · open-vocab (removed from portfolio by Trey; repo stays public — it's solid) · treylupo monorepo (dead rewrite — DELETE, Trey confirm) · FSML/DealForecast (work-derived, off-limits) · Ornith (private workbench; its public artifact IS understudy) · legacy private repos (visionkit, qwen3-tts-app, NetsuiteDashboard, procore-*, coursework — out of scope, no action).
+
+### Recommended execution order (mastermind call)
+1. **NOW:** Trey Step 0 → push → preview → promote (launch, Jul 11).
+2. **Wave 1 (this week — fixes publicly-broken claims):** ferroml-plugin Phase 1 + gsd-ml Phase A + the 4 hygiene pushes (on Trey's go).
+3. **Wave 2 (Jul):** understudy P4 writeup+card · Ask Terminal build · resume v3 ship (Jul 18) · company list.
+4. **Wave 3 (Jul-Aug):** FerroML P3 phases 1-5.
+5. **Wave 4 (Sep+):** ironclad go/no-go · ledge 2-session finish · atlas via understudy queue · ReadFlow one short session anytime.
+
 ## Standing rules (from the specs — do not violate)
 
 - **No portfolio push until Vercel Step 0** (pushes to main are production events until then).
