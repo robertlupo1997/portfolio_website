@@ -46,7 +46,7 @@ export const CORPUS: Chunk[] = [
     "sourceType": "project",
     "title": "Ask My Work",
     "slideIndex": 3,
-    "text": "Ask My Work — //ai · rag engine ('26)\nSemantic retrieval over my full project portfolio and resume — streaming SSE, citation-grounded answers, Anthropic API, serverless edge, rate-limited and eval-suite-verified.\nProblem: Recruiters skim. Let them interrogate.\nStack: RAG, SSE, Anthropic API, Serverless\nResult: Streaming RAG · SSE · EVAL-SUITE"
+    "text": "Ask My Work — //ai · rag engine ('26)\nAgentic retrieval over my full project portfolio and resume — streaming SSE, citation-grounded answers, Anthropic API, serverless edge, rate-limited and eval-suite-verified.\nProblem: Recruiters skim. Let them interrogate.\nStack: RAG, SSE, Anthropic API, Serverless\nResult: Streaming RAG · SSE · EVAL-SUITE"
   },
   {
     "id": "project-revenue-forecast",
