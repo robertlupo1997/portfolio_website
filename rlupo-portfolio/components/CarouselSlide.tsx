@@ -27,7 +27,6 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   onAskOpen,
 }) => {
   const [animating, setAnimating] = useState(false);
-  const url = project.githubUrl || project.liveUrl;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const showFallback = (useFallback ?? false) || prefersReducedMotion || isMobile;
@@ -131,11 +130,20 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
           >
             [ ASK -&gt; ]
           </button>
-        ) : url ? (
-          <a href={url} target="_blank" rel="noopener noreferrer" className="terminal-visit">
-            [ VISIT -&gt; ]
-          </a>
-        ) : null}
+        ) : (
+          <>
+            {project.githubUrl && (
+              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="terminal-visit">
+                [ VISIT -&gt; ]
+              </a>
+            )}
+            {project.liveUrl && (
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="terminal-visit">
+                {project.liveUrl.includes('pypi.org') ? '[ PYPI -> ]' : '[ LIVE -> ]'}
+              </a>
+            )}
+          </>
+        )}
         {isActive && <span className="cursor-blink" />}
         {isActive && (
           <nav className="carousel-nav" aria-label="Project navigation">
