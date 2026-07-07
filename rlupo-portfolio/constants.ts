@@ -40,6 +40,7 @@ export const FEATURED_PROJECTS: Project[] = [
     description: "55-algorithm AutoML framework in Rust — benchmark theater replaced with 489+ cross-library correctness tests and 5-layer verification. GPU acceleration via wgpu, SIMD, ONNX export. Ships on PyPI.",
     problem: "AutoML tools skip statistical rigor. FerroML doesn't.",
     githubUrl: "https://github.com/robertlupo1997/ferroml",
+    liveUrl: "https://pypi.org/project/ferroml/",
     epoch: "'26",
     metric: "3.9×",
     metricLabel: "FASTER THAN SKLEARN (KMEANS)",

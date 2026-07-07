@@ -39,7 +39,7 @@ export const CORPUS: Chunk[] = [
     "title": "FerroML",
     "url": "https://github.com/robertlupo1997/ferroml",
     "slideIndex": 2,
-    "text": "FerroML — //systems · automl ('26)\n55-algorithm AutoML framework in Rust — benchmark theater replaced with 489+ cross-library correctness tests and 5-layer verification. GPU acceleration via wgpu, SIMD, ONNX export. Ships on PyPI.\nProblem: AutoML tools skip statistical rigor. FerroML doesn't.\nStack: Rust, wgpu, ONNX, PyPI\nResult: 3.9× FASTER THAN SKLEARN (KMEANS)"
+    "text": "FerroML — //systems · automl ('26)\n55-algorithm AutoML framework in Rust — benchmark theater replaced with 489+ cross-library correctness tests and 5-layer verification. GPU acceleration via wgpu, SIMD, ONNX export. Ships on PyPI.\nProblem: AutoML tools skip statistical rigor. FerroML doesn't.\nStack: Rust, wgpu, ONNX, PyPI\nResult: 3.9× FASTER THAN SKLEARN (KMEANS)\nLive demo: https://pypi.org/project/ferroml/"
   },
   {
     "id": "project-ask-my-work",
