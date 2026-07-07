@@ -99,6 +99,8 @@
   --z-cursor: 9999;
   --z-overlay: 500;
   --z-nav: 100;
+  --z-panel: 60;   /* sits BELOW --z-nav; header stays visible over dim backdrop */
+  --z-sheet: 110;  /* must clear --z-nav on mobile (bac35cf regression fix) */
 }
 
 /* ----- RESET & BASE ----- */
@@ -1042,18 +1044,24 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
    ASK PANEL
    ============================================ */
 
-.ask-panel { position: fixed; inset: 0; z-index: 60; display: flex; align-items: flex-start; justify-content: center; padding-top: 12vh; background: rgba(0, 0, 0, 0.85); opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.ask-panel { position: fixed; inset: 0; z-index: var(--z-panel); display: flex; align-items: flex-start; justify-content: center; padding-top: 12vh; background: rgba(61,61,56,0.92); opacity: 0; pointer-events: none; transition: opacity var(--duration-md) var(--ease-entrance); }
 .ask-panel--open { opacity: 1; pointer-events: auto; }
-.ask-panel__inner { width: min(640px, 92vw); border: 1px solid rgba(255, 255, 255, 0.2); background: #0a0a0a; padding: 1.5rem; }
-.ask-panel__bar { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; letter-spacing: 0.1em; }
-.ask-panel__input { width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.3); color: inherit; font: inherit; padding: 0.5rem 0; outline: none; }
-.ask-panel__starters { list-style: none; padding: 0; margin: 1rem 0 0; }
-.ask-panel__starter, .ask-panel__citation, .ask-panel__close { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; text-align: left; padding: 0.35rem 0; opacity: 0.7; }
-.ask-panel__starter:hover, .ask-panel__citation:hover { opacity: 1; text-decoration: underline; }
-.ask-panel__answer { margin-top: 1.25rem; line-height: 1.6; white-space: pre-wrap; }
-.ask-panel__status, .ask-panel__error { margin-top: 1.25rem; opacity: 0.6; }
-.ask-panel__citations { margin-top: 1rem; padding-left: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, 0.15); }
-@media (prefers-reduced-motion: reduce) { .ask-panel { transition: none; } }
+.ask-panel__inner { width: min(640px, 92vw); border: 1px solid var(--border-emphasis); background: var(--bg-surface); padding: var(--sp-5); }
+.ask-panel__bar { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--sp-4); }
+.ask-panel__title { font-family: var(--font-departure); font-size: var(--text-label); letter-spacing: 0.08em; color: var(--text-secondary); }
+.ask-panel__input { width: 100%; background: transparent; border: 0; border-bottom: 1px solid var(--border-emphasis); color: var(--text-primary); font: inherit; padding: var(--sp-2) 0; outline: none; caret-color: var(--accent); }
+.ask-panel__input::placeholder { color: var(--text-tertiary); }
+.ask-panel__starters { list-style: none; padding: 0; margin: var(--sp-4) 0 0; }
+.ask-panel__close { background: none; border: 0; color: inherit; font: inherit; cursor: pointer; }
+.ask-panel__starter { background: none; border: 0; cursor: pointer; text-align: left; padding: var(--sp-2) 0; width: 100%; font-family: var(--font-departure); font-size: var(--text-label); color: var(--text-tertiary); transition: color var(--duration-sm) var(--ease-micro); }
+.ask-panel__starter:hover { color: var(--text-primary); }
+.ask-panel__citation { background: none; border: 0; cursor: pointer; text-align: left; padding: var(--sp-2) 0; font-family: var(--font-departure); font-size: var(--text-label); color: var(--text-secondary); position: relative; transition: color var(--duration-sm) var(--ease-micro); }
+.ask-panel__citation::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left center; transition: transform var(--duration-sm) var(--ease-micro); }
+.ask-panel__citation:hover { color: var(--accent); }
+.ask-panel__citation:hover::after { transform: scaleX(1); }
+.ask-panel__answer { margin-top: var(--sp-5); line-height: var(--leading-body); white-space: pre-wrap; max-width: 65ch; }
+.ask-panel__status, .ask-panel__error { margin-top: var(--sp-5); opacity: 0.6; }
+.ask-panel__citations { margin-top: var(--sp-4); padding-left: 0; list-style: none; border-top: 1px solid var(--border-default); }
 
 /* ============================================
    VIZ CANVAS REGION
@@ -1163,7 +1171,7 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
 
   /* Above the header (z-index 100): the full-screen sheet must own the whole
      viewport or the header buries the close button under the hamburger. */
-  .ask-panel { padding-top: 0; z-index: 110; }
+  .ask-panel { padding-top: 0; z-index: var(--z-sheet); }
   .ask-panel__inner { width: 100vw; min-height: 100vh; }
 }
 
