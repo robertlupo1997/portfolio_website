@@ -31,7 +31,7 @@ export const CORPUS: Chunk[] = [
     "sourceType": "project",
     "title": "nspb-api",
     "slideIndex": 1,
-    "text": "nspb-api — //api engineering ('26)\n60-endpoint Python SDK for Oracle EPM Cloud — covers Planning, Migration, and Data Management APIs that Oracle ships with no client library. Private build; case study on request.\nProblem: Oracle EPM Cloud exposes no public API. I built one.\nStack: Python, REST, Oracle EPM, SDK Design\nResult: 60+ API ENDPOINTS"
+    "text": "nspb-api — //api engineering ('26)\n60-endpoint Python SDK for Oracle EPM Cloud — powers the AI dashboard that replaced a 132-page monthly report. 114+ tests; v1.0 through v2.1; informs $500M+ portfolio decisions.\nProblem: Oracle EPM Cloud exposes no public API. I built one.\nStack: Python, REST, Oracle EPM, SDK Design\nResult: 8h→<1h VARIANCE ANALYSIS"
   },
   {
     "id": "project-ferroml",
@@ -39,31 +39,30 @@ export const CORPUS: Chunk[] = [
     "title": "FerroML",
     "url": "https://github.com/robertlupo1997/ferroml",
     "slideIndex": 2,
-    "text": "FerroML — //systems · automl ('26)\n55-algorithm AutoML framework in Rust with Python bindings that replaces benchmark theater with proper statistical hypothesis testing. Ships on PyPI; 6,500+ tests.\nProblem: AutoML tools skip statistical rigor. FerroML doesn't.\nStack: Rust, Python, PyPI, Statistics\nResult: 55 ML ALGORITHMS"
+    "text": "FerroML — //systems · automl ('26)\n55-algorithm AutoML framework in Rust — benchmark theater replaced with 489+ cross-library correctness tests and 5-layer verification. GPU acceleration via wgpu, SIMD, ONNX export. Ships on PyPI.\nProblem: AutoML tools skip statistical rigor. FerroML doesn't.\nStack: Rust, wgpu, ONNX, PyPI\nResult: 3.9× FASTER THAN SKLEARN (KMEANS)"
+  },
+  {
+    "id": "project-ask-my-work",
+    "sourceType": "project",
+    "title": "Ask My Work",
+    "slideIndex": 3,
+    "text": "Ask My Work — //ai · rag engine ('26)\nSemantic retrieval over my full project portfolio and resume — streaming SSE, citation-grounded answers, Anthropic API, serverless edge, rate-limited and eval-suite-verified.\nProblem: Recruiters skim. Let them interrogate.\nStack: RAG, SSE, Anthropic API, Serverless\nResult: Streaming RAG · SSE · EVAL-SUITE"
   },
   {
     "id": "project-revenue-forecast",
     "sourceType": "project",
     "title": "Hierarchical Revenue Forecast",
     "url": "https://github.com/robertlupo1997/hierarchical-revenue-forecast",
-    "slideIndex": 3,
-    "text": "Hierarchical Revenue Forecast — //time series ('26)\nHierarchical revenue forecasting across multiple business lines with temporal reconciliation, cross-validation, and SHAP attribution. Deployed in production at Franklin Street.\nProblem: Revenue forecasting across business lines that actually reconcile.\nStack: Python, Go, TypeScript, SHAP\nResult: Multi-LOB HIERARCHICAL RECONCILIATION"
+    "slideIndex": 4,
+    "text": "Hierarchical Revenue Forecast — //time series ('26)\nProduction-grade hierarchical forecasting across 1,782 time series (54 stores × 33 product families) on a $1B+ revenue proxy — 0.48 RMSLE, sub-10ms inference via Go + ONNX Runtime, Polars 80× preprocessing speedup.\nProblem: Revenue forecasting across business lines that actually reconcile.\nStack: Python, Go, ONNX, SHAP\nResult: 0.48 RMSLE (KAGGLE TOP-20%)"
   },
   {
     "id": "project-kkbox",
     "sourceType": "project",
     "title": "KKBOX Churn Prediction",
     "url": "https://github.com/robertlupo1997/kkbox-churn-prediction",
-    "slideIndex": 4,
-    "text": "KKBOX Churn Prediction — //ml · production ('24)\n0.97 AUC subscription churn model — leak-safe temporal feature engineering, isotonic probability calibration, and PSI drift monitoring on the KKBOX Kaggle benchmark.\nStack: Python, Streamlit, XGBoost\nResult: 0.97 AUC\nLive demo: https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction"
-  },
-  {
-    "id": "project-obj-detect",
-    "sourceType": "project",
-    "title": "Open-Vocab Object Detection",
-    "url": "https://github.com/robertlupo1997/open-vocabulary-object-detection",
     "slideIndex": 5,
-    "text": "Open-Vocab Object Detection — //computer vision ('24)\nOpen-vocabulary detection and segmentation via text prompts — Grounding DINO + SAM 2 at 265–490 ms per image on RTX 3070, no fine-tuning required.\nStack: Python, PyTorch, COCO\nResult: 265-490ms PER IMAGE"
+    "text": "KKBOX Churn Prediction — //ml · production ('24)\n0.97 AUC churn model on 30GB+ of data from 970K KKBOX subscribers — log loss 0.41 → 0.11 via isotonic calibration, leak-safe temporal validation. Live demo: React 19 dashboard with SHAP waterfalls and ROI calculator.\nStack: React 19, FastAPI, Docker, XGBoost\nResult: 0.97 AUC\nLive demo: https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction"
   },
   {
     "id": "project-ironclad",
@@ -71,7 +70,7 @@ export const CORPUS: Chunk[] = [
     "title": "Ironclad",
     "url": "https://github.com/robertlupo1997/ironclad",
     "slideIndex": 6,
-    "text": "Ironclad — //construction ml ('26)\nConstruction cost estimation with 95% confidence intervals per line item, built for bid analysis at Origin Construction. Replaces point estimates with statistical ranges.\nStack: Python, ML, Statistics\nResult: 95% CI CONFIDENCE"
+    "text": "Ironclad — //construction ml ('26)\nStatistical estimation engine designed for construction bid analysis — spec + FerroML core in place. Targets ±5-10% accuracy vs. human ±20-30%, with full Monte Carlo P10/P50/P90 uncertainty output per line item.\nProblem: $273B/yr in U.S. estimating errors. Ironclad names its confidence.\nStack: Florence-2, YOLOE, PaddleOCR, FerroML\nResult: $273B ANNUAL ESTIMATING COST"
   },
   {
     "id": "project-ferroml-plugin",
@@ -79,7 +78,7 @@ export const CORPUS: Chunk[] = [
     "title": "FerroML Plugin",
     "url": "https://github.com/robertlupo1997/ferroml-plugin",
     "slideIndex": 7,
-    "text": "FerroML Plugin — //ai tooling ('26)\nEnd-to-end machine learning from natural conversation inside Claude Code — invoke FerroML's full pipeline through a first-party plugin without leaving the editor.\nStack: Python, Plugin\nResult: Claude Code PLUGIN"
+    "text": "FerroML Plugin — //ai tooling ('26)\nEnd-to-end ML from natural conversation inside Claude Code — direct Python API, no MCP server, no subprocess overhead. Invokes FerroML's full pipeline through a first-party plugin without leaving the editor.\nStack: Python, Claude Code plugin API\nResult: 55-file SKILL · 6 WORKFLOWS · 3 HOOKS"
   },
   {
     "id": "project-gsd-ml",
@@ -87,15 +86,7 @@ export const CORPUS: Chunk[] = [
     "title": "GSD-ML",
     "url": "https://github.com/robertlupo1997/gsd-ml",
     "slideIndex": 8,
-    "text": "GSD-ML — //ai tooling ('26)\nPoint Claude Code at a dataset and metric; get a validated, tuned ML pipeline — autonomous research that handles feature engineering, model selection, and evaluation.\nStack: Python, GSD\nResult: Autonomous ML RESEARCH"
-  },
-  {
-    "id": "project-mlforge",
-    "sourceType": "project",
-    "title": "MLForge",
-    "url": "https://github.com/robertlupo1997/mlforge",
-    "slideIndex": 9,
-    "text": "MLForge — //automl ('26)\nCSV in, best-pipeline out — autonomous ML research framework for tabular data that searches preprocessing, feature engineering, and model selection without human steering.\nStack: Python, AutoML\nResult: AutoML FRAMEWORK"
+    "text": "GSD-ML — //ai tooling ('26)\nPoint Claude Code at a dataset and a metric; get a validated, tuned ML pipeline — git-based keep/revert experiment loop, LoRA/QLoRA fine-tuning support. Evolution of MLForge: replaces subprocess CLI with native Claude Code execution.\nStack: Python, Claude Code\nResult: 4 ML DOMAINS"
   },
   {
     "id": "resume",
@@ -245,34 +236,6 @@ export const CORPUS: Chunk[] = [
     "text": "n, Pydantic |\n| **Frontend** | React 19, TypeScript, Vite, Recharts, Tailwind |\n| **Infrastructure** | Docker, GitHub Actions, Hugging Face Spaces |\n\nDevelopment\n\nWhat I Learned\n\nThis project taught me the difference between **ranking** (AUC) and **calibration** (log loss):\n\n1. **AUC measures ranking** - Are churners scored higher than non-churners?\n2. **Log loss measures calibration** - Does 80% prediction mean 80% actual probability?\n3. **These are independent** - Perfect AUC with terrible log loss is possible\n4. **Calibration is often free** - Isotonic regression preserves ranking while fixing probabilities\n\nSee LEARNERS_GUIDE.md for the full learning journey.\n\nReferences\n\n- WSDM KKBox Churn Prediction Challenge\n- Bryan Gregory's 1st Place Solution (arXiv:1802.03396)\n- Isotonic Calibration\n\n---\n\n**Built as a portfolio project demonstrating end-to-end ML engineering**: feature engineering, model training, calibration, API development, and interactive dashboard."
   },
   {
-    "id": "readme-obj-detect-0",
-    "sourceType": "readme",
-    "title": "Open-Vocab Object Detection README",
-    "url": "https://github.com/robertlupo1997/open-vocabulary-object-detection",
-    "text": "Open-Vocabulary Object Detection (OVOD) \n\n   \n\n**Production-ready OVOD system combining Grounding DINO + SAM 2 for text-conditioned object detection and segmentation.**\n\n✨ Features\n\n- 🎯 **Text-to-Detection**: Query images with natural language prompts  \n- 🔍 **Auto Box Format**: Handles normalized cxcywh, pixel xyxy, normalized xyxy\n- ⚡ **Optimized Performance**: ~265ms/image on RTX 3070\n- 📊 **COCO Evaluation**: Multiple prompt strategies with micro-metrics\n- 🖥️ **Streamlit Demo**: Interactive web interface\n- 🔧 **Production Tools**: Makefile targets, environment locking\n\n📓 OVOD Notebook: Explainer & TL;DR\n\nWe include a portfolio-grade explainer notebook designed for ML engineers and reviewers:\n\n- **Path:** `notebooks/OVOD_Explainer_TLDR.ipynb`  \n- **What you'll learn:** Architecture (GroundingDINO + SAM2), prompt strategies, evaluation (COCO/mAP), CPU vs GPU trade-offs, and production considerations.  \n- **CPU-safe by default:** The notebook gracefully runs without a GPU. Heavy sections are gated.\n\nQuickstart (local Jupyter)\n\nNon-interactive run (papermill)\n\nOutputs\n* The notebook writes artifacts to `notebooks/outputs/` (ignored by git except for a `.gitkeep` placeholder).\n* "
-  },
-  {
-    "id": "readme-obj-detect-1",
-    "sourceType": "readme",
-    "title": "Open-Vocab Object Detection README",
-    "url": "https://github.com/robertlupo1997/open-vocabulary-object-detection",
-    "text": "Keep the repo lean: don't commit rendered images/HTML.\n\nGPU notes (WSL2 / Linux)\n* If you have NVIDIA drivers + CUDA available and want to run the heavy sections:\n  \n* In WSL2, verify GPU access with: `python -c \"import torch; print(torch.cuda.is_available())\"`\n\n🚀 Quickstart\n\n🎯 Prompt Strategies\n\n| Strategy | Classes | Best For | Recommended Thresholds |\n|----------|---------|----------|------------------------|\n| `person` | 1 | Person detection | `--box-thr 0.2 --text-thr 0.15` |\n| `common` | 18 | General use | `--box-thr 0.25 --text-thr 0.20` |\n| `full` | 80 | Full COCO eval | `--box-thr 0.25 --text-thr 0.20` |\n\n🏗️ Architecture\n\n- **Grounding DINO**: Text-conditioned object detection\n- **SAM 2**: High-quality segmentation masks\n- **Auto Format Detection**: Handles varying coordinate formats\n- **Smart Aliasing**: Maps \"car bike\" → \"bicycle\", \"motorbike\" → \"motorcycle\"\n\n📋 Model Zoo\n\n| Model | Config | FPS (RTX 3070) | COCO mAP | Notes |\n|-------|--------|----------------|----------|-------|\n| GroundingDINO | SwinT-OGC | ~3.8 | Varies by prompt | Text-conditioned detection |\n| SAM 2 | Hiera-Small | ~12-15 | N/A | Segmentation only |\n| **OVOD Pipeline** | **Combined** | **~2-4** "
-  },
-  {
-    "id": "readme-obj-detect-2",
-    "sourceType": "readme",
-    "title": "Open-Vocab Object Detection README",
-    "url": "https://github.com/robertlupo1997/open-vocabulary-object-detection",
-    "text": "| **0.001+** | **End-to-end system** |\n\n**Tested Configurations:**\n- GroundingDINO: `groundingdino_swint_ogc.pth` \n- SAM 2: `sam2_hiera_small.pt`\n- Hardware: RTX 3070, CUDA 11.8+\n\n⚡ Performance\n\n- **Latency**: 265-490 ms/image (RTX 3070)\n- **Detection Quality**: Auto-tuned thresholds per prompt strategy  \n- **COCO mAP**: Non-zero evaluation with proper coordinate handling\n\n📁 Repository Structure\n\n🛠️ Development\n\n📝 Notes\n\n- **Box Formats**: Detector outputs vary. `eval.py` auto-detects and converts to COCO `xywh` pixels.\n- **SAM-2**: Repo submodule or editable install supported; paths auto-discovered.\n- **Data**: Expects COCO val2017 dataset at project root `data/coco/`\n- **CUDA vs CPU**: Performance metrics are for CUDA. CI uses CPU-only PyTorch for compatibility.\n- **Dependencies**: GroundingDINO installed from source for latest features.\n\n🔧 Troubleshooting\n\n- **SAM-2 not found**: Ensure editable install or local `sam2/` path exists\n- **0.000 mAP**: Now auto-handled via coordinate format detection + aliasing  \n- **Streamlit warnings**: Fixed with `use_container_width=True`\n- **Windows setup**: Use `pip install pycocotools-windows` or WSL (recommended for CUDA workflows)\n\n✅ Sta"
-  },
-  {
-    "id": "readme-obj-detect-3",
-    "sourceType": "readme",
-    "title": "Open-Vocab Object Detection README",
-    "url": "https://github.com/robertlupo1997/open-vocabulary-object-detection",
-    "text": "tus\n\n- [x] Streamlit demo with prompt search\n- [x] COCO evaluation pipeline\n- [x] Auto box format detection\n- [x] Production Makefile targets\n- [x] Environment locking\n- [x] Performance benchmarks (265ms/img RTX 3070)\n\n📜 Third-Party Acknowledgments\n\nThis project builds upon excellent work from:\n\n- **Grounding DINO** (Apache-2.0) - Text-conditioned object detection\n- **SAM 2** (Apache-2.0) - Segment Anything Model 2\n- **COCO Dataset** (CC BY 4.0) - Evaluation benchmarks\n\nSee NOTICE for complete attribution details.\n\n---\n\n🤖 **Generated with Claude Code**"
-  },
-  {
     "id": "readme-ironclad-0",
     "sourceType": "readme",
     "title": "Ironclad README",
@@ -341,33 +304,5 @@ export const CORPUS: Chunk[] = [
     "title": "GSD-ML README",
     "url": "https://github.com/robertlupo1997/gsd-ml",
     "text": "e, keeps/reverts)\n- `results.jsonl` -- metric history across iterations\n- `experiments.md` -- human-readable journal of each iteration\n\nFrom mlforge\n\ngsd-ml replaces mlforge's subprocess-spawning CLI with native Claude Code execution.\n\n**Migration:**\n- Replace `from mlforge` with `from gsd_ml`\n- Replace `mlforge` CLI commands with `/gsd:ml` slash commands\n- `.ml/` directory structure is unchanged\n- All Python utilities carry over with identical APIs\n\nRequirements\n\n- Claude Code\n- Python 3.11+\n- Node.js 16.7+"
-  },
-  {
-    "id": "readme-mlforge-0",
-    "sourceType": "readme",
-    "title": "MLForge README",
-    "url": "https://github.com/robertlupo1997/mlforge",
-    "text": "mlforge\n\nAn autonomous ML research framework. Point it at a dataset and a goal, and it runs structured experiments overnight using **Claude Code** as the autonomous researcher.\n\nSupports **tabular ML**, **deep learning** (PyTorch), and **LLM fine-tuning** (LoRA/QLoRA).\n\nInspired by Karpathy's autoresearch.\n\n---\n\nQuick Start\n\n**Requirements**: Python 3.11+, uv, Claude Code CLI installed and authenticated. CPU-only for tabular; GPU optional for deep learning and fine-tuning.\n\n---\n\nHow It Works\n\nEvery experiment is a git commit. Crash? `--resume` picks up where you left off.\n\n---\n\nThree Domains\n\nTabular ML\n\nscikit-learn, XGBoost, LightGBM with Optuna hyperparameter search. Auto-detects classification vs. regression and selects the appropriate metric.\n\nMetrics: accuracy, f1, rmse, mae, r2, and more.\n\nDeep Learning\n\nPyTorch with timm (images) and transformers (text). Generates GPU-aware training templates.\n\nMetrics: accuracy, f1, loss.\n\nFine-Tuning\n\nLoRA/QLoRA via peft and trl. Point it at a HuggingFace model and a dataset.\n\nMetrics: perplexity, rouge1, rougeL, loss.\n\n---\n\nKey Features\n\n| Feature | Description |\n|---|---|\n| **Auto-profiling** | Detects task type, picks metric, generates"
-  },
-  {
-    "id": "readme-mlforge-1",
-    "sourceType": "readme",
-    "title": "MLForge README",
-    "url": "https://github.com/robertlupo1997/mlforge",
-    "text": " data pipeline |\n| **Plugin system** | Shared core engine with domain-specific plugins |\n| **Protocol prompts** | Jinja2 CLAUDE.md templates control agent behavior |\n| **Git for state** | Branch per run, commit on keep, hard reset on revert |\n| **Multi-draft start** | 3-5 diverse initial solutions, pick best, iterate linearly |\n| **Branch-on-stagnation** | 3 consecutive reverts -> branch from best-ever, try different model family |\n| **Diagnostics** | Tells the agent *where* the model fails (worst slices, bias, correlation) |\n| **Swarm mode** | Parallel agents in git worktrees with file-locked scoreboard |\n| **Guardrails** | Cost caps, time limits, disk usage, per-experiment timeouts |\n| **Checkpoint/resume** | Crash recovery for unattended overnight runs |\n| **Experiment journal** | Hypothesis -> result -> diff tracking in experiments.md |\n| **Retrospective** | Post-run summary: what worked, what didn't, metric trajectory |\n\n---\n\nArchitecture\n\n---\n\nCLI Reference\n\nRun (default subcommand)\n\n| Argument | Default | Description |\n|---|---|---|\n| `dataset` | *(required)* | Path to dataset (CSV or Parquet) |\n| `goal` | *(required)* | What to predict or optimize |\n| `--domain` | `tabular`"
-  },
-  {
-    "id": "readme-mlforge-2",
-    "sourceType": "readme",
-    "title": "MLForge README",
-    "url": "https://github.com/robertlupo1997/mlforge",
-    "text": " | Plugin domain: `tabular`, `deeplearning`, `finetuning` |\n| `--metric` | auto-detected | Metric to optimize |\n| `--direction` | auto | Override metric direction: `minimize` or `maximize` |\n| `--budget-minutes` | `60` | Time budget in minutes |\n| `--budget-usd` | `5.0` | USD cost cap |\n| `--budget-experiments` | `50` | Maximum experiment count |\n| `--output-dir` | auto | Experiment output directory |\n| `--resume` | -- | Resume a previous run |\n| `--model` | -- | Claude model to use |\n| `--custom-claude-md` | -- | Path to custom CLAUDE.md template |\n| `--custom-frozen` | -- | Additional frozen files |\n| `--custom-mutable` | -- | Additional mutable files |\n| `--swarm` | `false` | Enable parallel swarm mode |\n| `--n-agents` | `3` | Number of swarm agents |\n| `--enable-drafts` | `false` | Multi-draft initial exploration |\n| `--model-name` | -- | HuggingFace model name (fine-tuning) |\n| `--dry-run` | -- | Profile dataset and show plan without executing |\n| `--notify` | -- | Notification on completion: `desktop` or `webhook:<url>` |\n| `-v, --verbose` | -- | Enable DEBUG-level console logging |\n\n---\n\nProject Structure\n\n---\n\nDocumentation\n\n- **Getting Started** -- Installation, first expe"
-  },
-  {
-    "id": "readme-mlforge-3",
-    "sourceType": "readme",
-    "title": "MLForge README",
-    "url": "https://github.com/robertlupo1997/mlforge",
-    "text": "riment, simple vs expert mode\n- **Tabular ML Guide** -- Baselines, diagnostics, stagnation, model families\n- **Deep Learning Guide** -- Image/text classification, GPU config\n- **Fine-Tuning Guide** -- LoRA/QLoRA, data format, memory planning\n- **Swarm Guide** -- Parallel agents, scoreboard, budget splitting\n- **Configuration Reference** -- All CLI flags, config file, metrics\n\n---\n\nTesting\n\n---\n\nAcknowledgments\n\nThis project builds on ideas from the **AI-for-science / autonomous-research** community:\n\n| Project | Key Idea Borrowed |\n|---|---|\n| autoresearch | \"Point AI at a problem, let it research overnight\" -- the founding inspiration |\n| AIDE (WecoAI) | Multi-draft start, atomic improvements, frozen/mutable separation |\n| SELA (MetaGPT) | Stage-wise pipeline concept informing staged mutable zones |\n| AutoKaggle (Alibaba) | Unit testing concept for ML pipelines |\n| ML-Agent (Shanghai AI Lab) | Domain-specific approaches outperform scale alone |\n| The AI Scientist (Sakana AI) | Full research lifecycle vision |\n| pi-autoresearch (John Paton) | Checkpoint/resume patterns |\n| autoresearch-at-home (Darien Schettler) | Multi-agent coordination patterns |\n\n---\n\nLicense\n\nMIT"
   }
 ];

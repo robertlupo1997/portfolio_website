@@ -12,6 +12,7 @@ interface CarouselSlideProps {
   activeIndex: number;
   totalSlides: number;
   useFallback?: boolean;
+  onAskOpen?: (query: string) => void;
 }
 
 const CarouselSlide: React.FC<CarouselSlideProps> = ({
@@ -23,6 +24,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   activeIndex,
   totalSlides,
   useFallback,
+  onAskOpen,
 }) => {
   const [animating, setAnimating] = useState(false);
   const url = project.githubUrl || project.liveUrl;
@@ -121,11 +123,19 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       </div>
 
       <div className="carousel-slide-footer">
-        {url && (
+        {project.ctaAsk !== undefined ? (
+          <button
+            className="terminal-visit"
+            onClick={() => onAskOpen?.(project.ctaAsk!)}
+            aria-label="Open Ask My Work panel"
+          >
+            [ ASK -&gt; ]
+          </button>
+        ) : url ? (
           <a href={url} target="_blank" rel="noopener noreferrer" className="terminal-visit">
             [ VISIT -&gt; ]
           </a>
-        )}
+        ) : null}
         {isActive && <span className="cursor-blink" />}
         {isActive && (
           <nav className="carousel-nav" aria-label="Project navigation">

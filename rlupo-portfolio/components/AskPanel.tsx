@@ -14,9 +14,10 @@ interface AskPanelProps {
   isOpen: boolean;
   onClose: () => void;
   onGoToSlide: (index: number) => void;
+  initialQuery?: string;
 }
 
-const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide }) => {
+const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide, initialQuery }) => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [citations, setCitations] = useState<Citation[]>([]);
@@ -29,8 +30,8 @@ const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide }) => 
 
   useEffect(() => {
     if (isOpen) {
-      // Fix 2: reset to fresh idle state on every open
-      setQuestion('');
+      // Fix 2: reset to fresh idle state on every open; prefill if caller provided a query
+      setQuestion(initialQuery ?? '');
       setAnswer('');
       setCitations([]);
       setError('');

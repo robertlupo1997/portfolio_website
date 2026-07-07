@@ -16,6 +16,7 @@ const App: React.FC = () => {
   const [infoOpen, setInfoOpen] = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [askOpen, setAskOpen] = useState(() => window.location.pathname === '/ask');
+  const [askInitialQuery, setAskInitialQuery] = useState('');
   const goToRef = useRef<((index: number) => void) | null>(null);
   const onPreloaderComplete = useCallback(() => setLoaded(true), []);
 
@@ -33,7 +34,13 @@ const App: React.FC = () => {
 
   const handleAskClose = useCallback(() => {
     setAskOpen(false);
+    setAskInitialQuery('');
     if (window.location.pathname === '/ask') window.history.replaceState(null, '', '/');
+  }, []);
+
+  const handleAskOpen = useCallback((query = '') => {
+    setAskInitialQuery(query);
+    setAskOpen(true);
   }, []);
 
   const handleGoToSlide = useCallback((index: number) => {
@@ -63,7 +70,7 @@ const App: React.FC = () => {
           onAskClick={() => setAskOpen(true)}
         />
         <main id="main-content" className="main">
-          <Carousel onRegisterGoTo={handleRegisterGoTo} loaded={loaded} />
+          <Carousel onRegisterGoTo={handleRegisterGoTo} loaded={loaded} onAskOpen={handleAskOpen} />
         </main>
       </div>
       <InfoOverlay isOpen={infoOpen} onClose={() => setInfoOpen(false)} />
@@ -76,6 +83,7 @@ const App: React.FC = () => {
         isOpen={askOpen}
         onClose={handleAskClose}
         onGoToSlide={handleGoToSlide}
+        initialQuery={askInitialQuery}
       />
     </>
   );

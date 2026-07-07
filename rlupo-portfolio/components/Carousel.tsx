@@ -13,6 +13,7 @@ const VizCanvas = React.lazy(() =>
 interface CarouselProps {
   onRegisterGoTo?: (goTo: (index: number) => void) => void;
   loaded?: boolean;
+  onAskOpen?: (query: string) => void;
 }
 
 // A lost WebGL context makes three/postprocessing throw during React commits
@@ -28,7 +29,7 @@ class VizErrorBoundary extends React.Component<
   render() { return this.state.failed ? null : this.props.children; }
 }
 
-const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) => {
+const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false, onAskOpen }) => {
   const {
     activeIndex,
     next,
@@ -132,6 +133,7 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false }) =
             activeIndex={activeIndex}
             totalSlides={CAROUSEL_PROJECTS.length + 2}
             useFallback={contextLost}
+            onAskOpen={onAskOpen}
           />
         ))}
         <ActivitySlide

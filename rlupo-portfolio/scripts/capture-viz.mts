@@ -5,9 +5,9 @@ import { join } from 'path';
 import sharp from 'sharp';
 
 const PROJECT_IDS = [
-  'nspb-api', 'ferroml', 'revenue-forecast',
-  'kkbox', 'obj-detect', 'ironclad',
-  'ferroml-plugin', 'gsd-ml', 'mlforge',
+  'nspb-api', 'ferroml', 'ask-my-work',
+  'revenue-forecast', 'kkbox', 'ironclad',
+  'ferroml-plugin', 'gsd-ml',
 ];
 const BASE_URL = 'http://localhost:3000';
 const OUT_DIR = join(process.cwd(), 'public', 'viz');

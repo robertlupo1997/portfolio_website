@@ -26,6 +26,7 @@ export interface Project {
   problem?: string;
   imageUrl?: string;
   vizParams?: VizParams;
+  ctaAsk?: string;
 }
 
 export interface Credential {
