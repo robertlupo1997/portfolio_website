@@ -1,16 +1,25 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { CAROUSEL_PROJECTS } from '../constants';
 
-const BOOT_DURATION = 2400;
-const HOLD_DURATION = 400;
+const BOOT_DURATION = 1400;
+const HOLD_DURATION = 350;
 const FADE_DURATION = 300;
+
+// Every line is true: 8 projects in the carousel, 4 viz archetypes
+// (lattice / wavefield / particleflow / wireframe), and the Ask corpus.
+const BOOT_LINES: { at: number; text: string }[] = [
+  { at: 0.18, text: `projects: ${CAROUSEL_PROJECTS.length} mounted` },
+  { at: 0.52, text: 'viz: 4 archetypes compiled' },
+  { at: 0.82, text: 'ask: corpus indexed' },
+];
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
 const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
-  const [line1] = useState('INITIALIZING...');
   const [counter, setCounter] = useState('0%');
+  const [visibleLines, setVisibleLines] = useState(0);
   const [showReady, setShowReady] = useState(false);
   const [phase, setPhase] = useState<'booting' | 'ready' | 'fading' | 'done'>('booting');
   const frameRef = useRef<number>(0);
@@ -44,6 +53,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       const progress = Math.min(elapsed / BOOT_DURATION, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       setCounter(`${Math.floor(eased * 100)}%`);
+      setVisibleLines(BOOT_LINES.filter((l) => eased >= l.at).length);
 
       if (progress < 1) {
         frameRef.current = requestAnimationFrame(animate);
@@ -69,7 +79,10 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
       aria-hidden="true"
     >
       <div className="preloader-terminal">
-        <span className="preloader-line">{line1}</span>
+        <span className="preloader-line">$ boot treylupo.com</span>
+        {BOOT_LINES.slice(0, visibleLines).map((line) => (
+          <span key={line.text} className="preloader-line">{line.text}</span>
+        ))}
         <span className="preloader-line preloader-counter">{counter}</span>
         {showReady && (
           <span className="preloader-line preloader-ready">

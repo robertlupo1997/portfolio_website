@@ -3,6 +3,8 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 interface UseCarouselOptions {
   totalSlides: number;
   transitionDuration?: number;
+  /** When false (e.g. an overlay is open) arrow keys stop driving the carousel. */
+  keyboardEnabled?: boolean;
 }
 
 interface SwipeState {
@@ -12,9 +14,11 @@ interface SwipeState {
   isDragging: boolean;
 }
 
-export const useCarousel = ({ totalSlides, transitionDuration = 350 }: UseCarouselOptions) => {
+export const useCarousel = ({ totalSlides, transitionDuration = 350, keyboardEnabled = true }: UseCarouselOptions) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const keyboardEnabledRef = useRef(keyboardEnabled);
+  keyboardEnabledRef.current = keyboardEnabled;
   const swipeRef = useRef<SwipeState>({ startX: 0, startY: 0, startTime: 0, isDragging: false });
   const containerRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(0 as any);
@@ -46,6 +50,10 @@ export const useCarousel = ({ totalSlides, transitionDuration = 350 }: UseCarous
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (!keyboardEnabledRef.current) return;
+      // Never hijack arrows from a focused text field (Ask input, etc.).
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) return;
       if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
       if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
     };

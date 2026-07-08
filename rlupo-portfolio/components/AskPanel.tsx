@@ -126,9 +126,12 @@ const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide, initi
             ))}
           </ul>
         )}
-        {status === 'searching' && <p className="ask-panel__status">searching portfolio…</p>}
+        {status === 'searching' && <p className="ask-panel__status" role="status">searching portfolio…</p>}
         {answer && <p className="ask-panel__answer" data-testid="ask-answer">{answer}</p>}
-        {status === 'error' && <p className="ask-panel__error">{error}</p>}
+        {status === 'error' && <p className="ask-panel__error" role="alert">{error}</p>}
+        <div className="sr-only" role="status" aria-live="polite">
+          {status === 'done' ? 'Answer ready.' : ''}
+        </div>
         {citations.length > 0 && (
           <ol className="ask-panel__citations">
             {citations.map((c) => (

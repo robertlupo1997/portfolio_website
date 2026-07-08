@@ -16,18 +16,22 @@ const TerminalPanel: React.FC<TerminalPanelProps> = ({ project, index, isActive 
         <span className="terminal-epoch">{project.epoch}</span>
       </div>
 
+      <h2 className="terminal-title">
+        {isActive ? (
+          <TextScramble text={project.title} triggerOnView={false} triggerOnHover={false} duration={700} delay={100} />
+        ) : project.title}
+      </h2>
+
+      {project.problem && (
+        <p className="terminal-line terminal-problem">
+          <span className="terminal-caret">&gt; </span>
+          {project.problem}
+        </p>
+      )}
+
       <div className={`terminal-body ${isActive ? 'terminal-body--active' : ''}`}>
         <div className="terminal-line terminal-prompt">
           $ cat {project.id} --verbose
-        </div>
-
-        <div className="terminal-line">
-          <span className="terminal-label">TITLE:</span>
-          <span className="terminal-value">
-            {isActive ? (
-              <TextScramble text={project.title} triggerOnView={false} triggerOnHover={false} duration={600} delay={0} />
-            ) : project.title}
-          </span>
         </div>
 
         <div className="terminal-line">

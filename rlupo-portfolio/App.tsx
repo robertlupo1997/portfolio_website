@@ -7,7 +7,6 @@ import AskPanel from './components/AskPanel';
 import Cursor from './components/Cursor';
 import Preloader from './components/Preloader';
 import { useLenis } from './hooks/useLenis';
-import { useScrollAnimations } from './hooks/useScrollAnimations';
 import { VizCaptureRoute } from './components/VizCaptureRoute';
 import './styles/index.css';
 
@@ -22,7 +21,6 @@ const App: React.FC = () => {
 
   const anyOverlayOpen = infoOpen || projectsOpen || askOpen;
   useLenis(loaded && !anyOverlayOpen);
-  useScrollAnimations();
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -70,7 +68,12 @@ const App: React.FC = () => {
           onAskClick={() => setAskOpen(true)}
         />
         <main id="main-content" className="main">
-          <Carousel onRegisterGoTo={handleRegisterGoTo} loaded={loaded} onAskOpen={handleAskOpen} />
+          <Carousel
+            onRegisterGoTo={handleRegisterGoTo}
+            loaded={loaded}
+            onAskOpen={handleAskOpen}
+            keyboardEnabled={!anyOverlayOpen}
+          />
         </main>
       </div>
       <InfoOverlay isOpen={infoOpen} onClose={() => setInfoOpen(false)} />

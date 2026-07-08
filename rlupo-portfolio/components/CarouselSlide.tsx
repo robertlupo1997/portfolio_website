@@ -80,14 +80,17 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       );
       if (isActive && terminalRef.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         const lines = terminalRef.current.querySelectorAll('.terminal-line');
+        // 'expo.out' is the site-wide entrance ease; y reset also clears the
+        // -4px offset the exit tween leaves behind on a revisited slide.
         gsap.fromTo(
           lines,
-          { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
+          { clipPath: 'inset(0 100% 0 0)', opacity: 0, y: 6 },
           {
             clipPath: 'inset(0 0% 0 0)',
             opacity: 1,
-            duration: 0.3,
-            ease: 'cubic-bezier(0, 0, 0.2, 1)',
+            y: 0,
+            duration: 0.4,
+            ease: 'expo.out',
             stagger: 0.04,
             delay: 0.12,
           },

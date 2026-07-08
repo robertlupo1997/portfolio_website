@@ -34,6 +34,11 @@ export const useTextScramble = ({
   const runScramble = useCallback(() => {
     if (isScrambling) return;
 
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplayText(text);
+      return;
+    }
+
     setIsScrambling(true);
     startTimeRef.current = performance.now();
 

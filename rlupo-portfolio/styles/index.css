@@ -20,15 +20,21 @@
    ============================================ */
 
 :root {
-  /* --- Palette --- */
+  /* --- Palette ---
+     WCAG AA-audited against --bg-primary (#474741):
+       text-primary 7.27 · text-secondary 4.52 · text-tertiary 4.51
+       accent 3.17 (large text / UI only) · accent-text 4.55 (small accent text)
+       ink-on-accent-fill 5.15 · ink-on-accent-text-fill 7.40 */
   --bg-primary: #474741;
   --bg-elevated: #55554D;
   --bg-surface: #3D3D38;
   --text-primary: #E3E4D5;
-  --text-secondary: #A6A77E;
-  --text-tertiary: #7A7A6E;
-  --accent: #E85D3A;
-  --accent-dim: #A6A77E;
+  --text-secondary: #B6B78D;
+  --text-tertiary: #B5B5A7;
+  --accent: #F0704C;
+  --accent-text: #FA9E78;
+  --ink: #262622;
+  --accent-dim: #B6B78D;
   --border-subtle: rgba(227, 228, 213, 0.08);
   --border-default: rgba(227, 228, 213, 0.12);
   --border-emphasis: rgba(227, 228, 213, 0.20);
@@ -140,7 +146,7 @@ body { -ms-overflow-style: none; scrollbar-width: none; }
 
 ::selection {
   background-color: var(--accent);
-  color: var(--text-primary);
+  color: var(--ink);
 }
 
 a { color: inherit; text-decoration: none; }
@@ -185,6 +191,18 @@ h1, h2, h3, h4, h5, h6 {
   outline-offset: 2px;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .skip-link {
   position: absolute;
   top: -100%;
@@ -192,7 +210,7 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateX(-50%);
   padding: 1rem 2rem;
   background: var(--accent);
-  color: var(--bg-primary);
+  color: var(--ink);
   font-family: var(--font-departure);
   font-weight: 400;
   z-index: 10000;
@@ -222,7 +240,12 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-start;
   gap: var(--space-sm);
+  /* Reserve full boot-sequence height up front (6 lines + gaps) so lines
+     appearing one by one never re-center the block mid-boot. */
+  min-height: 11rem;
+  min-width: 24ch;
 }
 
 .preloader-line {
@@ -238,7 +261,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .preloader-ready {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 /* ============================================
@@ -280,7 +303,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: var(--text-label);
   font-weight: 400;
   letter-spacing: 0.06em;
-  color: var(--accent);
+  color: var(--accent-text);
   border: 1px solid var(--accent);
   background: transparent;
   padding: 0.4rem 1rem;
@@ -292,7 +315,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (hover: hover) and (pointer: fine) {
   .header-pill:hover {
-    color: var(--bg-primary);
+    color: var(--ink);
   }
 }
 
@@ -351,7 +374,7 @@ h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
   transition: color var(--duration-sm) var(--ease-micro);
 }
-.mobile-nav a:hover, .mobile-nav button:hover { color: var(--accent); }
+.mobile-nav a:hover, .mobile-nav button:hover { color: var(--accent-text); }
 
 /* ============================================
    CAROUSEL
@@ -457,7 +480,7 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 1;
   font-family: var(--font-departure);
   font-size: var(--text-nav);
-  color: var(--accent);
+  color: var(--accent-text);
   border: 1px solid var(--accent);
   background: transparent;
   padding: 0.6rem 1.4rem;
@@ -471,7 +494,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (hover: hover) and (pointer: fine) {
   .hero-projects-btn:hover {
     background-color: var(--accent);
-    color: var(--bg-primary);
+    color: var(--ink);
     transform: translateY(-50%) translateX(4px);
   }
 }
@@ -505,13 +528,15 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Horizontal inset lives on .terminal-panel (--page-indent) so the project
+   column's left edge lines up exactly with the hero name and the footer row. */
 .carousel-slide-terminal {
   grid-column: 1;
   grid-row: 1;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
-  padding: var(--sp-9) var(--sp-8);
+  padding: var(--sp-9) 0;
 }
 
 .carousel-slide-image {
@@ -570,14 +595,15 @@ h1, h2, h3, h4, h5, h6 {
 .carousel-btn {
   font-family: var(--font-departure);
   font-size: var(--text-nav);
-  color: var(--accent);
+  color: var(--accent-text);
   letter-spacing: 0.06em;
   padding: var(--space-sm) var(--space-md);
   transition: color var(--duration-md) var(--ease-micro);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .carousel-btn:hover:not(:disabled) { color: var(--text-primary); }
+  /* The ::after sweep fills with --accent on hover — ink keeps the label ≥4.5:1. */
+  .carousel-btn:hover:not(:disabled) { color: var(--ink); }
 }
 
 .carousel-btn:disabled { opacity: 0.25; cursor: default; pointer-events: none; }
@@ -607,12 +633,35 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-xl);
+}
+
+/* Display-scale project title — the typographic anchor of each slide.
+   Departure Mono is fixed-width, so the scramble reveal causes zero layout shift. */
+.terminal-title {
+  font-family: var(--font-departure);
+  font-size: clamp(2.1rem, 3.6vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+  max-width: 18ch;
+}
+
+/* The one-line hook under the title: the problem the project exists to solve. */
+.terminal-problem {
+  font-size: var(--text-nav);
+  color: var(--accent-text);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  max-width: 42ch;
+  margin-bottom: var(--space-xl);
 }
 
 .terminal-index {
   font-size: var(--text-label);
-  color: var(--accent);
+  color: var(--accent-text);
   letter-spacing: 0.06em;
 }
 
@@ -629,23 +678,9 @@ h1, h2, h3, h4, h5, h6 {
   gap: var(--space-sm);
 }
 
-.terminal-body--active .terminal-line {
-  opacity: 0;
-  transform: translateY(4px);
-  animation: terminalLineIn var(--duration-sm) var(--ease-entrance) forwards;
-}
-
-.terminal-body--active .terminal-line:nth-child(1) { animation-delay: 0ms; }
-.terminal-body--active .terminal-line:nth-child(2) { animation-delay: 40ms; }
-.terminal-body--active .terminal-line:nth-child(3) { animation-delay: 80ms; }
-.terminal-body--active .terminal-line:nth-child(4) { animation-delay: 120ms; }
-.terminal-body--active .terminal-line:nth-child(5) { animation-delay: 160ms; }
-.terminal-body--active .terminal-line:nth-child(6) { animation-delay: 200ms; }
-.terminal-body--active .terminal-line:nth-child(7) { animation-delay: 240ms; }
-
-@keyframes terminalLineIn {
-  to { opacity: 1; transform: translateY(0); }
-}
+/* Line entrances are owned entirely by GSAP (CarouselSlide / ActivitySlide).
+   A parallel CSS keyframe stagger used to run here at the same time — the two
+   systems fought over opacity and broke past 7 children. Removed. */
 
 .terminal-prompt {
   color: var(--accent-dim);
@@ -674,7 +709,7 @@ h1, h2, h3, h4, h5, h6 {
 .terminal-visit {
   font-family: var(--font-departure);
   font-size: var(--text-label);
-  color: var(--accent);
+  color: var(--accent-text);
   border: 1px solid var(--accent);
   padding: 0.5rem 1rem;
   letter-spacing: 0.06em;
@@ -684,7 +719,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (hover: hover) and (pointer: fine) {
   .terminal-visit:hover {
-    color: var(--bg-primary);
+    color: var(--ink);
   }
 }
 
@@ -693,7 +728,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Blinking cursor */
 .cursor-blink::after {
   content: '_';
-  color: var(--accent);
+  color: var(--accent-text);
   animation: blink 1s step-end infinite;
 }
 
@@ -720,7 +755,7 @@ h1, h2, h3, h4, h5, h6 {
   right: var(--page-margin);
   font-family: var(--font-departure);
   font-size: var(--text-label);
-  color: var(--accent);
+  color: var(--accent-text);
   border: 1px solid var(--accent);
   background: transparent;
   padding: 0.5rem 1rem;
@@ -732,7 +767,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .info-close:hover { background-color: var(--accent); color: var(--bg-primary); }
+  .info-close:hover { background-color: var(--accent); color: var(--ink); }
 }
 
 .info-content {
@@ -813,7 +848,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .info-timeline-year { color: var(--accent-dim); min-width: 10ch; }
 .info-timeline-title { color: var(--text-primary); }
-.info-current { color: var(--accent); }
+.info-current { color: var(--accent-text); }
 
 .info-contact {
   display: flex;
@@ -831,7 +866,7 @@ h1, h2, h3, h4, h5, h6 {
 .info-contact-email {
   font-family: var(--font-departure);
   font-size: var(--text-nav);
-  color: var(--accent);
+  color: var(--accent-text);
   background: none;
   border: none;
   padding: 0;
@@ -859,7 +894,7 @@ h1, h2, h3, h4, h5, h6 {
 .info-resume-link {
   border: 1px solid var(--accent);
   padding: 0.3rem 0.8rem;
-  color: var(--accent) !important;
+  color: var(--accent-text) !important;
   transition: background-color var(--duration-md) var(--ease-micro),
               color var(--duration-md) var(--ease-micro);
 }
@@ -867,7 +902,7 @@ h1, h2, h3, h4, h5, h6 {
 @media (hover: hover) and (pointer: fine) {
   .info-resume-link:hover {
     background-color: var(--accent);
-    color: var(--bg-primary) !important;
+    color: var(--ink) !important;
   }
 }
 
@@ -903,7 +938,7 @@ h1, h2, h3, h4, h5, h6 {
   right: var(--page-margin);
   font-family: var(--font-departure);
   font-size: var(--text-label);
-  color: var(--accent);
+  color: var(--accent-text);
   border: 1px solid var(--accent);
   background: transparent;
   padding: 0.5rem 1rem;
@@ -915,7 +950,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .projects-close:hover { background-color: var(--accent); color: var(--bg-primary); }
+  .projects-close:hover { background-color: var(--accent); color: var(--ink); }
 }
 
 .projects-content {
@@ -961,7 +996,7 @@ h1, h2, h3, h4, h5, h6 {
   outline-offset: -2px;
 }
 
-.projects-index { font-family: var(--font-departure); font-size: var(--text-label); color: var(--accent); letter-spacing: 0.06em; }
+.projects-index { font-family: var(--font-departure); font-size: var(--text-label); color: var(--accent-text); letter-spacing: 0.06em; }
 .projects-title { font-family: var(--font-departure); font-size: var(--text-nav); color: var(--text-primary); }
 .projects-category { font-family: var(--font-departure); font-size: var(--text-label); color: var(--accent-dim); letter-spacing: 0.04em; text-align: right; }
 .projects-metric { font-family: var(--font-departure); font-size: var(--text-label); color: var(--text-primary); font-variant-numeric: tabular-nums; text-align: right; }
@@ -985,7 +1020,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .activity-project {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .activity-label {
@@ -1057,7 +1092,7 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
 .ask-panel__starter:hover { color: var(--text-primary); }
 .ask-panel__citation { background: none; border: 0; cursor: pointer; text-align: left; padding: var(--sp-2) 0; font-family: var(--font-departure); font-size: var(--text-label); color: var(--text-secondary); position: relative; transition: color var(--duration-sm) var(--ease-micro); }
 .ask-panel__citation::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left center; transition: transform var(--duration-sm) var(--ease-micro); }
-.ask-panel__citation:hover { color: var(--accent); }
+.ask-panel__citation:hover { color: var(--accent-text); }
 .ask-panel__citation:hover::after { transform: scaleX(1); }
 .ask-panel__answer { margin-top: var(--sp-5); line-height: var(--leading-body); white-space: pre-wrap; max-width: 65ch; }
 .ask-panel__status, .ask-panel__error { margin-top: var(--sp-5); opacity: 0.6; }
@@ -1128,8 +1163,15 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
 
   .carousel-slide {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: auto 1fr auto;
     padding-top: 64px;
+  }
+
+  /* The hero slide has no image row (hero-content fills grid-row 1 on its
+     own) — restore its 2-row layout so it doesn't inherit the 3-row split
+     meant for project slides. */
+  .carousel-slide--hero {
+    grid-template-rows: 1fr auto;
   }
 
   .carousel-slide-image {
@@ -1139,17 +1181,44 @@ body.custom-cursor-active [data-cursor] { cursor: none; }
   .carousel-slide-image--fallback {
     display: flex;
     grid-column: 1 / -1;
-    max-height: 40vh;
+    grid-row: 1;
+    max-height: 32vh;
     padding: var(--space-md);
   }
 
+  /* The fallback image and the text column both defaulted to grid-row 1
+     (inherited from the desktop side-by-side layout), so the image painted
+     over the title/problem line instead of stacking above it. Give the text
+     column its own row. The taller title block can still exceed it on short
+     phones — let the text column scroll instead of silently clipping the
+     STACK line. touch-action: pan-y on .carousel already permits the gesture. */
   .carousel-slide-terminal {
+    grid-row: 2;
     align-items: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .terminal-problem {
+    margin-bottom: var(--space-lg);
+  }
+
+  .terminal-title {
+    font-size: clamp(1.6rem, 7.5vw, 2.1rem);
+  }
+
+  .terminal-panel {
+    padding-top: var(--space-lg);
+    padding-right: var(--space-lg);
+  }
+
+  .terminal-header {
+    margin-bottom: var(--space-lg);
   }
 
   .carousel-slide-footer {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 3;
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-md);

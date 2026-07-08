@@ -14,6 +14,7 @@ interface CarouselProps {
   onRegisterGoTo?: (goTo: (index: number) => void) => void;
   loaded?: boolean;
   onAskOpen?: (query: string) => void;
+  keyboardEnabled?: boolean;
 }
 
 // A lost WebGL context makes three/postprocessing throw during React commits
@@ -29,14 +30,14 @@ class VizErrorBoundary extends React.Component<
   render() { return this.state.failed ? null : this.props.children; }
 }
 
-const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false, onAskOpen }) => {
+const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false, onAskOpen, keyboardEnabled = true }) => {
   const {
     activeIndex,
     next,
     prev,
     goTo,
     swipeHandlers,
-  } = useCarousel({ totalSlides: CAROUSEL_PROJECTS.length + 2, transitionDuration: 650 });
+  } = useCarousel({ totalSlides: CAROUSEL_PROJECTS.length + 2, transitionDuration: 650, keyboardEnabled });
 
   const trackRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -161,6 +162,13 @@ const Carousel: React.FC<CarouselProps> = ({ onRegisterGoTo, loaded = false, onA
         </div>
       )}
       <SlideProgress activeIndex={activeIndex} totalSlides={CAROUSEL_PROJECTS.length + 2} />
+      <div className="sr-only" role="status" aria-live="polite">
+        {activeIndex === 0
+          ? 'Intro — Trey Lupo'
+          : activeIndex <= CAROUSEL_PROJECTS.length
+            ? `Project ${activeIndex} of ${CAROUSEL_PROJECTS.length}: ${CAROUSEL_PROJECTS[activeIndex - 1].title}`
+            : 'Activity log'}
+      </div>
     </section>
   );
 };

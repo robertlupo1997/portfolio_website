@@ -7,6 +7,10 @@ interface HeaderProps {
   onAskClick: () => void;
 }
 
+// ⌘K reads as noise on a Windows/Linux machine; show the modifier the visitor
+// actually has. (App.tsx binds both metaKey and ctrlKey.)
+const IS_MAC = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+
 const Header: React.FC<HeaderProps> = ({ onInfoClick, onProjectsClick, onAskClick }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -27,7 +31,7 @@ const Header: React.FC<HeaderProps> = ({ onInfoClick, onProjectsClick, onAskClic
         <nav className="header-nav">
           <button className="header-pill" onClick={onProjectsClick}>PROJECTS</button>
           <button className="header-pill" onClick={onInfoClick}>INFO</button>
-          <button className="header-pill" onClick={onAskClick}>ASK ⌘K</button>
+          <button className="header-pill" onClick={onAskClick}>{IS_MAC ? 'ASK ⌘K' : 'ASK ^K'}</button>
         </nav>
 
         <button
