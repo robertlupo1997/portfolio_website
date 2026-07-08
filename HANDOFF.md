@@ -1,3 +1,3 @@
 > **Latest handoff:**
-> `thoughts/handoffs/2026-07-06_22-16-27_mastermind-complete-disposition-matrix.md`
-> — launch READY TO PUSH (Step-0 gated) + every project specced (disposition matrix in the master plan); next: Trey's Step 0 + go/no-go on 4 public pushes, then Wave 1.
+> `thoughts/handoffs/2026-07-08_09-36-54_fable-design-pass-verification-repo-split-and-next-prompt.md`
+> — Fable's design pass verified + a real mobile bug found/fixed, committed as `b242e12` (not pushed); repo exists as two diverged local clones (WSL-native vs Windows-mounted) — see handoff for consolidation plan; next: decide push + canonical repo location, real-device swipe check, review the drafted next-Fable prompt.
