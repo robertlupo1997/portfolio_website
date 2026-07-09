@@ -1,3 +1,3 @@
 > **Latest handoff:**
-> `thoughts/handoffs/2026-07-09_13-08-41_fable-monolith-studies-complete-human-gate.md`
-> — Fable run complete: three monolith-adoption studies built, critiqued, verified at http://localhost:8791/ (not :8080 — Windows HTTP.sys squats it); next: Trey cold-reviews and picks a direction, then a later session ports the winner into React.
+> `thoughts/handoffs/2026-07-09_15-55-25_monolith-direct-copy-next-run.md`
+> — 3 adoption studies verdict "just OK" (post-mortem inside); next: fresh Fable session runs the included ready-to-paste prompt — DIRECT copy of monolith (:4179) with Trey's real resume/portfolio content from constants.ts, one site, per-poster animation mandate.
