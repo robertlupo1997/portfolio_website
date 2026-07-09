@@ -1,3 +1,3 @@
 > **Latest handoff:**
-> `thoughts/handoffs/2026-07-09_16-31-49_monolith-lupo-built-awaiting-gate.md`
-> — monolith-lupo BUILT (direct monolith copy, real resume content, 6 posters, 4 passes, 0 console errors, AA-audited) at rlupo-portfolio/prototypes/monolith-lupo/, live on :8791/monolith-lupo/; next: Trey reviews and gates, then deployment decision (static Vercel deploy needs no React port).
+> `thoughts/handoffs/2026-07-09_19-06-49_cyberpunk-run-plan.md`
+> — cyberpunk run planned (ready-to-paste prompt inside; Fable authors its own brief, one site, real content, builds cyber-lupo on feat/cyber-lupo); monolith-lupo is BUILT and committed on feat/monolith-lupo (gate handoff: 2026-07-09_16-31-49); next: run the cyberpunk prompt in a fresh session, then Trey compares candidates.
