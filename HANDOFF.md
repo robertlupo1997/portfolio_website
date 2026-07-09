@@ -1,3 +1,3 @@
 > **Latest handoff:**
-> `thoughts/handoffs/2026-07-09_15-55-25_monolith-direct-copy-next-run.md`
-> — 3 adoption studies verdict "just OK" (post-mortem inside); next: fresh Fable session runs the included ready-to-paste prompt — DIRECT copy of monolith (:4179) with Trey's real resume/portfolio content from constants.ts, one site, per-poster animation mandate.
+> `thoughts/handoffs/2026-07-09_16-31-49_monolith-lupo-built-awaiting-gate.md`
+> — monolith-lupo BUILT (direct monolith copy, real resume content, 6 posters, 4 passes, 0 console errors, AA-audited) at rlupo-portfolio/prototypes/monolith-lupo/, live on :8791/monolith-lupo/; next: Trey reviews and gates, then deployment decision (static Vercel deploy needs no React port).
