@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GUIDE — MONOLITH-LUPO</title>
+  <meta name="description" content="Build guide for monolith-lupo: the brief, the signature technique, and the honest critique history.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter+Tight:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1c1a17;
+      --concrete: #b9b5ad;
+      --concrete-dark: #8a8680;
+      --orange: #e8551a;
+      --font-display: 'Archivo Black', sans-serif;
+      --font-body: 'Inter Tight', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      background: var(--concrete);
+      background-image:
+        repeating-linear-gradient(-55deg, transparent 0, transparent 4px, rgba(28,26,23,0.018) 4px, rgba(28,26,23,0.018) 5px),
+        linear-gradient(168deg, #c0bcb4 0%, var(--concrete) 45%, #b2aea7 100%);
+      color: var(--ink);
+      line-height: 1.6;
+      padding: clamp(1.5rem, 5vw, 5rem);
+    }
+    .doc { max-width: 72ch; margin: 0 auto; }
+    .doc__ref {
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.15em; opacity: 0.78; margin-bottom: 2rem;
+      display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: 0.9; letter-spacing: -0.02em; margin-bottom: 0.5rem;
+    }
+    .doc__sub { font-size: 1rem; font-weight: 500; margin-bottom: 2.5rem; max-width: 55ch; }
+    .rule { height: 4px; background: var(--orange); margin: 2.5rem 0; }
+    .rule--thin { height: 1px; background: rgba(28,26,23,0.3); margin: 2rem 0; }
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      letter-spacing: -0.01em; margin: 2rem 0 0.75rem;
+    }
+    h3 {
+      font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.15em; margin: 1.5rem 0 0.4rem;
+    }
+    p, li { font-size: 0.95rem; margin-bottom: 0.75rem; }
+    ul { padding-left: 1.2rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: var(--ink); font-weight: 700; }
+    a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    pre {
+      background: var(--ink); color: var(--concrete);
+      font-family: ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 0.78rem; line-height: 1.55;
+      padding: 1.25rem; overflow-x: auto; margin: 1rem 0 1.5rem;
+    }
+    pre .hot { color: var(--orange); }
+    .stamp {
+      display: inline-block; background: var(--ink); color: var(--orange);
+      font-family: var(--font-display); font-size: 0.9rem;
+      padding: 0.4em 0.8em; transform: rotate(-2deg); margin: 0.5rem 0 1.5rem;
+    }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+    th, td { text-align: left; padding: 0.5rem 0.75rem 0.5rem 0; border-top: 1px solid rgba(28,26,23,0.25); vertical-align: top; }
+    th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; }
+    .foot { margin-top: 3rem; font-size: 0.75rem; opacity: 0.78; }
+  </style>
+</head>
+<body>
+  <main class="doc">
+    <div class="doc__ref">
+      <span>Filing G-2026 · Build guide</span>
+      <span><a href="../">← Back to the annual</a></span>
+    </div>
+
+    <h1>MONOLITH-LUPO</h1>
+    <p class="doc__sub">Trey Lupo's resume &amp; portfolio annual — a direct copy of the
+    MONOLITH civic-poster site (FABLE&nbsp;25, brief #6), rebuilt with his real record.</p>
+
+    <div class="rule"></div>
+
+    <h2>The brief</h2>
+    <p>The previous run adapted monolith's <em>style</em> into a 3-slide carousel and lost
+    what made it good: six full-viewport posters, scroll-snapped, each a different
+    composition at oversized scale. This run's contract: <strong>copy monolith's structure
+    verbatim</strong> — scroll-snap poster pages, side rail, Archivo Black + Inter Tight,
+    ink/concrete/orange, registration marks, hover grid, concrete texture, cover
+    scramble — and replace every fictional civic filing with a real one from
+    <code>constants.ts</code>. The civic-notice voice becomes the resume voice. One motion
+    set-piece per poster, entrance-triggered. Never invent a fact, metric, employer, or
+    date.</p>
+
+    <h3>The six filings — all real</h3>
+    <table>
+      <tr><th>Poster</th><th>Filing</th><th>Record</th></tr>
+      <tr><td>01</td><td>Cover</td><td>TREY LUPO — FP&amp;A Analyst · Data Scientist · AI/ML Engineer</td></tr>
+      <tr><td>02</td><td>nspb-api</td><td>Variance analysis 8h→&lt;1h · 60+ endpoints · 114+ tests · informs $500M+ decisions</td></tr>
+      <tr><td>03</td><td>FerroML</td><td>3.9× faster than sklearn (KMeans) · Rust · 6,500+ tests · ships on PyPI</td></tr>
+      <tr><td>04</td><td>Hierarchical Revenue Forecast</td><td>0.48 RMSLE (Kaggle top-20%) · 1,782 series · &lt;10ms inference · Polars 80×</td></tr>
+      <tr><td>05</td><td>Project register</td><td>Eight projects, 2024–26, honest statuses (Active / Done / Spec)</td></tr>
+      <tr><td>06</td><td>Open to work</td><td>Real links · education + roles from the timeline</td></tr>
+    </table>
+
+    <div class="rule--thin"></div>
+
+    <h2>Signature technique</h2>
+    <p>Every metric on the page is the true value in static HTML — JavaScript only
+    animates <em>toward</em> the truth. The RMSLE set-piece counts <strong>down</strong>
+    from 1.00 to 0.48, because for forecast error, decreasing is the achievement:</p>
+    <pre>/* Poster 4 — bars draw first, then the RMSLE resolves 1.00 → 0.48
+   (the error coming down is the point) */
+function runHrfCountdown() {
+  const el = document.querySelector('[data-countdown]');
+  if (!el) return;
+  if (reducedMotion) { el.textContent = <span class="hot">'0.48'</span>; return; }
+  window.setTimeout(() => {
+    animateNumber(el, <span class="hot">1.0, 0.48</span>, 1100, (v) => v.toFixed(2));
+  }, 850);
+}</pre>
+    <p>All entrance choreography is gated on a single <code>html.js-anim</code> class that
+    is added only when JS runs <em>and</em> the user allows motion — so no-JS and
+    reduced-motion visitors get the complete static composition, never a blank stage.
+    One IntersectionObserver stamps <code>.is-in</code> per poster; CSS transition-delays
+    do the sequencing (notice rows stamp in, register rows print, chips stamp last,
+    the orange block slides, link underlines draw on a stagger).</p>
+
+    <h3>Other set-pieces</h3>
+    <ul>
+      <li>Cover: monolith's letter scramble, kept, plus a settle-thud when the last glyph locks.</li>
+      <li>Poster 2: rubber stamp (8H → &lt;1H) slams in at 1.5× scale; a procedural SVG
+          certification seal with a 45s rotating ring.</li>
+      <li>Poster 3: 3.9× counts up from 1.0× (rAF, easeOutQuart, pauses on hidden tabs).</li>
+      <li>Poster 4: the noise waveform became a deterministic forecast chart — trend +
+          seasonal cycle + periodic promo spikes, bars drawing in with 22ms stagger.</li>
+      <li>Ground-aware fixed chrome: the rail and filing plate recolor per poster via
+          <code>data-rail</code>, keyed to the ground they actually float over
+          (poster 6's rail sits on the orange block, not the ink field).</li>
+      <li>Press <strong>G</strong> to pin the blueprint grid overlay. Print the page —
+          a print stylesheet flattens the annual to an ink-on-paper filing.</li>
+    </ul>
+
+    <div class="rule--thin"></div>
+
+    <h2>Critique history — what each pass actually found</h2>
+    <span class="stamp">4 PASSES · 0 CONSOLE ERRORS</span>
+
+    <h3>Pass 1 — desktop, posters 2/4/6</h3>
+    <ul>
+      <li><strong>Found:</strong> marginalia collided with the notice header; the filing
+          index was ink-on-ink over the PUBLIC NOTICE strip (read "ING 02/06"); the rail
+          floated over poster 6's orange block in concrete — the exact fixed-chrome trap
+          from the adoption run's post-mortem.</li>
+      <li><strong>Fixed:</strong> marginalia dropped below the header line; filing index
+          became an ink plate that survives every ground; <code>data-rail</code> override
+          per poster.</li>
+      <li><strong>Upgrade:</strong> certification seal on the notice; orange
+          <code>::selection</code>.</li>
+    </ul>
+
+    <h3>Pass 2 — desktop, posters 1/3/5</h3>
+    <ul>
+      <li><strong>Found:</strong> the register wordmark clipped to "OJECT" — monolith
+          clips "PUBLIC" as decoration, but here the word pairs with the heading as
+          "PROJECT · REGISTER 2024–26" and has to read.</li>
+      <li><strong>Fixed:</strong> sized to fit the column (7.6vw).</li>
+      <li><strong>Upgrade:</strong> print stylesheet — the annual files itself on paper.</li>
+    </ul>
+
+    <h3>Pass 3 — mobile sweep + computational AA audit</h3>
+    <ul>
+      <li><strong>Found:</strong> a 2px orange sliver at the top (the "hidden" skip-link
+          peeking in); eyebrows overlapping corner registration marks on mobile; the
+          footer credit overlapping the timeline's last row on poster 6 mobile.</li>
+      <li><strong>AA audit (computed, not eyeballed):</strong> five failing text pairs,
+          two inherited from monolith itself — notice header at ink@0.65 (3.92:1), rail
+          numbers at 0.55 (≈3.5:1), mobile orange-ground text at ink@0.6–0.72
+          (2.69–3.29:1), cover colophon and footer at reduced opacity. All raised to
+          passing values; on orange, only full ink passes (4.75:1), so mobile hierarchy
+          comes from size and weight, not tint.</li>
+      <li><strong>Upgrade:</strong> the G-key grid toggle; the stamp straightens 2° under
+          the cursor.</li>
+    </ul>
+
+    <h3>Pass 4 — director verification</h3>
+    <ul>
+      <li><strong>Found:</strong> on poster 6 the orange block's bottom edge crosses the
+          rail — links 01–05 sat on orange (ink passes) but the active 06 sat below the
+          edge on the ink field: ink on ink, invisible. No single float color survives a
+          rail that straddles two grounds.</li>
+      <li><strong>Fixed:</strong> on poster 6 the rail becomes an ink plate (echoing the
+          PUBLIC NOTICE strip) — concrete numbers at 8.5:1, active in orange at 4.75:1,
+          independent of whatever passes beneath.</li>
+    </ul>
+
+    <h3>Honest remaining concerns</h3>
+    <ul>
+      <li>The cover title sets at 14vw — monolith's MONOLITH fills harder at 15vw; "TREY
+          LUPO" has a space, so the tradeoff went to letter-size consistency.</li>
+      <li>Ask My Work is listed "SSE" in the register — the least legible metric of the
+          eight; it means streaming Server-Sent Events.</li>
+      <li>The fine-print marginalia stays at 0.38 opacity by monolith precedent —
+          defensible only because it is <code>aria-hidden</code> duplication of facts
+          stated accessibly elsewhere.</li>
+    </ul>
+
+    <div class="rule"></div>
+
+    <p class="foot">Spec: FABLE 25 monolith (index 318 · style 1242 · main 186 lines) ·
+    Content: rlupo-portfolio/constants.ts — no invented facts ·
+    Designed &amp; built by Claude Fable 5 · 2026</p>
+  </main>
+</body>
+</html>
