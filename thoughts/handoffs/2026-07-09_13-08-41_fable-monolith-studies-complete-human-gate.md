@@ -74,7 +74,7 @@ type: handoff
 | Claim | Command run this session | Result |
 |---|---|---|
 | HEAD / branch unchanged all session | `git rev-parse HEAD` / `--abbrev-ref HEAD` | `8c5bb18…4b2` / `main` (no commits made before this handoff) |
-| study server up, all 7 routes 200 | `curl -w %{http_code}` root + 3 studies + 3 guides | all `200` — restart: `cd /mnt/c/Users/Trey/Downloads/portfolio_website && python3 -m http.server 8080 --directory rlupo-portfolio/prototypes/fable-monolith --bind 127.0.0.1 &` |
+| study server up, all 7 routes 200 | `curl -w %{http_code}` root + 3 studies + 3 guides | all `200` — restart: `cd /mnt/c/Users/Trey/Downloads/portfolio_website && python3 -m http.server 8791 --directory rlupo-portfolio/prototypes/fable-monolith --bind 127.0.0.1 &` ⚠️ NOT :8080 — Windows HTTP.sys owns :8080 on this machine and answers 404 before WSL forwarding; Trey's browser must use :8791 |
 | zero console/page errors, ledger (post-fix) | `node tools/shot.mjs` from `~/projects/fable25` on `/ledger/` + `?slide=1` + `?slide=2` + `?overlay=1` | `errors:[] pageErrors:[]` × 4 |
 | zero console/page errors, broadside | same, 6 states incl. guide + `--reduced` | `errors:[] pageErrors:[]` × 6 |
 | zero console/page errors, graft | same, 5 states incl. guide + `--reduced` | `errors:[] pageErrors:[]` × 5 |
@@ -96,7 +96,7 @@ type: handoff
 
 ## Action Items & Next Steps
 
-1. **Trey:** open `http://localhost:8080/` (see restart row) and cold-review the three studies
+1. **Trey:** open `http://localhost:8791/` (see restart row — NOT :8080, Windows owns it) and cold-review the three studies
    in any order — arrow keys change slides, INDEX opens the overlay, Esc closes. Read guides
    only after forming an impression. Pick a direction (or a hybrid, or none).
 2. **Trey (optional):** the working tree holds all of this uncommitted except this handoff +
