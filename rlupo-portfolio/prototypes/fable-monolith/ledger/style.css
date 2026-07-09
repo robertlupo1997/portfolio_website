@@ -1,0 +1,1418 @@
+/* ═══════════════════════════════════════════════════════════════
+   LEDGER — The Fiscal Annual 2026
+   Persona: a civic-signage screenprinter who sets municipal
+   budget-hearing notices by hand. A good poster is a legal document.
+   ──────────────────────────────────────────────────────────────
+   Archivo Black (display) + Inter Tight (body) · Google Fonts
+   Palette:  concrete #b9b5ad · ink #1c1a17 · orange #e8551a · cream #f0ece4
+   AA audit: ink/concrete 8.50 · cream/ink 14.74 · orange/ink 4.75
+             orange/concrete 1.79 FAIL — orange is non-text on concrete ONLY
+             #3b3935/concrete 5.64 · concrete-dark #8a8680/ink 4.80
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Design tokens ── */
+:root {
+  --ink:            #1c1a17;
+  --concrete:       #b9b5ad;
+  --concrete-light: #ccc9c1;
+  --concrete-dark:  #8a8680;
+  /* Secondary text on concrete: rgba(28,26,23,0.8) composited = 5.64:1 ✓ */
+  --ink-80:         #3b3935;
+  /* Tertiary on concrete: 3.46:1 — large text (≥24px) only */
+  --ink-60:         #5b5853;
+  --orange:         #e8551a;
+  --cream:          #f0ece4;
+
+  --font-display: 'Archivo Black', sans-serif;
+  --font-body:    'Inter Tight', sans-serif;
+
+  /* Type scale */
+  --sz-xs:    clamp(0.625rem, 1vw,    0.8rem);
+  --sz-sm:    clamp(0.75rem,  1.5vw,  0.9375rem);
+  --sz-base:  clamp(0.875rem, 1.8vw,  1.0625rem);
+  --sz-lg:    clamp(1.25rem,  3vw,    2rem);
+  --sz-xl:    clamp(2rem,     5vw,    4rem);
+  --sz-2xl:   clamp(3rem,     8vw,    7rem);
+  --sz-hero:  clamp(3.5rem,   13vw,   17rem);
+  --sz-title: clamp(3rem,     10.5vw, 13rem);
+
+  /* Spacing */
+  --edge:   clamp(1.25rem, 5vw,  5rem);
+  --edge-v: clamp(1.5rem,  5vh,  4rem);
+
+  /* Filed strip width */
+  --strip-w: clamp(2rem, 4vw, 3.5rem);
+
+  /* Grid overlay colors: default concrete variant */
+  --grid-col: rgba(28, 26, 23, 0.12);
+  --grid-row: rgba(28, 26, 23, 0.06);
+
+  /* Reg mark color: default concrete variant */
+  --reg-color: rgba(28, 26, 23, 0.3);
+}
+
+
+/* ── 2. Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--ink);
+  color: var(--concrete);
+  height: 100dvh;
+  overflow: hidden; /* CRITICAL: carousel uses translateX, no scroll */
+}
+
+h1, h2 { text-wrap: balance; }
+ol, ul  { list-style: none; }
+dl, dt, dd { margin: 0; }
+
+
+/* ── 3. Skip link ── */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: var(--edge);
+  z-index: 999;
+  background: var(--orange);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.45rem 0.9rem;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+
+/* ── 4. Site header — ink bar, civic authority ── */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem var(--edge);
+  background: var(--ink);
+  border-bottom: 2px solid var(--orange);
+  /* border is decoration (non-text orange) — no AA constraint */
+}
+
+.site-header__wordmark {
+  font-family: var(--font-display);
+  font-size: var(--sz-sm);
+  letter-spacing: 0.08em;
+  color: var(--cream);           /* cream/ink = 14.74:1 ✓ */
+  text-decoration: none;
+  line-height: 1;
+}
+.site-header__wordmark:hover,
+.site-header__wordmark:focus-visible {
+  color: var(--concrete);
+  outline: none;
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-underline-offset: 3px;
+}
+
+.site-header__index-btn {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);          /* orange/ink = 4.75:1 ✓ */
+  background: transparent;
+  border: 2px solid var(--orange);
+  padding: 0.35rem 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.site-header__index-btn:hover,
+.site-header__index-btn:focus-visible {
+  background: var(--orange);
+  color: var(--ink);             /* ink/orange context: ink on orange = implied inverse */
+  outline: none;
+}
+.site-header__index-btn:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 2px;
+}
+
+
+/* ── 5. Carousel core ── */
+.carousel-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  /* Width = 3 slides × 100vw */
+  width: calc(3 * 100vw);
+  height: 100%;
+  transform: translateX(0);
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.slide {
+  width: 100vw;
+  flex-shrink: 0;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* ── 6. Registration marks ── */
+.reg-marks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.reg-mark {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: radial-gradient(
+    circle at center,
+    transparent 4.5px,
+    var(--reg-color) 4.5px,
+    var(--reg-color) 5.5px,
+    transparent 5.5px
+  );
+}
+
+.reg-mark::before,
+.reg-mark::after {
+  content: '';
+  position: absolute;
+  background: var(--reg-color);
+}
+
+.reg-mark::before {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.reg-mark::after {
+  height: 1px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+/* Top marks offset to clear the fixed ink header (~50px) */
+.reg-tl { top: 60px;  left: 20px; }
+.reg-tr { top: 60px;  right: 20px; }
+.reg-bl { bottom: 20px; left: 20px; }
+.reg-br { bottom: 20px; right: 20px; }
+
+/* Light reg marks for ink slides */
+.reg-marks--light { --reg-color: rgba(185, 181, 173, 0.45); }
+
+/* Overlay reg marks positioned inside the dialog */
+.index-overlay__reg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  --reg-color: rgba(185, 181, 173, 0.35);
+}
+
+
+/* ── 7. Grid overlay ── */
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      var(--grid-col) 0, var(--grid-col) 1px,
+      transparent 1px, transparent calc(100% / 12)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--grid-row) 0, var(--grid-row) 1px,
+      transparent 1px, transparent calc(100% / 8)
+    );
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide:hover .grid-overlay,
+.slide:focus-within .grid-overlay {
+  opacity: 1;
+}
+
+/* Concrete slides: ink-tinted grid */
+.grid-overlay--ink {
+  --grid-col: rgba(28, 26, 23, 0.12);
+  --grid-row: rgba(28, 26, 23, 0.06);
+}
+
+/* Ink slides: orange-tinted grid */
+.grid-overlay--orange {
+  --grid-col: rgba(232, 85, 26, 0.2);
+  --grid-row: rgba(232, 85, 26, 0.08);
+}
+
+
+/* ── 8. Concrete texture (3-layer + base gradient) ── */
+.concrete-surface {
+  background-color: var(--concrete);
+  background-image:
+    repeating-linear-gradient(
+      -55deg,
+      transparent 0, transparent 4px,
+      rgba(28, 26, 23, 0.018) 4px, rgba(28, 26, 23, 0.018) 5px
+    ),
+    repeating-linear-gradient(
+      35deg,
+      transparent 0, transparent 7px,
+      rgba(255, 255, 255, 0.01) 7px, rgba(255, 255, 255, 0.01) 8px
+    ),
+    repeating-linear-gradient(
+      82deg,
+      transparent 0, transparent 11px,
+      rgba(28, 26, 23, 0.01) 11px, rgba(28, 26, 23, 0.01) 12px
+    ),
+    linear-gradient(168deg, #c0bcb4 0%, var(--concrete) 45%, #b2aea7 100%);
+}
+
+
+/* ── 9. FILED strip ── */
+.filed-strip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--strip-w);
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-right: 2px solid var(--orange); /* decoration, non-text */
+}
+
+.filed-strip span {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--orange);   /* orange/ink = 4.75:1 ✓ */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  user-select: none;
+}
+
+/* Light variant for the ink (contact) slide */
+.filed-strip--light {
+  background: rgba(185, 181, 173, 0.08);
+  border-right-color: rgba(185, 181, 173, 0.25);
+}
+
+.filed-strip--light span {
+  color: var(--concrete-dark);  /* concrete-dark/ink = 4.80:1 ✓ */
+}
+
+
+/* ── 10. Carousel controls ── */
+.carousel-controls {
+  position: fixed;
+  bottom: clamp(1.25rem, 3.5vh, 2.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 4vw, 3rem);
+}
+
+/* ── Carousel controls color discipline ──
+   Controls are position:fixed, persisting over all slide grounds.
+   Default = ink-family text for the two concrete-ground slides (0, 1).
+   .carousel-controls--on-ink modifier flips to concrete-family for slide 2.
+   Contrast audit (computed):
+     ink-80 (#3b3935) on concrete (#b9b5ad) = 5.64 ✓
+     ink    (#1c1a17) on concrete (hover)   = 8.50 ✓
+     concrete (#b9b5ad) on ink              = 8.50 ✓
+     concrete-dark (#8a8680) on ink (ctr)   = 4.80 ✓
+     cream on ink (hover)                   = 14.74 ✓  */
+
+.carousel-btn {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-80);           /* DEFAULT: ink-80 on concrete = 5.64:1 ✓ */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem 0;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.carousel-btn::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: var(--orange);      /* decorative; non-text, no AA constraint */
+  transform: scaleX(0);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-btn:hover::after,
+.carousel-btn:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* DEFAULT hover: ink on concrete = 8.50:1 ✓ */
+.carousel-btn:hover,
+.carousel-btn:focus-visible {
+  color: var(--ink);
+  outline: none;
+}
+
+.carousel-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+.carousel-btn:disabled::after { display: none; }
+
+/* DEFAULT counter: ink-80 on concrete = 5.64:1 ✓ */
+.carousel-counter {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--ink-80);
+  font-variant-numeric: tabular-nums;
+  min-width: 5ch;
+  text-align: center;
+}
+
+/* ── Ink-ground modifier (slide 2 / contact) ──
+   Toggled by gotoSlide() in main.js when n === 2. */
+
+.carousel-controls--on-ink .carousel-btn {
+  color: var(--concrete);         /* concrete on ink = 8.50:1 ✓ */
+}
+
+.carousel-controls--on-ink .carousel-btn:hover,
+.carousel-controls--on-ink .carousel-btn:focus-visible {
+  color: var(--cream);            /* cream on ink = 14.74:1 ✓ */
+}
+
+.carousel-controls--on-ink .carousel-counter {
+  color: var(--concrete-dark);    /* concrete-dark on ink = 4.80:1 ✓ */
+}
+
+
+/* ── Reference measurement lines ──
+   Barely-visible horizontal rules suggest folded-paper registration.
+   hero__layout::before handles the hero rule;
+   project__layout::before would conflict with dog-ear, so use the hero only. */
+.hero__layout::before {
+  content: '';
+  position: absolute;
+  top: clamp(12rem, 28vh, 22rem);
+  left: calc(var(--strip-w) + clamp(1.25rem, 3vw, 3rem));
+  right: var(--edge);
+  height: 1px;
+  background: rgba(28, 26, 23, 0.07);
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 0 — HERO
+   Concrete ground, massive scramble name, civic stamp
+   ═══════════════════════════════════════════════════════════════ */
+
+.slide--hero {
+  background-color: var(--concrete);
+  background-image:
+    repeating-linear-gradient(-55deg, transparent 0, transparent 4px, rgba(28,26,23,0.018) 4px, rgba(28,26,23,0.018) 5px),
+    repeating-linear-gradient(35deg, transparent 0, transparent 7px, rgba(255,255,255,0.01) 7px, rgba(255,255,255,0.01) 8px),
+    repeating-linear-gradient(82deg, transparent 0, transparent 11px, rgba(28,26,23,0.01) 11px, rgba(28,26,23,0.01) 12px),
+    linear-gradient(168deg, #c0bcb4 0%, var(--concrete) 45%, #b2aea7 100%);
+}
+
+.hero__layout {
+  position: absolute;
+  inset: 0;
+  /* Offset left for the FILED strip; top clears fixed header */
+  padding: calc(var(--edge-v) + 3.5rem) var(--edge) clamp(3.5rem, 7vh, 5rem) calc(var(--strip-w) + clamp(1.25rem, 3vw, 3rem));
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(0.5rem, 1vh, 1rem);
+  z-index: 5;
+}
+
+.hero__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.hero__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--ink-80);          /* #3b3935/concrete = 5.64:1 ✓ */
+}
+
+.hero__filing-ref {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-80);          /* 5.64:1 ✓ */
+}
+
+.eyebrow-bull,
+.role-bull,
+.stat-bull {
+  color: var(--orange);
+  /* orange on concrete = 1.79 — these bullets are decorative,
+     aria-hidden="true" on each. Non-text color, no AA requirement. */
+}
+
+.hero__center {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;         /* anchor to bottom of the 1fr zone */
+  padding-bottom: clamp(1.5rem, 3vh, 3rem);
+  gap: clamp(0.75rem, 1.5vh, 1.5rem);
+}
+
+/* The h1 scramble target */
+.hero__name {
+  font-family: var(--font-display);
+  font-size: var(--sz-hero);
+  line-height: 0.88;
+  color: var(--ink);             /* ink/concrete = 8.50:1 ✓ */
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+/* Each scramble letter is a span (injected by JS) */
+.hero__name span {
+  display: inline-block;
+}
+
+.hero__rule {
+  height: 4px;
+  background: var(--orange);    /* decorative bar, non-text */
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.hero__role {
+  font-family: var(--font-body);
+  font-size: var(--sz-base);
+  font-weight: 500;
+  color: var(--ink);             /* 8.50:1 ✓ */
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero__tagline {
+  font-family: var(--font-body);
+  font-size: var(--sz-sm);
+  color: var(--ink-80);          /* 5.64:1 ✓ */
+  line-height: 1.55;
+  max-width: 55ch;
+}
+
+.hero__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+/* Rubber-stamp block */
+.hero__stamp {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--ink);             /* 8.50:1 ✓ */
+  border: 2px solid var(--ink);  /* decoration */
+  padding: 0.45em 0.9em;
+  transform: rotate(-1.5deg);
+  display: inline-block;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); /* spring */
+  cursor: default;
+}
+
+.hero__stamp:hover {
+  transform: rotate(0.8deg);
+}
+
+.hero__colophon {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  color: var(--ink-60);          /* 3.46:1 — this is fine-print at 12.8px+, large-text rule applies at 24px+ so this is borderline; bumping to ink-80 */
+  color: var(--ink-80);          /* 5.64:1 ✓ — override above */
+  text-align: right;
+  line-height: 1.4;
+  opacity: 0.65;
+}
+
+/* ── Pass 3 complexity upgrade: diagonal watermark on hero ──
+   Ghost text band across the upper zone. Extremely faint — purely texture.
+   Uses ::after on slide--hero (::before is unused on hero, ::after is for this).
+   Project slide uses its own ::before + ::after for the dog-ear fold. */
+
+.slide--hero::after {
+  content: 'FISCAL RECORD · ANNUAL FILING · PUBLIC RECORD ·';
+  position: absolute;
+  top: clamp(6rem, 18vh, 15rem);
+  left: -5%;
+  right: -5%;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 4.5rem);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  color: rgba(28, 26, 23, 0.038);
+  transform: rotate(-4deg);
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+/* Vertical right-edge label — claims the upper-right dead zone as intentional */
+.hero__layout::after {
+  content: 'PUBLIC RECORD · FISCAL ANNUAL';
+  position: absolute;
+  right: calc(var(--edge) - 0.5rem);
+  top: clamp(6rem, 15vh, 12rem);
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-80);
+  opacity: 0.25;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+
+
+/* Embossed LUPO — barely-visible text-shadow relief in concrete */
+.emboss {
+  position: absolute;
+  right: calc(var(--edge) - 1rem);
+  bottom: calc(var(--edge-v) + 2rem);
+  font-family: var(--font-display);
+  font-size: clamp(7rem, 22vw, 26rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: transparent;
+  /* Relief: white highlight above, ink shadow below = emboss effect */
+  text-shadow:
+    1px  1px 0 rgba(255, 255, 255, 0.22),
+    -1px -1px 0 rgba(28,  26,  23, 0.10);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 1 — PROJECT POSTER (renewal notice)
+   Concrete ground, stacked giant title, detail grid
+   ═══════════════════════════════════════════════════════════════ */
+
+.slide--project {
+  background-color: var(--concrete);
+  background-image:
+    repeating-linear-gradient(-55deg, transparent 0, transparent 4px, rgba(28,26,23,0.018) 4px, rgba(28,26,23,0.018) 5px),
+    repeating-linear-gradient(35deg, transparent 0, transparent 7px, rgba(255,255,255,0.01) 7px, rgba(255,255,255,0.01) 8px),
+    repeating-linear-gradient(82deg, transparent 0, transparent 11px, rgba(28,26,23,0.01) 11px, rgba(28,26,23,0.01) 12px),
+    linear-gradient(168deg, #c0bcb4 0%, var(--concrete) 45%, #b2aea7 100%);
+}
+
+.project__layout {
+  position: absolute;
+  inset: 0;
+  padding: calc(var(--edge-v) + 3.5rem) var(--edge) var(--edge-v) calc(var(--strip-w) + clamp(1.25rem, 3vw, 3rem));
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(0.75rem, 1.5vh, 1.5rem);
+  z-index: 5;
+}
+
+.project__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-80);           /* 5.64:1 ✓ */
+}
+
+.project__ref {
+  font-weight: 700;
+}
+
+.project__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.65rem, 1.2vh, 1.2rem);
+}
+
+/* Stacked title — asymmetric, one word shifted */
+.project__title {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.85;
+  gap: 0;
+}
+
+.project__word {
+  font-family: var(--font-display);
+  font-size: var(--sz-title);
+  color: var(--ink);               /* 8.50:1 ✓ */
+  line-height: 0.88;
+  display: block;
+  letter-spacing: -0.02em;
+}
+
+/* Second word shifted right — creates asymmetric tension */
+.project__word--shift {
+  padding-left: clamp(1.5rem, 7%, 7rem);
+}
+
+.project__divider {
+  height: 4px;
+  background: var(--orange);      /* decoration */
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.project__desc {
+  font-family: var(--font-body);
+  font-size: var(--sz-base);
+  color: var(--ink);               /* 8.50:1 ✓ */
+  line-height: 1.55;
+  max-width: 52ch;
+  text-wrap: balance;
+}
+
+.project__stats {
+  font-family: var(--font-body);
+  font-size: var(--sz-sm);
+  font-weight: 700;
+  color: var(--ink-80);            /* 5.64:1 ✓ */
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Detail grid — 3 columns */
+.project__details {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0.5rem clamp(2rem, 6vw, 6rem);
+  align-items: start;
+  width: max-content;
+}
+
+.project__detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.project__detail-item dt {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ink);               /* 8.50:1 ✓ */
+}
+
+.project__detail-item dd {
+  font-family: var(--font-body);
+  font-size: var(--sz-sm);
+  font-weight: 500;
+  color: var(--ink-80);            /* 5.64:1 ✓ */
+  line-height: 1.35;
+}
+
+/* Fine-print marginalia — filing statutes in dead zone */
+.project__marginalia {
+  position: absolute;
+  right: var(--edge);
+  top: calc(var(--edge-v) + 4rem);
+  width: clamp(140px, 16%, 210px);
+  font-family: var(--font-body);
+  font-size: 0.575rem;
+  line-height: 1.6;
+  color: var(--ink-80);
+  opacity: 0.5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  pointer-events: none;
+}
+
+/* ── Filing fold — CSS dog-ear on project slide ──
+   Top-right corner peel: the bright triangle = folded paper face;
+   the dark triangle = shadow on the paper beneath. No clipping needed. */
+.slide--project::before {
+  content: '';
+  position: absolute;
+  top: 50px; /* clear fixed header */
+  right: 0;
+  width: 0;
+  height: 0;
+  /* Shadow wedge (bottom-left triangle of the corner square) */
+  border-style: solid;
+  border-width: clamp(3rem, 5.5vw, 5.5rem) clamp(3rem, 5.5vw, 5.5rem) 0 0;
+  border-color: rgba(28, 26, 23, 0.2) transparent transparent transparent;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.slide--project::after {
+  content: '';
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: clamp(3rem, 5.5vw, 5.5rem);
+  height: clamp(3rem, 5.5vw, 5.5rem);
+  /* Fold-back flap: brighter concrete face revealed */
+  background: linear-gradient(
+    -135deg,
+    var(--concrete-light) 50%,
+    transparent 50%
+  );
+  z-index: 31;
+  pointer-events: none;
+}
+
+
+/* Rubber stamp — rotated, absolute position */
+.project__stamp {
+  position: absolute;
+  bottom: calc(var(--edge-v) + 2rem);
+  right: clamp(7rem, 16%, 18rem);
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--ink);               /* 8.50:1 ✓ */
+  border: 2px solid var(--ink);    /* decoration */
+  padding: 0.45em 0.9em;
+  transform: rotate(1.8deg);
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: default;
+}
+
+.project__stamp:hover {
+  transform: rotate(-0.5deg);
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   SLIDE 2 — OUTRO / CONTACT
+   Ink ground, cream text, orange accent as decoration
+   ═══════════════════════════════════════════════════════════════ */
+
+.slide--contact {
+  background: var(--ink);
+}
+
+.contact__layout {
+  position: absolute;
+  inset: 0;
+  padding: calc(var(--edge-v) + 3.5rem) var(--edge) var(--edge-v) calc(var(--strip-w) + clamp(1.25rem, 3vw, 3rem));
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(0.75rem, 1.5vh, 1.5rem);
+  z-index: 5;
+}
+
+.contact__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.contact__eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--concrete-dark);    /* 4.80:1 ✓ */
+}
+
+.contact__ref {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--concrete-dark);    /* 4.80:1 ✓ */
+}
+
+.contact__center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1rem, 2vh, 2rem);
+}
+
+.contact__heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 10rem);
+  line-height: 0.9;
+  color: var(--cream);            /* cream/ink = 14.74:1 ✓ */
+  letter-spacing: -0.02em;
+}
+
+.contact__rule {
+  height: 4px;
+  background: var(--orange);     /* decoration, non-text on ink */
+  width: clamp(4rem, 15%, 12rem);
+  flex-shrink: 0;
+}
+
+.contact__line {
+  font-family: var(--font-body);
+  font-size: var(--sz-lg);
+  font-weight: 500;
+  color: var(--concrete);         /* 8.50:1 ✓ */
+  line-height: 1.4;
+}
+
+.contact__nav {
+  display: flex;
+  gap: clamp(1.25rem, 4vw, 3.5rem);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.contact__link {
+  font-family: var(--font-body);
+  font-size: var(--sz-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--cream);            /* cream/ink = 14.74:1 ✓ */
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1.5px solid var(--orange); /* decoration */
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact__link:hover,
+.contact__link:focus-visible {
+  color: var(--orange);           /* orange/ink = 4.75:1 ✓ */
+  outline: none;
+}
+
+.contact__link:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+}
+
+.contact__footer {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  color: var(--concrete-dark);    /* 4.80:1 ✓ */
+  opacity: 0.7;
+}
+
+/* Ghost OPEN text in background */
+.contact__bg-text {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 28vw, 36rem);
+  color: rgba(185, 181, 173, 0.04);
+  bottom: 5%;
+  right: -2%;
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   INDEX OVERLAY
+   Full-screen ink takeover; orange numerals; concrete text
+   ═══════════════════════════════════════════════════════════════ */
+
+.index-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: var(--ink);
+  display: flex;
+  align-items: stretch;
+  overflow-y: auto;
+}
+
+.index-overlay[hidden] {
+  display: none;
+}
+
+.index-overlay__inner {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(3.5rem, 6vh, 5rem) var(--edge) var(--edge-v);
+  gap: clamp(0.75rem, 1.5vh, 1.5rem); /* tightened so 5 entries fit at 900px height */
+  min-height: 100%;
+}
+
+.index-overlay__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  border-bottom: 2px solid var(--orange); /* decoration */
+  padding-bottom: 1rem;
+}
+
+.index-overlay__heading {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 11vw, 16rem);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  color: var(--cream);            /* cream/ink = 14.74:1 ✓ */
+}
+
+.index-overlay__close {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--concrete);         /* 8.50:1 ✓ */
+  background: transparent;
+  border: 2px solid var(--concrete);
+  padding: 0.4rem 0.85rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.index-overlay__close:hover,
+.index-overlay__close:focus-visible {
+  background: var(--concrete);
+  color: var(--ink);
+  outline: none;
+}
+
+.index-overlay__close:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 2px;
+}
+
+.index-overlay__body {
+  display: grid;
+  grid-template-columns: 1fr clamp(140px, 20%, 240px);
+  gap: clamp(2rem, 5vw, 5rem);
+  flex: 1;
+  align-items: stretch; /* allows index-list to fill the full column height */
+}
+
+/* Entry list — fills available overlay body height */
+.index-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.index-item {
+  border-bottom: 1px solid rgba(185, 181, 173, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.index-item:first-child {
+  border-top: 1px solid rgba(185, 181, 173, 0.15);
+}
+
+/* Active entry (01) — left accent stripe to distinguish from inert entries */
+.index-item:first-child {
+  border-left: 3px solid var(--orange);
+  padding-left: clamp(0.75rem, 1.5vw, 1.5rem);
+}
+
+.index-item__link {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 3rem);
+  padding: clamp(0.4rem, 1vh, 0.9rem) 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* Active entry (entry-01): full hover row highlight */
+a.index-item__link:hover,
+a.index-item__link:focus-visible {
+  outline: none;
+}
+
+a.index-item__link:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 2px;
+}
+
+a.index-item__link:hover .index-item__num,
+a.index-item__link:focus-visible .index-item__num {
+  color: var(--cream);
+}
+
+a.index-item__link:hover .index-item__title,
+a.index-item__link:focus-visible .index-item__title {
+  color: var(--cream);
+}
+
+/* Inert entries */
+.index-item--inert .index-item__link {
+  cursor: default;
+  opacity: 0.45;
+}
+
+/* Orange display-scale numeral — sized to fit 5 entries within 900px height */
+.index-item__num {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--orange);           /* orange/ink = 4.75:1 ✓ (large text, passes AA) */
+  flex-shrink: 0;
+  min-width: clamp(3rem, 5.5vw, 7rem);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.index-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+.index-item__title {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.5vw, 3rem);
+  color: var(--concrete);         /* 8.50:1 ✓ */
+  letter-spacing: -0.01em;
+  line-height: 1;
+  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.index-item__meta {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--concrete-dark);    /* 4.80:1 ✓ */
+}
+
+.index-item__arrow {
+  font-family: var(--font-body);
+  font-size: var(--sz-base);
+  color: var(--orange);           /* orange/ink 4.75:1 ✓ */
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-0.5rem);
+}
+
+a.index-item__link:hover .index-item__arrow,
+a.index-item__link:focus-visible .index-item__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.index-item__status {
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--concrete-dark);    /* 4.80:1 ✓ */
+  flex-shrink: 0;
+  border: 1px solid rgba(185, 181, 173, 0.3);
+  padding: 0.25em 0.6em;
+}
+
+/* Fine-print statute marginalia */
+.index-overlay__marginalia {
+  font-family: var(--font-body);
+  font-size: 0.575rem;
+  line-height: 1.65;
+  color: var(--concrete-dark);
+  opacity: 0.55;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85em;
+  padding-top: 0.5rem;
+  pointer-events: none;
+}
+
+.marginalia__title {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PREFERS-REDUCED-MOTION
+   Static composition — dignified, not blank
+   ═══════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  /* Track: instant jumps only (handled in JS too) */
+  .carousel-track {
+    transition: none !important;
+  }
+
+  /* Show grid skeleton statically at subtle opacity */
+  .grid-overlay {
+    opacity: 0.2;
+    transition: none;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE — 375px to 1600px
+   Recompose for mobile, don't shrink the desktop
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Wide screens ── */
+@media (min-width: 1280px) {
+  .project__details {
+    gap: 0.5rem clamp(4rem, 8vw, 8rem);
+  }
+}
+
+/* ── Tablet / smaller desktop ── */
+@media (max-width: 900px) {
+  .project__marginalia {
+    display: none;
+  }
+
+  .project__stamp {
+    right: var(--edge);
+    bottom: calc(var(--edge-v) + 1rem);
+  }
+
+  .index-overlay__body {
+    grid-template-columns: 1fr;
+  }
+
+  .index-overlay__marginalia {
+    display: none;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  :root {
+    --edge:   1.25rem;
+    --edge-v: 1.25rem;
+    --strip-w: 1.75rem;
+  }
+
+  /* Hero: compress name scale, center the content block vertically */
+  .hero__name {
+    font-size: clamp(2.5rem, 13vw, 5rem);
+    white-space: normal;
+  }
+
+  .hero__center {
+    justify-content: center; /* override flex-end on mobile */
+    padding-bottom: 0;
+  }
+
+  .hero__role {
+    font-size: var(--sz-xs);
+  }
+
+  /* Prevent eyebrow from wrapping at 390px */
+  .hero__eyebrow,
+  .hero__filing-ref {
+    font-size: 0.58rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .hero__top {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .hero__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .hero__colophon {
+    text-align: left;
+  }
+
+  .emboss {
+    display: none; /* remove clutter on small screens */
+  }
+
+  /* Project: compress title */
+  .project__word {
+    font-size: clamp(2.5rem, 12vw, 6rem);
+  }
+
+  .project__word--shift {
+    padding-left: 1rem;
+  }
+
+  .project__details {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .project__detail-item:last-child {
+    grid-column: 1 / -1;
+  }
+
+  /* Contact */
+  .contact__heading {
+    font-size: clamp(2rem, 11vw, 4rem);
+  }
+
+  .contact__nav {
+    gap: 1rem;
+  }
+
+  /* Index overlay */
+  .index-overlay__heading {
+    font-size: clamp(3.5rem, 18vw, 8rem);
+  }
+
+  .index-item__num {
+    font-size: clamp(2.25rem, 9vw, 4.5rem);
+    min-width: clamp(3rem, 10vw, 5rem);
+  }
+
+  .index-item__title {
+    font-size: clamp(1rem, 5vw, 2rem);
+  }
+
+  /* Carousel controls */
+  .carousel-controls {
+    gap: 0.75rem;
+  }
+}
+
+/* ── Extra small ── */
+@media (max-width: 390px) {
+  :root {
+    --edge:   1rem;
+    --edge-v: 1rem;
+    --strip-w: 1.5rem;
+  }
+
+  .hero__name {
+    font-size: clamp(2.25rem, 13vw, 4rem);
+  }
+
+  .project__word {
+    font-size: clamp(2rem, 12vw, 5rem);
+  }
+}

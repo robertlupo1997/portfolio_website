@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRAFT — Trey Lupo · Portfolio Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- ── Header ── -->
+  <header class="site-header" role="banner">
+    <a href="#" class="wordmark" id="wordmarkLink" aria-label="TREY LUPO — return to start">TREY LUPO</a>
+    <button class="index-btn" id="indexBtn" type="button"
+            aria-haspopup="dialog" aria-expanded="false" aria-controls="indexOverlay">
+      INDEX
+    </button>
+  </header>
+
+  <!-- ── Carousel ── -->
+  <main id="main-content" class="carousel-viewport" role="main">
+    <div class="carousel-track" id="carouselTrack">
+
+      <!-- Slide 0: Hero -->
+      <section class="slide slide--hero" id="slide-0" aria-label="Introduction">
+        <!-- Graft 1: grid overlay + reg marks (appear only on hover/focus) -->
+        <div class="grid-overlay" aria-hidden="true"></div>
+        <div class="reg-marks" aria-hidden="true">
+          <span class="reg-mark reg-tl"></span>
+          <span class="reg-mark reg-tr"></span>
+          <span class="reg-mark reg-bl"></span>
+          <span class="reg-mark reg-br"></span>
+        </div>
+
+        <div class="slide__inner">
+          <div class="slide__zone-top">
+            <p class="eyebrow">Portfolio Annual · Issue I · 2026</p>
+          </div>
+          <div class="slide__zone-mid">
+            <!-- Graft 3: poster-scale on exactly ONE heading per surface -->
+            <h1 class="hero-name poster-heading">TREY LUPO</h1>
+            <p class="role-line">FP&amp;A Analyst · Data Scientist · ML Engineer</p>
+          </div>
+          <div class="slide__zone-bot">
+            <p class="tagline">Forecasts filed. Pipelines audited. Models on the record.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 1: Project Poster -->
+      <section class="slide slide--project" id="slide-1" aria-label="Revenue Telemetry — project filing">
+        <div class="grid-overlay" aria-hidden="true"></div>
+        <div class="reg-marks" aria-hidden="true">
+          <span class="reg-mark reg-tl"></span>
+          <span class="reg-mark reg-tr"></span>
+          <span class="reg-mark reg-bl"></span>
+          <span class="reg-mark reg-br"></span>
+        </div>
+
+        <div class="slide__inner">
+          <div class="slide__zone-top">
+            <p class="eyebrow">FILING F-2026-011</p>
+            <p class="eyebrow eyebrow--dim">Hierarchical Forecasting</p>
+          </div>
+          <div class="slide__zone-mid">
+            <h2 class="project-title poster-heading">REVENUE<br>TELEMETRY</h2>
+          </div>
+          <div class="slide__zone-bot">
+            <p class="project-desc">A reconciled forecast tree for a fictional distributor — bottom-up noise, top-down discipline, one source of truth.</p>
+            <div class="project-stats">
+              <span class="stat-item">40 series</span>
+              <span class="stat-sep" aria-hidden="true">·</span>
+              <span class="stat-item">12 models</span>
+              <span class="stat-sep" aria-hidden="true">·</span>
+              <span class="stat-item">8-quarter horizon</span>
+            </div>
+            <dl class="project-details">
+              <div class="detail-pair">
+                <dt>Stack</dt>
+                <dd>Python · statsmodels · DuckDB</dd>
+              </div>
+              <div class="detail-pair">
+                <dt>Status</dt>
+                <dd>Filed</dd>
+              </div>
+              <div class="detail-pair">
+                <dt>Year</dt>
+                <dd>2026</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Outro / Contact -->
+      <section class="slide slide--outro" id="slide-2" aria-label="Contact">
+        <div class="grid-overlay" aria-hidden="true"></div>
+        <div class="reg-marks" aria-hidden="true">
+          <span class="reg-mark reg-tl"></span>
+          <span class="reg-mark reg-tr"></span>
+          <span class="reg-mark reg-bl"></span>
+          <span class="reg-mark reg-br"></span>
+        </div>
+
+        <div class="slide__inner">
+          <div class="slide__zone-top">
+            <div class="rule" aria-hidden="true"></div>
+          </div>
+          <div class="slide__zone-mid">
+            <h2 class="outro-heading poster-heading poster-heading--outro">THE RECORD<br>IS OPEN</h2>
+            <p class="outro-line">Six filings a year. One analyst.</p>
+          </div>
+          <div class="slide__zone-bot">
+            <nav class="contact-links" aria-label="External links">
+              <a href="#" class="contact-link">GitHub</a>
+              <a href="#" class="contact-link">LinkedIn</a>
+              <a href="#" class="contact-link">treylupo.com</a>
+            </nav>
+            <p class="credit-line">Designed &amp; built by Claude Fable 5 · study · 2026</p>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /carousel-track -->
+  </main>
+
+  <!-- ── Carousel navigation ── -->
+  <nav class="carousel-nav" aria-label="Slide navigation">
+    <button class="nav-btn nav-btn--prev" id="prevBtn" type="button"
+            aria-label="Previous slide" disabled>
+      <span aria-hidden="true">←</span>
+    </button>
+    <div class="slide-counter" id="slideCounter">
+      <span class="counter-current" id="counterCurrent" aria-live="polite" aria-atomic="true"
+            aria-label="Slide 1 of 3">01</span><span class="counter-sep" aria-hidden="true">/</span><span
+            class="counter-total" aria-hidden="true">03</span>
+    </div>
+    <button class="nav-btn nav-btn--next" id="nextBtn" type="button"
+            aria-label="Next slide">
+      <span aria-hidden="true">→</span>
+    </button>
+  </nav>
+
+  <!-- ── INDEX Overlay ── -->
+  <div class="overlay" id="indexOverlay"
+       role="dialog" aria-modal="true" aria-labelledby="overlayHeading" hidden>
+    <!-- Graft 1 in overlay context: grid + reg marks always-on while overlay is open -->
+    <div class="overlay__grid-overlay" aria-hidden="true"></div>
+    <div class="reg-marks reg-marks--overlay" aria-hidden="true">
+      <span class="reg-mark reg-tl"></span>
+      <span class="reg-mark reg-tr"></span>
+      <span class="reg-mark reg-bl"></span>
+      <span class="reg-mark reg-br"></span>
+    </div>
+
+    <div class="overlay__inner">
+      <div class="overlay__header">
+        <!-- Graft 3: poster-scale INDEX heading -->
+        <h2 class="overlay-heading poster-heading poster-heading--index" id="overlayHeading">INDEX</h2>
+        <button class="overlay-close" id="overlayClose" type="button" aria-label="Close index">
+          <span aria-hidden="true">✕</span>
+        </button>
+      </div>
+
+      <!-- Two-column layout: list left, marginalia right -->
+      <div class="overlay__body">
+        <ol class="index-list">
+          <li class="index-entry">
+            <button class="index-entry__btn" id="indexEntry01" type="button"
+                    data-target-slide="1">
+              <span class="entry-num">01</span>
+              <span class="entry-body">
+                <span class="entry-title">REVENUE TELEMETRY</span>
+                <span class="entry-meta">
+                  <span class="entry-cat">Forecasting</span>
+                  <span class="entry-year">2026</span>
+                </span>
+              </span>
+              <span class="entry-arrow" aria-hidden="true">→</span>
+            </button>
+          </li>
+          <li class="index-entry index-entry--inert" aria-disabled="true">
+            <span class="entry-num">02</span>
+            <span class="entry-body">
+              <span class="entry-title">FREIGHT AUDIT</span>
+              <span class="entry-meta">
+                <span class="entry-cat">Anomaly Detection</span>
+                <span class="entry-year">2026</span>
+              </span>
+            </span>
+          </li>
+          <li class="index-entry index-entry--inert" aria-disabled="true">
+            <span class="entry-num">03</span>
+            <span class="entry-body">
+              <span class="entry-title">MARGIN ATLAS</span>
+              <span class="entry-meta">
+                <span class="entry-cat">Analytics Engineering</span>
+                <span class="entry-year">2025</span>
+              </span>
+            </span>
+          </li>
+          <li class="index-entry index-entry--inert" aria-disabled="true">
+            <span class="entry-num">04</span>
+            <span class="entry-body">
+              <span class="entry-title">COLD START</span>
+              <span class="entry-meta">
+                <span class="entry-cat">Recommender Systems</span>
+                <span class="entry-year">2025</span>
+              </span>
+            </span>
+          </li>
+          <li class="index-entry index-entry--inert" aria-disabled="true">
+            <span class="entry-num">05</span>
+            <span class="entry-body">
+              <span class="entry-title">NIGHT SHIFT</span>
+              <span class="entry-meta">
+                <span class="entry-cat">Orchestration</span>
+                <span class="entry-year">2024</span>
+              </span>
+            </span>
+          </li>
+        </ol>
+
+        <!-- Marginalia column — filing log, right side -->
+        <aside class="overlay__marginalia" aria-hidden="true">
+          <p class="marginalia-label">FILING LOG</p>
+          <ul class="marginalia-list">
+            <li>F-2026-011 · OPEN</li>
+            <li>F-2026-007 · OPEN</li>
+            <li>F-2025-003 · CLOSED</li>
+            <li>F-2025-001 · CLOSED</li>
+            <li>F-2024-014 · ARCHIVED</li>
+          </ul>
+          <div class="marginalia-rule"></div>
+          <p class="marginalia-statute">§ 4(b) — All filings constitute<br>public record as of date stamped.</p>
+          <p class="marginalia-statute marginalia-statute--year">ANNUAL SERIES · VOL. I</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

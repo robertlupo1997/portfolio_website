@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRAFT — Design Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:   #474741;
+      --ink:  #262622;
+      --text: #E3E4D5;
+      --dim:  #B6B78D;
+      --faint:#B5B5A7;
+      --acc:  #FA9E78;
+      --bd:   rgba(227,228,213,0.12);
+      --font: 'Space Grotesk', sans-serif;
+      --mono: 'Space Mono', monospace;
+      --edge: max(1.5rem, 5vw);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      padding: 5rem var(--edge);
+      max-width: 900px;
+    }
+
+    /* ── Layout ── */
+    .guide-section {
+      margin-bottom: 5rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--bd);
+    }
+    .guide-section:first-of-type { border-top: none; padding-top: 0; }
+
+    /* ── Labels ── */
+    .section-num {
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--acc);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    /* ── Headings ── */
+    h1 {
+      font-family: var(--font);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 0.92;
+      color: var(--text);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-family: var(--font);
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    p { color: var(--dim); margin-bottom: 1rem; max-width: 68ch; }
+    p strong { color: var(--text); font-weight: 600; }
+
+    /* ── Code blocks ── */
+    pre {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      line-height: 1.7;
+      color: var(--faint);
+      background: var(--ink);
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      border-left: 2px solid var(--acc);
+    }
+    code { font-family: var(--mono); font-size: 0.8125rem; color: var(--acc); }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.04em;
+      margin: 1.5rem 0;
+    }
+    th {
+      text-align: left;
+      color: var(--faint);
+      padding: 0.5rem 1rem 0.5rem 0;
+      border-bottom: 1px solid var(--bd);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    td {
+      padding: 0.6rem 1rem 0.6rem 0;
+      color: var(--dim);
+      border-bottom: 1px solid rgba(227,228,213,0.06);
+      vertical-align: top;
+    }
+    td:first-child { color: var(--text); white-space: nowrap; }
+
+    /* ── List items ── */
+    ul.guide-list {
+      list-style: none;
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    ul.guide-list li {
+      font-size: 0.875rem;
+      color: var(--dim);
+      padding-left: 1rem;
+      position: relative;
+    }
+    ul.guide-list li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--acc);
+      font-family: var(--mono);
+    }
+
+    /* ── Critique passes ── */
+    .pass-block {
+      margin-bottom: 2rem;
+      padding: 1.25rem 1.5rem;
+      border-left: 2px solid var(--bd);
+      background: rgba(227,228,213,0.03);
+    }
+    .pass-label {
+      font-family: var(--mono);
+      font-size: 0.5625rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--acc);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .pass-block h3 {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 0.5rem;
+    }
+    .pass-block p { margin-bottom: 0.5rem; font-size: 0.875rem; }
+    .pass-block p + h3 { margin-top: 1rem; }
+
+    /* ── Header ── */
+    .guide-header {
+      margin-bottom: 4rem;
+    }
+    .guide-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    .back-link {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+      text-decoration: none;
+      border-bottom: 1px solid var(--bd);
+      padding-bottom: 2px;
+      display: inline-block;
+      margin-bottom: 3rem;
+    }
+    .back-link:hover { color: var(--acc); border-color: var(--acc); }
+  </style>
+</head>
+<body>
+
+  <div class="guide-header">
+    <a href="../" class="back-link">← Back to study</a>
+    <span class="guide-eyebrow">Design Guide · GRAFT · 2026</span>
+    <h1>GRAFT</h1>
+    <p><strong>Three Grafts, Nothing More.</strong> The current portfolio's editorial system, kept — with exactly three surgical additions from the monolith. If a fourth move appeared, it was cut.</p>
+  </div>
+
+
+  <!-- 01 The Brief -->
+  <section class="guide-section">
+    <span class="section-num">01 — The Brief</span>
+    <h2>Persona & Concept</h2>
+    <p><strong>Persona seed:</strong> A restraint-first editorial art director who rejects redesigns on principle and approves at most three changes per season.</p>
+    <p><strong>Concept:</strong> The portfolio's quiet editorial system, kept — with exactly three monolith grafts and nothing else. Targeted borrowing beats a full reskin.</p>
+
+    <h2>The Three Grafts</h2>
+    <ul class="guide-list">
+      <li><strong>Graft 1 — Grid skeleton reveal:</strong> 12-column × 8-row grid overlay + registration marks in corners, revealed on hover/focus-within each slide. Registration marks are inside the same hover state — not always-on. Sourced from monolith section 7.</li>
+      <li><strong>Graft 2 — Whisper texture:</strong> Three layered <code>repeating-linear-gradient</code> stripes on the olive ground at ≤1.5% alpha each. Light strokes on a dark ground (inverted from monolith's dark-on-concrete recipe). Deepens ~2× inside the INDEX overlay. Sourced from monolith section 8.</li>
+      <li><strong>Graft 3 — One poster-scale heading per surface:</strong> <code>clamp(3rem, 12vw, 13rem)</code>, <code>letter-spacing: -0.02em</code>, <code>line-height: 0.92</code>. Hero → H1 TREY LUPO. Project → H2 REVENUE TELEMETRY. Outro → H2 THE RECORD IS OPEN. Overlay → H2 INDEX. Exactly one per surface.</li>
+    </ul>
+
+    <h2>What Was Deliberately Excluded</h2>
+    <ul class="guide-list">
+      <li>No letter-scramble (a fourth borrowed move from ledger/broadside)</li>
+      <li>No scroll-snap (the monolith move that doesn't map to the carousel SPA)</li>
+      <li>No orange body text, glow effects, gradient blobs, or symmetric grids</li>
+      <li>No always-on registration marks (they only appear with the grid)</li>
+    </ul>
+
+    <h2>Palette (portfolio's audited tokens — identical to broadside)</h2>
+    <table>
+      <thead><tr><th>Token</th><th>Value</th><th>Contrast on bg</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>--bg-primary</td><td>#474741</td><td>—</td><td>All slide backgrounds</td></tr>
+        <tr><td>--text-primary</td><td>#E3E4D5</td><td>7.27 ✓</td><td>Headings, body text</td></tr>
+        <tr><td>--text-secondary</td><td>#B6B78D</td><td>4.52 ✓</td><td>Role line, descriptions, nav</td></tr>
+        <tr><td>--text-tertiary</td><td>#B5B5A7</td><td>4.51 ✓</td><td>Tagline, counters, credits</td></tr>
+        <tr><td>--accent-text</td><td>#FA9E78</td><td>4.55 ✓</td><td>Contact links, section labels</td></tr>
+        <tr><td>--accent</td><td>#F0704C</td><td>3.17 ⚠</td><td>Non-text decoration ONLY on #474741; all text on #262622 (5.15 ✓)</td></tr>
+        <tr><td>--ink</td><td>#262622</td><td>—</td><td>INDEX overlay background</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+
+  <!-- 02 Signature Technique -->
+  <section class="guide-section">
+    <span class="section-num">02 — Signature Technique</span>
+    <h2>Texture Inversion (Graft 2)</h2>
+    <p>The monolith uses dark ink strokes on a light concrete ground. The graft inverts this: light strokes from <code>rgba(227,228,213,…)</code> on the dark olive ground. Three layers at staggered angles and sub-1.5% alpha each produce grain without banding.</p>
+
+    <pre>/* Graft 2: whisper aggregate texture on the olive ground */
+/* Sourced from monolith section 8, inverted for dark bg */
+body {
+  background-color: #474741;
+  background-image:
+    repeating-linear-gradient(
+      -55deg,
+      transparent 0, transparent 4px,
+      rgba(227, 228, 213, 0.012) 4px, rgba(227, 228, 213, 0.012) 5px
+    ),
+    repeating-linear-gradient(
+      35deg,
+      transparent 0, transparent 7px,
+      rgba(227, 228, 213, 0.008) 7px, rgba(227, 228, 213, 0.008) 8px
+    ),
+    repeating-linear-gradient(
+      82deg,
+      transparent 0, transparent 11px,
+      rgba(227, 228, 213, 0.006) 11px, rgba(227, 228, 213, 0.006) 12px
+    );
+}
+
+/* INDEX overlay: deeper texture (~2× alpha) */
+.overlay {
+  background-color: #262622;
+  background-image:
+    repeating-linear-gradient(-55deg, transparent 0, transparent 4px,
+      rgba(227, 228, 213, 0.015) 4px, rgba(227, 228, 213, 0.015) 5px),
+    repeating-linear-gradient(35deg, transparent 0, transparent 7px,
+      rgba(227, 228, 213, 0.012) 7px, rgba(227, 228, 213, 0.012) 8px),
+    repeating-linear-gradient(82deg, transparent 0, transparent 11px,
+      rgba(227, 228, 213, 0.010) 11px, rgba(227, 228, 213, 0.010) 12px);
+}</pre>
+
+    <h2>Grid Skeleton Reveal (Graft 1)</h2>
+    <p>12-column × 8-row hairlines using <code>repeating-linear-gradient</code> at <code>rgba(227,228,213,0.12)</code>. Opacity transitions from 0 to 1 on <code>slide:hover</code> and <code>slide:focus-within</code>. Registration marks (crosshair circles in four corners) share the same CSS trigger — they are inside graft 1, not a separate move.</p>
+
+    <pre>/* Graft 1: grid overlay + reg marks — same hover/focus state */
+.grid-overlay {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 40;
+  opacity: 0;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      rgba(227,228,213,0.12) 0, rgba(227,228,213,0.12) 1px,
+      transparent 1px, transparent calc(100% / 12)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(227,228,213,0.06) 0, rgba(227,228,213,0.06) 1px,
+      transparent 1px, transparent calc(100% / 8)
+    );
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slide:hover .grid-overlay,
+.slide:focus-within .grid-overlay { opacity: 1; }
+
+/* Registration marks appear with the grid — same trigger */
+.reg-mark { opacity: 0; transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1); }
+.slide:hover .reg-marks .reg-mark,
+.slide:focus-within .reg-marks .reg-mark { opacity: 1; }</pre>
+
+    <h2>Heading Settle (Pass 1 Upgrade)</h2>
+    <p>The H1 hero name settles 8px downward on page load with a long spring ease. Reduced-motion users get the final settled state immediately — full opacity, no transform.</p>
+
+    <pre>/* Pass 1 upgrade: 8px settle on load */
+@keyframes settle-down {
+  from { transform: translateY(-8px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.hero-name {
+  animation: settle-down 600ms cubic-bezier(0.16, 1, 0.3, 1) 150ms both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-name { animation: none; opacity: 1; transform: none; }
+}</pre>
+
+    <h2>Counter Flicker (Pass 3 Upgrade)</h2>
+    <p>On each slide transition, the mono counter's current digit cycles through two random characters for exactly two animation frames before settling to the real slide number.</p>
+
+    <pre>/* Pass 3: 2-frame mono flicker — JS */
+function updateCounter(instant) {
+  const finalText = String(currentSlide + 1).padStart(2, '0');
+  if (instant || reducedMotion) {
+    counterEl.textContent = finalText;
+    return;
+  }
+  const glyphs = '0123456789';
+  const rand2 = () =>
+    glyphs[Math.floor(Math.random() * 10)] +
+    glyphs[Math.floor(Math.random() * 10)];
+  counterEl.textContent = rand2();
+  requestAnimationFrame(() => {
+    counterEl.textContent = rand2();
+    requestAnimationFrame(() => {
+      counterEl.textContent = finalText;
+    });
+  });
+}</pre>
+  </section>
+
+
+  <!-- 03 The Three Surfaces -->
+  <section class="guide-section">
+    <span class="section-num">03 — The Three Surfaces</span>
+    <h2>Slide 1 — Hero</h2>
+    <p>Eyebrow label (Space Mono, 0.6875rem) anchors top-left. H1 "TREY LUPO" at poster scale with 10vh deliberate space below the eyebrow — chosen placement, not centered float. Role line in text-secondary below. Tagline with visible hairline rule at bottom via <code>margin-top: auto</code>.</p>
+
+    <h2>Slide 2 — Project Poster</h2>
+    <p>Filing reference and category labels top-left. H2 "REVENUE / TELEMETRY" at poster scale dominates two thirds of the viewport height. Description, tabular stats (Space Mono), and dl detail grid anchor the bottom zone. The stats row has a <code>font-variant-numeric: tabular-nums</code> treatment for data alignment.</p>
+
+    <h2>Slide 3 — Outro / Contact</h2>
+    <p>Thin accent rule (non-text, <code>var(--accent) #F0704C</code>) at top as a zone marker. H2 "THE RECORD / IS OPEN" at poster scale. "Six filings a year. One analyst." in text-secondary. Contact links (GitHub · LinkedIn · treylupo.com) in Space Mono caps with accent-text color (#FA9E78, 4.55 ✓). Credit line in tertiary.</p>
+
+    <h2>INDEX Overlay</h2>
+    <p>Full-screen ink panel (<code>#262622</code>) with deeper texture (~2× slide alpha). H2 "INDEX" at poster scale top-left. Two-column layout: entry list left (entry 01 is a live <code>&lt;button&gt;</code> navigating to the project slide; entries 02–05 are inert list items at 0.5 opacity). Right column: FILING LOG marginalia in ultra-small Space Mono (not a fourth borrowed move — flavor copy, not a design technique). Grid overlay always-on while overlay is open. Reg marks visible in all four corners.</p>
+  </section>
+
+
+  <!-- 04 Critique History -->
+  <section class="guide-section">
+    <span class="section-num">04 — Critique History</span>
+
+    <div class="pass-block">
+      <span class="pass-label">Pass 1</span>
+      <h3>Found</h3>
+      <p>Hero slide: <code>1fr</code> middle zone was centering the heading in ~700px of space, creating a ~260px void above it. The eyebrow was marooned at top disconnected from the heading. Tagline was clipped by the nav bar (insufficient bottom padding). INDEX overlay right half was empty — no use of the 60% horizontal space to the right of the entry list.</p>
+      <h3>Changed</h3>
+      <p>Removed the three-zone grid approach in favor of flex-column with explicit <code>margin-top</code> on zone-mid. Set bottom padding to <code>5rem</code> to clear the carousel nav. Added FILING LOG marginalia column to the overlay right side.</p>
+      <h3>Pass 1 Upgrade</h3>
+      <p>Heading settle: H1 "TREY LUPO" enters 8px above final position and settles with <code>cubic-bezier(0.16,1,0.3,1)</code> over 600ms. Already present in initial build code; confirmed via pass-1 screenshot record.</p>
+    </div>
+
+    <div class="pass-block">
+      <span class="pass-label">Pass 2</span>
+      <h3>Found</h3>
+      <p>Hero heading at <code>7vh</code> margin still felt too close to the eyebrow — the eyebrow and name were reading as the same editorial unit rather than hierarchically separated elements. Close button had a box border that created a visible coral/orange rectangle in static QA shots (the focus-visible ring on the first focusable overlay element). Tagline rule (border-subtle 0.08 alpha) was nearly invisible in screenshots.</p>
+      <h3>Changed</h3>
+      <p>Increased zone-mid margin-top to <code>clamp(4rem, 10vh, 7rem)</code> (~90px on 900px viewport). Stripped the close button border — the focus ring alone handles the a11y signal. Changed tagline rule to <code>border-default</code> (0.12 alpha). Changed project stats separator from border-subtle to border-default. Added <code>font-variant-numeric: tabular-nums</code> to stats row.</p>
+      <h3>Pass 2 Upgrade</h3>
+      <p>Texture deepens ~2× behind the open overlay: slide layers use alpha 0.012/0.008/0.006; overlay layers use 0.015/0.012/0.010 on a darker ink ground (#262622 vs #474741), making the grain perceptibly more present without crossing the 1.5% threshold.</p>
+    </div>
+
+    <div class="pass-block">
+      <span class="pass-label">Pass 3</span>
+      <h3>Found</h3>
+      <p>All three surfaces and the overlay pass hostile review. Zero console errors. Reduced-motion composition is dignified (hero name fully visible, no collapsed layout). WCAG AA verified computationally: all text pairs ≥ 4.51; <code>#F0704C</code> used only as non-text decoration on slides and as text on ink overlay (5.15 ✓). No fourth borrowed move present.</p>
+      <h3>Changed</h3>
+      <p>No structural changes required — pass 3 was verification and upgrade integration only.</p>
+      <h3>Pass 3 Upgrade</h3>
+      <p>2-frame mono counter flicker: on each slide change, the counter's current digit shows two random glyphs across two <code>requestAnimationFrame</code> cycles (~33ms at 60Hz) before settling to the real number. Suppressed under <code>prefers-reduced-motion</code>.</p>
+    </div>
+  </section>
+
+  <footer style="margin-top:4rem; padding-top:2rem; border-top:1px solid rgba(227,228,213,0.08);">
+    <p style="font-family:var(--mono);font-size:0.5625rem;letter-spacing:0.1em;color:rgba(227,228,213,0.25);">
+      Designed &amp; built by Claude Fable 5 · study · 2026
+    </p>
+  </footer>
+
+</body>
+</html>
