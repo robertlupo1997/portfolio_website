@@ -150,7 +150,7 @@ function runHrfCountdown() {
     <div class="rule--thin"></div>
 
     <h2>Critique history — what each pass actually found</h2>
-    <span class="stamp">4 PASSES · 0 CONSOLE ERRORS</span>
+    <span class="stamp">5 PASSES · 0 CONSOLE ERRORS</span>
 
     <h3>Pass 1 — desktop, posters 2/4/6</h3>
     <ul>
@@ -200,12 +200,34 @@ function runHrfCountdown() {
           independent of whatever passes beneath.</li>
     </ul>
 
+    <h3>Pass 5 — AI-engineer fit (Trey-directed upgrades)</h3>
+    <ul>
+      <li><strong>Clickable filings:</strong> register rows link to their repos (↗), with
+          extra PyPI / live-demo links on FerroML and KKBOX; poster 3 links PyPI + GitHub,
+          poster 4 links its source, poster 2 gets a "public inspection" link. Hover moves
+          the orange into the <em>underline</em> on concrete grounds — orange text still
+          fails there (1.79:1).</li>
+      <li><strong>Ask My Work stage:</strong> its own block on the closing poster — "Recruiters
+          skim. Let them interrogate." (its real one-liner from constants.ts) with a FILE AN
+          INQUIRY CTA (mailto until the demo has a public URL); register metric fixed
+          "SSE" → "RAG · SSE".</li>
+      <li><strong>Docket set-piece:</strong> the real ACTIVITY_LOG (10 releases, 2024-11 →
+          2026-06) prints chronologically in the register's left column with a blinking
+          caret — the "this person ships" telemetry.</li>
+      <li><strong>Schedule of competencies:</strong> SKILL_GROUPS as a third fine-print
+          column on the closing poster — the keywords recruiters and ATS scanners grep for.</li>
+      <li><strong>Deploy hygiene:</strong> OG/Twitter meta, JSON-LD Person schema,
+          canonical, theme-color, favicon.svg, og.png (49&nbsp;KB).</li>
+    </ul>
+
     <h3>Honest remaining concerns</h3>
     <ul>
       <li>The cover title sets at 14vw — monolith's MONOLITH fills harder at 15vw; "TREY
           LUPO" has a space, so the tradeoff went to letter-size consistency.</li>
-      <li>Ask My Work is listed "SSE" in the register — the least legible metric of the
-          eight; it means streaming Server-Sent Events.</li>
+      <li>The FILE AN INQUIRY CTA points at mailto until Ask My Work has a live URL —
+          re-point it at deploy time.</li>
+      <li>og:image and canonical assume https://treylupo.com/ — correct at deploy if the
+          site lands on a subdomain.</li>
       <li>The fine-print marginalia stays at 0.38 opacity by monolith precedent —
           defensible only because it is <code>aria-hidden</code> duplication of facts
           stated accessibly elsewhere.</li>
