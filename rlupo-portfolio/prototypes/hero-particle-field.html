@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hero Prototype — Particle Field</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #474741;
+    color: #E3E4D5;
+    font-family: 'Courier New', monospace;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 0 6rem 7rem;
+    pointer-events: none;
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: #E85D3A;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-tagline {
+    font-size: 0.875rem;
+    color: #A6A77E;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-tagline span { color: #E3E4D5; }
+
+  .hero-bio {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: #E3E4D5;
+    line-height: 1.6;
+    max-width: 45ch;
+    margin-bottom: 2rem;
+  }
+
+  .hero-creds {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.75rem;
+    color: #A6A77E;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-label { color: #7A7A6E; }
+</style>
+</head>
+<body>
+<canvas id="field"></canvas>
+<div class="hero-content">
+  <div class="hero-name">TREY LUPO</div>
+  <div class="hero-tagline">$ whoami — <span>AI/ML Systems Engineer</span></div>
+  <p class="hero-bio">
+    Corporate FP&A Analyst at Franklin Street. I build Python SDKs that replace
+    manual Oracle exports, ML frameworks in Rust, and revenue models that reconcile.
+  </p>
+  <div class="hero-creds">
+    <span><span class="hero-label">EDU </span>B.A. Statistics · USF</span>
+    <span><span class="hero-label">CERT </span>MIT Data Science</span>
+    <span><span class="hero-label">LANG </span>Python / Rust / TypeScript / SQL</span>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('field');
+const ctx = canvas.getContext('2d');
+
+const PARTICLE_COUNT = 120;
+const CONNECTION_DIST = 140;
+const MOUSE_RADIUS = 200;
+const MOUSE_FORCE = 0.04;
+
+let mouseX = -1000, mouseY = -1000;
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+document.addEventListener('mouseleave', () => {
+  mouseX = -1000;
+  mouseY = -1000;
+});
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = (Math.random() - 0.5) * 0.4;
+    this.radius = Math.random() * 1.5 + 0.5;
+    this.baseAlpha = Math.random() * 0.4 + 0.2;
+  }
+
+  update() {
+    const dx = this.x - mouseX;
+    const dy = this.y - mouseY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist < MOUSE_RADIUS && dist > 0) {
+      const force = (1 - dist / MOUSE_RADIUS) * MOUSE_FORCE;
+      this.vx += (dx / dist) * force;
+      this.vy += (dy / dist) * force;
+    }
+
+    this.vx *= 0.98;
+    this.vy *= 0.98;
+    this.x += this.vx;
+    this.y += this.vy;
+
+    if (this.x < 0) this.x = canvas.width;
+    if (this.x > canvas.width) this.x = 0;
+    if (this.y < 0) this.y = canvas.height;
+    if (this.y > canvas.height) this.y = 0;
+  }
+}
+
+const particles = Array.from({ length: PARTICLE_COUNT }, () => new Particle());
+
+const ACCENT = [232, 93, 58];
+const DIM = [166, 167, 126];
+const SUBTLE = [122, 122, 110];
+
+function draw() {
+  ctx.fillStyle = '#474741';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  for (let i = 0; i < particles.length; i++) {
+    const a = particles[i];
+    a.update();
+
+    for (let j = i + 1; j < particles.length; j++) {
+      const b = particles[j];
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < CONNECTION_DIST) {
+        const alpha = (1 - dist / CONNECTION_DIST) * 0.15;
+
+        const midX = (a.x + b.x) / 2;
+        const midY = (a.y + b.y) / 2;
+        const mDx = midX - mouseX;
+        const mDy = midY - mouseY;
+        const mDist = Math.sqrt(mDx * mDx + mDy * mDy);
+        const nearMouse = mDist < MOUSE_RADIUS;
+
+        if (nearMouse) {
+          const t = 1 - mDist / MOUSE_RADIUS;
+          const r = Math.round(SUBTLE[0] + (ACCENT[0] - SUBTLE[0]) * t);
+          const g = Math.round(SUBTLE[1] + (ACCENT[1] - SUBTLE[1]) * t);
+          const bl = Math.round(SUBTLE[2] + (ACCENT[2] - SUBTLE[2]) * t);
+          ctx.strokeStyle = `rgba(${r},${g},${bl},${alpha + t * 0.2})`;
+        } else {
+          ctx.strokeStyle = `rgba(${SUBTLE[0]},${SUBTLE[1]},${SUBTLE[2]},${alpha})`;
+        }
+
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  for (const p of particles) {
+    const dx = p.x - mouseX;
+    const dy = p.y - mouseY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const nearMouse = dist < MOUSE_RADIUS;
+
+    if (nearMouse) {
+      const t = 1 - dist / MOUSE_RADIUS;
+      ctx.fillStyle = `rgba(${ACCENT[0]},${ACCENT[1]},${ACCENT[2]},${p.baseAlpha + t * 0.5})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius + t * 2, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      ctx.fillStyle = `rgba(${DIM[0]},${DIM[1]},${DIM[2]},${p.baseAlpha})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  requestAnimationFrame(draw);
+}
+
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>

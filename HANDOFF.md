@@ -1,3 +1,4 @@
 > **Latest handoff:**
-> `thoughts/handoffs/2026-07-09_19-22-40_monolith-lupo-ai-engineer-upgrades.md`
-> — monolith-lupo upgraded for AI-engineer fit (clickable posters, Ask My Work stage, activity docket, skills schedule, OG/JSON-LD/favicon) and verified, zero errors, on feat/monolith-lupo; next: Trey reviews at :8791/monolith-lupo/, and the cyberpunk run prompt is ready in 2026-07-09_19-06-49_cyberpunk-run-plan.md (fresh session → feat/cyber-lupo).
+> `thoughts/handoffs/2026-07-09_19-28-39_monolith-lupo-motion-pass.md` (Session A — THIS directory, feat/monolith-lupo: the go-nuts motion pass, 8 mandated set-pieces)
+> and `thoughts/handoffs/2026-07-09_19-28-39_cyber-lupo-worktree-run.md` (Session B — worktree at ../portfolio_website-cyber, feat/cyber-lupo, server :8792: the cyberpunk build)
+> — both contain their own paste-ready prompt; next: run each in its own terminal, then Trey compares the two candidates.

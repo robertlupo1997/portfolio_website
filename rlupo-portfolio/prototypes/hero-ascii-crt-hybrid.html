@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hero Prototype — ASCII Grid + CRT Hybrid</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #474741;
+    color: #E3E4D5;
+    font-family: 'Courier New', monospace;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* --- CRT layers --- */
+  .crt-scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.05) 2px,
+      rgba(0, 0, 0, 0.05) 4px
+    );
+  }
+
+  .crt-vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 55%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+  }
+
+  .crt-flicker {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+    opacity: 0;
+  }
+
+  @keyframes flicker {
+    0% { opacity: 0; }
+    5% { opacity: 0.012; background: rgba(227, 228, 213, 1); }
+    10% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  /* --- ASCII grid canvas --- */
+  canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+  }
+
+  /* --- Content --- */
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 0 6rem 7rem;
+    pointer-events: none;
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: #E85D3A;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  /* Glitch layers on the name */
+  .hero-name-glitch {
+    position: absolute;
+    top: 0; left: 0;
+    color: #E85D3A;
+    opacity: 0.6;
+    clip-path: inset(0 0 100% 0);
+    animation: glitch1 5s infinite linear;
+  }
+
+  .hero-name-glitch2 {
+    position: absolute;
+    top: 0; left: 0;
+    color: #A6A77E;
+    opacity: 0.5;
+    clip-path: inset(0 0 100% 0);
+    animation: glitch2 5s infinite linear;
+  }
+
+  @keyframes glitch1 {
+    0%, 93% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+    94% { clip-path: inset(15% 0 65% 0); transform: translate(3px, 0); }
+    95% { clip-path: inset(55% 0 20% 0); transform: translate(-4px, 0); }
+    96% { clip-path: inset(25% 0 55% 0); transform: translate(5px, 0); }
+    97%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  }
+
+  @keyframes glitch2 {
+    0%, 95% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+    96% { clip-path: inset(60% 0 15% 0); transform: translate(-3px, 0); }
+    97% { clip-path: inset(35% 0 45% 0); transform: translate(4px, 0); }
+    98%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  }
+
+  .hero-tagline {
+    font-size: 0.875rem;
+    color: #A6A77E;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-tagline span { color: #E3E4D5; }
+
+  .hero-bio {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: #E3E4D5;
+    line-height: 1.6;
+    max-width: 45ch;
+    margin-bottom: 2rem;
+  }
+
+  .hero-creds {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.75rem;
+    color: #A6A77E;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-label { color: #7A7A6E; }
+</style>
+</head>
+<body>
+
+<canvas id="grid"></canvas>
+<div class="crt-scanlines"></div>
+<div class="crt-vignette"></div>
+<div class="crt-flicker"></div>
+
+<div class="hero-content">
+  <div class="hero-name">
+    TREY LUPO
+    <span class="hero-name-glitch" aria-hidden="true">TREY LUPO</span>
+    <span class="hero-name-glitch2" aria-hidden="true">TREY LUPO</span>
+  </div>
+  <div class="hero-tagline">$ whoami — <span>AI/ML Systems Engineer</span></div>
+  <p class="hero-bio">
+    Corporate FP&A Analyst at Franklin Street. I build Python SDKs that replace
+    manual Oracle exports, ML frameworks in Rust, and revenue models that reconcile.
+  </p>
+  <div class="hero-creds">
+    <span><span class="hero-label">EDU </span>B.A. Statistics · USF</span>
+    <span><span class="hero-label">CERT </span>MIT Data Science</span>
+    <span><span class="hero-label">LANG </span>Python / Rust / TypeScript / SQL</span>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('grid');
+const ctx = canvas.getContext('2d');
+
+const CHARS = '.·:+*#@%&';
+const CELL = 18;
+const INFLUENCE_RADIUS = 200;
+
+let cols, rows;
+let mouseX = -1000, mouseY = -1000;
+let grid = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  cols = Math.ceil(canvas.width / CELL);
+  rows = Math.ceil(canvas.height / CELL);
+  grid = new Array(cols * rows).fill(0);
+}
+
+window.addEventListener('resize', resize);
+resize();
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+document.addEventListener('mouseleave', () => {
+  mouseX = -1000;
+  mouseY = -1000;
+});
+
+const BG = '#474741';
+const DIM = '#55554D';
+const MID = '#7A7A6E';
+const BRIGHT = '#A6A77E';
+const ACCENT = '#E85D3A';
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function draw(time) {
+  ctx.fillStyle = BG;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.font = `${CELL - 4}px 'Courier New', monospace`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      const px = x * CELL + CELL / 2;
+      const py = y * CELL + CELL / 2;
+
+      const dx = px - mouseX;
+      const dy = py - mouseY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      const proximity = Math.max(0, 1 - dist / INFLUENCE_RADIUS);
+      const eased = proximity * proximity * proximity;
+
+      const idx = x + y * cols;
+      grid[idx] = lerp(grid[idx], eased, 0.12);
+      const val = grid[idx];
+
+      const wave = Math.sin(time * 0.001 + x * 0.15 + y * 0.1) * 0.5 + 0.5;
+      const baseFlicker = wave * 0.15;
+      const intensity = Math.min(1, val + baseFlicker * 0.3);
+
+      const charIdx = Math.floor(intensity * (CHARS.length - 1));
+      const char = CHARS[charIdx];
+
+      if (intensity < 0.05) continue;
+
+      if (val > 0.7) {
+        ctx.fillStyle = ACCENT;
+      } else if (val > 0.3) {
+        ctx.fillStyle = BRIGHT;
+      } else if (intensity > 0.15) {
+        ctx.fillStyle = MID;
+      } else {
+        ctx.fillStyle = DIM;
+      }
+
+      ctx.globalAlpha = Math.min(1, intensity * 1.5 + 0.1);
+      ctx.fillText(char, px, py);
+    }
+  }
+
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(draw);
+}
+
+requestAnimationFrame(draw);
+</script>
+</body>
+</html>
