@@ -84,7 +84,7 @@
 
         <div class="cover__baseline">
           <p class="cover__desc">An annual of public filings for the professional record&nbsp;—<br>eight projects, three roles, one working year.</p>
-          <p class="cover__colophon">Bureau of Career Records &amp; Public Filings<br>treylupo.com · github.com/robertlupo1997</p>
+          <p class="cover__colophon">Bureau of Career Records &amp; Public Filings<br>treylupo.com · github.com/robertlupo1997<span class="cover__keys"><br>Press P — proof sheet · G — grid</span></p>
         </div>
       </div>
     </section>
@@ -133,8 +133,8 @@
 
         <div class="notice__body">
           <h2 class="notice__title" id="notice-h2">
-            <span class="notice__word">VARIANCE</span>
-            <span class="notice__word notice__word--shift">ANALYSIS</span>
+            <span class="notice__word" data-text="VARIANCE">VARIANCE</span>
+            <span class="notice__word notice__word--shift" data-text="ANALYSIS">ANALYSIS</span>
           </h2>
           <div class="notice__stamp" role="img" aria-label="Variance analysis reduced from 8 hours to under 1 hour">
             <span class="notice__stamp-metric" aria-hidden="true">8H&nbsp;→&nbsp;&lt;1H</span>
@@ -181,9 +181,20 @@
       </div>
       <div class="grid-overlay grid-overlay--dark" aria-hidden="true"></div>
 
-      <div class="ferro__numeral" role="img" aria-label="3.9 times faster than scikit-learn KMeans">
+      <div class="ferro__numeral" role="img" aria-label="3.9 times faster than scikit-learn KMeans — in the same wall-clock time FerroML covers 3.9 times the distance">
         <span class="ferro__value" data-countup aria-hidden="true">3.9×</span>
         <span class="ferro__value-label" aria-hidden="true">FASTER THAN SKLEARN — KMEANS</span>
+        <div class="ferro__race" aria-hidden="true">
+          <div class="ferro__lane">
+            <span class="ferro__lane-label">FerroML</span>
+            <span class="ferro__track" style="--f: 1;"><span class="ferro__trail"></span><span class="ferro__runner"></span></span>
+          </div>
+          <div class="ferro__lane">
+            <span class="ferro__lane-label">sklearn</span>
+            <span class="ferro__track" style="--f: 0.2564;"><span class="ferro__trail"></span><span class="ferro__runner"></span></span>
+          </div>
+          <p class="ferro__race-note">Same job · same clock — 3.9× the distance</p>
+        </div>
       </div>
 
       <div class="ferro__content">
@@ -375,9 +386,9 @@
         </div>
 
         <div class="open__main">
-          <h2 class="open__title" id="open-h2">
-            <span class="open__line open__orange-text">OPEN</span>
-            <span class="open__line open__concrete">TO&nbsp;WORK</span>
+          <h2 class="open__title" id="open-h2" aria-label="Open to work">
+            <span class="open__line open__orange-text" aria-hidden="true">OPEN</span>
+            <span class="open__line open__concrete" aria-hidden="true">TO&nbsp;WORK</span>
           </h2>
           <p class="open__subtitle">Trey Lupo — FP&amp;A · Data Science · AI/ML</p>
 
@@ -432,6 +443,43 @@
     </section>
 
   </main>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- PROOF SHEET — imposition view (press P)        -->
+  <!-- ══════════════════════════════════════════════ -->
+  <div class="proof" id="proof-sheet" role="dialog" aria-modal="true" aria-label="Proof sheet — imposition view of all six posters" hidden>
+    <header class="proof__head">
+      <span class="proof__head-title">Proof sheet — imposition · 6 filings</span>
+      <span class="proof__hint" aria-hidden="true"><kbd>Enter</kbd> jump to poster · <kbd>Esc</kbd> exit</span>
+      <button class="proof__close" type="button">Close ×</button>
+    </header>
+    <div class="proof__grid">
+      <button type="button" class="proof__tile" data-target="poster-1" aria-label="Jump to poster 1 — cover, Trey Lupo" style="--i: 0;">
+        <span class="proof__frame" aria-hidden="true"><iframe data-src="./#poster-1" tabindex="-1" title="Poster 1 proof"></iframe></span>
+        <span class="proof__cap" aria-hidden="true">01 · Cover</span>
+      </button>
+      <button type="button" class="proof__tile" data-target="poster-2" aria-label="Jump to poster 2 — nspb-api, variance analysis" style="--i: 1;">
+        <span class="proof__frame" aria-hidden="true"><iframe data-src="./#poster-2" tabindex="-1" title="Poster 2 proof"></iframe></span>
+        <span class="proof__cap" aria-hidden="true">02 · nspb-api</span>
+      </button>
+      <button type="button" class="proof__tile" data-target="poster-3" aria-label="Jump to poster 3 — FerroML" style="--i: 2;">
+        <span class="proof__frame" aria-hidden="true"><iframe data-src="./#poster-3" tabindex="-1" title="Poster 3 proof"></iframe></span>
+        <span class="proof__cap" aria-hidden="true">03 · FerroML</span>
+      </button>
+      <button type="button" class="proof__tile" data-target="poster-4" aria-label="Jump to poster 4 — hierarchical revenue forecast" style="--i: 3;">
+        <span class="proof__frame" aria-hidden="true"><iframe data-src="./#poster-4" tabindex="-1" title="Poster 4 proof"></iframe></span>
+        <span class="proof__cap" aria-hidden="true">04 · Forecast</span>
+      </button>
+      <button type="button" class="proof__tile" data-target="poster-5" aria-label="Jump to poster 5 — project register" style="--i: 4;">
+        <span class="proof__frame" aria-hidden="true"><iframe data-src="./#poster-5" tabindex="-1" title="Poster 5 proof"></iframe></span>
+        <span class="proof__cap" aria-hidden="true">05 · Register</span>
+      </button>
+      <button type="button" class="proof__tile" data-target="poster-6" aria-label="Jump to poster 6 — open to work, contact" style="--i: 5;">
+        <span class="proof__frame" aria-hidden="true"><iframe data-src="./#poster-6" tabindex="-1" title="Poster 6 proof"></iframe></span>
+        <span class="proof__cap" aria-hidden="true">06 · Contact</span>
+      </button>
+    </div>
+  </div>
 
   <script src="main.js"></script>
 </body>

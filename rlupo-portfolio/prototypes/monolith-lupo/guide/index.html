@@ -149,8 +149,70 @@ function runHrfCountdown() {
 
     <div class="rule--thin"></div>
 
+    <h2>The motion pass — print-shop physics, chaos gridded underneath</h2>
+    <p>A second directed build (Trey: "go nuts — inside the grid"). Eight set-pieces,
+    every one an artifact of print production, never web-slop. All of it rides the
+    existing gates: <code>html.js-anim</code> for entrances, reduced-motion and no-JS
+    get the finished composition, transform/opacity only, rAF loops pause on hidden
+    tabs, zero libraries.</p>
+    <ul>
+      <li><strong>P2 — misregistration settle (the signature).</strong> VARIANCE /
+          ANALYSIS arrive as misregistered overprints: an orange plate copy
+          (<code>::before</code>, <code>content: attr(data-text)</code>) sits 3px off
+          the ink and slides into perfect register as the poster enters, then vanishes.
+          The corner registration marks, made literal. The orange copy is decorative
+          pseudo-content behind AA-passing ink text, on screen for under a second —
+          reduced-motion users only ever see registered ink.</li>
+      <li><strong>P3 — benchmark race.</strong> Under the 3.9×: two plotter pens run the
+          same wall-clock, FerroML's ink trail ending 3.9× further than sklearn's
+          (<code>--f: 1</code> vs <code>0.2564</code> — the true ratio). Static and
+          reduced-motion pages ship the finished race; JS re-runs it with the count-up's
+          own duration and easing.</li>
+      <li><strong>P4 — forecast split.</strong> After the bars print, a dashed fit line
+          (SVG polyline over the bar tops) sweeps across on a linear clip-path reveal —
+          and as it crosses the seam at bar 34, the last ten bars lift from solid ink to
+          outlined plates, timed to the sweep (delay = i·30ms − 150ms). Fine print marks
+          the seam: ACTUAL → | → FORECAST.</li>
+      <li><strong>P5 — scanline registration.</strong> A 2px orange line sweeps the
+          register once (the bottom edge of a full-height strip, translateY −100% → 0,
+          clipped by the list's own overflow) and every status chip stamps <em>as the
+          line passes its row</em> — chip delays retimed from a flat stagger to
+          0.43s + i·169ms to track the linear sweep. The docket's newest line types in
+          character-by-character under the blinking caret.</li>
+      <li><strong>P6 — date-stamp arrival.</strong> OPEN TO WORK lands as individual
+          stamp strikes: JS splits the lines into letter spans, each scaling 1.25 → 1 on
+          the thud bezier, 26ms apart in one continuous pass. The CTA takes a quiet
+          ready-pulse every 7s (scale 1.012, suspended under hover/focus so the hover
+          transform wins).</li>
+      <li><strong>P1 — plotter rules + live letters.</strong> The cover rules are drawn
+          by an 8px orange carriage that rides the ink edge and vanishes at the end of
+          the line (the carriage is the right-edge block of a full-width strip sliding
+          translateX −100% → 0, so it can never desync from the <code>scaleX</code>
+          draw). Hovering any settled title glyph re-scrambles just that glyph for 350ms,
+          then it locks (pointer:fine only).</li>
+      <li><strong>Site-wide — crosshair cursor.</strong> A registration-mark crosshair
+          follows the pointer with <code>mix-blend-mode: difference</code> — white
+          strokes, so it renders as the exact negative of every ground it crosses
+          (light on ink, dark on concrete, cyan on orange: the mathematical complement).
+          Spring-lagged ~80ms via an exponential rAF filter that sleeps when settled and
+          on hidden tabs; scales 1.4× over links. The native cursor is never hidden.</li>
+      <li><strong>Site-wide — proof sheet (press P).</strong> The imposition view: all
+          six posters as a printer's contact sheet. Implementation choice — <em>live
+          same-document iframes</em>, one per poster via <code>./#poster-N</code>
+          anchors, lazy-loaded on first toggle and scaled to the tile (JS measures the
+          frame, sets <code>--proof-scale</code>). The tiles are living proofs: each
+          mini poster runs its own entrance. Cost: six extra page instances on first
+          open — accepted for desktop-only, keyboard-gated chrome; the CSS-abstraction
+          fallback was the cheaper, deader option. Dialog semantics: role=dialog,
+          aria-modal, focus trapped (close button + six labeled tiles), Enter jumps to
+          the poster and exits, Esc exits, Ctrl/⌘+P never intercepted. ≤768px: not
+          available.</li>
+    </ul>
+
+    <div class="rule--thin"></div>
+
     <h2>Critique history — what each pass actually found</h2>
-    <span class="stamp">5 PASSES · 0 CONSOLE ERRORS</span>
+    <span class="stamp">8 PASSES · 0 CONSOLE ERRORS</span>
 
     <h3>Pass 1 — desktop, posters 2/4/6</h3>
     <ul>
@@ -220,6 +282,50 @@ function runHrfCountdown() {
           canonical, theme-color, favicon.svg, og.png (49&nbsp;KB).</li>
     </ul>
 
+    <h3>Pass 7 — the motion pass, desktop verify</h3>
+    <ul>
+      <li><strong>Built:</strong> all eight set-pieces above, then verified at 1440×900 —
+          six settled shots, five mid-animation shots (misregistration caught wide open
+          at 450ms, the P6 "K" frozen mid-strike at 1.25×, chips trailing the scanline),
+          and full-res crops confirming the P4 sweep→lift sequence. Zero console/page
+          errors on every shot.</li>
+      <li><strong>Interactive contract, computed not eyeballed:</strong> a Playwright
+          run asserted the cursor appears and scales to exactly 1.4 over links, P opens
+          with focus on tile 1, Tab walks the tiles, Enter exits and lands poster-2 at
+          top with focus moved to it, Esc exits with body scroll restored, focus wraps
+          correctly at both trap boundaries, hovering a settled glyph re-scrambles and
+          relocks it, and Ctrl+P is left for the browser.</li>
+    </ul>
+
+    <h3>Pass 8 — mobile + reduced-motion sweep</h3>
+    <ul>
+      <li>390×844 all posters: the race compacts under the centered numeral, the seam
+          label fits inside the narrow chart, the P hint hides with the rest of the
+          desktop chrome, the proof sheet is display:none'd and JS-guarded. No defects
+          found.</li>
+      <li>Reduced motion: registered words, the race parked at its true distances, the
+          forecast split fully drawn, unsplit title lines — the complete composition,
+          statically. Zero errors.</li>
+    </ul>
+
+    <h3>Pass 9 — director check: print + no-JS</h3>
+    <ul>
+      <li><strong>Found (pre-existing, all the way back to pass 2):</strong> the print
+          stylesheet only ever worked if you had scrolled the whole page first — entrance
+          states are gated per-poster on <code>.is-in</code>, so printing after load
+          filed posters 2–6 with their content at opacity 0. The pass-2 claim "the
+          annual files itself on paper" was true only of a fully-scrolled page.</li>
+      <li><strong>Fixed:</strong> a <code>beforeprint</code> hook settles every poster
+          (+ the chart split), and print CSS zeroes all transitions/animations so
+          queued delays land instantly on paper. That fix itself broke the cover — its
+          eyebrow/roles/baseline reach opacity 1 <em>by animation</em>, which the
+          animations-off rule froze at 0 — caught in the same pass and handed their
+          settled state back explicitly. Print now files all six pages complete from
+          any scroll position, race and forecast split included, in ink.</li>
+      <li><strong>No-JS re-verified after the motion pass:</strong> title intact, race
+          parked statically via <code>--f</code>, proof sheet hidden, docket line whole.</li>
+    </ul>
+
     <h3>Honest remaining concerns</h3>
     <ul>
       <li>The cover title sets at 14vw — monolith's MONOLITH fills harder at 15vw; "TREY
@@ -231,6 +337,20 @@ function runHrfCountdown() {
       <li>The fine-print marginalia stays at 0.38 opacity by monolith precedent —
           defensible only because it is <code>aria-hidden</code> duplication of facts
           stated accessibly elsewhere.</li>
+      <li>The proof sheet's six live iframes are the honest cost of living tiles —
+          lazy-loaded and desktop-only, but a first toggle on a slow machine will feel
+          it. Swap to CSS-drawn abstractions if it ever matters more than the delight.</li>
+      <li>The misregistration overprint puts orange glyph-shapes on concrete for
+          ~0.9s. AA is a property of <em>text</em>, and the text — the ink layer — never
+          dips below 9:1; the orange is aria-hidden paint that reduced-motion users
+          never see. Ruled compliant, noted because orange-on-concrete is otherwise
+          banned on this site.</li>
+      <li>The crosshair renders cyan on the orange poster — that is what
+          <code>difference</code> does to orange, the literal photographic negative.
+          Ruled in-brief (registration marks are press hardware), but it is the one
+          non-palette color on the site.</li>
+      <li>Printing within the first ~1.2s of load can still catch the cover scramble
+          mid-flight (inline letter opacities) — a real but vanishing edge.</li>
     </ul>
 
     <div class="rule"></div>
