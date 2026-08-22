@@ -2434,7 +2434,10 @@ body.proof-open { overflow: hidden; }
   .grid-overlay,
   .notice__strip,
   .cursor-reg,
-  .proof { display: none; }
+  .proof,
+  .kkb__bg-text,
+  .open__orange-block,
+  .open__year-mark { display: none; }
 
   /* Motion chrome flattens to ink on paper */
   .notice__word::before { display: none !important; }
