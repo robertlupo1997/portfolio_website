@@ -569,6 +569,19 @@ html.js-anim .cover__baseline { animation-delay: 1.15s; }
   opacity: 0.78; /* 5.4:1 on concrete — 0.65 fails AA at 3.9:1 */
 }
 
+/* Conditional-claim marker: half-blood-prince is private until published */
+.notice__status {
+  margin-top: 0.6rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+}
+
 .notice__body {
   display: flex;
   align-items: center;
