@@ -87,7 +87,7 @@ dl, dt, dd { margin: 0; }
   left: 1rem;
   z-index: 999;
   background: var(--orange);
-  color: var(--cream);
+  color: var(--ink); /* ink #1c1a17 on orange #e8551a = 4.75:1 (cream was 3.10:1) */
   font-family: var(--font-body);
   font-size: var(--sz-sm);
   font-weight: 700;
@@ -504,7 +504,7 @@ html.js-anim .cover__baseline { animation-delay: 1.15s; }
 
 
 /* ═══════════════════════════════════════════════════════════════
-   POSTER 2 — NSPB-API · VARIANCE ANALYSIS  (concrete notice)
+   POSTER 2 — HALF-BLOOD PRINCE · MARGIN NOTES  (concrete notice)
    ═══════════════════════════════════════════════════════════════ */
 
 .poster--notice {
@@ -567,6 +567,19 @@ html.js-anim .cover__baseline { animation-delay: 1.15s; }
   letter-spacing: 0.12em;
   color: var(--ink);
   opacity: 0.78; /* 5.4:1 on concrete — 0.65 fails AA at 3.9:1 */
+}
+
+/* Conditional-claim marker: half-blood-prince is private until published */
+.notice__status {
+  margin-top: 0.6rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--sz-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink);
 }
 
 .notice__body {
@@ -843,7 +856,7 @@ html.js-anim .poster--notice.is-in .notice__stamp {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   POSTER 3 — FERROML · 3.9×  (orange, giant numeral)
+   POSTER 3 — FERROML  (orange, giant numeral)
    ═══════════════════════════════════════════════════════════════ */
 
 .poster--ferro {
@@ -870,7 +883,8 @@ html.js-anim .poster--notice.is-in .notice__stamp {
 
 .ferro__value {
   font-family: var(--font-display);
-  font-size: min(52vh, 30vw);
+  /* sized for six glyphs — must clear the content column's border */
+  font-size: min(46vh, 13.8vw);
   line-height: 0.82;
   color: var(--ink); /* ink on orange = 4.75:1, passes AA large */
   letter-spacing: -0.04em;
@@ -887,92 +901,6 @@ html.js-anim .poster--notice.is-in .notice__stamp {
   color: var(--ink);
 }
 
-/* ── Benchmark race — the 3.9× explained visually ──
-   Two plotter pens race the same wall-clock: FerroML's trail ends 3.9×
-   further than sklearn's. Static/no-JS/reduced-motion pages ship the
-   finished race (--f is the true distance fraction); JS only re-runs it. */
-.ferro__race {
-  width: 100%;
-  max-width: min(44vw, 620px);
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  margin-top: clamp(0.5rem, 1.5vh, 1.25rem);
-}
-
-.ferro__lane {
-  display: grid;
-  grid-template-columns: 5.2em 1fr;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.ferro__lane-label {
-  font-family: var(--font-body);
-  font-size: var(--sz-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--ink); /* 4.75:1 on orange */
-}
-
-.ferro__track {
-  position: relative;
-  height: 13px;
-  border-bottom: 1px solid rgba(28, 26, 23, 0.4);
-}
-
-/* Finish line */
-.ferro__track::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: -1px;
-  width: 2px;
-  background: rgba(28, 26, 23, 0.4);
-}
-
-/* Ink laid down behind the pen — scaleX(--f) of the full track */
-.ferro__trail {
-  position: absolute;
-  left: 0;
-  bottom: -1px;
-  height: 3px;
-  width: 100%;
-  background: var(--ink);
-  transform: scaleX(var(--f));
-  transform-origin: left center;
-}
-
-/* The pen itself — static truth parks it at its finish distance;
-   JS re-races it from left: 0 via transform */
-.ferro__runner {
-  position: absolute;
-  left: calc(100% * var(--f) - 4px);
-  bottom: -1px;
-  width: 4px;
-  height: 13px;
-  background: var(--ink);
-}
-
-html.js-anim .poster--ferro .ferro__trail  { transform: scaleX(0); }
-html.js-anim .poster--ferro .ferro__runner { left: 0; }
-
-.ferro__race-note {
-  font-family: var(--font-body);
-  font-size: 0.62rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--ink);
-}
-
-html.js-anim .poster--ferro .ferro__race {
-  opacity: 0;
-  transition: opacity 0.5s var(--ease-out) 0.2s;
-}
-html.js-anim .poster--ferro.is-in .ferro__race { opacity: 1; }
 
 .ferro__content {
   position: absolute;
@@ -1083,10 +1011,10 @@ html.js-anim .poster--ferro.is-in .ferro__value-label { opacity: 1; }
 
 
 /* ═══════════════════════════════════════════════════════════════
-   POSTER 4 — HIERARCHICAL REVENUE FORECAST  (ink, giant metric)
+   POSTER 4 — KKBOX CHURN PREDICTION  (ink, giant metric)
    ═══════════════════════════════════════════════════════════════ */
 
-.poster--hrf {
+.poster--kkb {
   background-color: var(--ink);
   --reg-color: rgba(185, 181, 173, 0.45);
   --grid-col: rgba(232, 85, 26, 0.2);
@@ -1095,7 +1023,7 @@ html.js-anim .poster--ferro.is-in .ferro__value-label { opacity: 1; }
   align-items: stretch;
 }
 
-.hrf__bg-text {
+.kkb__bg-text {
   position: absolute;
   font-family: var(--font-display);
   font-size: clamp(8rem, 26vw, 32rem);
@@ -1110,17 +1038,18 @@ html.js-anim .poster--ferro.is-in .ferro__value-label { opacity: 1; }
   letter-spacing: -0.05em;
 }
 
-.hrf__layout {
+.kkb__layout {
   position: relative;
   z-index: 1;
   flex: 1;
   padding: var(--edge-v) var(--edge);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: clamp(0.75rem, 1.5vh, 1.5rem);
 }
 
-.hrf__header {
+.kkb__header {
   display: flex;
   justify-content: space-between;
   font-family: var(--font-body);
@@ -1131,19 +1060,19 @@ html.js-anim .poster--ferro.is-in .ferro__value-label { opacity: 1; }
   color: var(--concrete-dark);
 }
 
-.hrf__limit-block {
+.kkb__limit-block {
   display: flex;
   flex-direction: column;
   gap: clamp(0.5rem, 1vh, 1rem);
 }
 
-.hrf__limit {
+.kkb__limit {
   display: flex;
   align-items: baseline;
   line-height: 0.85;
 }
 
-.hrf__value {
+.kkb__value {
   font-family: var(--font-display);
   font-size: clamp(7rem, 19vw, 22rem);
   color: var(--orange); /* orange on ink = 4.75:1, passes */
@@ -1152,7 +1081,7 @@ html.js-anim .poster--ferro.is-in .ferro__value-label { opacity: 1; }
   font-variant-numeric: tabular-nums;
 }
 
-.hrf__unit {
+.kkb__unit {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 7vw, 7rem);
   color: var(--concrete);
@@ -1161,7 +1090,7 @@ html.js-anim .poster--ferro.is-in .ferro__value-label { opacity: 1; }
   margin-left: 0.12em;
 }
 
-.hrf__label {
+.kkb__label {
   font-family: var(--font-display);
   font-size: clamp(1.25rem, 3.5vw, 3.5rem);
   color: var(--concrete);
@@ -1169,7 +1098,7 @@ html.js-anim .poster--ferro.is-in .ferro__value-label { opacity: 1; }
   line-height: 1.05;
 }
 
-.hrf__zones {
+.kkb__zones {
   font-family: var(--font-body);
   font-size: var(--sz-sm);
   color: var(--concrete-dark);
@@ -1177,125 +1106,14 @@ html.js-anim .poster--ferro.is-in .ferro__value-label { opacity: 1; }
   letter-spacing: 0.1em;
 }
 
-.hrf__divider {
+.kkb__divider {
   height: 1px;
   background: var(--concrete-dark);
   opacity: 0.25;
   align-self: stretch;
 }
 
-/* ── Forecast bar chart (filled by JS) ── */
-.hrf__chart {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  gap: 3px;
-  flex: 1;
-  min-height: clamp(40px, 6vh, 60px);
-  max-height: clamp(60px, 14vh, 130px);
-}
-
-.hrf__bar {
-  flex: 1;
-  background: var(--orange);
-  opacity: 0.55;
-  border-radius: 0;
-  min-width: 3px;
-  height: var(--h);
-}
-
-html.js-anim .poster--hrf .hrf__bar {
-  height: 0;
-  transition: height 0.7s var(--ease-out);
-  transition-delay: calc(var(--i) * 22ms);
-}
-html.js-anim .poster--hrf.is-in .hrf__bar { height: var(--h); }
-
-/* ── Forecast split — the seam where history ends ──
-   The last 10 bars are the forecast: outlined plates, not solid ink.
-   Static truth is the split state; with motion, the bars print solid,
-   then the plate lifts left-to-right as a dashed line sweeps the bar
-   tops (a plotter drawing the fit over the series). */
-.hrf__bar--fc {
-  background: transparent;
-  box-shadow: inset 0 0 0 2px var(--orange);
-  opacity: 0.8;
-}
-
-html.js-anim .poster--hrf .hrf__chart:not(.is-split) .hrf__bar--fc {
-  background: var(--orange);
-  box-shadow: inset 0 0 0 2px rgba(232, 85, 26, 0);
-  opacity: 0.55;
-}
-
-/* Bars 34–43 lift to outline as the sweep line passes each one:
-   line is linear over 1.15s, seam (77%) at ~0.87s → delay i·30ms − 150ms */
-html.js-anim .poster--hrf .hrf__bar--fc {
-  transition: height 0.7s var(--ease-out) calc(var(--i) * 22ms),
-              background-color 0.4s var(--ease-inout) calc(var(--i) * 30ms - 150ms),
-              box-shadow 0.4s var(--ease-inout) calc(var(--i) * 30ms - 150ms),
-              opacity 0.4s var(--ease-inout) calc(var(--i) * 30ms - 150ms);
-}
-
-/* Dashed fit line over the bar tops (SVG polyline, JS-built).
-   Revealed by a linear clip sweep — mechanical, like the register scanner. */
-.hrf__line {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.hrf__line polyline {
-  fill: none;
-  stroke: var(--orange);
-  stroke-width: 2;
-  stroke-dasharray: 7 5;
-  vector-effect: non-scaling-stroke;
-}
-
-html.js-anim .poster--hrf .hrf__line {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.15s linear;
-}
-html.js-anim .poster--hrf .hrf__chart.is-split .hrf__line {
-  clip-path: inset(0 0 0 0);
-}
-
-/* The seam itself — fine print marks where ACTUAL hands off to FORECAST */
-.hrf__seam {
-  position: absolute;
-  left: calc(100% * 34 / 44);
-  top: 0;
-  bottom: 0;
-  border-left: 1px dashed rgba(185, 181, 173, 0.45);
-  pointer-events: none;
-}
-
-.hrf__seam span {
-  position: absolute;
-  top: 0;
-  font-family: var(--font-body);
-  font-size: 0.6rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--concrete-dark); /* 4.8:1 on ink */
-  white-space: nowrap;
-}
-
-.hrf__seam span:first-child { right: 0.6em; }
-.hrf__seam span:last-child  { left: 0.6em; }
-
-html.js-anim .poster--hrf .hrf__seam {
-  opacity: 0;
-  transition: opacity 0.6s var(--ease-out) 0.85s;
-}
-html.js-anim .poster--hrf .hrf__chart.is-split .hrf__seam { opacity: 1; }
-
-.hrf__body {
+.kkb__body {
   font-family: var(--font-body);
   font-size: var(--sz-sm);
   color: var(--concrete-dark);
@@ -1304,7 +1122,7 @@ html.js-anim .poster--hrf .hrf__chart.is-split .hrf__seam { opacity: 1; }
   flex-shrink: 0;
 }
 
-.hrf__link {
+.kkb__link {
   color: var(--concrete-dark); /* 4.8:1 on ink */
   font-weight: 700;
   text-decoration: underline;
@@ -1314,27 +1132,27 @@ html.js-anim .poster--hrf .hrf__chart.is-split .hrf__seam { opacity: 1; }
   transition: color 0.25s var(--ease-inout);
 }
 
-.hrf__link:hover { color: var(--orange); } /* 4.75:1 on ink */
+.kkb__link:hover { color: var(--orange); } /* 4.75:1 on ink */
 
-.hrf__link:focus-visible {
+.kkb__link:focus-visible {
   outline: 2px solid var(--orange);
   outline-offset: 3px;
 }
 
-.hrf__stats {
+.kkb__stats {
   display: flex;
   gap: clamp(2rem, 6vw, 6rem);
   padding-bottom: 0.5rem;
   flex-shrink: 0;
 }
 
-.hrf__stat {
+.kkb__stat {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
 
-.hrf__stat-num {
+.kkb__stat-num {
   font-family: var(--font-body);
   font-size: var(--sz-xs);
   letter-spacing: 0.12em;
@@ -1342,7 +1160,7 @@ html.js-anim .poster--hrf .hrf__chart.is-split .hrf__seam { opacity: 1; }
   text-transform: uppercase;
 }
 
-.hrf__stat-val {
+.kkb__stat-val {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 3.5vw, 3rem);
   color: var(--orange); /* orange on ink passes */
@@ -1350,7 +1168,7 @@ html.js-anim .poster--hrf .hrf__chart.is-split .hrf__seam { opacity: 1; }
   font-variant-numeric: tabular-nums;
 }
 
-.hrf__stat-desc {
+.kkb__stat-desc {
   font-family: var(--font-body);
   font-size: var(--sz-xs);
   color: var(--concrete-dark);
@@ -1358,16 +1176,16 @@ html.js-anim .poster--hrf .hrf__chart.is-split .hrf__seam { opacity: 1; }
   letter-spacing: 0.1em;
 }
 
-/* Entrance: chart draws, then the metric resolves (JS countdown) */
-html.js-anim .poster--hrf .hrf__stat {
+/* Entrance: stats print after the metric resolves (JS countdown) */
+html.js-anim .poster--kkb .kkb__stat {
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
 }
-html.js-anim .poster--hrf .hrf__stat:nth-child(1) { transition-delay: 1.0s; }
-html.js-anim .poster--hrf .hrf__stat:nth-child(2) { transition-delay: 1.12s; }
-html.js-anim .poster--hrf .hrf__stat:nth-child(3) { transition-delay: 1.24s; }
-html.js-anim .poster--hrf.is-in .hrf__stat {
+html.js-anim .poster--kkb .kkb__stat:nth-child(1) { transition-delay: 1.0s; }
+html.js-anim .poster--kkb .kkb__stat:nth-child(2) { transition-delay: 1.12s; }
+html.js-anim .poster--kkb .kkb__stat:nth-child(3) { transition-delay: 1.24s; }
+html.js-anim .poster--kkb.is-in .kkb__stat {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1539,9 +1357,8 @@ html.js-anim .poster--register.is-in .register__docket li {
   display: flex;
   flex-direction: column;
   gap: 0;
-  flex: 1;
+  flex: 0 0 auto;
   overflow: hidden;
-  justify-content: space-between;
 }
 
 /* ── Scanline registration — a thin orange line sweeps the register
@@ -1580,7 +1397,7 @@ html.js-anim .poster--register.is-in .register__list::after {
   align-items: center;
   gap: 0.75rem;
   border-top: 1px solid rgba(28, 26, 23, 0.2);
-  padding: clamp(0.5rem, 1.2vh, 1.1rem) 0;
+  padding: clamp(1.1rem, 2.8vh, 2rem) 0;
   font-family: var(--font-body);
   cursor: default;
   position: relative;
@@ -1693,11 +1510,6 @@ html.js-anim .poster--register.is-in .register__list::after {
 
 .register__status--done { color: rgba(28, 26, 23, 0.78); } /* ≈5.1:1 on concrete */
 
-.register__status--spec {
-  color: rgba(28, 26, 23, 0.78);
-  border-style: dashed;
-}
-
 /* Pulsing live dot on ACTIVE stamps */
 .register__status--active::after {
   content: '';
@@ -1739,12 +1551,12 @@ html.js-anim .poster--register.is-in .register__item {
 }
 
 /* Chips stamp as the scanline passes their row: sweep runs 0.35s→1.7s
-   linear over 8 evenly spaced rows → row i certified at 0.43s + i·169ms */
+   linear over 3 register rows → row i certified at 0.43s + i·450ms */
 html.js-anim .poster--register .register__status {
   opacity: 0;
   transform: scale(1.35);
   transition: opacity 0.25s var(--ease-out), transform 0.3s var(--ease-thud);
-  transition-delay: calc(0.43s + var(--i) * 169ms);
+  transition-delay: calc(0.43s + var(--i) * 450ms);
 }
 html.js-anim .poster--register.is-in .register__status {
   opacity: 1;
@@ -1880,28 +1692,13 @@ html.js-anim .poster--open .open__subtitle {
 }
 html.js-anim .poster--open.is-in .open__subtitle { opacity: 1; }
 
-/* ── Ask My Work stage — the inquiry block ── */
+/* ── Inquiry CTA block ── */
 .open__inquiry {
   margin-top: clamp(0.75rem, 2vh, 1.5rem);
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
   align-items: flex-start;
-}
-
-.open__inquiry-lede {
-  font-family: var(--font-display);
-  font-size: clamp(0.9rem, 1.6vw, 1.35rem);
-  color: var(--concrete);
-  letter-spacing: -0.01em;
-}
-
-.open__inquiry-note {
-  font-family: var(--font-body);
-  font-size: var(--sz-xs);
-  color: var(--concrete-dark); /* 4.8:1 on ink */
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
 }
 
 .open__cta {
@@ -1967,6 +1764,7 @@ html.js-anim .poster--open.is-in .open__inquiry {
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
+  padding-bottom: 2.75rem; /* clears the absolute site-footer credit */
 }
 
 .open__link {
@@ -2393,7 +2191,7 @@ body.proof-open { overflow: hidden; }
   /* Clear the corner registration marks (20px + 24px) */
   .cover__layout,
   .notice__layout,
-  .hrf__layout,
+  .kkb__layout,
   .open__layout {
     padding-top: 3rem;
   }
@@ -2425,7 +2223,7 @@ body.proof-open { overflow: hidden; }
 
   .cover__colophon { text-align: left; }
 
-  /* Notice (nspb-api) */
+  /* Notice (margin notes) */
   .notice__strip { display: none; }
   .notice__marginalia { display: none; }
 
@@ -2464,7 +2262,7 @@ body.proof-open { overflow: hidden; }
   }
 
   .ferro__value {
-    font-size: min(30vh, 32vw);
+    font-size: min(22vh, 14.5vw);
   }
 
   .ferro__value-label {
@@ -2492,16 +2290,16 @@ body.proof-open { overflow: hidden; }
     position: relative;
   }
 
-  /* HRF */
-  .hrf__value {
+  /* KKBOX log-loss numeral */
+  .kkb__value {
     font-size: clamp(5.5rem, 24vw, 14rem);
   }
 
-  .hrf__unit {
+  .kkb__unit {
     font-size: clamp(2rem, 9vw, 5rem);
   }
 
-  .hrf__stats {
+  .kkb__stats {
     gap: 1.5rem;
     flex-wrap: wrap;
   }
@@ -2561,8 +2359,6 @@ body.proof-open { overflow: hidden; }
     min-height: 100dvh;
   }
 
-  .open__inquiry-lede { color: var(--ink); }
-  .open__inquiry-note { color: var(--ink); }
 
   .open__cta {
     background: var(--ink);
@@ -2651,31 +2447,16 @@ body.proof-open { overflow: hidden; }
   .grid-overlay,
   .notice__strip,
   .cursor-reg,
-  .proof { display: none; }
+  .proof,
+  .kkb__bg-text,
+  .open__orange-block,
+  .open__year-mark { display: none; }
 
   /* Motion chrome flattens to ink on paper */
   .notice__word::before { display: none !important; }
   .register__list::after { content: none !important; }
-  .hrf__line polyline { stroke: var(--ink); }
-  .hrf__seam { border-left-color: rgba(28, 26, 23, 0.4); }
-  .hrf__seam span { color: var(--ink); }
   .open__cta { animation: none; }
 
-  /* JS-driven states print at their true final values even if the
-     poster never entered the viewport (belt to the beforeprint hook) */
-  .hrf__line { clip-path: none !important; }
-  .hrf__seam { opacity: 1 !important; }
-  .hrf__bar--fc {
-    background: transparent !important;
-    box-shadow: inset 0 0 0 2px var(--ink) !important;
-    opacity: 0.8 !important;
-  }
-  .ferro__race { opacity: 1 !important; }
-  .ferro__trail { transform: scaleX(var(--f)) !important; }
-  .ferro__runner {
-    left: calc(100% * var(--f) - 4px) !important;
-    transform: none !important;
-  }
 
   .poster {
     height: auto;
@@ -2688,18 +2469,18 @@ body.proof-open { overflow: hidden; }
   }
 
   /* Ink-on-paper: every ground flattens to white, every letter to ink */
-  .poster--cover, .poster--hrf, .poster--open, .poster--ferro {
+  .poster--cover, .poster--kkb, .poster--open, .poster--ferro {
     background-color: #fff !important;
     background-image: none !important;
   }
   .poster--notice, .poster--register { background-image: none !important; }
 
   .cover__title, .cover__roles, .cover__desc, .cover__colophon, .cover__eyebrow,
-  .hrf__value, .hrf__unit, .hrf__label, .hrf__zones, .hrf__body, .hrf__link,
-  .hrf__stat-val, .hrf__stat-num, .hrf__stat-desc, .hrf__header,
+  .kkb__value, .kkb__unit, .kkb__label, .kkb__zones, .kkb__body, .kkb__link,
+  .kkb__stat-val, .kkb__stat-num, .kkb__stat-desc, .kkb__header,
   .open__line, .open__subtitle, .open__tag, .open__link,
   .open__t-year, .open__t-item p,
-  .open__inquiry-lede, .open__inquiry-note, .open__cta,
+  .open__cta,
   .open__skills-title, .open__skills dt, .open__skills dd,
   .notice__stamp-metric, .notice__stamp-label,
   .register__status--active {
@@ -2716,8 +2497,6 @@ body.proof-open { overflow: hidden; }
   .register__status--active { background: none; border: 1.5px solid var(--ink); }
   .register__status--active::after { background: var(--ink); animation: none; }
 
-  .open__orange-block, .hrf__bg-text, .open__year-mark { display: none; }
-  .hrf__bar { background: var(--ink); opacity: 0.7; }
   .cover__rule, .notice__divider { background: var(--ink); }
 
   .open__link { text-decoration: underline; }

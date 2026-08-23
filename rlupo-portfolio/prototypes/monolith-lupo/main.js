@@ -1,7 +1,6 @@
 /* MONOLITH-LUPO — main.js
    Letter scramble + live letters · nav + entrance observers ·
-   metric counters · benchmark race · forecast chart + split ·
-   docket typewriter · stamp title · crosshair cursor ·
+   metric counters · docket typewriter · stamp title · crosshair cursor ·
    proof sheet (P) · visibility guard
    ——————————————————————————————————————————————— */
 
@@ -155,131 +154,22 @@ function animateNumber(el, from, to, duration, format) {
   });
 }
 
-/* Poster 3 — FerroML: 3.9× counts up from 1.0× as the poster enters */
+/* Poster 3 — FerroML: test count climbs from 0 to 8,196 as the poster enters */
 function runFerroCountup() {
   const el = document.querySelector('[data-countup]');
-  animateNumber(el, 1.0, 3.9, 1400, (v) => v.toFixed(1) + '×');
+  if (!el) return;
+  animateNumber(el, 0, 8196, 1400, (v) => Math.round(v).toLocaleString('en-US'));
 }
 
-/* Poster 3 — benchmark race: two plotter pens on the same wall-clock,
-   FerroML's trail ending 3.9× further (--f is the true distance
-   fraction, shipped in the HTML). Same duration and easing family as
-   the count-up, fired with it. */
-function runFerroRace() {
-  const race = document.querySelector('.ferro__race');
-  if (!race || reducedMotion) return;
-
-  const parts = Array.from(race.querySelectorAll('.ferro__track')).map((track) => {
-    const f = parseFloat(getComputedStyle(track).getPropertyValue('--f')) || 0;
-    return {
-      runner: track.querySelector('.ferro__runner'),
-      trail:  track.querySelector('.ferro__trail'),
-      f,
-      dist: Math.max(0, track.clientWidth * f - 4), /* pen parks at trail end */
-    };
-  });
-
-  const DURATION = 1400;
-  const start = performance.now();
-  let rafId;
-
-  function settle() {
-    parts.forEach((p) => {
-      p.trail.style.transform  = `scaleX(${p.f})`;
-      p.runner.style.transform = `translateX(${p.dist}px)`;
-    });
-  }
-
-  function tick(now) {
-    if (document.hidden) { settle(); return; }
-    const t = Math.min((now - start) / DURATION, 1);
-    const e = easeOutQuart(t);
-    parts.forEach((p) => {
-      p.trail.style.transform  = `scaleX(${p.f * e})`;
-      p.runner.style.transform = `translateX(${p.dist * e}px)`;
-    });
-    if (t < 1) rafId = requestAnimationFrame(tick);
-  }
-
-  rafId = requestAnimationFrame(tick);
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden && rafId) {
-      cancelAnimationFrame(rafId);
-      rafId = null;
-      settle();
-    }
-  });
-}
-
-/* Poster 4 — HRF: bars draw first, then the RMSLE resolves 1.00 → 0.48
-   (the error coming down is the point) */
-function runHrfCountdown() {
+/* Poster 4 — KKBOX: validation log loss resolves 0.41 → 0.11 (calibration is the point;
+   the error coming down is the achievement) */
+function runKkbCountdown() {
   const el = document.querySelector('[data-countdown]');
   if (!el) return;
-  if (reducedMotion) { el.textContent = '0.48'; return; }
+  if (reducedMotion) { el.textContent = '0.11'; return; }
   window.setTimeout(() => {
-    animateNumber(el, 1.0, 0.48, 1100, (v) => v.toFixed(2));
+    animateNumber(el, 0.41, 0.11, 1100, (v) => v.toFixed(2));
   }, 850);
-}
-
-/* ── Forecast bar chart (deterministic trend + seasonality) ──
-   Replaces monolith's noise waveform with a series that reads
-   as a store-sales forecast: upward trend, seasonal cycle,
-   repeating promotional spikes. */
-
-function initForecastChart() {
-  const el = document.querySelector('.hrf__chart');
-  if (!el) return;
-
-  const BARS = 44;
-  const FC_FROM = 34; // bars 34–43 are the forecast window (seam in CSS: 34/44)
-  const points = [];
-
-  for (let i = 0; i < BARS; i++) {
-    const trend    = 18 + (i / (BARS - 1)) * 42;          // 18% → 60%
-    const season   = 16 * Math.sin(i * 0.48 + 0.8);       // seasonal cycle
-    const promo    = (i % 11 === 7) ? 18 : 0;             // periodic spike
-    const h        = Math.max(8, Math.min(96, Math.round(trend + season + promo)));
-
-    const bar = document.createElement('div');
-    bar.className = i >= FC_FROM ? 'hrf__bar hrf__bar--fc' : 'hrf__bar';
-    bar.style.setProperty('--h', h + '%');
-    bar.style.setProperty('--i', i);
-    el.appendChild(bar);
-
-    points.push(`${i * 10 + 5},${100 - h}`);
-  }
-
-  /* Dashed fit line over the bar tops (absolute, outside the flex flow) */
-  const SVG_NS = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(SVG_NS, 'svg');
-  svg.setAttribute('class', 'hrf__line');
-  svg.setAttribute('viewBox', `0 0 ${BARS * 10} 100`);
-  svg.setAttribute('preserveAspectRatio', 'none');
-  const line = document.createElementNS(SVG_NS, 'polyline');
-  line.setAttribute('points', points.join(' '));
-  svg.appendChild(line);
-  el.appendChild(svg);
-
-  /* The seam where history hands off to forecast */
-  const seam = document.createElement('div');
-  seam.className = 'hrf__seam';
-  const left  = document.createElement('span');
-  left.textContent = 'Actual →';
-  const right = document.createElement('span');
-  right.textContent = '→ Forecast';
-  seam.append(left, right);
-  el.appendChild(seam);
-}
-
-/* Poster 4 — after the bars print (0.7s + 43·22ms ≈ 1.65s), the
-   forecast plate lifts: dashed line sweeps the bar tops, the last 10
-   bars restyle to outline, the seam label appears. */
-function runForecastSplit() {
-  const chart = document.querySelector('.hrf__chart');
-  if (!chart || reducedMotion) return;
-  window.setTimeout(() => chart.classList.add('is-split'), 1900);
 }
 
 /* Poster 5 — the docket's newest line types in character-by-character
@@ -401,8 +291,8 @@ function initEntranceObserver() {
         const poster = entry.target;
         poster.classList.add('is-in');
 
-        if (poster.id === 'poster-3') { runFerroCountup(); runFerroRace(); }
-        if (poster.id === 'poster-4') { runHrfCountdown(); runForecastSplit(); }
+        if (poster.id === 'poster-3') { runFerroCountup(); }
+        if (poster.id === 'poster-4') { runKkbCountdown(); }
         if (poster.id === 'poster-5') { runDocketType(); }
 
         obs.unobserve(poster);
@@ -610,8 +500,6 @@ function initProofSheet() {
 function initPrintSettle() {
   window.addEventListener('beforeprint', () => {
     document.querySelectorAll('.poster').forEach((p) => p.classList.add('is-in'));
-    const chart = document.querySelector('.hrf__chart');
-    if (chart) chart.classList.add('is-split');
   });
 }
 
@@ -619,7 +507,6 @@ function initPrintSettle() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initScramble();
-  initForecastChart();
   initNavObserver();
   initEntranceObserver();
   initKeyNav();
