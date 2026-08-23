@@ -154,11 +154,11 @@ function animateNumber(el, from, to, duration, format) {
   });
 }
 
-/* Poster 3 — FerroML: test count climbs from 0 to 7,600+ as the poster enters */
+/* Poster 3 — FerroML: test count climbs from 0 to 8,196 as the poster enters */
 function runFerroCountup() {
   const el = document.querySelector('[data-countup]');
   if (!el) return;
-  animateNumber(el, 0, 7600, 1400, (v) => Math.round(v).toLocaleString('en-US') + '+');
+  animateNumber(el, 0, 8196, 1400, (v) => Math.round(v).toLocaleString('en-US'));
 }
 
 /* Poster 4 — KKBOX: log loss resolves 0.41 → 0.11 (calibration is the point;
