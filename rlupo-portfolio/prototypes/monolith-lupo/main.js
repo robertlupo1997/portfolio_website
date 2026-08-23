@@ -161,7 +161,7 @@ function runFerroCountup() {
   animateNumber(el, 0, 8196, 1400, (v) => Math.round(v).toLocaleString('en-US'));
 }
 
-/* Poster 4 — KKBOX: log loss resolves 0.41 → 0.11 (calibration is the point;
+/* Poster 4 — KKBOX: validation log loss resolves 0.41 → 0.11 (calibration is the point;
    the error coming down is the achievement) */
 function runKkbCountdown() {
   const el = document.querySelector('[data-countdown]');
