@@ -94,8 +94,12 @@ export const ALL_PROJECTS: Project[] = [
     githubUrl: "https://github.com/robertlupo1997/kkbox-churn-prediction",
     liveUrl: "https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction",
     epoch: "'24",
-    metric: "0.97",
-    metricLabel: "AUC",
+    // The card links to the live demo, so it carries the demo's number. "0.97"
+    // was a rounding of 0.9696 -- an archived full-data LightGBM tuned-validation
+    // figure describing no served model -- and the kkbox repository retracted that
+    // rounding. Both numbers appear in full in `description` above.
+    metric: "0.9765",
+    metricLabel: "AUC · DEMO HOLDOUT (1,995)",
     stack: ["React 19", "FastAPI", "Docker", "XGBoost"],
     primaryStack: ["Python"],
     featured: false,
@@ -187,7 +191,7 @@ export const CREDENTIALS: Credential[] = [
   { label: 'B.A. Statistics · USF' },
   { label: '6,500+ Tests · FerroML' },
   { label: '60+ API Endpoints · nspb-api' },
-  { label: '0.97 AUC · KKBOX Churn' },
+  { label: '0.9765 AUC · KKBOX Churn demo' },
   { label: 'Franklin Street FP&A' },
   { label: 'Python · Rust · TypeScript · SQL' },
   { label: 'Origin Construction · AI Intern' },
@@ -203,7 +207,7 @@ export const ACTIVITY_LOG: ActivityEntry[] = [
   { date: '2026-03', project: 'MLForge', label: 'released', note: 'CSV in · pipeline out' },
   { date: '2025-12', project: 'nspb-api', label: 'v1.0', note: 'Oracle EPM SDK launched' },
   { date: '2025-09', project: 'revenue-forecast', label: 'deployed', note: 'multi-LOB reconciliation' },
-  { date: '2024-11', project: 'KKBOX', label: 'published', note: '0.97 AUC · HuggingFace' },
+  { date: '2024-11', project: 'KKBOX', label: 'published', note: '0.9696 AUC archived · demo 0.9765 · HuggingFace' },
 ];
 
 export const ACTIVITY_SUMMARY = {
