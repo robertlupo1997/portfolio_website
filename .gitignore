@@ -40,3 +40,27 @@ claude-20251217T231824Z-3-001/
 claude-code-plugins/
 humanlayer/
 claude.md
+
+# Agent/tool working directories and generated output. All were left untracked in
+# the tree; none is an input to the site. Sizes at the time of adding: references/
+# 47M, graphify-out/ 11M, .agents/ 3.7M, design-extract-output/ 3.7M,
+# .superpowers/ 2.2M.
+.agents/
+.impeccable/
+.superpowers/
+.vite/
+skills-lock.json
+design-extract-output/
+graphify-out/
+references/
+rlupo-portfolio/test-results/
+rlupo-portfolio/prototypes/screenshots/
+
+# Windows "mark of the web" sidecars, created when a file is downloaded.
+*:Zone.Identifier
+
+# Scratch markers left by tooling. Not deleted here -- that is the owner's call --
+# but they must not reach the published repository.
+_gittest_marker.txt
+plain_test_file.txt
+Layout Critique.html
