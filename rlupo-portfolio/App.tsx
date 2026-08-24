@@ -7,7 +7,6 @@ import AskPanel from './components/AskPanel';
 import Cursor from './components/Cursor';
 import Preloader from './components/Preloader';
 import { useLenis } from './hooks/useLenis';
-import { useScrollAnimations } from './hooks/useScrollAnimations';
 import { VizCaptureRoute } from './components/VizCaptureRoute';
 import './styles/index.css';
 
@@ -16,12 +15,12 @@ const App: React.FC = () => {
   const [infoOpen, setInfoOpen] = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [askOpen, setAskOpen] = useState(() => window.location.pathname === '/ask');
+  const [askInitialQuery, setAskInitialQuery] = useState('');
   const goToRef = useRef<((index: number) => void) | null>(null);
   const onPreloaderComplete = useCallback(() => setLoaded(true), []);
 
   const anyOverlayOpen = infoOpen || projectsOpen || askOpen;
   useLenis(loaded && !anyOverlayOpen);
-  useScrollAnimations();
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -33,7 +32,13 @@ const App: React.FC = () => {
 
   const handleAskClose = useCallback(() => {
     setAskOpen(false);
+    setAskInitialQuery('');
     if (window.location.pathname === '/ask') window.history.replaceState(null, '', '/');
+  }, []);
+
+  const handleAskOpen = useCallback((query = '') => {
+    setAskInitialQuery(query);
+    setAskOpen(true);
   }, []);
 
   const handleGoToSlide = useCallback((index: number) => {
@@ -63,7 +68,12 @@ const App: React.FC = () => {
           onAskClick={() => setAskOpen(true)}
         />
         <main id="main-content" className="main">
-          <Carousel onRegisterGoTo={handleRegisterGoTo} loaded={loaded} />
+          <Carousel
+            onRegisterGoTo={handleRegisterGoTo}
+            loaded={loaded}
+            onAskOpen={handleAskOpen}
+            keyboardEnabled={!anyOverlayOpen}
+          />
         </main>
       </div>
       <InfoOverlay isOpen={infoOpen} onClose={() => setInfoOpen(false)} />
@@ -76,6 +86,7 @@ const App: React.FC = () => {
         isOpen={askOpen}
         onClose={handleAskClose}
         onGoToSlide={handleGoToSlide}
+        initialQuery={askInitialQuery}
       />
     </>
   );

@@ -1,24 +1,25 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# treylupo.com — portfolio + Ask My Work
 
-# Run and deploy your AI Studio app
+Personal portfolio with an embedded LLM answer engine ("Ask My Work") that answers
+questions about my work with citations, grounded in a build-time corpus of my
+projects and resume.
 
-This contains everything you need to run your app locally.
+## Stack
+- React 19 + Vite, GSAP, react-three-fiber (generative project visuals with a
+  reduced-motion/context-loss fallback path)
+- Vercel serverless: `api/ask.ts` → Claude (Haiku 4.5), 10 req/hr/IP rate limit,
+  500-char questions, 1024-token answers, 4 tool rounds max
+- Retrieval: build-time corpus (`npm run build:corpus`) from site content, resume,
+  and GitHub READMEs — no vector DB, no runtime scraping
 
-View your app in AI Studio: https://ai.studio/apps/drive/10QOz20ZiMCZGn-RY3osoh3YLoySKbUEu
+## Develop
+    npm install
+    npm run dev            # :3000
+    npm test               # vitest unit suite
+    npm run test:e2e       # playwright
+    npm run build:corpus   # regenerate generated/corpus.ts
+    npm run evals          # answer-quality gate (needs ANTHROPIC_API_KEY), >=90% to pass
 
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
-
-## Acknowledgments
-
-- **Fluid Glass Effect** - Based on [fluidglass](https://github.com/chiuhans111/fluidglass) by [@chiuhans111](https://github.com/chiuhans111). The footer uses a React port of this WebGL fluid simulation with glass refraction effects.
+## Deploy
+Vercel Git integration off `main`; root directory `rlupo-portfolio/`.
+Env: `ANTHROPIC_API_KEY` (capped key — without it the ask panel serves a local fallback).

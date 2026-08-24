@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TREY LUPO — Terminal Broadside</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Skip link -->
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Site header -->
+  <header class="site-header" role="banner">
+    <a href="#" class="wordmark" id="wordmark-link" aria-label="TREY LUPO — return to start">TREY LUPO</a>
+    <button
+      class="index-btn"
+      id="index-btn"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls="index-overlay"
+    >INDEX</button>
+  </header>
+
+  <!-- Carousel / main -->
+  <main id="main-content" class="carousel" role="region" aria-label="Portfolio slides" aria-roledescription="carousel">
+
+    <!-- Form-feed scan flash (decorative, injected by JS) -->
+    <div class="carousel__flash" id="carousel-flash" aria-hidden="true"></div>
+
+    <div class="carousel__track" id="carousel-track">
+
+      <!-- ═══ SLIDE 0 — HERO ════════════════════════════════════════ -->
+      <section
+        class="slide slide--hero"
+        id="slide-0"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="Slide 1 of 3: Introduction"
+      >
+        <!-- Scanline texture overlay -->
+        <div class="scanline-overlay" aria-hidden="true"></div>
+
+        <!-- Grid overlay (revealed on hover / focus-within) -->
+        <div class="grid-overlay" aria-hidden="true"></div>
+
+        <!-- Tractor-feed holes -->
+        <div class="tractor-strip tractor-strip--left" aria-hidden="true"></div>
+        <div class="tractor-strip tractor-strip--right" aria-hidden="true"></div>
+
+        <!-- ASCII registration marks -->
+        <div class="reg-ascii" aria-hidden="true">
+          <span class="reg-ascii__mark reg-ascii__mark--tl">+</span>
+          <span class="reg-ascii__mark reg-ascii__mark--tr">+</span>
+          <span class="reg-ascii__mark reg-ascii__mark--bl">+</span>
+          <span class="reg-ascii__mark reg-ascii__mark--br">+</span>
+        </div>
+
+        <!-- Job-log left rail -->
+        <aside class="log-rail" aria-hidden="true">
+          <div class="log-rail__inner">
+            <p class="log-line">RUN 2026-07-09</p>
+            <p class="log-line">03:14:22 UTC</p>
+            <p class="log-line log-line--ok">STATUS: OK</p>
+            <p class="log-line log-line--sep">──────────</p>
+            <p class="log-line">JOB: PORTFOLIO</p>
+            <p class="log-line">BATCH: 001/005</p>
+            <p class="log-line">HOST: LUPO-WS</p>
+            <p class="log-line log-line--sep">──────────</p>
+            <p class="log-line">DEPT: FP&amp;A</p>
+            <p class="log-line">USER: T.LUPO</p>
+            <p class="log-line">PRI: NORMAL</p>
+          </div>
+        </aside>
+
+        <!-- Hero content -->
+        <div class="slide__content hero__content">
+          <p class="hero__eyebrow">Portfolio Annual · Issue I · 2026</p>
+          <p class="hero__status-line" aria-hidden="true">
+            <span class="status-dot" aria-hidden="true"></span>
+            STATUS: BATCH COMPLETE · 0 ERRORS · EXIT 0
+          </p>
+          <div class="hero__main">
+            <h1
+              class="hero__title"
+              id="hero-title"
+              data-scramble
+              aria-label="TREY LUPO"
+            >TREY LUPO</h1>
+            <p class="hero__role">FP&amp;A Analyst · Data Scientist · ML Engineer</p>
+            <p class="hero__tagline">
+              Forecasts filed. Pipelines audited. Models on the record.<span class="cursor" aria-hidden="true">█</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ SLIDE 1 — PROJECT POSTER ═════════════════════════════ -->
+      <section
+        class="slide slide--project"
+        id="slide-1"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="Slide 2 of 3: Project — Revenue Telemetry"
+      >
+        <div class="scanline-overlay" aria-hidden="true"></div>
+        <div class="grid-overlay" aria-hidden="true"></div>
+        <div class="tractor-strip tractor-strip--left" aria-hidden="true"></div>
+        <div class="tractor-strip tractor-strip--right" aria-hidden="true"></div>
+
+        <div class="reg-ascii" aria-hidden="true">
+          <span class="reg-ascii__mark reg-ascii__mark--tl">+</span>
+          <span class="reg-ascii__mark reg-ascii__mark--tr">+</span>
+          <span class="reg-ascii__mark reg-ascii__mark--bl">+</span>
+          <span class="reg-ascii__mark reg-ascii__mark--br">+</span>
+        </div>
+
+        <!-- Job-log rail (print queue flavor) -->
+        <aside class="log-rail" aria-hidden="true">
+          <div class="log-rail__inner">
+            <p class="log-line">QUEUE: FCST</p>
+            <p class="log-line">FILE F-2026-011</p>
+            <p class="log-line log-line--sep">──────────</p>
+            <p class="log-line">TYPE: ANALYSIS</p>
+            <p class="log-line">PAGES: 01</p>
+            <p class="log-line">DPI: 600</p>
+            <p class="log-line log-line--ok">PRINT: OK</p>
+          </div>
+        </aside>
+
+        <!-- Project content -->
+        <div class="slide__content project__content">
+
+          <header class="project__header">
+            <span class="project__ref">FILING F-2026-011</span>
+            <span class="project__cat">Hierarchical Forecasting</span>
+          </header>
+          <p class="project__timestamp" aria-hidden="true">OUTPUT: 03:14:22 UTC · PRINTED 2026-01-15 · 7.27KB · OK</p>
+
+          <div class="project__title-block">
+            <h2 class="project__title" aria-label="Revenue Telemetry">
+              <span class="project__word">REVENUE</span>
+              <span class="project__word project__word--shift">TELEMETRY</span>
+            </h2>
+          </div>
+
+          <div class="project__rule" aria-hidden="true"></div>
+
+          <p class="project__desc">
+            A reconciled forecast tree for a fictional distributor — bottom-up noise,
+            top-down discipline, one source of truth.
+          </p>
+
+          <div class="project__stats" role="list" aria-label="Key statistics">
+            <span class="stat" role="listitem">
+              <span class="stat__val" aria-label="40">40</span>
+              <span class="stat__lbl"> series</span>
+            </span>
+            <span class="stat__sep" aria-hidden="true">·</span>
+            <span class="stat" role="listitem">
+              <span class="stat__val" aria-label="12">12</span>
+              <span class="stat__lbl"> models</span>
+            </span>
+            <span class="stat__sep" aria-hidden="true">·</span>
+            <span class="stat" role="listitem">
+              <span class="stat__val" aria-label="8">8</span>
+              <span class="stat__lbl">-quarter horizon</span>
+            </span>
+          </div>
+
+          <dl class="project__details">
+            <div class="detail-pair">
+              <dt>Stack</dt>
+              <dd>Python · statsmodels · DuckDB</dd>
+            </div>
+            <div class="detail-pair">
+              <dt>Status</dt>
+              <dd>Filed</dd>
+            </div>
+            <div class="detail-pair">
+              <dt>Year</dt>
+              <dd>2026</dd>
+            </div>
+          </dl>
+
+        </div>
+      </section>
+
+      <!-- ═══ SLIDE 2 — OUTRO / CONTACT ════════════════════════════ -->
+      <section
+        class="slide slide--outro"
+        id="slide-2"
+        role="group"
+        aria-roledescription="slide"
+        aria-label="Slide 3 of 3: Contact"
+      >
+        <div class="scanline-overlay" aria-hidden="true"></div>
+        <div class="grid-overlay" aria-hidden="true"></div>
+        <div class="tractor-strip tractor-strip--left" aria-hidden="true"></div>
+        <div class="tractor-strip tractor-strip--right" aria-hidden="true"></div>
+
+        <div class="reg-ascii" aria-hidden="true">
+          <span class="reg-ascii__mark reg-ascii__mark--tl">+</span>
+          <span class="reg-ascii__mark reg-ascii__mark--tr">+</span>
+          <span class="reg-ascii__mark reg-ascii__mark--bl">+</span>
+          <span class="reg-ascii__mark reg-ascii__mark--br">+</span>
+        </div>
+
+        <!-- Batch-end log rail -->
+        <aside class="log-rail" aria-hidden="true">
+          <div class="log-rail__inner">
+            <p class="log-line">BATCH END</p>
+            <p class="log-line">03:14:58 UTC</p>
+            <p class="log-line log-line--sep">──────────</p>
+            <p class="log-line log-line--ok">JOBS: 5/5</p>
+            <p class="log-line log-line--ok">ERRS: 0</p>
+            <p class="log-line log-line--ok">WARN: 0</p>
+            <p class="log-line log-line--sep">──────────</p>
+            <p class="log-line">EXIT: 0</p>
+          </div>
+        </aside>
+
+        <!-- Outro content -->
+        <div class="slide__content outro__content">
+          <div class="outro__main">
+            <h2 class="outro__heading">THE RECORD IS OPEN</h2>
+            <p class="outro__sub">Six filings a year.<br>One analyst.</p>
+          </div>
+
+          <nav class="outro__links" aria-label="External links">
+            <a href="#" class="outro__link">GitHub</a>
+            <a href="#" class="outro__link">LinkedIn</a>
+            <a href="#" class="outro__link">treylupo.com</a>
+          </nav>
+
+          <footer class="outro__credit">
+            Designed &amp; built by Claude Fable 5 · study · 2026<span class="verbose" aria-hidden="true"> --verbose</span>
+          </footer>
+        </div>
+      </section>
+
+    </div><!-- /carousel__track -->
+  </main>
+
+  <!-- Slide navigation -->
+  <nav class="slide-nav" aria-label="Slide navigation">
+    <button
+      class="slide-nav__btn slide-nav__prev"
+      id="prev-btn"
+      aria-label="Previous slide"
+      disabled
+    >◀</button>
+    <span
+      class="slide-counter"
+      id="slide-counter"
+      aria-live="polite"
+      aria-atomic="true"
+    >01 / 03</span>
+    <button
+      class="slide-nav__btn slide-nav__next"
+      id="next-btn"
+      aria-label="Next slide"
+    >▶</button>
+  </nav>
+
+  <!-- INDEX overlay -->
+  <div
+    class="overlay"
+    id="index-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Project index"
+    hidden
+  >
+    <!-- Scanline on overlay bg -->
+    <div class="scanline-overlay scanline-overlay--overlay" aria-hidden="true"></div>
+
+    <button class="overlay__close" id="overlay-close" aria-label="Close index">✕ CLOSE</button>
+
+    <div class="overlay__inner">
+      <header class="overlay__header">
+        <p class="overlay__sys-label" aria-hidden="true">PROCESS TABLE · PID LIST · TTY=ANALYST</p>
+        <h2 class="overlay__heading">INDEX</h2>
+      </header>
+
+      <div class="overlay__rule" aria-hidden="true">──────────────────────────────────────────────────────────────</div>
+
+      <ol class="pt" role="list" aria-label="Project index">
+        <li class="pt__row pt__row--active">
+          <a href="#" class="pt__link" id="index-entry-01">
+            <span class="pt__num" aria-hidden="true">01</span>
+            <span class="pt__info">
+              <span class="pt__title">REVENUE TELEMETRY</span>
+              <span class="pt__meta">Forecasting · 2026</span>
+            </span>
+            <span class="pt__status" aria-hidden="true">FILED</span>
+          </a>
+        </li>
+        <li class="pt__row" aria-disabled="true">
+          <span class="pt__num" aria-hidden="true">02</span>
+          <span class="pt__info">
+            <span class="pt__title">FREIGHT AUDIT</span>
+            <span class="pt__meta">Anomaly Detection · 2026</span>
+          </span>
+          <span class="pt__status" aria-hidden="true">FILED</span>
+        </li>
+        <li class="pt__row" aria-disabled="true">
+          <span class="pt__num" aria-hidden="true">03</span>
+          <span class="pt__info">
+            <span class="pt__title">MARGIN ATLAS</span>
+            <span class="pt__meta">Analytics Engineering · 2025</span>
+          </span>
+          <span class="pt__status" aria-hidden="true">ACTIVE</span>
+        </li>
+        <li class="pt__row" aria-disabled="true">
+          <span class="pt__num" aria-hidden="true">04</span>
+          <span class="pt__info">
+            <span class="pt__title">COLD START</span>
+            <span class="pt__meta">Recommender Systems · 2025</span>
+          </span>
+          <span class="pt__status" aria-hidden="true">PENDING</span>
+        </li>
+        <li class="pt__row" aria-disabled="true">
+          <span class="pt__num" aria-hidden="true">05</span>
+          <span class="pt__info">
+            <span class="pt__title">NIGHT SHIFT</span>
+            <span class="pt__meta">Orchestration · 2024</span>
+          </span>
+          <span class="pt__status" aria-hidden="true">ARCHIVED</span>
+        </li>
+      </ol>
+
+      <div class="overlay__rule overlay__rule--bottom" aria-hidden="true">──────────────────────────────────────────────────────────────</div>
+      <p class="overlay__footer" aria-hidden="true">5 processes · 1 user · load avg: 0.42 0.38 0.31</p>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

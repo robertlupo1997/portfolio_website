@@ -1,0 +1,974 @@
+/* ═══════════════════════════════════════════════════════════════
+   GRAFT — Three Grafts Study
+   Space Grotesk (display + body) · Space Mono (eyebrow, counter, refs)
+   Palette: portfolio olive tokens — identical to broadside
+   Grafts: (1) grid+reg reveal · (2) whisper texture · (3) poster-scale heading
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Tokens ── */
+:root {
+  /* Portfolio palette (WCAG AA-audited) */
+  --bg-primary:    #474741;
+  --bg-elevated:   #55554D;
+  --bg-surface:    #3D3D38;
+  --ink:           #262622;
+  --text-primary:  #E3E4D5;   /* 7.27 on --bg-primary */
+  --text-secondary:#B6B78D;   /* 4.52 on --bg-primary */
+  --text-tertiary: #B5B5A7;   /* 4.51 on --bg-primary */
+  --accent:        #F0704C;   /* 3.17 — large text (≥24px / bold ≥19px) + non-text only */
+  --accent-text:   #FA9E78;   /* 4.55 — safe for all text on --bg-primary */
+  --border-subtle:  rgba(227, 228, 213, 0.08);
+  --border-default: rgba(227, 228, 213, 0.12);
+  --border-emphasis:rgba(227, 228, 213, 0.20);
+
+  /* Typography */
+  --font-display: 'Space Grotesk', -apple-system, sans-serif;
+  --font-mono:    'Space Mono', 'Courier New', monospace;
+
+  /* Graft 3: poster scale — one per surface */
+  --sz-poster: clamp(3rem, 12vw, 13rem);
+
+  /* Edge padding */
+  --edge-h: max(1.5rem, 5vw);
+  --edge-v: max(1.5rem, 5vh);
+
+  /* Motion (portfolio durations) */
+  --dur-fast:    225ms;
+  --dur-mid:     300ms;
+  --dur-slow:    400ms;
+  --dur-settle:  600ms;
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-micro:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-enter:  cubic-bezier(0, 0, 0.2, 1);
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1); /* spring-ish for heading entrance */
+  --ease-slide:  cubic-bezier(0.77, 0, 0.175, 1);
+
+  /* Grid overlay colors — portfolio temperature (not orange) */
+  --grid-col: rgba(227, 228, 213, 0.12);
+  --grid-row: rgba(227, 228, 213, 0.06);
+
+  /* Registration mark color */
+  --reg-color: rgba(227, 228, 213, 0.28);
+
+  /* Z-layers */
+  --z-nav:     100;
+  --z-overlay: 500;
+}
+
+/* ── 2. Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;  /* carousel SPA — no page scroll */
+}
+
+body {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  /* Graft 2: whisper aggregate texture on the olive ground — ≤1.5% alpha per layer */
+  background-color: var(--bg-primary);
+  background-image:
+    repeating-linear-gradient(
+      -55deg,
+      transparent 0, transparent 4px,
+      rgba(227, 228, 213, 0.012) 4px, rgba(227, 228, 213, 0.012) 5px
+    ),
+    repeating-linear-gradient(
+      35deg,
+      transparent 0, transparent 7px,
+      rgba(227, 228, 213, 0.008) 7px, rgba(227, 228, 213, 0.008) 8px
+    ),
+    repeating-linear-gradient(
+      82deg,
+      transparent 0, transparent 11px,
+      rgba(227, 228, 213, 0.006) 11px, rgba(227, 228, 213, 0.006) 12px
+    );
+}
+
+ol, ul { list-style: none; }
+dl, dt, dd { margin: 0; }
+h1, h2 { text-wrap: balance; }
+a { color: inherit; }
+
+/* ── 3. Skip link ── */
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 9999;
+  background: var(--text-primary);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform var(--dur-fast) var(--ease-micro);
+}
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── 4. Site header ── */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem var(--edge-h);
+  pointer-events: none;
+}
+
+.site-header > * { pointer-events: auto; }
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: color var(--dur-fast) var(--ease-micro);
+}
+.wordmark:hover { color: var(--accent-text); }
+.wordmark:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 4px;
+}
+
+.index-btn {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  padding: 0.4rem 0.875rem;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-micro),
+    border-color var(--dur-fast) var(--ease-micro);
+}
+.index-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-emphasis);
+}
+.index-btn:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+/* ── 5. Carousel ── */
+.carousel-viewport {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  width: 300%;
+  height: 100%;
+  will-change: transform;
+  transition: transform 0.55s var(--ease-slide);
+}
+
+/* reduced-motion: instant jumps */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track { transition: none !important; }
+}
+
+.slide {
+  flex: 0 0 calc(100% / 3);
+  width: calc(100% / 3);
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── 6. Graft 1: Grid overlay + registration marks ──
+   Revealed ONLY on hover / focus-within the slide (same state) */
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      var(--grid-col) 0, var(--grid-col) 1px,
+      transparent 1px, transparent calc(100% / 12)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--grid-row) 0, var(--grid-row) 1px,
+      transparent 1px, transparent calc(100% / 8)
+    );
+  transition: opacity 0.45s var(--ease-micro);
+}
+
+.slide:hover .grid-overlay,
+.slide:focus-within .grid-overlay {
+  opacity: 1;
+}
+
+/* Registration marks — ride the same hover/focus state as the grid */
+.reg-marks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 41;
+}
+
+.reg-mark {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  transition: opacity 0.45s var(--ease-micro);
+}
+
+/* Crosshair: circle + vertical + horizontal lines */
+.reg-mark::before,
+.reg-mark::after {
+  content: '';
+  position: absolute;
+  background: var(--reg-color);
+}
+.reg-mark::before {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+.reg-mark::after {
+  height: 1px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+/* Inner circle via box-shadow on a tiny centered pseudo-element:
+   simulate with a radial-gradient background on the mark itself */
+.reg-mark {
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 4px,
+      var(--reg-color) 4px,
+      var(--reg-color) 5px,
+      transparent 5px
+    );
+}
+
+.reg-tl { top: 16px;  left: 16px; }
+.reg-tr { top: 16px;  right: 16px; }
+.reg-bl { bottom: 16px; left: 16px; }
+.reg-br { bottom: 16px; right: 16px; }
+
+/* reg marks appear with the grid — same slide hover/focus trigger */
+.slide:hover .reg-marks .reg-mark,
+.slide:focus-within .reg-marks .reg-mark {
+  opacity: 1;
+}
+
+/* ── 7. Slide inner layout ──
+   Flex column with deliberate placement.
+   Heading starts at ~25% from top (intentional, not floated center). */
+.slide__inner {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  /* bottom: 5rem clears the fixed carousel nav bar */
+  padding: calc(var(--edge-v) + 4rem) var(--edge-h) 5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Zone top: eyebrow / ref labels — sits right at top */
+.slide__zone-top {
+  flex: 0 0 auto;
+}
+
+/* Zone mid: poster heading + subtitle —
+   deliberately spaced from eyebrow, not floated to vertical center.
+   Pass 3: increased margin so heading has editorial breathing room. */
+.slide__zone-mid {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: clamp(4rem, 10vh, 7rem);
+  gap: 0.75rem;
+}
+
+/* Zone bot: body text, stats, links —
+   margin-top: auto pushes it to the bottom of remaining space */
+.slide__zone-bot {
+  margin-top: auto;
+  flex: 0 0 auto;
+}
+
+/* ── 8. Typography tokens ── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.eyebrow--dim { color: var(--text-tertiary); margin-top: 0.25rem; }
+
+/* Graft 3: poster-scale heading */
+.poster-heading {
+  font-family: var(--font-display);
+  font-size: var(--sz-poster);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+/* Outro poster heading — same scale, slightly adjusted line-height for multi-word */
+.poster-heading--outro { line-height: 0.88; }
+
+/* INDEX overlay heading — fills naturally */
+.poster-heading--index {
+  line-height: 1;
+  margin-bottom: 0;
+}
+
+.role-line {
+  font-family: var(--font-display);
+  font-size: clamp(0.75rem, 1.8vw, 1rem);
+  font-weight: 400;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  margin-top: 0.5rem;
+}
+
+.tagline {
+  font-family: var(--font-display);
+  font-size: clamp(0.8125rem, 1.5vw, 1rem);
+  font-weight: 400;
+  color: var(--text-tertiary);
+  letter-spacing: 0.01em;
+  max-width: 48ch;
+  padding-top: 1rem;
+  /* Pass 3: border-default (0.12) so the rule reads clearly */
+  border-top: 1px solid var(--border-default);
+}
+
+/* ── 9. Hero slide ── */
+.hero-name {
+  /* Pass 1 upgrade: settles 8px downward on load with spring ease */
+  animation: settle-down var(--dur-settle) var(--ease-settle) 150ms both;
+}
+
+@keyframes settle-down {
+  from {
+    transform: translateY(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-name {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── 10. Project slide ── */
+.project-title {
+  /* poster-heading already provides size */
+}
+
+.project-desc {
+  font-size: clamp(0.8125rem, 1.4vw, 0.9375rem);
+  color: var(--text-secondary);
+  max-width: 52ch;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.project-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  /* Pass 3: more visible separator */
+  border-bottom: 1px solid var(--border-default);
+}
+
+.stat-sep { color: var(--text-tertiary); }
+
+.project-details {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0.25rem 2rem;
+  width: fit-content;
+}
+
+.detail-pair {
+  display: contents;
+}
+
+/* Render as rows: Stack/Status/Year labels left, values right */
+.project-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.detail-pair {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+
+.detail-pair dt {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.detail-pair dd {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+/* ── 11. Outro slide ── */
+.rule {
+  width: clamp(2rem, 8vw, 4rem);
+  height: 1px;
+  background: var(--accent);
+  /* accent as non-text decoration — valid at 3.17 */
+}
+
+.outro-heading {
+  margin-bottom: 1.5rem;
+}
+
+.outro-line {
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+.contact-links {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.contact-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 2px;
+  transition:
+    color var(--dur-fast) var(--ease-micro),
+    border-color var(--dur-fast) var(--ease-micro);
+}
+.contact-link:hover {
+  color: var(--accent-text);
+  border-color: var(--accent-text);
+}
+.contact-link:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+.credit-line {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+/* ── 12. Carousel nav ── */
+.carousel-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem var(--edge-h) 1.5rem;
+  pointer-events: none;
+}
+.carousel-nav > * { pointer-events: auto; }
+
+.nav-btn {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  transition: color var(--dur-fast) var(--ease-micro);
+  display: flex;
+  align-items: center;
+}
+.nav-btn:hover:not(:disabled) { color: var(--text-primary); }
+.nav-btn:disabled {
+  color: var(--text-tertiary);
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+.nav-btn:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+/* Pass 3 upgrade: counter flicker class added via JS */
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  user-select: none;
+}
+
+.counter-current { display: inline-block; min-width: 1.5em; text-align: center; }
+.counter-sep { color: var(--text-tertiary); margin: 0 0.1em; }
+.counter-total { color: var(--text-tertiary); }
+
+/* ── 13. INDEX overlay ──
+   Pass 2 upgrade: texture deepens ~2× behind overlay (higher alpha per layer).
+   On ink bg (#262622), #F0704C = 4.66 ✓ at all text sizes. */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  /* Ink background with deeper texture */
+  background-color: var(--ink);
+  background-image:
+    repeating-linear-gradient(
+      -55deg,
+      transparent 0, transparent 4px,
+      rgba(227, 228, 213, 0.015) 4px, rgba(227, 228, 213, 0.015) 5px
+    ),
+    repeating-linear-gradient(
+      35deg,
+      transparent 0, transparent 7px,
+      rgba(227, 228, 213, 0.012) 7px, rgba(227, 228, 213, 0.012) 8px
+    ),
+    repeating-linear-gradient(
+      82deg,
+      transparent 0, transparent 11px,
+      rgba(227, 228, 213, 0.010) 11px, rgba(227, 228, 213, 0.010) 12px
+    );
+  display: flex;
+  flex-direction: column;
+  /* Animate in/out */
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 0.3s var(--ease-out),
+    transform 0.3s var(--ease-settle);
+  pointer-events: none;
+}
+
+.overlay[hidden] {
+  display: none !important;
+}
+
+.overlay.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Overlay grid (always visible while overlay is open — it's the overlay's own scaffold) */
+.overlay__grid-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      rgba(227, 228, 213, 0.07) 0, rgba(227, 228, 213, 0.07) 1px,
+      transparent 1px, transparent calc(100% / 12)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(227, 228, 213, 0.035) 0, rgba(227, 228, 213, 0.035) 1px,
+      transparent 1px, transparent calc(100% / 8)
+    );
+}
+
+/* Overlay reg marks (visible while overlay is open) */
+.reg-marks--overlay .reg-mark {
+  opacity: 1;
+  --reg-color: rgba(227, 228, 213, 0.2);
+}
+.reg-marks--overlay {
+  z-index: 2;
+}
+
+.overlay__inner {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  padding: calc(var(--edge-v) + 4rem) var(--edge-h) var(--edge-v);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.overlay__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(2rem, 5vh, 4rem);
+}
+
+.overlay-heading {
+  /* Graft 3: poster-scale INDEX heading */
+  color: var(--text-primary);
+}
+
+/* Pass 3: strip the box border — let focus ring do the a11y work alone */
+.overlay-close {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+  transition: color var(--dur-fast) var(--ease-micro);
+}
+.overlay-close:hover {
+  color: var(--text-primary);
+}
+.overlay-close:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 4px;
+}
+
+/* ── 14. Overlay two-column body ── */
+.overlay__body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── Marginalia column (pass 2 complexity upgrade) ── */
+.overlay__marginalia {
+  width: clamp(9rem, 14vw, 14rem);
+  padding-top: 0.25rem;
+  border-left: 1px solid rgba(227, 228, 213, 0.1);
+  padding-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.marginalia-label {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(227, 228, 213, 0.3);
+  margin-bottom: 0.25rem;
+}
+
+.marginalia-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.marginalia-list li {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.06em;
+  color: rgba(227, 228, 213, 0.25);
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.marginalia-rule {
+  width: 1.5rem;
+  height: 1px;
+  background: rgba(227, 228, 213, 0.12);
+  margin: 0.25rem 0;
+}
+
+.marginalia-statute {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.04em;
+  color: rgba(227, 228, 213, 0.2);
+  line-height: 1.6;
+}
+
+.marginalia-statute--year {
+  margin-top: auto;
+  color: rgba(227, 228, 213, 0.15);
+}
+
+/* ── Index list ── */
+.index-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid rgba(227, 228, 213, 0.1);
+}
+
+.index-entry {
+  border-bottom: 1px solid rgba(227, 228, 213, 0.06);
+}
+
+.index-entry__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: clamp(0.875rem, 2vh, 1.25rem) 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  text-align: left;
+  transition: background var(--dur-fast) var(--ease-micro);
+}
+.index-entry__btn:hover {
+  background: rgba(227, 228, 213, 0.04);
+  padding-left: 0.5rem;
+  margin-left: -0.5rem;
+  padding-right: 0.5rem;
+}
+.index-entry__btn:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: -2px;
+}
+
+/* Inert entries (no button — just visual list items) */
+.index-entry--inert {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: clamp(0.875rem, 2vh, 1.25rem) 0;
+  cursor: default;
+  opacity: 0.5;
+}
+
+.entry-num {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);  /* display scale — #F0704C safe at ≥24px */
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: clamp(2rem, 4vw, 3rem);
+}
+
+/* On ink background, #F0704C: contrast = 4.66 ✓ passes AA at all sizes */
+.index-entry--inert .entry-num {
+  color: var(--text-tertiary); /* dimmed for inert entries */
+}
+
+.entry-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.entry-title {
+  font-family: var(--font-display);
+  font-size: clamp(0.9375rem, 1.8vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.entry-meta {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.entry-cat {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.entry-year {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.08em;
+}
+
+.entry-arrow {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  transition: transform var(--dur-fast) var(--ease-micro),
+              color var(--dur-fast) var(--ease-micro);
+}
+
+.index-entry__btn:hover .entry-arrow {
+  transform: translateX(4px);
+  color: var(--accent-text);
+}
+
+/* ── 15. Mobile recompose ── */
+@media (max-width: 640px) {
+
+  .slide__inner {
+    padding-bottom: 4.5rem; /* clear mobile nav bar */
+  }
+
+  .slide__zone-mid {
+    margin-top: clamp(2rem, 6vh, 4rem);
+  }
+
+  .project-details {
+    gap: 0.35rem;
+  }
+
+  .detail-pair {
+    grid-template-columns: 4rem 1fr;
+    gap: 0.5rem;
+  }
+
+  .contact-links {
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .overlay__inner {
+    padding-top: calc(var(--edge-v) + 3.5rem);
+  }
+
+  .overlay__body {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .overlay__marginalia {
+    display: none; /* hide marginalia column on mobile — index list takes full width */
+  }
+
+  .overlay__header {
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+
+  .index-entry__btn,
+  .index-entry--inert {
+    gap: 1rem;
+  }
+
+  .entry-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.125rem;
+  }
+
+  .entry-arrow { display: none; }
+}
+
+/* ── 16. Focus-visible global ── */
+:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}

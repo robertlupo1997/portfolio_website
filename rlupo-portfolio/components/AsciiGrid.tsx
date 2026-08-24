@@ -8,11 +8,13 @@ const CHARS = '.·:+*#@%&';
 const CELL = 18;
 const INFLUENCE_RADIUS = 200;
 
+// Canvas mirror of the CSS palette tokens (bg-primary / bg-elevated /
+// a mid step / text-secondary / accent). Keep in sync with :root.
 const BG = '#474741';
 const DIM = '#55554D';
 const MID = '#7A7A6E';
-const BRIGHT = '#A6A77E';
-const ACCENT = '#E85D3A';
+const BRIGHT = '#B6B78D';
+const ACCENT = '#F0704C';
 
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t; }
 

@@ -14,9 +14,10 @@ interface AskPanelProps {
   isOpen: boolean;
   onClose: () => void;
   onGoToSlide: (index: number) => void;
+  initialQuery?: string;
 }
 
-const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide }) => {
+const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide, initialQuery }) => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
   const [citations, setCitations] = useState<Citation[]>([]);
@@ -29,8 +30,8 @@ const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide }) => 
 
   useEffect(() => {
     if (isOpen) {
-      // Fix 2: reset to fresh idle state on every open
-      setQuestion('');
+      // Fix 2: reset to fresh idle state on every open; prefill if caller provided a query
+      setQuestion(initialQuery ?? '');
       setAnswer('');
       setCitations([]);
       setError('');
@@ -125,9 +126,12 @@ const AskPanel: React.FC<AskPanelProps> = ({ isOpen, onClose, onGoToSlide }) => 
             ))}
           </ul>
         )}
-        {status === 'searching' && <p className="ask-panel__status">searching portfolio…</p>}
+        {status === 'searching' && <p className="ask-panel__status" role="status">searching portfolio…</p>}
         {answer && <p className="ask-panel__answer" data-testid="ask-answer">{answer}</p>}
-        {status === 'error' && <p className="ask-panel__error">{error}</p>}
+        {status === 'error' && <p className="ask-panel__error" role="alert">{error}</p>}
+        <div className="sr-only" role="status" aria-live="polite">
+          {status === 'done' ? 'Answer ready.' : ''}
+        </div>
         {citations.length > 0 && (
           <ol className="ask-panel__citations">
             {citations.map((c) => (

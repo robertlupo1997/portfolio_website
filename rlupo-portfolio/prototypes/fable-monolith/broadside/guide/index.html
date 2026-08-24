@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BROADSIDE — Design Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #474741;
+      --surface:   #3D3D38;
+      --ink:       #262622;
+      --text:      #E3E4D5;
+      --sec:       #B6B78D;
+      --acc:       #F0704C;
+      --acct:      #FA9E78;
+      --font-d: 'VT323', monospace;
+      --font-b: 'Space Grotesk', sans-serif;
+      --edge: clamp(1rem, 5vw, 5rem);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Scanline */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0, transparent 3px,
+        rgba(0,0,0,0.01) 3px, rgba(0,0,0,0.01) 4px
+      );
+    }
+
+    a { color: var(--acct); }
+    a:focus-visible { outline: 2px solid var(--acct); outline-offset: 3px; }
+
+    /* ── Header ── */
+    .g-header {
+      background: var(--ink);
+      border-bottom: 1px solid rgba(227,228,213,0.08);
+      padding: 1.5rem var(--edge);
+    }
+
+    .g-wordmark {
+      font-family: var(--font-d);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: var(--text);
+      letter-spacing: 0.1em;
+    }
+
+    .g-sub {
+      font-family: var(--font-b);
+      font-size: 0.75rem;
+      color: var(--sec);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+
+    /* ── Sections ── */
+    .g-section {
+      border-top: 1px solid rgba(227,228,213,0.08);
+      padding: clamp(2rem, 6vh, 5rem) var(--edge);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .g-section-num {
+      font-family: var(--font-d);
+      font-size: clamp(3rem, 8vw, 7rem);
+      color: var(--acc);
+      line-height: 1;
+      letter-spacing: 0.05em;
+    }
+
+    .g-section-title {
+      font-family: var(--font-d);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: clamp(1rem, 3vh, 2.5rem);
+    }
+
+    .g-rule {
+      height: 1px;
+      background: rgba(227,228,213,0.1);
+      margin: clamp(1rem, 3vh, 2rem) 0;
+    }
+
+    .g-rule--accent {
+      background: var(--acc);
+      height: 2px;
+    }
+
+    /* ── Body text ── */
+    .g-body { color: var(--text); font-size: clamp(0.9rem, 1.5vw, 1.1rem); line-height: 1.7; }
+    .g-body + .g-body { margin-top: 1rem; }
+    .g-label { font-family: var(--font-d); font-size: clamp(0.75rem, 1.2vw, 0.9rem); color: var(--sec); letter-spacing: 0.12em; text-transform: uppercase; }
+
+    /* ── Code block ── */
+    .g-code {
+      background: var(--ink);
+      border: 1px solid rgba(227,228,213,0.1);
+      border-left: 3px solid var(--acc);
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+
+    .g-code pre {
+      font-family: var(--font-d);
+      font-size: clamp(0.75rem, 1.4vw, 0.95rem);
+      color: var(--text);
+      line-height: 1.5;
+      white-space: pre;
+      tab-size: 2;
+    }
+
+    .g-code pre .cm { color: var(--sec); }
+    .g-code pre .kw { color: var(--acct); }
+    .g-code pre .st { color: rgba(227,228,213,0.5); }
+
+    /* ── Brief grid ── */
+    .g-brief-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.35rem 1.5rem;
+      font-size: clamp(0.8rem, 1.3vw, 1rem);
+    }
+
+    .g-brief-grid dt {
+      font-family: var(--font-d);
+      color: var(--sec);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .g-brief-grid dd { color: var(--text); }
+
+    /* ── Surface cards ── */
+    .g-surfaces {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: rgba(227,228,213,0.08);
+      margin-top: 1.5rem;
+    }
+
+    .g-surface {
+      background: var(--surface);
+      padding: 1.5rem;
+    }
+
+    .g-surface__num {
+      font-family: var(--font-d);
+      font-size: 2.5rem;
+      color: var(--acc);
+      line-height: 1;
+    }
+
+    .g-surface__title {
+      font-family: var(--font-d);
+      font-size: 1.25rem;
+      color: var(--text);
+      letter-spacing: 0.06em;
+      margin: 0.35rem 0 0.75rem;
+    }
+
+    .g-surface__desc {
+      font-size: 0.85rem;
+      color: var(--sec);
+      line-height: 1.55;
+    }
+
+    /* ── Pass history ── */
+    .g-passes { display: flex; flex-direction: column; gap: 0; }
+
+    .g-pass {
+      border-left: 2px solid rgba(227,228,213,0.12);
+      padding: 1.25rem 0 1.25rem 1.5rem;
+      position: relative;
+    }
+
+    .g-pass::before {
+      content: '';
+      position: absolute;
+      left: -5px;
+      top: 1.5rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--acc);
+    }
+
+    .g-pass__num {
+      font-family: var(--font-d);
+      font-size: 1.1rem;
+      color: var(--acct);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .g-pass__findings { list-style: none; padding: 0; }
+    .g-pass__findings li {
+      font-size: 0.85rem;
+      color: var(--sec);
+      padding: 0.2rem 0;
+    }
+    .g-pass__findings li::before { content: '— '; color: rgba(227,228,213,0.25); }
+
+    .g-pass__upgrade {
+      font-family: var(--font-d);
+      font-size: 0.9rem;
+      color: var(--acct);
+      margin-top: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Footer ── */
+    .g-footer {
+      background: var(--ink);
+      padding: 1.5rem var(--edge);
+      text-align: center;
+      border-top: 1px solid rgba(227,228,213,0.06);
+    }
+
+    .g-footer p {
+      font-family: var(--font-d);
+      font-size: 0.85rem;
+      color: rgba(227,228,213,0.3);
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 640px) {
+      .g-surfaces { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="g-header">
+    <div class="g-wordmark">BROADSIDE — DESIGN GUIDE</div>
+    <p class="g-sub">TERMINAL BROADSIDE · Study B · 2026 · Claude Fable 5</p>
+  </header>
+
+  <!-- 01 The Brief -->
+  <section class="g-section">
+    <div class="g-section-num">01</div>
+    <h1 class="g-section-title">The Brief</h1>
+    <div class="g-rule g-rule--accent"></div>
+
+    <dl class="g-brief-grid">
+      <dt>Slug</dt>        <dd>broadside</dd>
+      <dt>Variant</dt>     <dd>Hybrid — monolith structure × portfolio skin</dd>
+      <dt>Persona</dt>     <dd>VT220-era systems typographer who prints the nightly batch report as a poster broadside</dd>
+      <dt>Concept</dt>     <dd>Each slide is a line-printer broadside at poster scale — the analyst's nightly job log elevated to civic-notice grandeur</dd>
+      <dt>Palette</dt>     <dd>Portfolio real tokens: bg #474741 · elevated #55554D · surface #3D3D38 · text #E3E4D5 (7.27) · secondary #B6B78D (4.52) · accent #F0704C (3.17 — large/non-text only) · accent-text #FA9E78 (4.55) · ink panel #262622</dd>
+      <dt>Display font</dt><dd>VT323 (pixel CRT monospace; stands in for self-hosted Departure Mono at port time)</dd>
+      <dt>Body font</dt>   <dd>Space Grotesk</dd>
+      <dt>Prove</dt>       <dd>Brutalist rigor survives a dark palette — and a monospace face can carry a poster</dd>
+    </dl>
+
+    <div class="g-rule"></div>
+
+    <p class="g-body">
+      The broadside is the <em>bridge variant</em>: it adopts monolith's structural rigour (scramble, grid overlay, registration marks, poster-scale type) and applies it to the portfolio's existing dark olive skin.
+      Where monolith uses raw concrete, this study uses CRT scanlines. Where monolith has inked rubber stamps, this study has job-log rails and tractor-feed holes.
+      The result is not a reskin — it is a restatement of the same argument in a different register.
+    </p>
+  </section>
+
+  <!-- 02 Signature Technique -->
+  <section class="g-section">
+    <div class="g-section-num">02</div>
+    <h2 class="g-section-title">Signature Technique</h2>
+    <div class="g-rule g-rule--accent"></div>
+
+    <p class="g-label">Fit-title: poster-scale headline that fills container width exactly</p>
+    <div class="g-rule"></div>
+    <p class="g-body">
+      The hero title "TREY LUPO" must fill the content column width at every viewport. CSS <code>clamp()</code> approximates this, but VT323's character-cell width is non-standard and produces gaps.
+      The solution: a binary-search fit function that measures <code>scrollWidth</code> against the available container width and converges on the largest integer pixel size that fits.
+      It runs before the scramble (which wraps letters in spans) so measurement is clean, and re-runs on window resize via a 60ms debounce.
+    </p>
+
+    <div class="g-code">
+<pre><span class="cm">/* From main.js — fitTitle() */</span>
+<span class="kw">function</span> fitTitle() {
+  <span class="kw">const</span> el = document.getElementById(<span class="st">'hero-title'</span>);
+  <span class="kw">if</span> (!el) <span class="kw">return</span>;
+
+  <span class="kw">const</span> parent = el.parentElement;
+  <span class="kw">const</span> style  = window.getComputedStyle(parent);
+  <span class="kw">const</span> maxW   = parent.clientWidth
+    - parseFloat(style.paddingLeft)
+    - parseFloat(style.paddingRight);
+
+  el.style.fontSize = <span class="st">'1px'</span>;
+  <span class="kw">let</span> lo = 1, hi = 600;
+  <span class="kw">while</span> (lo < hi - 1) {
+    <span class="kw">const</span> mid = Math.floor((lo + hi) / 2);
+    el.style.fontSize = mid + <span class="st">'px'</span>;
+    <span class="kw">if</span> (el.scrollWidth <= maxW) lo = mid;
+    <span class="kw">else</span> hi = mid;
+  }
+  el.style.fontSize = lo + <span class="st">'px'</span>;
+}</pre>
+    </div>
+
+    <p class="g-label">Form-feed slide transition</p>
+    <div class="g-rule"></div>
+    <p class="g-body">
+      When a slide changes, a brief <code>clip-path</code> animation sweeps a near-opaque overlay from top to bottom — simulating a line-printer's form-feed advancing the paper.
+      The animation is 90ms, triggered by adding/removing a class on the flash element.
+      In reduced motion, the CSS override (<code>animation-duration: 0.001ms</code>) collapses the flash to instant, so no special JS branch is needed.
+    </p>
+
+    <div class="g-code">
+<pre><span class="cm">/* style.css — form-feed flash */</span>
+<span class="kw">@keyframes</span> ff-scan {
+  0%   { opacity: 0; clip-path: inset(0 0 100% 0); }
+  35%  { opacity: 0.2; clip-path: inset(0 0 0% 0); }
+  100% { opacity: 0; clip-path: inset(100% 0 0 0); }
+}
+
+.carousel__flash.active {
+  animation: ff-scan 90ms cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}</pre>
+    </div>
+
+    <p class="g-label">VT323 taste gate (pass 1 verdict)</p>
+    <div class="g-rule"></div>
+    <p class="g-body">
+      The brief required a judgment call in pass 1: does VT323 at hero scale read "DEC terminal" or "arcade game"?
+      At poster scale (~200px), the pixelation becomes deliberate texture — each letter's blocky pixel grid reads as a CRT scan artifact, not a game sprite.
+      The O in LUPO's octagonal hole and the R's pixelated serifs reinforce a typewriter-era authority rather than an 8-bit playfulness.
+      <strong>Verdict: KEEP VT323.</strong> Swap to Martian Mono at port time if the client's eye reads differently.
+    </p>
+  </section>
+
+  <!-- 03 The Three Surfaces -->
+  <section class="g-section">
+    <div class="g-section-num">03</div>
+    <h2 class="g-section-title">The Three Surfaces</h2>
+    <div class="g-rule g-rule--accent"></div>
+
+    <div class="g-surfaces">
+      <div class="g-surface">
+        <div class="g-surface__num">01</div>
+        <div class="g-surface__title">HERO / NAME</div>
+        <p class="g-surface__desc">
+          Classic broadside composition: eyebrow + batch-status line at top, large void, poster-scale name anchored at bottom.
+          VT323 fitted to fill content width via binary search. Letter scramble on load.
+          Hard left rail with job-log marginalia (RUN date, STATUS: OK, BATCH: 001/005).
+          Tractor-feed holes on both edges. ASCII + registration marks revealed on hover.
+          Blinking block cursor after tagline (static in reduced motion).
+        </p>
+      </div>
+      <div class="g-surface">
+        <div class="g-surface__num">02</div>
+        <div class="g-surface__title">PROJECT POSTER</div>
+        <p class="g-surface__desc">
+          Print-queue entry at poster scale. Filing ref and category in accent-text color as header.
+          Print-job timestamp line adds depth: OUTPUT: 03:14:22 UTC · PRINTED 2026-01-15 · 7.27KB · OK.
+          "REVENUE / TELEMETRY" stacked with word-shift offset (monolith renewal poster DNA).
+          Orange 2px rule divides title from description.
+          Stats in display-scale VT323 with accent-text numerals and Space Grotesk labels.
+          Detail pairs in two columns.
+        </p>
+      </div>
+      <div class="g-surface">
+        <div class="g-surface__num">03</div>
+        <div class="g-surface__title">OUTRO / CONTACT</div>
+        <p class="g-surface__desc">
+          "THE RECORD IS OPEN" fills the full content width at display scale.
+          Space-between layout: heading+subtitle at top third, links at middle, credit at bottom.
+          Links in accent-text VT323 with underline fade on hover.
+          Batch-end log rail: JOBS: 5/5 · ERRS: 0 · EXIT: 0.
+          Footer easter egg: credit line ends with "--verbose" in muted accent.
+        </p>
+      </div>
+      <div class="g-surface">
+        <div class="g-surface__num">04</div>
+        <div class="g-surface__title">INDEX OVERLAY</div>
+        <p class="g-surface__desc">
+          Full-screen process table on ink-panel (#262622) ground.
+          "INDEX" heading at 10vw display scale.
+          Orange row numerals at 5rem display scale (5.15:1 on ink panel — passes all-text AA).
+          Row 01 marked active with accent left border, white title, FILED in accent-text.
+          Rows 02–05 use dimmed orange numerals and secondary text to signal inert state.
+          Status column (FILED / ACTIVE / PENDING / ARCHIVED) right-aligned.
+          Sys-label line "PROCESS TABLE · PID LIST · TTY=ANALYST" as terminal flavor.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Critique History -->
+  <section class="g-section">
+    <div class="g-section-num">04</div>
+    <h2 class="g-section-title">Critique History</h2>
+    <div class="g-rule g-rule--accent"></div>
+
+    <div class="g-passes">
+
+      <div class="g-pass">
+        <div class="g-pass__num">PASS 01 — INITIAL BUILD</div>
+        <ul class="g-pass__findings">
+          <li>Hero title vertically centered in flex container, but large void above creates awkward top-heavy feel — title appearing in lower 50% of slide but role/tagline tight to the bottom</li>
+          <li>Mobile (390px): same issue amplified — title at 55%+ with no breathing room below tagline before nav controls</li>
+          <li>VT323 taste gate: borderline at poster scale. Pixel letterforms read as CRT texture, not arcade game. KEPT.</li>
+          <li>Overlay process table: strong first pass — numerals, active/inert states, FILED status all reading correctly</li>
+          <li>Tractor holes on right edge slightly heavy on mobile</li>
+          <li>Slide height chain bug: grid auto-row doesn't stretch to fill the slide, making height:100% on hero__content resolve against the wrong containing block — title overflows</li>
+        </ul>
+        <div class="g-pass__upgrade">Upgrade: Batch-completion status badge (●·STATUS: BATCH COMPLETE·0 ERRORS·EXIT 0) added between eyebrow and main content to fill the vertical dead zone with terminal narrative</div>
+      </div>
+
+      <div class="g-pass">
+        <div class="g-pass__num">PASS 02 — HEIGHT CHAIN + FLEX-END ANCHOR</div>
+        <ul class="g-pass__findings">
+          <li>Switched slide layout from grid to flex row (align-items: stretch) — flex items now inherit full slide height correctly</li>
+          <li>Made slide__content a flex column so hero__content can use flex:1 instead of height:100%</li>
+          <li>Changed hero__main to justify-content: flex-end — title block anchors to bottom of available space (classic broadside: masthead top, headline bottom)</li>
+          <li>Role line and tagline now clearly visible below title on both desktop and mobile</li>
+          <li>Tractor hole opacity reduced on mobile (0.55 → 0.3)</li>
+          <li>Project slide: print-job timestamp line added between header and title block (OUTPUT: 03:14:22 UTC · PRINTED 2026-01-15)</li>
+          <li>Bottom nav clearance insufficient — tagline too close to 01/03 counter</li>
+        </ul>
+        <div class="g-pass__upgrade">Upgrade: slide__content bottom padding increased to clamp(5rem, 9vh, 7rem) globally to clear the fixed nav controls — applies across all three slides</div>
+      </div>
+
+      <div class="g-pass">
+        <div class="g-pass__num">PASS 03 — OUTRO + FINAL TUNING</div>
+        <ul class="g-pass__findings">
+          <li>Outro outro__main had flex:1 making it absorb all available height — heading/subtitle were centered in a 80% block, creating a 220px gap above the links. Removed flex:1; space-between now distributes naturally</li>
+          <li>Outro heading "THE RECORD IS OPEN" was at 8vw / 10rem max — bumped to 10vw / 11rem so it fills the content width</li>
+          <li>All surfaces confirmed: zero console errors, zero page errors across every URL variant (?slide=0, ?slide=1, ?slide=2, ?overlay=1, bare URL) and both viewports</li>
+          <li>Reduced motion: cursor static, grid overlay shows at 0.18 opacity always, carousel track transitions instant, scanline texture unchanged</li>
+        </ul>
+        <div class="g-pass__upgrade">Upgrade: outro heading sized to fill content width — "THE RECORD IS OPEN" now dominates the surface as the brief's one loud element per surface rule demands</div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="g-footer">
+    <p>Designed &amp; built by Claude Fable 5 · study · 2026 --verbose</p>
+  </footer>
+
+</body>
+</html>

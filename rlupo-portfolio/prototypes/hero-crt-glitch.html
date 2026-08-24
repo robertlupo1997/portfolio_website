@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hero Prototype — CRT / Glitch</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #474741;
+    color: #E3E4D5;
+    font-family: 'Courier New', monospace;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .crt-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.06) 2px,
+      rgba(0, 0, 0, 0.06) 4px
+    );
+  }
+
+  .crt-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 60%,
+      rgba(0, 0, 0, 0.35) 100%
+    );
+  }
+
+  .flicker {
+    position: fixed;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+    opacity: 0;
+  }
+
+  @keyframes flicker {
+    0% { opacity: 0; }
+    5% { opacity: 0.015; background: rgba(227, 228, 213, 1); }
+    10% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-name-wrapper {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
+  .hero-name {
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: #E3E4D5;
+    line-height: 1;
+    position: relative;
+  }
+
+  .hero-name-glitch {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    color: #E85D3A;
+    clip-path: inset(0 0 0 0);
+    animation: glitch1 4s infinite linear;
+    opacity: 0.8;
+  }
+
+  .hero-name-glitch2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    line-height: inherit;
+    color: #A6A77E;
+    clip-path: inset(0 0 0 0);
+    animation: glitch2 4s infinite linear;
+    opacity: 0.6;
+  }
+
+  @keyframes glitch1 {
+    0%, 92% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+    93% { clip-path: inset(20% 0 60% 0); transform: translate(4px, 0); }
+    94% { clip-path: inset(50% 0 20% 0); transform: translate(-3px, 0); }
+    95% { clip-path: inset(10% 0 70% 0); transform: translate(6px, 0); }
+    96% { clip-path: inset(40% 0 30% 0); transform: translate(-2px, 0); }
+    97%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  }
+
+  @keyframes glitch2 {
+    0%, 94% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+    95% { clip-path: inset(60% 0 10% 0); transform: translate(-5px, 0); }
+    96% { clip-path: inset(30% 0 50% 0); transform: translate(3px, 0); }
+    97% { clip-path: inset(70% 0 5% 0); transform: translate(-4px, 0); }
+    98%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
+  }
+
+  .hero-tagline {
+    font-size: 0.875rem;
+    color: #A6A77E;
+    letter-spacing: 0.12em;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+  }
+
+  .hero-tagline span { color: #E85D3A; }
+
+  .hero-terminal {
+    text-align: left;
+    max-width: 50ch;
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(227, 228, 213, 0.08);
+    background: rgba(61, 61, 56, 0.6);
+  }
+
+  .hero-terminal-line {
+    font-size: 0.75rem;
+    line-height: 2;
+    color: #A6A77E;
+    letter-spacing: 0.04em;
+  }
+
+  .hero-terminal-line .val { color: #E3E4D5; }
+  .hero-terminal-line .accent { color: #E85D3A; }
+
+  .hero-prompt {
+    color: #A6A77E;
+    margin-bottom: 0.5rem;
+  }
+
+  .cursor-blink::after {
+    content: '_';
+    color: #E85D3A;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hero-creds {
+    display: flex;
+    gap: 2rem;
+    margin-top: 3rem;
+    font-size: 0.75rem;
+    color: #7A7A6E;
+    letter-spacing: 0.04em;
+  }
+
+  .noise {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0.03;
+    mix-blend-mode: overlay;
+  }
+</style>
+</head>
+<body>
+
+<div class="crt-overlay"></div>
+<div class="flicker"></div>
+<canvas class="noise" id="noise"></canvas>
+
+<div class="hero-content">
+  <div class="hero-name-wrapper">
+    <div class="hero-name">TREY LUPO</div>
+    <div class="hero-name-glitch" aria-hidden="true">TREY LUPO</div>
+    <div class="hero-name-glitch2" aria-hidden="true">TREY LUPO</div>
+  </div>
+
+  <div class="hero-tagline"><span>//</span> AI/ML Systems Engineer</div>
+
+  <div class="hero-terminal">
+    <div class="hero-prompt">$ cat profile --verbose</div>
+    <div class="hero-terminal-line"><span class="accent">ROLE:</span>  <span class="val">Corporate FP&A Analyst · Franklin Street</span></div>
+    <div class="hero-terminal-line"><span class="accent">BUILD:</span> <span class="val">Python SDKs / Rust ML Frameworks / Revenue Models</span></div>
+    <div class="hero-terminal-line"><span class="accent">STACK:</span> <span class="val">Python / Rust / TypeScript / SQL</span></div>
+    <div class="hero-terminal-line"><span class="accent">CERT:</span>  <span class="val">MIT Data Science · B.A. Statistics USF</span></div>
+    <div class="hero-terminal-line"><span class="accent">STATUS:</span> <span class="val">shipping production tools<span class="cursor-blink"></span></span></div>
+  </div>
+
+  <div class="hero-creds">
+    <span>60+ API Endpoints · nspb-api</span>
+    <span>6,500+ Tests · FerroML</span>
+    <span>0.97 AUC · KKBOX Churn</span>
+  </div>
+</div>
+
+<script>
+const noiseCanvas = document.getElementById('noise');
+const nctx = noiseCanvas.getContext('2d');
+
+function resizeNoise() {
+  noiseCanvas.width = window.innerWidth / 2;
+  noiseCanvas.height = window.innerHeight / 2;
+}
+window.addEventListener('resize', resizeNoise);
+resizeNoise();
+
+function drawNoise() {
+  const w = noiseCanvas.width;
+  const h = noiseCanvas.height;
+  const imageData = nctx.createImageData(w, h);
+  const data = imageData.data;
+
+  for (let i = 0; i < data.length; i += 4) {
+    const v = Math.random() * 255;
+    data[i] = v;
+    data[i + 1] = v;
+    data[i + 2] = v;
+    data[i + 3] = 255;
+  }
+
+  nctx.putImageData(imageData, 0, 0);
+  requestAnimationFrame(drawNoise);
+}
+
+requestAnimationFrame(drawNoise);
+
+// Random heavy glitch burst on the whole page
+function triggerGlitch() {
+  const content = document.querySelector('.hero-content');
+  content.style.transform = `translate(${(Math.random() - 0.5) * 6}px, ${(Math.random() - 0.5) * 3}px)`;
+
+  setTimeout(() => {
+    content.style.transform = 'translate(0, 0)';
+  }, 50 + Math.random() * 80);
+
+  setTimeout(triggerGlitch, 3000 + Math.random() * 8000);
+}
+
+setTimeout(triggerGlitch, 2000);
+</script>
+</body>
+</html>

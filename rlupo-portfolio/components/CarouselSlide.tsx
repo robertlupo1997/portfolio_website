@@ -12,6 +12,7 @@ interface CarouselSlideProps {
   activeIndex: number;
   totalSlides: number;
   useFallback?: boolean;
+  onAskOpen?: (query: string) => void;
 }
 
 const CarouselSlide: React.FC<CarouselSlideProps> = ({
@@ -23,9 +24,9 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   activeIndex,
   totalSlides,
   useFallback,
+  onAskOpen,
 }) => {
   const [animating, setAnimating] = useState(false);
-  const url = project.githubUrl || project.liveUrl;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const showFallback = (useFallback ?? false) || prefersReducedMotion || isMobile;
@@ -79,14 +80,17 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       );
       if (isActive && terminalRef.current && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         const lines = terminalRef.current.querySelectorAll('.terminal-line');
+        // 'expo.out' is the site-wide entrance ease; y reset also clears the
+        // -4px offset the exit tween leaves behind on a revisited slide.
         gsap.fromTo(
           lines,
-          { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
+          { clipPath: 'inset(0 100% 0 0)', opacity: 0, y: 6 },
           {
             clipPath: 'inset(0 0% 0 0)',
             opacity: 1,
-            duration: 0.3,
-            ease: 'cubic-bezier(0, 0, 0.2, 1)',
+            y: 0,
+            duration: 0.4,
+            ease: 'expo.out',
             stagger: 0.04,
             delay: 0.12,
           },
@@ -121,10 +125,27 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       </div>
 
       <div className="carousel-slide-footer">
-        {url && (
-          <a href={url} target="_blank" rel="noopener noreferrer" className="terminal-visit">
-            [ VISIT -&gt; ]
-          </a>
+        {project.ctaAsk !== undefined ? (
+          <button
+            className="terminal-visit"
+            onClick={() => onAskOpen?.(project.ctaAsk!)}
+            aria-label="Open Ask My Work panel"
+          >
+            [ ASK -&gt; ]
+          </button>
+        ) : (
+          <>
+            {project.githubUrl && (
+              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="terminal-visit">
+                [ VISIT -&gt; ]
+              </a>
+            )}
+            {project.liveUrl && (
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="terminal-visit">
+                {project.liveUrl.includes('pypi.org') ? '[ PYPI -> ]' : '[ LIVE -> ]'}
+              </a>
+            )}
+          </>
         )}
         {isActive && <span className="cursor-blink" />}
         {isActive && (

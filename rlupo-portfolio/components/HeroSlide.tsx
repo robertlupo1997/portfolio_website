@@ -47,7 +47,7 @@ const HeroSlide: React.FC<HeroSlideProps> = ({
       <div className="hero-content">
         <SplitReveal
           text="TREY LUPO"
-          as="div"
+          as="h1"
           className="hero-name"
           trigger={isActive && revealReady && !hasAnimated.current}
           delay={0.1}

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <title>GUIDE — MONOLITH-LUPO</title>
+  <meta name="description" content="Build guide for monolith-lupo: the brief, the signature technique, and the honest critique history.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter+Tight:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1c1a17;
+      --concrete: #b9b5ad;
+      --concrete-dark: #8a8680;
+      --orange: #e8551a;
+      --font-display: 'Archivo Black', sans-serif;
+      --font-body: 'Inter Tight', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      background: var(--concrete);
+      background-image:
+        repeating-linear-gradient(-55deg, transparent 0, transparent 4px, rgba(28,26,23,0.018) 4px, rgba(28,26,23,0.018) 5px),
+        linear-gradient(168deg, #c0bcb4 0%, var(--concrete) 45%, #b2aea7 100%);
+      color: var(--ink);
+      line-height: 1.6;
+      padding: clamp(1.5rem, 5vw, 5rem);
+    }
+    .doc { max-width: 72ch; margin: 0 auto; }
+    .doc__ref {
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.15em; opacity: 0.78; margin-bottom: 2rem;
+      display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: 0.9; letter-spacing: -0.02em; margin-bottom: 0.5rem;
+    }
+    .doc__sub { font-size: 1rem; font-weight: 500; margin-bottom: 2.5rem; max-width: 55ch; }
+    .rule { height: 4px; background: var(--orange); margin: 2.5rem 0; }
+    .rule--thin { height: 1px; background: rgba(28,26,23,0.3); margin: 2rem 0; }
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      letter-spacing: -0.01em; margin: 2rem 0 0.75rem;
+    }
+    h3 {
+      font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.15em; margin: 1.5rem 0 0.4rem;
+    }
+    p, li { font-size: 0.95rem; margin-bottom: 0.75rem; }
+    ul { padding-left: 1.2rem; margin-bottom: 1rem; }
+    li { margin-bottom: 0.4rem; }
+    a { color: var(--ink); font-weight: 700; }
+    a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    pre {
+      background: var(--ink); color: var(--concrete);
+      font-family: ui-monospace, 'Cascadia Mono', 'SF Mono', Menlo, Consolas, monospace;
+      font-size: 0.78rem; line-height: 1.55;
+      padding: 1.25rem; overflow-x: auto; margin: 1rem 0 1.5rem;
+    }
+    pre .hot { color: var(--orange); }
+    .stamp {
+      display: inline-block; background: var(--ink); color: var(--orange);
+      font-family: var(--font-display); font-size: 0.9rem;
+      padding: 0.4em 0.8em; transform: rotate(-2deg); margin: 0.5rem 0 1.5rem;
+    }
+    table { border-collapse: collapse; width: 100%; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+    th, td { text-align: left; padding: 0.5rem 0.75rem 0.5rem 0; border-top: 1px solid rgba(28,26,23,0.25); vertical-align: top; }
+    th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; }
+    .foot { margin-top: 3rem; font-size: 0.75rem; opacity: 0.78; }
+  </style>
+</head>
+<body>
+  <main class="doc">
+    <div class="doc__ref">
+      <span>Filing G-2026 · Build guide</span>
+      <span><a href="../">← Back to the annual</a></span>
+    </div>
+
+    <h1>MONOLITH-LUPO</h1>
+    <p class="doc__sub">Trey Lupo's resume &amp; portfolio annual — a direct copy of the
+    MONOLITH civic-poster site (FABLE&nbsp;25, brief #6), rebuilt with his real record.</p>
+
+    <div class="rule"></div>
+
+    <h2>The brief</h2>
+    <p>The original build copied monolith's structure verbatim — scroll-snap poster pages,
+    side rail, Archivo Black + Inter Tight, ink/concrete/orange, registration marks, hover
+    grid, concrete texture, cover scramble — and filled six posters with the full record.
+    The 2026 restructure cut that record to one identity and three projects:
+    every filing without an artifact behind it went, and every surviving claim traces to
+    one. One motion set-piece per poster, entrance-triggered. Never invent a fact,
+    metric, employer, or date.</p>
+
+    <h3>The six filings — all real</h3>
+    <table>
+      <tr><th>Poster</th><th>Filing</th><th>Record</th></tr>
+      <tr><td>01</td><td>Cover</td><td>TREY LUPO — AI engineer · statistics foundation · finance domain</td></tr>
+      <tr><td>02</td><td>Half-Blood Prince</td><td>Margin-annotation CLI for PDF &amp; EPUB · structured-output negotiation · fail-closed anchoring · 1,883 tests passing across 86 files</td></tr>
+      <tr><td>03</td><td>FerroML</td><td>Rust AutoML on PyPI · 55+ algorithms · 8,196 tests passing · GPU via wgpu · ONNX export</td></tr>
+      <tr><td>04</td><td>KKBOX Churn Prediction</td><td>0.9696 AUC on a time-ordered validation split · log loss 0.4130 → 0.1127 via isotonic calibration · tuned-validation numbers, no held-out test window · live on HuggingFace</td></tr>
+      <tr><td>05</td><td>Project register</td><td>The three featured filings, 2024–26, honest statuses</td></tr>
+      <tr><td>06</td><td>Open to work</td><td>Real links · education + sanitized roles from the timeline</td></tr>
+    </table>
+
+    <div class="rule--thin"></div>
+
+    <h2>Signature technique</h2>
+    <p>Every metric on the page is the true value in static HTML — JavaScript only
+    animates <em>toward</em> the truth. The KKBOX set-piece counts log loss
+    <strong>down</strong> from 0.41 to 0.11, because calibration — error coming down —
+    is the achievement:</p>
+    <pre>/* Poster 4 — KKBOX: log loss resolves 0.41 → 0.11 */
+function runKkbCountdown() {
+  const el = document.querySelector('[data-countdown]');
+  if (!el) return;
+  if (reducedMotion) { el.textContent = <span class="hot">'0.11'</span>; return; }
+  window.setTimeout(() => {
+    animateNumber(el, <span class="hot">0.41, 0.11</span>, 1100, (v) => v.toFixed(2));
+  }, 850);
+}</pre>
+    <p>All entrance choreography is gated on a single <code>html.js-anim</code> class that
+    is added only when JS runs <em>and</em> the user allows motion — so no-JS and
+    reduced-motion visitors get the complete static composition, never a blank stage.
+    One IntersectionObserver stamps <code>.is-in</code> per poster; CSS transition-delays
+    do the sequencing (notice rows stamp in, register rows print, chips stamp last,
+    the orange block slides, link underlines draw on a stagger).</p>
+
+    <h3>Other set-pieces</h3>
+    <ul>
+      <li>Cover: monolith's letter scramble, kept, plus a settle-thud when the last glyph locks.</li>
+      <li>Poster 2: rubber stamp (1,883 TESTS) slams in at 1.5× scale; a procedural SVG
+          division seal with a 45s rotating ring.</li>
+      <li>Poster 3: the FerroML test count climbs from 0 to 8,196 (rAF, easeOutQuart,
+          pauses on hidden tabs).</li>
+      <li>Poster 4: log loss resolves 0.41 → 0.11 under the KKBOX title.</li>
+      <li>Ground-aware fixed chrome: the rail and filing plate recolor per poster via
+          <code>data-rail</code>, keyed to the ground they actually float over
+          (poster 6's rail sits on the orange block, not the ink field).</li>
+      <li>Press <strong>G</strong> to pin the blueprint grid overlay. Print the page —
+          a print stylesheet flattens the annual to an ink-on-paper filing.</li>
+    </ul>
+
+    <div class="rule--thin"></div>
+
+    <h2>The motion pass — print-shop physics, chaos gridded underneath</h2>
+    <p>A second directed build (Trey: "go nuts — inside the grid"). Eight set-pieces,
+    every one an artifact of print production, never web-slop. All of it rides the
+    existing gates: <code>html.js-anim</code> for entrances, reduced-motion and no-JS
+    get the finished composition, transform/opacity only, rAF loops pause on hidden
+    tabs, zero libraries.</p>
+    <ul>
+      <li><strong>P2 — misregistration settle (the signature).</strong> MARGIN /
+          NOTES arrive as misregistered overprints: an orange plate copy
+          (<code>::before</code>, <code>content: attr(data-text)</code>) sits 3px off
+          the ink and slides into perfect register as the poster enters, then vanishes.
+          The corner registration marks, made literal. The orange copy is decorative
+          pseudo-content behind AA-passing ink text, on screen for under a second —
+          reduced-motion users only ever see registered ink.</li>
+      <li><strong>P3 — count-up numeral.</strong> The FerroML test count climbs from 0
+          to 8,196 under the orange ground (rAF, easeOutQuart, hidden-tab guard). A
+          former speed-comparison set-piece here was retired in the restructure when its
+          number failed claim audit.</li>
+      <li><strong>P4 — log-loss countdown.</strong> 0.41 resolves down to 0.11 under the
+          KKBOX title — the error coming down is the achievement. (This poster's former
+          forecast-chart set-piece was retired alongside its source filing in the
+          restructure.)</li>
+      <li><strong>P5 — scanline registration.</strong> A 2px orange line sweeps the
+          register once (the bottom edge of a full-height strip, translateY −100% → 0,
+          clipped by the list's own overflow) and every status chip stamps <em>as the
+          line passes its row</em>. The docket's newest line types in
+          character-by-character under the blinking caret — three artifact-backed rows
+          since the restructure.</li>
+      <li><strong>P6 — date-stamp arrival.</strong> OPEN TO WORK lands as individual
+          stamp strikes: JS splits the lines into letter spans, each scaling 1.25 → 1 on
+          the thud bezier, 26ms apart in one continuous pass. The CTA takes a quiet
+          ready-pulse every 7s (scale 1.012, suspended under hover/focus so the hover
+          transform wins).</li>
+      <li><strong>P1 — plotter rules + live letters.</strong> The cover rules are drawn
+          by an 8px orange carriage that rides the ink edge and vanishes at the end of
+          the line (the carriage is the right-edge block of a full-width strip sliding
+          translateX −100% → 0, so it can never desync from the <code>scaleX</code>
+          draw). Hovering any settled title glyph re-scrambles just that glyph for 350ms,
+          then it locks (pointer:fine only).</li>
+      <li><strong>Site-wide — crosshair cursor.</strong> A registration-mark crosshair
+          follows the pointer with <code>mix-blend-mode: difference</code> — white
+          strokes, so it renders as the exact negative of every ground it crosses
+          (light on ink, dark on concrete, cyan on orange: the mathematical complement).
+          Spring-lagged ~80ms via an exponential rAF filter that sleeps when settled and
+          on hidden tabs; scales 1.4× over links. The native cursor is never hidden.</li>
+      <li><strong>Site-wide — proof sheet (press P).</strong> The imposition view: all
+          six posters as a printer's contact sheet. Implementation choice — <em>live
+          same-document iframes</em>, one per poster via <code>./#poster-N</code>
+          anchors, lazy-loaded on first toggle and scaled to the tile (JS measures the
+          frame, sets <code>--proof-scale</code>). The tiles are living proofs: each
+          mini poster runs its own entrance. Cost: six extra page instances on first
+          open — accepted for desktop-only, keyboard-gated chrome; the CSS-abstraction
+          fallback was the cheaper, deader option. Dialog semantics: role=dialog,
+          aria-modal, focus trapped (close button + six labeled tiles), Enter jumps to
+          the poster and exits, Esc exits, Ctrl/⌘+P never intercepted. ≤768px: not
+          available.</li>
+    </ul>
+
+    <div class="rule--thin"></div>
+
+    <h2>Critique history — what each pass actually found</h2>
+    <span class="stamp">RESTRUCTURE · 3 PASSES · 0 CONSOLE ERRORS</span>
+
+    <p>The pre-restructure build went through nine documented passes (desktop rhythm, an
+    AA contrast audit, fixed-chrome rail traps, the motion pass, mobile + reduced-motion,
+    print + no-JS). Those passes shaped the frame that survives today. The 2026
+    restructure then re-cut the content to one identity and three artifact-backed
+    projects; its three passes:</p>
+
+    <h3>Restructure pass 1 — desktop sweep after the cut</h3>
+    <ul>
+      <li><strong>Found:</strong> the FerroML poster's benchmark race was gone but the
+          claim audit had already retired its number; the KKBOX poster needed a
+          centerpiece; register rows referenced deleted projects.</li>
+      <li><strong>Fixed:</strong> test-count numeral verified against the repo README;
+          KKBOX countdown wired; register pruned to the three filings.</li>
+      <li><strong>Removed:</strong> a stale cross-library speed claim — the repo's own
+          committed regression table contradicted it on the current performance
+          configuration, so the number failed claim audit.</li>
+    </ul>
+
+    <h3>Restructure pass 2 — desktop mid + bottom, mobile top</h3>
+    <ul>
+      <li><strong>Found:</strong> the FerroML numeral, resized for six glyphs, overflowed
+          into the right content column and buried the title and route lines; on poster 6
+          the last contact link collided with the footer credit after the inquiry block
+          was cut.</li>
+      <li><strong>Fixed:</strong> numeral sized to clear the column border (desktop and
+          mobile); links list padded clear of the absolute footer.</li>
+      <li><strong>Removed:</strong> the dead Spec status-chip CSS — no Spec row survives
+          the claim audit.</li>
+    </ul>
+
+    <h3>Restructure pass 3 — full sweep + reduced-motion</h3>
+    <ul>
+      <li><strong>Found:</strong> the KKBOX poster carried a bottom-third dead zone left
+          by the retired chart; a systematic class diff found zero further dead CSS; all
+          nine sweep shots (six desktop angles, mobile top/bottom, reduced-motion) ran
+          with zero console and zero page errors.</li>
+      <li><strong>Fixed:</strong> KKBOX layout distributes on space-between so the
+          composition fills the viewport.</li>
+      <li><strong>Removed:</strong> "treylupo.com" from the rendered colophon — the
+          domain is a deploy assumption nothing verifies; the GitHub profile (live) stays.
+          Canonical/og:url keep the domain as documented deploy hygiene.</li>
+    </ul>
+
+    <h3>Honest remaining concerns</h3>
+    <ul>
+      <li>The Half-Blood Prince repository is not public yet. The site marks this in
+          three places: a "Filing sealed — repository private · claims pending public
+          release" strip on the notice poster, a Private status chip on the register
+          row, and a "repo private" suffix on the docket line. All its figures are
+          conditional on that publication. Add the repo link and lift the markers when
+          it is pushed.</li>
+      <li>og.png regenerated from the post-restructure desktop composition (1200×630 crop of qa/final-desktop.png).</li>
+      <li>og:image and canonical assume https://treylupo.com/ — correct at deploy if the
+          site lands on a subdomain.</li>
+      <li>The fine-print marginalia stays at low opacity by monolith precedent —
+          defensible only because it is <code>aria-hidden</code> duplication of facts
+          stated accessibly elsewhere.</li>
+      <li>The proof sheet's six live iframes are the honest cost of living tiles —
+          lazy-loaded and desktop-only. Swap to CSS-drawn abstractions if it ever
+          matters more than the delight.</li>
+      <li>The crosshair renders cyan on the orange poster — that is what
+          <code>difference</code> does to orange, the literal photographic negative.
+          Ruled in-brief (registration marks are press hardware).</li>
+    </ul>
+
+    <div class="rule"></div>
+
+    <p class="foot">Content: every surviving claim traces to an artifact
+    (see RESTRUCTURE-OX.md for the ledger) — no invented facts ·
+    Designed &amp; built by Claude Fable 5 · 2026</p>
+  </main>
+</body>
+</html>

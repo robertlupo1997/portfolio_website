@@ -23,8 +23,8 @@ Jun 2025–Sep 2025
 
 PROJECTS
 
-· FerroML — statistically rigorous AutoML framework in Rust with Python bindings; 55+ algorithms, 6,500+ tests; published on PyPI.
-· KKBOX Churn Prediction — leak-safe features, isotonic calibration, temporal backtests, PSI drift monitoring on a 30GB+ user transaction dataset; 0.97 AUC; live on Hugging Face Spaces.
+· FerroML — statistically rigorous AutoML framework in Rust with Python bindings; 55+ algorithms, 4,600+ Rust tests; published on PyPI.
+· KKBOX Churn Prediction — leak-safe point-in-time features (temporal-safety tested), isotonic calibration, temporal backtests, PSI drift monitoring on a 30GB+ user transaction dataset; 0.9696 AUC on the tuned validation window, with no held-out test set; live on Hugging Face Spaces.
 · Local-LLM orchestration (Ornith) — designed and operate a 24/7 system using Claude Code as orchestrator delegating implementation to locally served 9B/35B-MoE models (Ollama): propose-only task loop, sandboxed verification gates (bwrap, no-network), git-worktree isolation, human-review inbox; model-written code merges only after automated checks and review.
 · treylupo.com — portfolio site with an embedded AI answer engine: agentic retrieval (RAG) over projects and resume with streaming, citation-grounded answers; Anthropic API, serverless SSE, rate-limited, eval-suite-verified. Full project set at treylupo.com.
 · nspb-api — complete Python SDK for Oracle EPM Cloud (Planning, Migration, Data Management); 60+ API endpoints.
