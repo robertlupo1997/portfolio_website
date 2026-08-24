@@ -240,6 +240,12 @@
           from 0.4130 to 0.1127. Both are tuned-validation numbers: the hyperparameters
           were selected on that same window, so no untouched test set stands behind them.
           The repository states this first.
+          <br><br>
+          The live demo is not that model. It serves an XGBoost model retrained on the
+          10,000-member sample the repository actually ships, scored on a 1,995-member
+          holdout at 0.9765 AUC, with the calibrator applied at request time. Calibration
+          costs it log loss there — 0.1534 to 0.1677 — which is the honest direction when
+          the raw scores were already sharp.
           Source: <a class="kkb__link" href="https://github.com/robertlupo1997/kkbox-churn-prediction">github.com/robertlupo1997/kkbox-churn-prediction</a> ·
           Live: <a class="kkb__link" href="https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction">huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction</a>.
         </p>
@@ -283,7 +289,7 @@
           <div class="register__docket">
             <p class="register__docket-title">Docket — recent filings</p>
             <ul role="list">
-              <li style="--i: 0;"><span class="register__docket-date">2024-11</span><span>KKBOX published — 0.9696 AUC (validation) · HuggingFace</span></li>
+              <li style="--i: 0;"><span class="register__docket-date">2024-11</span><span>KKBOX published — 0.9696 AUC (archived validation) · live demo scores 0.9765 on its own holdout</span></li>
               <li style="--i: 1;"><span class="register__docket-date">2026-06</span><span>FerroML v1.0 — PyPI · 8,196 tests</span></li>
               <li style="--i: 2;"><span class="register__docket-date">2026-07</span><span>Half-Blood Prince v0.1.0 — margin engine shipped · repo private</span></li>
             </ul>
@@ -313,8 +319,8 @@
             </li>
             <li class="register__item" style="--i: 2;">
               <span class="register__id">P-03</span>
-              <span class="register__name"><a class="register__link" href="https://github.com/robertlupo1997/kkbox-churn-prediction">KKBOX Churn — 970K subscribers&nbsp;↗</a> <a class="register__live" href="https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction">Live demo&nbsp;↗</a></span>
-              <span class="register__metric">0.9696 AUC (val)</span>
+              <span class="register__name"><a class="register__link" href="https://github.com/robertlupo1997/kkbox-churn-prediction">KKBOX Churn — 970K validation rows&nbsp;↗</a> <a class="register__live" href="https://huggingface.co/spaces/robertlupo1997/kkbox-churn-prediction">Live demo — 0.9765 holdout&nbsp;↗</a></span>
+              <span class="register__metric">0.9696 AUC (val, archived)</span>
               <span class="register__status register__status--done">Done</span>
             </li>
           </ol>
