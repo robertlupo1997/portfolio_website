@@ -73,12 +73,12 @@ export const ALL_PROJECTS: Project[] = [
     title: "Hierarchical Revenue Forecast",
     category: "//time series",
     projectCategory: "fpna",
-    description: "Production-grade hierarchical forecasting across 1,782 time series (54 stores × 33 product families) on a $1B+ revenue proxy — 0.48 RMSLE, sub-10ms inference via Go + ONNX Runtime, Polars 80× preprocessing speedup.",
-    problem: "Revenue forecasting across business lines that actually reconcile.",
+    description: "Experimental unit-sales forecasting prototype over 1,782 retail series (54 stores × 33 product families) from the Kaggle Store Sales dataset. Python training, Go + ONNX serving, a SHAP sidecar, and a React dashboard. The model is a rolling one-step regressor; multi-horizon forecasting and hierarchical reconciliation are not wired in, and no accuracy figure is reproducible from a clean clone.",
+    problem: "A polyglot forecasting stack with its limits written down.",
     githubUrl: "https://github.com/robertlupo1997/hierarchical-revenue-forecast",
     epoch: "'26",
-    metric: "0.48",
-    metricLabel: "RMSLE (KAGGLE TOP-20%)",
+    metric: "1,782",
+    metricLabel: "UNIT-SALES SERIES",
     stack: ["Python", "Go", "ONNX", "SHAP"],
     primaryStack: ["Python", "Go"],
     featured: false,
@@ -189,7 +189,7 @@ export const CAROUSEL_PROJECTS: Project[] = [...FEATURED_PROJECTS, ...ALL_PROJEC
 export const CREDENTIALS: Credential[] = [
   { label: 'MIT Data Science Certificate' },
   { label: 'B.A. Statistics · USF' },
-  { label: '6,500+ Tests · FerroML' },
+  { label: 'FerroML 1.0.1 · PyPI' },
   { label: '60+ API Endpoints · nspb-api' },
   { label: '0.9765 AUC · KKBOX Churn demo' },
   { label: 'Franklin Street FP&A' },
@@ -199,15 +199,15 @@ export const CREDENTIALS: Credential[] = [
 
 export const ACTIVITY_LOG: ActivityEntry[] = [
   { date: '2026-06', project: 'portfolio', label: 'redesigned', note: 'GSAP terminal carousel' },
-  { date: '2026-06', project: 'FerroML', label: 'v0.3.0', note: '6,500 tests · PyPI' },
   { date: '2026-06', project: 'nspb-api', label: 'v2.1', note: '60+ endpoints shipped' },
-  { date: '2026-05', project: 'gsd-ml', label: 'released', note: 'autonomous ML research' },
-  { date: '2026-05', project: 'FerroML Plugin', label: 'released', note: 'Claude Code integration' },
-  { date: '2026-04', project: 'ironclad', label: 'spec', note: 'estimation engine designed' },
+  { date: '2026-04', project: 'FerroML', label: 'v1.0.1', note: 'published on PyPI' },
+  { date: '2026-03', project: 'FerroML Plugin', label: 'released', note: 'Claude Code integration' },
+  { date: '2026-03', project: 'gsd-ml', label: 'released', note: 'npm 0.1.2 · ML research skill' },
   { date: '2026-03', project: 'MLForge', label: 'released', note: 'CSV in · pipeline out' },
+  { date: '2026-03', project: 'ironclad', label: 'spec', note: 'estimation engine designed' },
+  { date: '2026-01', project: 'revenue-forecast', label: 'prototype', note: 'unit-sales forecasting stack' },
   { date: '2025-12', project: 'nspb-api', label: 'v1.0', note: 'Oracle EPM SDK launched' },
-  { date: '2025-09', project: 'revenue-forecast', label: 'deployed', note: 'multi-LOB reconciliation' },
-  { date: '2024-11', project: 'KKBOX', label: 'published', note: '0.9696 AUC archived · demo 0.9765 · HuggingFace' },
+  { date: '2025-08', project: 'KKBOX', label: 'started', note: '0.9696 AUC archived · demo 0.9765 · HuggingFace' },
 ];
 
 export const ACTIVITY_SUMMARY = {
